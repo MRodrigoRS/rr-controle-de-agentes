@@ -1,0 +1,317 @@
+[
+  {
+    "nome": "tRPC",
+    "categoria": "Backend",
+    "ranking": 1,
+    "aplicabilidade": "APIs Type-Safe ponta a ponta sem arquivos de definição",
+    "descricao": "Permite criar APIs com tipagem 100% compartilhada entre frontend e backend TypeScript de forma nativa e sem geração de schemas ou build intermediários."
+  },
+  {
+    "nome": "Prisma ORM",
+    "categoria": "Backend",
+    "ranking": 2,
+    "aplicabilidade": "Mapeamento objeto-relacional para Node.js/TypeScript",
+    "descricao": "ORM declarativo e Type-Safe que permite modelar dados em um arquivo de schema próprio e autogera queries JavaScript/TypeScript com autocompletação precisa."
+  },
+  {
+    "nome": "Drizzle ORM",
+    "categoria": "Backend",
+    "ranking": 3,
+    "aplicabilidade": "APIs leves com escrita de SQL pura e alta performance",
+    "descricao": "ORM extremamente leve e flexível focado em tipagem TypeScript estrita e queries rápidas com sintaxe próxima a SQL nativo."
+  },
+  {
+    "nome": "Dapper",
+    "categoria": "Backend",
+    "ranking": 4,
+    "aplicabilidade": "APIs de alta performance em C# com banco relacional",
+    "descricao": "Micro-ORM para o ecossistema .NET C# que estende a conexão ADO.NET fornecendo mapeamento extremamente rápido de queries SQL brutas para objetos."
+  },
+  {
+    "nome": "Fiber",
+    "categoria": "Backend",
+    "ranking": 5,
+    "aplicabilidade": "APIs REST rápidas e microsserviços em Go",
+    "descricao": "Framework web inspirado no Express.js, construído sobre o Fasthttp (o motor HTTP mais rápido para Go), focado em alocação zero de memória e performance massiva."
+  },
+  {
+    "nome": "PostgreSQL",
+    "categoria": "Bancos de Dados",
+    "ranking": 1,
+    "aplicabilidade": "Aplicações concorrentes de grande escala e alta confiabilidade",
+    "descricao": "Banco de dados relacional clássico open-source, extremamente robusto, compatível com concorrência pesada e extensões avançadas."
+  },
+  {
+    "nome": "SQLite",
+    "categoria": "Bancos de Dados",
+    "ranking": 2,
+    "aplicabilidade": "Aplicações locais offline, testes e ferramentas desktop",
+    "descricao": "Banco de dados relacional contido em um único arquivo de disco local, sem necessidade de servidores ativos rodando no sistema."
+  },
+  {
+    "nome": "Supabase Client",
+    "categoria": "Bibliotecas",
+    "ranking": 1,
+    "aplicabilidade": "Conexão a serviços de banco e autenticação remotos",
+    "descricao": "Biblioteca oficial JavaScript/TypeScript para se comunicar com as APIs do Supabase (banco, storage, auth e realtime) de forma assíncrona."
+  },
+  {
+    "nome": "TanStack Query",
+    "categoria": "Bibliotecas",
+    "ranking": 2,
+    "aplicabilidade": "Sincronização e cache de dados de servidores no React",
+    "descricao": "Gerenciador de estado assíncrono reativo para gerenciar buscas, cache, invalidações de queries, paginações e mutações de dados no cliente."
+  },
+  {
+    "nome": "Zustand",
+    "categoria": "Bibliotecas",
+    "ranking": 3,
+    "aplicabilidade": "Gerenciamento de estado leve e global no frontend",
+    "descricao": "Biblioteca minimalista e flexível para gerenciamento de estado React baseada em hooks, livre de boilerplate e de alto desempenho."
+  },
+  {
+    "nome": "Zod",
+    "categoria": "Bibliotecas",
+    "ranking": 4,
+    "aplicabilidade": "Validação de dados de entrada e tipagem em runtime",
+    "descricao": "Ferramenta de declaração de esquemas de dados com inferência de tipos estática para TypeScript, essencial para validar payloads de API."
+  },
+  {
+    "nome": "React Hook Form",
+    "categoria": "Bibliotecas",
+    "ranking": 5,
+    "aplicabilidade": "Criação de formulários complexos reativos com alta performance",
+    "descricao": "Minimiza renderizações desnecessárias no formulário React, com validação de dados em runtime integrada com bibliotecas como Zod."
+  },
+  {
+    "nome": "Recharts",
+    "categoria": "Bibliotecas",
+    "ranking": 6,
+    "aplicabilidade": "Renderizar gráficos dinâmicos de dados em dashboards React",
+    "descricao": "Biblioteca de gráficos construídos sobre componentes React com renderização SVG nativa de alta performance e responsiva."
+  },
+  {
+    "nome": "GSAP",
+    "categoria": "Bibliotecas",
+    "ranking": 7,
+    "aplicabilidade": "Animações profissionais de alta performance na Web",
+    "descricao": "Biblioteca Javascript profissional para criar transições ricas, manipulação de timelines de animação complexas e efeitos interativos de scroll."
+  },
+  {
+    "nome": "Three.js",
+    "categoria": "Bibliotecas",
+    "ranking": 8,
+    "aplicabilidade": "Visualizações e jogos 3D interativos no navegador",
+    "descricao": "Biblioteca gráfica que simplifica o desenvolvimento de gráficos 3D acelerados por GPU na web usando a API WebGL nativa."
+  },
+  {
+    "nome": "PixiJS",
+    "categoria": "Bibliotecas",
+    "ranking": 9,
+    "aplicabilidade": "Jogos e renderizações gráficas interativas 2D rápidas",
+    "descricao": "Renderizador 2D ultrarrápido para a web que escolhe automaticamente WebGL ou Canvas, ideal para animações de jogos HTML5."
+  },
+  {
+    "nome": "Base UI",
+    "categoria": "Bibliotecas",
+    "ranking": 10,
+    "aplicabilidade": "Componentes de UI acessíveis sem estilização para React",
+    "descricao": "Uma biblioteca de componentes de interface que provê comportamento e acessibilidade (WAI-ARIA) sem impor estilos CSS, facilitando a customização com Tailwind."
+  },
+  {
+    "nome": "Dnd-Kit",
+    "categoria": "Bibliotecas",
+    "ranking": 11,
+    "aplicabilidade": "Criar interfaces interativas de arrastar e soltar (Drag and Drop)",
+    "descricao": "Um kit de ferramentas leve, modular e extensível para implementar interações complexas de arrastar e soltar em aplicativos baseados em React."
+  },
+  {
+    "nome": "Next.js",
+    "categoria": "Frontend",
+    "ranking": 1,
+    "aplicabilidade": "SaaS corporativos de grande porte e portais otimizados",
+    "descricao": "Framework completo React com suporte a SSR (Server Side Rendering), geração de páginas estáticas em build, rotas automáticas baseadas em arquivos e React Server Components."
+  },
+  {
+    "nome": "React",
+    "categoria": "Frontend",
+    "ranking": 2,
+    "aplicabilidade": "Single Page Applications (SPAs) reativas e modulares",
+    "descricao": "Biblioteca do Facebook para construção de interfaces de usuário declarativas baseadas em componentes reutilizáveis."
+  },
+  {
+    "nome": "Tailwind CSS",
+    "categoria": "Frontend",
+    "ranking": 3,
+    "aplicabilidade": "Estilização ágil de componentes sem arquivos CSS gigantes",
+    "descricao": "Framework CSS baseado em utilitários utilitários, que permite construir designs complexos diretamente nas classes HTML de forma rápida."
+  },
+  {
+    "nome": "shadcn/ui",
+    "categoria": "Frontend",
+    "ranking": 4,
+    "aplicabilidade": "Acelerar a criação de layouts com design de nível premium",
+    "descricao": "Componentes de UI acessíveis e estilizados com Tailwind CSS que você copia diretamente para o seu projeto, dando flexibilidade total de edição."
+  },
+  {
+    "nome": "TypeScript",
+    "categoria": "Linguagens",
+    "ranking": 1,
+    "aplicabilidade": "Frontend e Backend corporativo",
+    "descricao": "Superset de JavaScript que adiciona tipagem estática opcional, oferecendo segurança, autocompletação rica e prevenção de bugs durante o desenvolvimento."
+  },
+  {
+    "nome": "Python",
+    "categoria": "Linguagens",
+    "ranking": 2,
+    "aplicabilidade": "Ciência de dados, Inteligência Artificial e automações",
+    "descricao": "Linguagem de alto nível com sintaxe extremamente legível, ideal para scripts rápidos, backend de alta performance, raspagem de dados e modelos de Machine Learning."
+  },
+  {
+    "nome": "C#",
+    "categoria": "Linguagens",
+    "ranking": 3,
+    "aplicabilidade": "Aplicações nativas Windows, games (Unity) e backend corporativo",
+    "descricao": "Linguagem fortemente tipada, orientada a objetos moderna, carro-chefe da plataforma Microsoft .NET."
+  },
+  {
+    "nome": "JavaScript",
+    "categoria": "Linguagens",
+    "ranking": 4,
+    "aplicabilidade": "Lógica client-side para navegadores web e scripting leve",
+    "descricao": "A linguagem nativa de programação da web, executada em qualquer navegador moderno para criar comportamentos interativos básicos."
+  },
+  {
+    "nome": "HTML",
+    "categoria": "Linguagens",
+    "ranking": 5,
+    "aplicabilidade": "Marcação e estruturação semântica de páginas web",
+    "descricao": "Linguagem padrão de marcação de hipertexto usada para estruturar e dar significado a conteúdos na internet."
+  },
+  {
+    "nome": "CSS",
+    "categoria": "Linguagens",
+    "ranking": 6,
+    "aplicabilidade": "Estilização visual, cores e layouts de páginas web",
+    "descricao": "Linguagem de folhas de estilo em cascata usada para estilizar, formatar e posicionar elementos criados com HTML."
+  },
+  {
+    "nome": "XAML",
+    "categoria": "Linguagens",
+    "ranking": 7,
+    "aplicabilidade": "Definição de layouts de interface gráfica declarativa em C#",
+    "descricao": "Linguagem de marcação baseada em XML usada para projetar interfaces em tecnologias Microsoft como WPF e Xamarin/MAUI."
+  },
+  {
+    "nome": "Go",
+    "categoria": "Linguagens",
+    "ranking": 8,
+    "aplicabilidade": "Backend de alta performance, microsserviços e sistemas concorrentes",
+    "descricao": "Linguagem open-source criada pelo Google, compilada, fortemente tipada, com sintaxe simples, concorrência nativa por goroutines (threads leves) e excelente velocidade de execução."
+  },
+  {
+    "nome": "Biome",
+    "categoria": "Qualidade & Testes",
+    "ranking": 1,
+    "aplicabilidade": "Formatação e análise de código ultrarrápidas em JS/TS/CSS",
+    "descricao": "Linter, Formatter e organizador de imports unificado e escrito em Rust, projetado para substituir o ESLint e Prettier com performance massiva."
+  },
+  {
+    "nome": "Playwright",
+    "categoria": "Qualidade & Testes",
+    "ranking": 2,
+    "aplicabilidade": "Testes end-to-end (E2E) robustos e automatizados",
+    "descricao": "Framework moderno de testes que simula a experiência do usuário final interagindo com a tela real nos navegadores Chromium, Firefox e WebKit."
+  },
+  {
+    "nome": "Vitest",
+    "categoria": "Qualidade & Testes",
+    "ranking": 3,
+    "aplicabilidade": "Testes de unidade e integração rápidos e reativos",
+    "descricao": "Framework de testes de unidade Javascript focado em velocidade extrema com suporte nativo a ESM, TypeScript e JSX."
+  },
+  {
+    "nome": "pytest",
+    "categoria": "Qualidade & Testes",
+    "ranking": 4,
+    "aplicabilidade": "Testes de unidade em código Python de forma simples",
+    "descricao": "Framework de testes nativo do Python, extremamente simples e modular para automatizar a validação de algoritmos e APIs."
+  },
+  {
+    "nome": "xUnit",
+    "categoria": "Qualidade & Testes",
+    "ranking": 5,
+    "aplicabilidade": "Testes de unidade robustos no ecossistema C#",
+    "descricao": "Framework de testes tradicional para a plataforma .NET C#, usado para testar lógica de negócio de forma isolada."
+  },
+  {
+    "nome": "MSW (Mock Service Worker)",
+    "categoria": "Qualidade & Testes",
+    "ranking": 6,
+    "aplicabilidade": "Interceptar e mockar chamadas HTTP em testes",
+    "descricao": "Biblioteca que intercepta requisições HTTP na camada de rede (usando Service Workers), permitindo simular respostas de APIs reais em testes."
+  },
+  {
+    "nome": "Testing Library",
+    "categoria": "Qualidade & Testes",
+    "ranking": 7,
+    "aplicabilidade": "Testar interações de componentes React com o DOM",
+    "descricao": "Biblioteca utilitária que permite testar o comportamento do usuário final nos componentes React sem se acoplar a detalhes internos de implementação."
+  },
+  {
+    "nome": "ESLint",
+    "categoria": "Qualidade & Testes",
+    "ranking": 8,
+    "aplicabilidade": "Garantir conformidade e qualidade estática em projetos JS/TS",
+    "descricao": "O linter padrão do ecossistema JavaScript que analisa o código estaticamente para encontrar problemas, aplicar boas práticas e evitar bugs comuns."
+  },
+  {
+    "nome": "Docker",
+    "categoria": "Runtimes & Build",
+    "ranking": 1,
+    "aplicabilidade": "Garantir consistência absoluta em desenvolvimento e produção",
+    "descricao": "Plataforma de containerização que isola a aplicação e seus serviços em containers leves e portáveis contendo todas as dependências necessárias."
+  },
+  {
+    "nome": "Docker Compose",
+    "categoria": "Runtimes & Build",
+    "ranking": 2,
+    "aplicabilidade": "Orquestrar múltiplos containers Docker locais",
+    "descricao": "Ferramenta para definir e rodar aplicações multi-container locais por meio de um arquivo YAML de configuração simples."
+  },
+  {
+    "nome": "Node.js",
+    "categoria": "Runtimes & Build",
+    "ranking": 3,
+    "aplicabilidade": "Executar Javascript e TypeScript do lado do servidor",
+    "descricao": "Runtime Javascript assíncrono orientado a eventos, permitindo criar servidores web, APIs e ferramentas de linha de comando estáveis."
+  },
+  {
+    "nome": "Supabase CLI",
+    "categoria": "Runtimes & Build",
+    "ranking": 4,
+    "aplicabilidade": "Desenvolvimento e testes locais do banco Supabase",
+    "descricao": "Ferramenta de terminal que orquestra containers locais do Docker para simular o backend do Supabase em ambiente de desenvolvimento local."
+  },
+  {
+    "nome": "Vite",
+    "categoria": "Runtimes & Build",
+    "ranking": 5,
+    "aplicabilidade": "Desenvolvimento ágil de aplicações Web modernas",
+    "descricao": "Build tool e servidor de desenvolvimento web moderno com HMR (Hot Module Replacement) extremamente veloz baseado em ES Modules."
+  },
+  {
+    "nome": "pnpm",
+    "categoria": "Runtimes & Build",
+    "ranking": 6,
+    "aplicabilidade": "Gerenciamento eficiente de dependências node_modules",
+    "descricao": "Gerenciador de dependências rápido que compartilha pacotes globalmente através de hard links, reduzindo drasticamente o uso do espaço em disco."
+  },
+  {
+    "nome": "PyInstaller",
+    "categoria": "Runtimes & Build",
+    "ranking": 7,
+    "aplicabilidade": "Gerar executáveis .exe a partir de scripts Python",
+    "descricao": "Compila e empacota aplicações escritas em Python em arquivos executáveis independentes para que rodem em máquinas sem Python instalado."
+  }
+]
