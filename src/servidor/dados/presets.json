@@ -77,13 +77,13 @@
     {
       "id": "gas-web-app",
       "nome": "Google Apps Script (Web App)",
-      "descricao": "Web App do Google que roda diretamente na nuvem do Google Workspace, com planilha como banco de dados. Ideal para automações internas, ferramentas administrativas, dashboards corporativos leves e sistemas de workflow integrados ao ecossistema Google.",
-      "destaque": "Web App integrado ao Google Workspace",
-      "stack": ["Google Apps Script (V8)", "HTML/CSS/JS", "Google Sheets", "clasp", "Biome"],
+      "descricao": "Web App Google com HTML/CSS/JS servido por GAS, Bootstrap 5 para UI, Chart.js para gráficos e SweetAlert2 para modais. Autenticação via SHA-256 + pepper + token UUID. Planilha como banco e Drive para arquivos.",
+      "destaque": "Web App Google com Bootstrap + Chart.js",
+      "stack": ["Google Apps Script (V8)", "HTML5/CSS3/JS", "Bootstrap 5.3", "Bootstrap Icons 1.11", "SweetAlert2 11", "Chart.js", "clasp", "Biome"],
       "pastas": ["src", "src/scripts", "src/servidor", "src/html"],
       "arquitetura": {
-        "frontendFramework": "Google Apps Script (HTML/CSS/JS)",
-        "frontendTestes": "Teste manual com clasp",
+        "frontendFramework": "Google Apps Script + Bootstrap 5.3",
+        "frontendEstilo": "Bootstrap 5.3 + Bootstrap Icons",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
       }
@@ -198,13 +198,14 @@
     {
       "id": "gas-sheets",
       "nome": "Google Apps Script (Planilha)",
-      "descricao": "Backend rodando no Google Apps Script com Google Sheets como banco de dados. Ideal para ferramentas administrativas internas, CRMs leves, sistemas de aprovação e workflow, e qualquer aplicação que já opere dentro do ecossistema Google Workspace.",
-      "destaque": "Planilha como banco no ecossistema Google",
-      "stack": ["Google Apps Script (V8)", "Google Sheets", "clasp", "Biome"],
+      "descricao": "Backend Google Apps Script com SpreadsheetApp, DriveApp, LockService, CacheService, PropertiesService, HtmlService e Utilities. Autenticação SHA-256 + pepper + token UUID. Planilha como banco e Drive para upload de arquivos.",
+      "destaque": "GAS completo: Sheets + Drive + Auth",
+      "stack": ["Google Apps Script (V8)", "SpreadsheetApp", "DriveApp", "LockService", "CacheService", "PropertiesService", "HtmlService", "Utilities", "Google Sheets", "Google Drive", "SHA-256 + pepper + UUID", "clasp", "Biome"],
       "pastas": ["src/servidor", "src/scripts"],
       "arquitetura": {
         "backendRuntime": "Google Apps Script (V8)",
-        "backendBanco": "Google Sheets",
+        "backendBanco": "Google Sheets + Google Drive",
+        "backendORM": "SpreadsheetApp API",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
       }

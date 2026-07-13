@@ -59,11 +59,7 @@ Com a stack validada, configure o ambiente:
  1. Crie os arquivos de configuração do projeto:
     {{#if temPresets}}
     - Frontend: `package.json`, `tsconfig.json`, configs de build/lint
-    {{#if ehGo}}
-    - Backend: `go.mod`, configs de banco/CI
-    {{else}}
-    - Backend: `package.json`, configs de banco/CI
-    {{/if}}
+    - Backend: {{setupBackend}}
     {{else}}
     - Crie os arquivos conforme a stack definida
     {{/if}}
