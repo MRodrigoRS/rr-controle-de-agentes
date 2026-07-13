@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 interface PresetOpcao {
@@ -50,6 +50,26 @@ export default function CriarProjeto() {
   const [selecionando, setSelecionando] = useState(false);
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const [importAberto, setImportAberto] = useState(false);
+  const [importTexto, setImportTexto] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const arquivo = e.target.files?.[0];
+    if (!arquivo) return;
+    if (!arquivo.name.endsWith(".md")) { setErro("Apenas arquivos .md"); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const texto = reader.result as string;
+      setImportTexto(texto);
+      setDescricao(texto);
+    };
+    reader.readAsText(arquivo);
+  }
+
+  function aplicarImport() {
+    if (importTexto.trim()) setDescricao(importTexto);
+  }
 
   useEffect(() => {
     fetch("/api/presets")
@@ -116,6 +136,34 @@ export default function CriarProjeto() {
       <h1 className="mb-8 text-2xl font-bold text-[#e6edf3]">Criar Projeto</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
+          <button type="button" onClick={() => setImportAberto(!importAberto)}
+            className="flex w-full items-center justify-between text-left">
+            <h2 className="font-semibold text-[#e6edf3]">Importar Documento</h2>
+            <span className="text-[#8b949e] text-sm">{importAberto ? "▲" : "▼"}</span>
+          </button>
+          {importAberto && (
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <input ref={fileInputRef} type="file" accept=".md" onChange={handleFileUpload}
+                  className="hidden" />
+                <button type="button" onClick={() => fileInputRef.current?.click()}
+                  className="rounded-lg border border-[#30363d] bg-[#21262d] px-3 py-2 text-sm text-[#c9d1d9] hover:bg-[#30363d] transition">
+                  Upload .md
+                </button>
+                <span className="text-sm text-[#8b949e] self-center">ou cole o texto abaixo</span>
+              </div>
+              <textarea value={importTexto} onChange={(e) => setImportTexto(e.target.value)} rows={8}
+                className="w-full rounded-lg border border-[#30363d] bg-[#0d1117] px-3 py-2 text-sm text-[#e6edf3] placeholder-[#8b949e] focus:border-[#58a6ff] focus:outline-none font-mono"
+                placeholder="Cole o conteudo do documento de requisitos (.md) aqui..." />
+              <button type="button" onClick={aplicarImport}
+                className="rounded-lg bg-[#238636] px-4 py-2 text-sm text-white hover:bg-[#2ea043] transition">
+                Aplicar como Descrição
+              </button>
+            </div>
+          )}
+        </div>
+
         <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
           <h2 className="font-semibold text-[#e6edf3]">Informações Básicas</h2>
           <div>
