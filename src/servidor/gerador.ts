@@ -88,6 +88,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     lint: fe.lint || be.lint || "A definir",
     formatacao: fe.formatacao || be.formatacao || "A definir",
     cicd: be.cicd || "A definir",
+    ehGo: (be.backendRuntime || "").toLowerCase().includes("go 1"),
   };
 
   const ctxSprint = {

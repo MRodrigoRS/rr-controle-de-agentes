@@ -21,10 +21,15 @@ function carregarTemplate(nome: string): string {
 export function processarTemplate(nome: string, ctx: Record<string, unknown>): string {
   let conteudo = carregarTemplate(nome);
 
-  // {{#if var}}...{{else}}...{{/if}}
-  conteudo = conteudo.replace(/\{\{#if ([\w.-]+)\}\}([\s\S]*?)(?:\{\{else\}\}([\s\S]*?))?\{\{\/if\}\}/g, (_, varName, trueBlock, falseBlock) => {
-    return ctx[varName] ? trueBlock : (falseBlock || "");
-  });
+  // {{#if var}}...{{else}}...{{/if}} — processa blocos mais internos primeiro
+  const ifRegex = /\{\{#if ([\w.-]+)\}\}((?:[^{]|\{(?!\{#if))*?)(?:\{\{else\}\}((?:[^{]|\{(?!\{#if))*?))?\{\{\/if\}\}/g;
+  let anterior: string;
+  do {
+    anterior = conteudo;
+    conteudo = conteudo.replace(ifRegex, (_, varName, trueBlock, falseBlock) => {
+      return ctx[varName] ? trueBlock : (falseBlock || "");
+    });
+  } while (conteudo !== anterior);
 
   // {{variavel}}
   conteudo = conteudo.replace(/\{\{([\w.-]+)\}\}/g, (_, varName) => {

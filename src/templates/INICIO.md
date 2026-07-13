@@ -56,13 +56,17 @@ Pergunte: "Podemos seguir com essa stack ou você quer alterar algo?"
 
 Com a stack validada, configure o ambiente:
 
-1. Crie os arquivos de configuração do projeto:
-   {{#if temPresets}}
-   - Frontend: `package.json`, `tsconfig.json`, configs de build/lint
-   - Backend: `go.mod`, configs de banco/CI
-   {{else}}
-   - Crie os arquivos conforme a stack definida
-   {{/if}}
+ 1. Crie os arquivos de configuração do projeto:
+    {{#if temPresets}}
+    - Frontend: `package.json`, `tsconfig.json`, configs de build/lint
+    {{#if ehGo}}
+    - Backend: `go.mod`, configs de banco/CI
+    {{else}}
+    - Backend: `package.json`, configs de banco/CI
+    {{/if}}
+    {{else}}
+    - Crie os arquivos conforme a stack definida
+    {{/if}}
 2. Instale as dependências e verifique se o build base funciona.
 3. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface PresetOpcao {
@@ -10,27 +10,6 @@ interface PresetOpcao {
   destaque: string;
   stack: string[];
 }
-
-const frontends: PresetOpcao[] = [
-  { id: "nextjs-app-router", nome: "Next.js (App Router)", destaque: "Fullstack com React Server Components", descricao: "Framework fullstack para produção com React 19, renderização híbrida (SSR + SSG + ISR). Ideal para SaaS corporativos e portais.", stack: ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "shadcn/ui", "Zod", "Biome", "Vitest", "pnpm"] },
-  { id: "vite-react-ts", nome: "Vite + React + TypeScript", destaque: "SPA rápida com Vite e React 19", descricao: "SPA moderna e ultrarrápida com HMR instantâneo. Ideal para dashboards administrativos e apps single-page.", stack: ["React 19", "Vite 6", "TypeScript 5", "Tailwind CSS 4", "TanStack Query", "Zustand", "Zod", "Vitest"] },
-  { id: "html-css-js", nome: "HTML + CSS + JavaScript", destaque: "Estática, sem dependências", descricao: "Página web estática clássica sem frameworks. Ideal para landing pages, sites institucionais e protótipos rápidos.", stack: ["HTML5", "CSS3", "JavaScript"] },
-  { id: "threejs-rapier-gsap", nome: "Three.js + Rapier + GSAP", destaque: "3D interativo com física e animações", descricao: "Aplicação 3D interativa com WebGL, física realista e animações profissionais. Ideal para visualizações e jogos 3D.", stack: ["Three.js", "Rapier", "GSAP", "TypeScript 5"] },
-  { id: "pixijs-gsap-zustand", nome: "PixiJS + GSAP + Zustand", destaque: "Jogos 2D e visualizações pesadas", descricao: "Renderização 2D ultrarrápida via WebGL com animações suaves e estado global. Ideal para jogos HTML5 e dashboards.", stack: ["PixiJS", "GSAP", "Zustand", "TypeScript 5"] },
-  { id: "gas-web-app", nome: "Google Apps Script (Web App)", destaque: "Web App integrado ao Google Workspace", descricao: "Web App Google que roda na nuvem com planilha como banco. Ideal para automações internas e ferramentas corporativas.", stack: ["Google Apps Script (V8)", "HTML/CSS/JS", "Google Sheets", "clasp"] },
-  { id: "browser-extension-mv3", nome: "Extensão de Navegador (MV3)", destaque: "Extensão Chrome/Edge MV3", descricao: "Extensão Manifest V3 com popup, service worker e content scripts. Ideal para automação de navegação e produtividade.", stack: ["Manifest V3", "JavaScript", "HTML/CSS", "Chrome APIs"] },
-  { id: "nenhum", nome: "Nenhum", destaque: "Apenas backend", descricao: "Sem frontend. Útil para APIs puras, pacotes npm e microsserviços.", stack: [] },
-];
-
-const backends: PresetOpcao[] = [
-  { id: "sqlite-local", nome: "SQLite + Prisma", destaque: "Banco local embutido, zero setup", descricao: "Banco em arquivo único .db via Prisma ORM. Ideal para aplicações locais, MVPs e ferramentas desktop.", stack: ["Node.js 22", "SQLite", "Prisma 7", "Biome", "GitHub Actions"] },
-  { id: "postgres-drizzle", nome: "PostgreSQL + Drizzle", destaque: "ORM leve com SQL puro", descricao: "PostgreSQL com Drizzle ORM — SQL puro com tipagem forte. Ideal para consultas complexas e migrações versionadas.", stack: ["Node.js 22", "PostgreSQL", "Drizzle ORM", "Biome", "GitHub Actions"] },
-  { id: "supabase-online", nome: "Supabase (Cloud)", destaque: "Backend cloud completo", descricao: "Banco PostgreSQL + autenticação + storage + Realtime. Tudo gerenciado via SDK. Ideal para startups e MVPs.", stack: ["Node.js 22", "Supabase", "PostgreSQL", "Supabase Client", "Biome"] },
-  { id: "trpc-backend", nome: "tRPC", destaque: "API type-safe sem REST/GraphQL", descricao: "API com tipos inferidos automaticamente do backend pro frontend. Elimina SDKs e contratos de API.", stack: ["Node.js 22", "tRPC", "Prisma 7", "SQLite/PostgreSQL", "Biome"] },
-  { id: "go-fiber-postgres", nome: "Go + Fiber + PostgreSQL", destaque: "Alta performance com concorrência nativa", descricao: "API ultrarrápida em Go com Fiber e PostgreSQL. Ideal para microsserviços e sistemas de baixa latência.", stack: ["Go 1.22", "Fiber", "PostgreSQL", "pgx", "golangci-lint", "GitHub Actions"] },
-  { id: "gas-sheets", nome: "Google Apps Script (Planilha)", destaque: "Planilha como banco no ecossistema Google", descricao: "Backend no Google Apps Script com Sheets como banco. Ideal para CRMs leves e workflow interno.", stack: ["Google Apps Script (V8)", "Google Sheets", "clasp", "ESLint"] },
-  { id: "nenhum", nome: "Nenhum", destaque: "Apenas frontend", descricao: "Sem backend. Útil para sites estáticos e landing pages.", stack: [] },
-];
 
 function CardPreset({ item, selecionado, aoSelecionar, nome }: { item: PresetOpcao; selecionado: boolean; aoSelecionar: () => void; nome: string }) {
   return (
@@ -60,14 +39,33 @@ function CardPreset({ item, selecionado, aoSelecionar, nome }: { item: PresetOpc
 
 export default function CriarProjeto() {
   const router = useRouter();
+  const [frontends, setFrontends] = useState<PresetOpcao[]>([]);
+  const [backends, setBackends] = useState<PresetOpcao[]>([]);
+  const [carregando, setCarregando] = useState(true);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [frontend, setFrontend] = useState("nextjs-app-router");
-  const [backend, setBackend] = useState("nenhum");
+  const [frontend, setFrontend] = useState("");
+  const [backend, setBackend] = useState("");
   const [caminho, setCaminho] = useState("");
   const [selecionando, setSelecionando] = useState(false);
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/presets")
+      .then((res) => res.json())
+      .then((data) => {
+        setFrontends(data.frontend);
+        setBackends(data.backend);
+        if (data.frontend.length > 0) setFrontend(data.frontend[0].id);
+        if (data.backend.length > 0) setBackend(data.backend[0].id);
+        setCarregando(false);
+      })
+      .catch(() => {
+        setErro("Falha ao carregar presets");
+        setCarregando(false);
+      });
+  }, []);
 
   async function selecionarPasta() {
     setSelecionando(true);
@@ -76,7 +74,6 @@ export default function CriarProjeto() {
       const data = await res.json();
       if (data.caminho) setCaminho(data.caminho);
     } catch {
-      // usuário cancelou ou erro
     } finally {
       setSelecionando(false);
     }
@@ -104,6 +101,14 @@ export default function CriarProjeto() {
     } finally {
       setEnviando(false);
     }
+  }
+
+  if (carregando) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <p className="text-[#8b949e]">Carregando presets...</p>
+      </div>
+    );
   }
 
   return (
@@ -145,18 +150,22 @@ export default function CriarProjeto() {
         <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
           <h2 className="font-semibold text-[#e6edf3]">Stack Tecnológica</h2>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
-              {frontends.map((f) => (
-                <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
-              ))}
-            </div>
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-[#8b949e]">Backend</p>
-              {backends.map((b) => (
-                <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
-              ))}
-            </div>
+            {frontends.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
+                {frontends.map((f) => (
+                  <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
+                ))}
+              </div>
+            )}
+            {backends.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-[#8b949e]">Backend</p>
+                {backends.map((b) => (
+                  <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
