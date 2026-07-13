@@ -77,13 +77,17 @@
     {
       "id": "gas-web-app",
       "nome": "Google Apps Script (Web App)",
-      "descricao": "Web App Google com HTML/CSS/JS servido por GAS, Bootstrap 5 para UI, Chart.js para gráficos e SweetAlert2 para modais. Autenticação via SHA-256 + pepper + token UUID. Planilha como banco e Drive para arquivos.",
-      "destaque": "Web App Google com Bootstrap + Chart.js",
+      "descricao": "Web App Google com HTML/CSS/JS servido por GAS, Bootstrap 5 para UI, Chart.js para gráficos e SweetAlert2 para modais. Arquitetura SPA com hash routing, comunicação RPC via google.script.run, formulários com máscaras (CPF, CNPJ, Telefone, CEP, Data, Moeda) e validação de CPF/CNPJ. Autenticação via SHA-256 + pepper + token UUID.",
+      "destaque": "Web App Google com Bootstrap + Chart.js + Formulários inteligentes",
       "stack": ["Google Apps Script (V8)", "HTML5/CSS3/JS", "Bootstrap 5.3", "Bootstrap Icons 1.11", "SweetAlert2 11", "Chart.js", "clasp", "Biome"],
       "pastas": ["src", "src/scripts", "src/servidor", "src/html"],
       "arquitetura": {
         "frontendFramework": "Google Apps Script + Bootstrap 5.3",
         "frontendEstilo": "Bootstrap 5.3 + Bootstrap Icons",
+        "frontendTestes": "Testes manuais (GAS não suporta test runner nativo)",
+        "SPA": "Hash routing client-side com google.script.run",
+        "formularios": "Máscaras de input + validação CPF/CNPJ",
+        "uuid": "Utilities.getUuid() via servidor",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
       }
@@ -198,9 +202,9 @@
     {
       "id": "gas-sheets",
       "nome": "Google Apps Script (Planilha)",
-      "descricao": "Backend Google Apps Script com SpreadsheetApp, DriveApp, LockService, CacheService, PropertiesService, HtmlService e Utilities. Autenticação SHA-256 + pepper + token UUID. Planilha como banco e Drive para upload de arquivos.",
-      "destaque": "GAS completo: Sheets + Drive + Auth",
-      "stack": ["Google Apps Script (V8)", "SpreadsheetApp", "DriveApp", "LockService", "CacheService", "PropertiesService", "HtmlService", "Utilities", "Google Sheets", "Google Drive", "SHA-256 + pepper + UUID", "clasp", "Biome"],
+      "descricao": "Backend Google Apps Script completo com SpreadsheetApp, DriveApp, GmailApp, DocumentApp, UrlFetchApp, ScriptApp, LockService, CacheService, PropertiesService, HtmlService e Utilities. E-mail via GmailApp, templates e PDF via DocumentApp, pagamentos via UrlFetchApp (Mercado Pago), processamento em lote via ScriptApp. Autenticação SHA-256 + pepper + token UUID.",
+      "destaque": "GAS completo: Sheets + Drive + Docs + E-mail + Pagamentos",
+      "stack": ["Google Apps Script (V8)", "SpreadsheetApp", "DriveApp", "GmailApp", "DocumentApp", "UrlFetchApp", "ScriptApp", "LockService", "CacheService", "PropertiesService", "HtmlService", "Utilities", "Google Sheets", "Google Drive", "SHA-256 + pepper + UUID", "clasp", "Biome"],
       "pastas": ["src/servidor", "src/scripts"],
       "arquitetura": {
         "backendRuntime": "Google Apps Script (V8)",
