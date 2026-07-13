@@ -33,12 +33,12 @@
     {
       "id": "html-css-js",
       "nome": "HTML + CSS + JavaScript",
-      "descricao": "Página web estática clássica sem frameworks. Ideal para landing pages, sites institucionais, protótipos rápidos e projetos onde a simplicidade é prioridade. Zero dependências, zero build.",
-      "destaque": "Estática, sem dependências",
-      "stack": ["HTML5", "CSS3", "JavaScript", "Biome"],
+      "descricao": "Landing page ou site estático com Vite como build tool. HTML semântico, CSS puro e JavaScript vanilla com live reload, autoprefixing e build otimizado. Ideal para landing pages, sites institucionais e protótipos onde simplicidade é prioridade.",
+      "destaque": "Estático com Vite, zero framework",
+      "stack": ["HTML5", "CSS3", "JavaScript", "Vite 6", "Biome"],
       "pastas": ["src", "src/css", "src/js"],
       "arquitetura": {
-        "frontendFramework": "HTML5 + CSS3 + JavaScript",
+        "frontendFramework": "HTML5 + CSS3 + JavaScript + Vite 6",
         "frontendEstilo": "CSS puro",
         "lint": "Biome",
         "formatacao": "Biome"
