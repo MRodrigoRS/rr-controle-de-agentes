@@ -30,22 +30,12 @@ export async function POST(request: Request) {
       ? path.resolve(caminhoInput.trim())
       : path.join(projetosDir, nome.trim().toLowerCase().replace(/\s+/g, "-"));
 
-    const governancaExiste = fs.existsSync(path.join(caminhoProjeto, "governanca"));
+    if (fs.existsSync(path.join(caminhoProjeto, "governanca"))) {
+      return NextResponse.json({ erro: "Já existe uma pasta governanca/ neste diretório" }, { status: 409 });
+    }
 
-    if (caminhoInput && caminhoInput.trim()) {
-      if (governancaExiste) {
-        return NextResponse.json({ erro: "Já existe uma pasta governanca/ neste diretório" }, { status: 409 });
-      }
-      if (!fs.existsSync(caminhoProjeto)) {
-        fs.mkdirSync(caminhoProjeto, { recursive: true });
-      }
-    } else {
-      if (fs.existsSync(caminhoProjeto)) {
-        return NextResponse.json({ erro: "Já existe um projeto com este nome" }, { status: 409 });
-      }
-      if (!fs.existsSync(projetosDir)) {
-        fs.mkdirSync(projetosDir, { recursive: true });
-      }
+    if (!fs.existsSync(caminhoProjeto)) {
+      fs.mkdirSync(caminhoProjeto, { recursive: true });
     }
 
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
