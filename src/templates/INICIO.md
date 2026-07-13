@@ -17,6 +17,11 @@ Apresente-se ao usuário e peça que ele descreva a visão do projeto:
 
 **Só avance após o usuário confirmar a visão.**
 
+> Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
+> antes de executar a skill `comparar-stack-com-plano.md` em
+> `governanca/skills/`. Ela orienta a comparação bidirecional entre a stack do
+> preset e a stack do plano, e a decisão de qual caminho seguir.
+
 ---
 
 ## Passo 2 — Definição das Sprints
