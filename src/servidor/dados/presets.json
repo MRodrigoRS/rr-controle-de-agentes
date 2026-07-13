@@ -20,14 +20,14 @@
       "nome": "Vite + React + TypeScript",
       "descricao": "SPA moderna e ultrarrápida com Vite 6, React 19 e TypeScript 5. Hot Module Replacement instantâneo e build otimizado. Ideal para dashboards administrativos, apps single-page e ferramentas internas.",
       "destaque": "SPA rápida com Vite e React 19",
-      "stack": ["React 19", "Vite 6", "TypeScript 5", "Tailwind CSS 4", "TanStack Query", "Zustand", "Zod", "React Hook Form", "ESLint 9", "Vitest", "Testing Library"],
+      "stack": ["React 19", "Vite 6", "TypeScript 5", "Tailwind CSS 4", "TanStack Query", "Zustand", "Zod", "React Hook Form", "Biome", "Vitest", "Testing Library", "MSW"],
       "pastas": ["src/app", "src/componentes", "src/lib"],
       "arquitetura": {
         "frontendFramework": "React 19 + Vite 6",
         "frontendEstilo": "Tailwind CSS 4",
-        "frontendTestes": "Vitest + Testing Library",
-        "lint": "ESLint 9",
-        "formatacao": "Prettier"
+        "frontendTestes": "Vitest + Testing Library + MSW",
+        "lint": "Biome",
+        "formatacao": "Biome"
       }
     },
     {
@@ -35,13 +35,13 @@
       "nome": "HTML + CSS + JavaScript",
       "descricao": "Página web estática clássica sem frameworks. Ideal para landing pages, sites institucionais, protótipos rápidos e projetos onde a simplicidade é prioridade. Zero dependências, zero build.",
       "destaque": "Estática, sem dependências",
-      "stack": ["HTML5", "CSS3", "JavaScript"],
+      "stack": ["HTML5", "CSS3", "JavaScript", "Biome"],
       "pastas": ["src", "src/css", "src/js"],
       "arquitetura": {
         "frontendFramework": "HTML5 + CSS3 + JavaScript",
         "frontendEstilo": "CSS puro",
-        "lint": "ESLint",
-        "formatacao": "Prettier"
+        "lint": "Biome",
+        "formatacao": "Biome"
       }
     },
     {
@@ -49,13 +49,13 @@
       "nome": "Three.js + Rapier + GSAP",
       "descricao": "Aplicação 3D interativa no navegador com Three.js para renderização WebGL, Rapier para física realista e GSAP para animações profissionais. Ideal para visualizações arquitetônicas, jogos 3D e experiências imersivas.",
       "destaque": "3D interativo com física e animações",
-      "stack": ["Three.js", "Rapier", "GSAP", "JavaScript", "TypeScript 5", "ESLint"],
+      "stack": ["Three.js", "Rapier", "GSAP", "TypeScript 5", "Biome"],
       "pastas": ["src", "src/cenas", "src/componentes", "src/scripts"],
       "arquitetura": {
         "frontendFramework": "Three.js + Rapier + GSAP",
         "frontendEstilo": "CSS puro",
-        "lint": "ESLint",
-        "formatacao": "Prettier"
+        "lint": "Biome",
+        "formatacao": "Biome"
       }
     },
     {
@@ -63,13 +63,13 @@
       "nome": "PixiJS + GSAP + Zustand",
       "descricao": "Jogo 2D ou visualização interativa pesada no navegador. PixiJS renderiza gráficos 2D ultrarrápidos via WebGL, GSAP cuida das animações e Zustand gerencia o estado global. Ideal para jogos HTML5 e dashboards de alta performance.",
       "destaque": "Jogos 2D e visualizações pesadas",
-      "stack": ["PixiJS", "GSAP", "Zustand", "TypeScript 5", "ESLint"],
+      "stack": ["PixiJS", "GSAP", "Zustand", "TypeScript 5", "Biome"],
       "pastas": ["src", "src/cenas", "src/estado", "src/scripts"],
       "arquitetura": {
         "frontendFramework": "PixiJS + GSAP + Zustand",
         "frontendEstilo": "CSS puro",
-        "lint": "ESLint",
-        "formatacao": "Prettier"
+        "lint": "Biome",
+        "formatacao": "Biome"
       }
     },
     {
@@ -77,13 +77,13 @@
       "nome": "Google Apps Script (Web App)",
       "descricao": "Web App do Google que roda diretamente na nuvem do Google Workspace, com planilha como banco de dados. Ideal para automações internas, ferramentas administrativas, dashboards corporativos leves e sistemas de workflow integrados ao ecossistema Google.",
       "destaque": "Web App integrado ao Google Workspace",
-      "stack": ["Google Apps Script (V8)", "HTML/CSS/JS", "Google Sheets", "clasp", "ESLint"],
+      "stack": ["Google Apps Script (V8)", "HTML/CSS/JS", "Google Sheets", "clasp", "Biome"],
       "pastas": ["src", "src/scripts", "src/servidor", "src/html"],
       "arquitetura": {
         "frontendFramework": "Google Apps Script (HTML/CSS/JS)",
         "frontendTestes": "Teste manual com clasp",
-        "lint": "ESLint + @google/clasp",
-        "formatacao": "Prettier"
+        "lint": "Biome + @google/clasp",
+        "formatacao": "Biome"
       }
     },
     {
@@ -91,12 +91,12 @@
       "nome": "Extensão de Navegador (MV3)",
       "descricao": "Extensão Chrome/Edge/Opera usando Manifest V3, o padrão mais moderno e seguro para extensões de navegador. Inclui popup, service worker (background), content scripts e comunicação entre contextos. Ideal para automação de navegação, produtividade e ferramentas de desenvolvimento.",
       "destaque": "Extensão Chrome/Edge MV3",
-      "stack": ["Manifest V3", "JavaScript", "HTML/CSS", "Chrome APIs", "ESLint"],
+      "stack": ["Manifest V3", "TypeScript 5", "HTML/CSS", "Chrome APIs", "Biome"],
       "pastas": ["src", "src/popup", "src/background", "src/content", "public"],
       "arquitetura": {
-        "frontendFramework": "Manifest V3 + JavaScript",
-        "lint": "ESLint",
-        "formatacao": "Prettier"
+        "frontendFramework": "Manifest V3 + TypeScript",
+        "lint": "Biome",
+        "formatacao": "Biome"
       }
     },
     {
@@ -117,12 +117,12 @@
       "nome": "SQLite + Prisma",
       "descricao": "Banco de dados embutido em Node.js via Prisma ORM. Zero configuração de servidor de banco — o banco é um único arquivo .db no projeto. Ideal para aplicações locais, MVPs, ferramentas desktop, e cenários onde a simplicidade da infraestrutura é prioridade.",
       "destaque": "Banco local embutido, zero setup",
-      "stack": ["Node.js 22", "SQLite", "Prisma 7", "Biome", "GitHub Actions"],
+      "stack": ["Node.js 22", "SQLite", "Prisma", "Biome", "Vitest", "GitHub Actions"],
       "pastas": ["src/dados", "prisma"],
       "arquitetura": {
         "backendRuntime": "Node.js 22",
         "backendBanco": "SQLite",
-        "backendORM": "Prisma 7",
+        "backendORM": "Prisma",
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
@@ -133,7 +133,7 @@
       "nome": "PostgreSQL + Drizzle",
       "descricao": "PostgreSQL gerenciado com Drizzle ORM — um ORM extremamente leve que prioriza SQL puro com tipagem TypeScript forte. Ideal para aplicações que precisam de consultas complexas, migrações versionadas e performance de banco relacional tradicional.",
       "destaque": "ORM leve com SQL puro e tipagem forte",
-      "stack": ["Node.js 22", "PostgreSQL", "Drizzle ORM", "Biome", "GitHub Actions"],
+      "stack": ["Node.js 22", "PostgreSQL", "Drizzle ORM", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
       "pastas": ["src/dados", "src/servidor"],
       "arquitetura": {
         "backendRuntime": "Node.js 22",
@@ -149,7 +149,7 @@
       "nome": "Supabase (Cloud)",
       "descricao": "Plataforma backend completa na nuvem: banco PostgreSQL, autenticação, storage, Realtime e Edge Functions. Tudo gerenciado via dashboard ou SDK. Ideal para startups e MVPs que precisam de backend rico sem gerenciar servidores.",
       "destaque": "Backend cloud completo: banco + auth + realtime",
-      "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Biome", "GitHub Actions"],
+      "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Biome", "Vitest", "GitHub Actions"],
       "pastas": ["src/dados", "src/servidor"],
       "arquitetura": {
         "backendRuntime": "Node.js 22",
@@ -165,12 +165,12 @@
       "nome": "tRPC",
       "descricao": "API type-safe sem definições de rota manuais. O tRPC infere tipos automaticamente do backend para o frontend, eliminando a necessidade de SDKs, contratos REST ou GraphQL. Ideal para fullstack TypeScript onde produtividade e segurança de tipos são críticas.",
       "destaque": "API type-safe sem REST/GraphQL",
-      "stack": ["Node.js 22", "tRPC", "Prisma 7", "SQLite ou PostgreSQL", "Biome", "GitHub Actions"],
+      "stack": ["Node.js 22", "tRPC", "Prisma", "SQLite ou PostgreSQL", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
       "pastas": ["src/servidor", "src/dados"],
       "arquitetura": {
         "backendRuntime": "Node.js 22",
         "backendBanco": "SQLite ou PostgreSQL",
-        "backendORM": "Prisma 7",
+        "backendORM": "Prisma",
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
@@ -181,10 +181,10 @@
       "nome": "Go + Fiber + PostgreSQL",
       "descricao": "API de altíssima performance em Go usando o framework Fiber (inspirado no Express.js) com PostgreSQL. Ideal para microsserviços, APIs públicas que exigem baixa latência, processamento concorrente intenso e sistemas que precisam de eficiência máxima de hardware.",
       "destaque": "Alta performance com concorrência nativa",
-      "stack": ["Go 1.22", "Fiber", "PostgreSQL", "pgx", "golangci-lint", "gofumpt", "GitHub Actions"],
+      "stack": ["Go 1.24", "Fiber", "PostgreSQL", "pgx", "testify", "golangci-lint", "gofumpt", "Docker Compose", "GitHub Actions"],
       "pastas": ["src", "src/handlers", "src/dados", "src/models"],
       "arquitetura": {
-        "backendRuntime": "Go 1.22",
+        "backendRuntime": "Go 1.24",
         "backendBanco": "PostgreSQL",
         "backendORM": "pgx",
         "lint": "golangci-lint",
@@ -197,13 +197,13 @@
       "nome": "Google Apps Script (Planilha)",
       "descricao": "Backend rodando no Google Apps Script com Google Sheets como banco de dados. Ideal para ferramentas administrativas internas, CRMs leves, sistemas de aprovação e workflow, e qualquer aplicação que já opere dentro do ecossistema Google Workspace.",
       "destaque": "Planilha como banco no ecossistema Google",
-      "stack": ["Google Apps Script (V8)", "Google Sheets", "clasp", "ESLint"],
+      "stack": ["Google Apps Script (V8)", "Google Sheets", "clasp", "Biome"],
       "pastas": ["src/servidor", "src/scripts"],
       "arquitetura": {
         "backendRuntime": "Google Apps Script (V8)",
         "backendBanco": "Google Sheets",
-        "lint": "ESLint + @google/clasp",
-        "formatacao": "Prettier"
+        "lint": "Biome + @google/clasp",
+        "formatacao": "Biome"
       }
     },
     {
