@@ -313,5 +313,40 @@
     "ranking": 7,
     "aplicabilidade": "Gerar executáveis .exe a partir de scripts Python",
     "descricao": "Compila e empacota aplicações escritas em Python em arquivos executáveis independentes para que rodem em máquinas sem Python instalado."
+  },
+  {
+    "nome": "GmailApp",
+    "categoria": "Backend",
+    "ranking": 6,
+    "aplicabilidade": "Serviço de e-mail nativo do Google Apps Script",
+    "descricao": "Serviço integrado do Google Apps Script que permite enviar e-mails diretamente da aplicação GAS usando a conta Google do usuário logado. Suporta envio com anexos, HTML, múltiplos destinatários, e cópia oculta. Essencial para notificações, envio de documentos e comunicações automatizadas."
+  },
+  {
+    "nome": "DocumentApp",
+    "categoria": "Backend",
+    "ranking": 7,
+    "aplicabilidade": "Manipulação programática de Google Docs",
+    "descricao": "Serviço integrado do Google Apps Script para criar, ler e modificar documentos do Google Docs de forma programática. Permite substituir placeholders em templates, gerar PDFs, inserir tabelas e imagens, e exportar documentos em múltiplos formatos. Essencial para geração de contratos, propostas e relatórios."
+  },
+  {
+    "nome": "UrlFetchApp",
+    "categoria": "Backend",
+    "ranking": 8,
+    "aplicabilidade": "Requisições HTTP externas no Google Apps Script",
+    "descricao": "Serviço integrado do Google Apps Script para realizar requisições HTTP/HTTPS para APIs externas. Suporta GET, POST, PUT, DELETE, headers customizados, payloads JSON/XML e autenticação básica ou OAuth. Essencial para integrações com gateways de pagamento, webhooks e serviços REST."
+  },
+  {
+    "nome": "ScriptApp",
+    "categoria": "Backend",
+    "ranking": 9,
+    "aplicabilidade": "Agendamento e controle de triggers no GAS",
+    "descricao": "Serviço integrado do Google Apps Script para gerenciamento de triggers baseados em tempo (time-driven), eventos do Google Sheets (onEdit, onChange, onOpen) e formulários (onFormSubmit). Permite criar, listar e deletar triggers programaticamente. Essencial para processamento em lote e automações periódicas."
+  },
+  {
+    "nome": "Mercado Pago",
+    "categoria": "Bibliotecas",
+    "ranking": 12,
+    "aplicabilidade": "Gateway de pagamentos latino-americano com API REST",
+    "descricao": "Plataforma de pagamentos líder na América Latina que oferece API REST para processar pagamentos via cartão de crédito, boleto, PIX e carteiras digitais. Inclui suporte a assinaturas recorrentes (Preapproval API), checkout transparente e notificações via webhook (IPN). Integrável ao Google Apps Script via UrlFetchApp."
   }
 ]
