@@ -3,6 +3,7 @@ import path from "path";
 import { notFound } from "next/navigation";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
+import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { carregarProjetos } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -43,7 +44,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold text-[#e6edf3]">{projeto.nome}</h1>
-            {projeto.descricao && <p className="mt-2 text-[#8b949e]">{projeto.descricao}</p>}
+            {projeto.descricao && <DescricaoColapsavel texto={projeto.descricao} />}
           </div>
           <div className="flex items-center gap-3">
             <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetFrontend}</span>
