@@ -49,11 +49,12 @@
       "nome": "Three.js + Rapier + GSAP",
       "descricao": "Aplicação 3D interativa no navegador com Three.js para renderização WebGL, Rapier para física realista e GSAP para animações profissionais. Ideal para visualizações arquitetônicas, jogos 3D e experiências imersivas.",
       "destaque": "3D interativo com física e animações",
-      "stack": ["Three.js", "Rapier", "GSAP", "TypeScript 5", "Biome"],
+      "stack": ["Three.js", "Rapier", "GSAP", "TypeScript 5", "Vite 6", "Vitest", "Biome"],
       "pastas": ["src", "src/cenas", "src/componentes", "src/scripts"],
       "arquitetura": {
         "frontendFramework": "Three.js + Rapier + GSAP",
         "frontendEstilo": "CSS puro",
+        "frontendTestes": "Vitest",
         "lint": "Biome",
         "formatacao": "Biome"
       }
@@ -63,11 +64,12 @@
       "nome": "PixiJS + GSAP + Zustand",
       "descricao": "Jogo 2D ou visualização interativa pesada no navegador. PixiJS renderiza gráficos 2D ultrarrápidos via WebGL, GSAP cuida das animações e Zustand gerencia o estado global. Ideal para jogos HTML5 e dashboards de alta performance.",
       "destaque": "Jogos 2D e visualizações pesadas",
-      "stack": ["PixiJS", "GSAP", "Zustand", "TypeScript 5", "Biome"],
+      "stack": ["PixiJS", "GSAP", "Zustand", "TypeScript 5", "Vite 6", "Vitest", "Biome"],
       "pastas": ["src", "src/cenas", "src/estado", "src/scripts"],
       "arquitetura": {
         "frontendFramework": "PixiJS + GSAP + Zustand",
         "frontendEstilo": "CSS puro",
+        "frontendTestes": "Vitest",
         "lint": "Biome",
         "formatacao": "Biome"
       }
@@ -91,10 +93,11 @@
       "nome": "Extensão de Navegador (MV3)",
       "descricao": "Extensão Chrome/Edge/Opera usando Manifest V3, o padrão mais moderno e seguro para extensões de navegador. Inclui popup, service worker (background), content scripts e comunicação entre contextos. Ideal para automação de navegação, produtividade e ferramentas de desenvolvimento.",
       "destaque": "Extensão Chrome/Edge MV3",
-      "stack": ["Manifest V3", "TypeScript 5", "HTML/CSS", "Chrome APIs", "Biome"],
+      "stack": ["Manifest V3", "TypeScript 5", "WXT", "HTML/CSS", "Chrome APIs", "Vitest", "Biome"],
       "pastas": ["src", "src/popup", "src/background", "src/content", "public"],
       "arquitetura": {
-        "frontendFramework": "Manifest V3 + TypeScript",
+        "frontendFramework": "WXT + Manifest V3 + TypeScript",
+        "frontendTestes": "Vitest",
         "lint": "Biome",
         "formatacao": "Biome"
       }
@@ -117,10 +120,10 @@
       "nome": "SQLite + Prisma",
       "descricao": "Banco de dados embutido em Node.js via Prisma ORM. Zero configuração de servidor de banco — o banco é um único arquivo .db no projeto. Ideal para aplicações locais, MVPs, ferramentas desktop, e cenários onde a simplicidade da infraestrutura é prioridade.",
       "destaque": "Banco local embutido, zero setup",
-      "stack": ["Node.js 22", "SQLite", "Prisma", "Biome", "Vitest", "GitHub Actions"],
+      "stack": ["Node.js 22", "Hono", "SQLite", "Prisma", "Biome", "Vitest", "GitHub Actions"],
       "pastas": ["src/dados", "prisma"],
       "arquitetura": {
-        "backendRuntime": "Node.js 22",
+        "backendRuntime": "Node.js 22 + Hono",
         "backendBanco": "SQLite",
         "backendORM": "Prisma",
         "lint": "Biome",
@@ -133,10 +136,10 @@
       "nome": "PostgreSQL + Drizzle",
       "descricao": "PostgreSQL gerenciado com Drizzle ORM — um ORM extremamente leve que prioriza SQL puro com tipagem TypeScript forte. Ideal para aplicações que precisam de consultas complexas, migrações versionadas e performance de banco relacional tradicional.",
       "destaque": "ORM leve com SQL puro e tipagem forte",
-      "stack": ["Node.js 22", "PostgreSQL", "Drizzle ORM", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
+      "stack": ["Node.js 22", "Hono", "PostgreSQL", "Drizzle ORM", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
       "pastas": ["src/dados", "src/servidor"],
       "arquitetura": {
-        "backendRuntime": "Node.js 22",
+        "backendRuntime": "Node.js 22 + Hono",
         "backendBanco": "PostgreSQL",
         "backendORM": "Drizzle ORM",
         "lint": "Biome",
@@ -152,7 +155,7 @@
       "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Biome", "Vitest", "GitHub Actions"],
       "pastas": ["src/dados", "src/servidor"],
       "arquitetura": {
-        "backendRuntime": "Node.js 22",
+        "backendRuntime": "Node.js 22 + Supabase SDK",
         "backendBanco": "PostgreSQL (Supabase)",
         "backendORM": "Supabase Client",
         "lint": "Biome",
@@ -168,7 +171,7 @@
       "stack": ["Node.js 22", "tRPC", "Prisma", "SQLite ou PostgreSQL", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
       "pastas": ["src/servidor", "src/dados"],
       "arquitetura": {
-        "backendRuntime": "Node.js 22",
+        "backendRuntime": "Node.js 22 + tRPC",
         "backendBanco": "SQLite ou PostgreSQL",
         "backendORM": "Prisma",
         "lint": "Biome",
@@ -184,7 +187,7 @@
       "stack": ["Go 1.24", "Fiber", "PostgreSQL", "pgx", "testify", "golangci-lint", "gofumpt", "Docker Compose", "GitHub Actions"],
       "pastas": ["src", "src/handlers", "src/dados", "src/models"],
       "arquitetura": {
-        "backendRuntime": "Go 1.24",
+        "backendRuntime": "Go 1.24 + Fiber",
         "backendBanco": "PostgreSQL",
         "backendORM": "pgx",
         "lint": "golangci-lint",
