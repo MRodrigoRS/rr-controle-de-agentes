@@ -23,6 +23,8 @@ usuário deseja implementar **a partir do repositório existente**.
 - Examine a estrutura de pastas para entender a organização
 - Verifique se há ferramentas de teste, lint, build configuradas
 - Identifique serviços externos (bancos, APIs, gateways de pagamento)
+- Execute a skill `deduzir-presets-do-repositorio.md` em `governanca/skills/`
+  para comparar a stack detectada com os presets da progenitora
 
 ## 3. Preencha o Livro de Arquitetura
 

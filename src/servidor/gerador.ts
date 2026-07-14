@@ -123,6 +123,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "arquivar-sprints.md"), template: "skills/arquivar-sprints.md", ctx },
     { destino: path.join(governancaDir, "skills", "comparar-stack-com-plano.md"), template: "skills/comparar-stack-com-plano.md", ctx },
     { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
+    { destino: path.join(governancaDir, "skills", "deduzir-presets-do-repositorio.md"), template: "skills/deduzir-presets-do-repositorio.md", ctx },
   ];
 
   if (params.regenerar) {
