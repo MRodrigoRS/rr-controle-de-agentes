@@ -68,8 +68,9 @@ Com a stack validada, configure o ambiente:
     {{else}}
     - Crie os arquivos conforme a stack definida
     {{/if}}
-2. Instale as dependências e verifique se o build base funciona.
-3. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
+ 2. Crie os scripts auxiliares seguindo a skill `criar-scripts-auxiliares.md` em `governanca/skills/`.
+ 3. Instale as dependências e verifique se o build base funciona.
+ 4. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
 
 **Não avance sem o build passando.**
 

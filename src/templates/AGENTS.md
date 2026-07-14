@@ -58,6 +58,7 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `CONVENCOES.md` — organização de pastas e arquivos
 - `comparar-stack-com-plano.md` — como comparar a stack do preset com a stack do plano/PRD
 - `contribuir-tecnologias.md` — como adicionar tecnologias ao catálogo
+- `criar-scripts-auxiliares.md` — como criar e manter scripts utilitários de desenvolvimento
 - `manter-contexto.md` — como gerenciar contexto entre sessões
 - `arquivar-sprints.md` — como arquivar sprints concluídas
 
