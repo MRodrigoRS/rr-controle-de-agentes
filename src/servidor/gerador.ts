@@ -117,8 +117,6 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   const arquivos: { destino: string; template: string; ctx: Record<string, unknown> }[] = [
     { destino: caminhoAgents, template: "AGENTS.md", ctx },
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
-    { destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md", ctx },
-    { destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md", ctx },
     { destino: path.join(governancaDir, "skills", "contribuir-tecnologias.md"), template: "skills/contribuir-tecnologias.md", ctx },
     { destino: path.join(governancaDir, "skills", "CONVENCOES.md"), template: "skills/CONVENCOES.md", ctx },
     { destino: path.join(governancaDir, "skills", "manter-contexto.md"), template: "skills/manter-contexto.md", ctx },
@@ -145,6 +143,13 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
       template: "INICIO.md",
       ctx,
     });
+  }
+
+  if (!params.regenerar) {
+    arquivos.push(
+      { destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md", ctx },
+      { destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md", ctx },
+    );
   }
 
   for (const { destino, template, ctx: templateCtx } of arquivos) {
