@@ -117,6 +117,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   const arquivos: { destino: string; template: string; ctx: Record<string, unknown> }[] = [
     { destino: caminhoAgents, template: "AGENTS.md", ctx },
+    { destino: path.join(governancaDir, "PLANO.md"), template: "PLANO.md", ctx },
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
     { destino: path.join(governancaDir, "skills", "contribuir-tecnologias.md"), template: "skills/contribuir-tecnologias.md", ctx },
     { destino: path.join(governancaDir, "skills", "CONVENCOES.md"), template: "skills/CONVENCOES.md", ctx },

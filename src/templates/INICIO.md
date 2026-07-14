@@ -13,7 +13,7 @@ Apresente-se ao usuário e peça que ele descreva a visão do projeto:
 - Qual o público-alvo?
 - Existe algum prazo ou prioridade especial?
 
-> Se o projeto já tiver uma descrição preenchida, leia-a para o usuário e pergunte se está correta ou se falta algo.
+> O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o para o usuário e pergunte se está correto ou se falta algo.
 
 **Só avance após o usuário confirmar a visão.**
 

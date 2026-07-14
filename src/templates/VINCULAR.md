@@ -6,9 +6,9 @@
 
 ## 1. Leia o Plano do Usuário
 
-Se o usuário forneceu uma descrição ou documento de requisitos (`.md`),
-leia-o agora. Ele contém as melhorias, correções ou funcionalidades que o
-usuário deseja implementar **a partir do repositório existente**.
+O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o agora.
+Ele contém as melhorias, correções ou funcionalidades que o usuário deseja
+implementar **a partir do repositório existente**.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `comparar-stack-com-plano.md` em
