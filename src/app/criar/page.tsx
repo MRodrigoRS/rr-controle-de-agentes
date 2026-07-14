@@ -72,6 +72,18 @@ export default function CriarProjeto() {
     if (importTexto.trim()) setDescricao(importTexto);
   }
 
+  async function selecionarPasta() {
+    setSelecionando(true);
+    try {
+      const res = await fetch("/api/selecionar-pasta");
+      const data = await res.json();
+      if (data.caminho) setCaminho(data.caminho);
+    } catch {
+    } finally {
+      setSelecionando(false);
+    }
+  }
+
   useEffect(() => {
     fetch("/api/presets")
       .then((res) => res.json())
@@ -87,18 +99,6 @@ export default function CriarProjeto() {
         setCarregando(false);
       });
   }, []);
-
-  async function selecionarPasta() {
-    setSelecionando(true);
-    try {
-      const res = await fetch("/api/selecionar-pasta");
-      const data = await res.json();
-      if (data.caminho) setCaminho(data.caminho);
-    } catch {
-    } finally {
-      setSelecionando(false);
-    }
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
