@@ -42,6 +42,7 @@ export default function CriarProjeto() {
   const [frontends, setFrontends] = useState<PresetOpcao[]>([]);
   const [backends, setBackends] = useState<PresetOpcao[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [tipo, setTipo] = useState<"novo" | "vincular">("novo");
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [frontend, setFrontend] = useState("");
@@ -103,12 +104,20 @@ export default function CriarProjeto() {
     e.preventDefault();
     setErro("");
     if (!nome.trim()) { setErro("Nome é obrigatório"); return; }
+    if (tipo === "vincular" && !caminho.trim()) { setErro("Caminho do repositório é obrigatório para vincular"); return; }
     setEnviando(true);
     try {
+      const body: Record<string, unknown> = { nome: nome.trim(), descricao, caminho: caminho.trim() || undefined };
+      if (tipo === "vincular") {
+        body.vinculado = true;
+      } else {
+        body.frontend = frontend;
+        body.backend = backend;
+      }
       const res = await fetch("/api/projetos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome: nome.trim(), descricao, frontend, backend, caminho: caminho.trim() || undefined }),
+        body: JSON.stringify(body),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -136,6 +145,26 @@ export default function CriarProjeto() {
       <h1 className="mb-8 text-2xl font-bold text-[#e6edf3]">Criar Projeto</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
+          <h2 className="font-semibold text-[#e6edf3]">Tipo de Projeto</h2>
+          <div className="flex gap-4">
+            <label className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-3 transition flex-1 ${tipo === "novo" ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#0d1117] hover:border-[#8b949e]"}`}>
+              <input type="radio" name="tipo" value="novo" checked={tipo === "novo"} onChange={() => setTipo("novo")} className="accent-[#58a6ff]" />
+              <div>
+                <span className="font-medium text-[#e6edf3]">Novo</span>
+                <p className="text-xs text-[#8b949e]">Cria do zero com presets de stack</p>
+              </div>
+            </label>
+            <label className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-3 transition flex-1 ${tipo === "vincular" ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#0d1117] hover:border-[#8b949e]"}`}>
+              <input type="radio" name="tipo" value="vincular" checked={tipo === "vincular"} onChange={() => setTipo("vincular")} className="accent-[#58a6ff]" />
+              <div>
+                <span className="font-medium text-[#e6edf3]">Vincular</span>
+                <p className="text-xs text-[#8b949e]">Governança para repositório existente</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
         <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
           <button type="button" onClick={() => setImportAberto(!importAberto)}
             className="flex w-full items-center justify-between text-left">
@@ -179,11 +208,11 @@ export default function CriarProjeto() {
               placeholder="O que esse projeto faz?" />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[#8b949e]">Caminho <span className="text-[#8b949e]">(opcional)</span></label>
+            <label className="mb-1 block text-sm font-medium text-[#8b949e]">Caminho {tipo === "vincular" ? <span className="text-[#e94560]">*</span> : <span className="text-[#8b949e]">(opcional)</span>}</label>
             <div className="flex gap-2">
               <input value={caminho} onChange={(e) => setCaminho(e.target.value)}
                 className="flex-1 rounded-lg border border-[#30363d] bg-[#0d1117] px-3 py-2 text-sm text-[#e6edf3] placeholder-[#8b949e] focus:border-[#58a6ff] focus:outline-none"
-                placeholder={`Deixe vazio para criar em ./projetos/${nome || "meu-app"}`} />
+                placeholder={tipo === "vincular" ? "C:\\Users\\...\\meu-repo" : `Deixe vazio para criar em ./projetos/${nome || "meu-app"}`} />
               <button type="button" onClick={selecionarPasta} disabled={selecionando}
                 className="flex items-center gap-1.5 rounded-lg border border-[#30363d] bg-[#21262d] px-3 py-2 text-sm text-[#c9d1d9] hover:bg-[#30363d] disabled:opacity-50 transition whitespace-nowrap">
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -192,36 +221,41 @@ export default function CriarProjeto() {
                 {selecionando ? "Abrindo..." : "Selecionar Pasta"}
               </button>
             </div>
+            {tipo === "vincular" && (
+              <p className="mt-1 text-xs text-[#8b949e]">A stack será documentada pelo agente durante a vinculação. Presets não se aplicam.</p>
+            )}
           </div>
         </div>
 
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
-          <h2 className="font-semibold text-[#e6edf3]">Stack Tecnológica</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {frontends.length > 0 && (
-              <div className="space-y-3">
-                <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
-                {frontends.map((f) => (
-                  <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
-                ))}
-              </div>
-            )}
-            {backends.length > 0 && (
-              <div className="space-y-3">
-                <p className="text-sm font-medium text-[#8b949e]">Backend</p>
-                {backends.map((b) => (
-                  <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
-                ))}
-              </div>
-            )}
+        {tipo === "novo" && (
+          <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
+            <h2 className="font-semibold text-[#e6edf3]">Stack Tecnológica</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {frontends.length > 0 && (
+                <div className="space-y-3">
+                  <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
+                  {frontends.map((f) => (
+                    <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
+                  ))}
+                </div>
+              )}
+              {backends.length > 0 && (
+                <div className="space-y-3">
+                  <p className="text-sm font-medium text-[#8b949e]">Backend</p>
+                  {backends.map((b) => (
+                    <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {erro && <p className="text-sm text-[#e94560]">{erro}</p>}
 
         <button type="submit" disabled={enviando}
           className="rounded-lg bg-[#238636] px-6 py-3 text-sm font-medium text-white hover:bg-[#2ea043] disabled:opacity-50 transition">
-          {enviando ? "Criando..." : "Criar Projeto"}
+          {enviando ? (tipo === "vincular" ? "Vinculando..." : "Criando...") : (tipo === "vincular" ? "Vincular Governança" : "Criar Projeto")}
         </button>
       </form>
     </>

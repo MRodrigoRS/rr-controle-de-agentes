@@ -9,6 +9,7 @@ export interface ProjetoRegistro {
   presetBackend: string;
   caminho: string;
   criadoEm: string;
+  vinculado?: boolean;
 }
 
 const caminhoArquivo = path.resolve("dados/projetos.json");

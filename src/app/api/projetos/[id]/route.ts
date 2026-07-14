@@ -40,6 +40,8 @@ export async function PUT(_request: Request, { params }: { params: Promise<{ id:
     return NextResponse.json({ erro: "Pasta do projeto não encontrada no disco" }, { status: 404 });
   }
 
+  const ehVinculado = projeto.vinculado === true;
+
   try {
     await criarEstruturaGovernanca({
       nome: projeto.nome,
@@ -47,7 +49,7 @@ export async function PUT(_request: Request, { params }: { params: Promise<{ id:
       caminho: caminhoAbs,
       presetFrontend,
       presetBackend,
-      repositorioExistente: false,
+      repositorioExistente: ehVinculado,
       regenerar: true,
     });
 
