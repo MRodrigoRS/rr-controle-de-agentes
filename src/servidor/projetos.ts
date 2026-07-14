@@ -28,3 +28,12 @@ export function registrarProjeto(projeto: ProjetoRegistro) {
   existentes.push(projeto);
   salvarProjetos(existentes);
 }
+
+export function atualizarProjeto(id: string, campos: Partial<ProjetoRegistro>): ProjetoRegistro | null {
+  const projetos = carregarProjetos();
+  const index = projetos.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+  projetos[index] = { ...projetos[index], ...campos };
+  salvarProjetos(projetos);
+  return projetos[index];
+}

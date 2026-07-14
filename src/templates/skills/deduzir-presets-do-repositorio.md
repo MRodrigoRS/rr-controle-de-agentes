@@ -89,6 +89,18 @@ Então atualize o preset na progenitora:
    git add src/servidor/dados/tecnologias.json
    git commit -m "tecnologias novas incluídas a partir de repositorio: <lista>"
    ```
+6. Atualize o registro do projeto na progenitora com os presets detectados:
+
+   ```bash
+   cd {{caminhoRR}}
+   curl -s -X PATCH http://localhost:3000/api/projetos/<ID_DO_PROJETO> \
+     -H "Content-Type: application/json" \
+     -d '{"presetFrontend": "<id do preset frontend>", "presetBackend": "<id do preset backend>"}'
+   ```
+
+   > Substitua `<ID_DO_PROJETO>` pelo id real (consulte o AGENTS.md ou
+   > `dados/projetos.json` na progenitora). Isso faz o card do projeto
+   > exibir os presets corretos em vez de "nenhum / nenhum".
 
 > **Importante:** Só atualize o preset se o repositório for claramente
 > superior ou complementar. Se o repositório usa uma stack mais antiga

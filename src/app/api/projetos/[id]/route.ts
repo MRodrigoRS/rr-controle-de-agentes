@@ -3,7 +3,24 @@ import fs from "fs";
 import path from "path";
 import { obterFrontend, obterBackend } from "@/presets";
 import { criarEstruturaGovernanca } from "@/servidor/gerador";
-import { carregarProjetos, salvarProjetos } from "@/servidor/projetos";
+import { carregarProjetos, salvarProjetos, atualizarProjeto } from "@/servidor/projetos";
+
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const body = await request.json();
+  const { presetFrontend, presetBackend } = body;
+
+  if (!presetFrontend || !presetBackend) {
+    return NextResponse.json({ erro: "presetFrontend e presetBackend são obrigatórios" }, { status: 400 });
+  }
+
+  const projeto = atualizarProjeto(id, { presetFrontend, presetBackend });
+  if (!projeto) {
+    return NextResponse.json({ erro: "Projeto não encontrado" }, { status: 404 });
+  }
+
+  return NextResponse.json(projeto);
+}
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

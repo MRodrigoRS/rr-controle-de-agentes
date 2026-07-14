@@ -47,8 +47,16 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             {projeto.descricao && <DescricaoColapsavel texto={projeto.descricao} />}
           </div>
           <div className="flex items-center gap-3">
-            <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetFrontend}</span>
-            <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetBackend}</span>
+            {projeto.presetFrontend === "nenhum" && projeto.vinculado ? (
+              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill deduzir-presets-do-repositorio.md">frontend: aguardando detecção</span>
+            ) : (
+              <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetFrontend}</span>
+            )}
+            {projeto.presetBackend === "nenhum" && projeto.vinculado ? (
+              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill deduzir-presets-do-repositorio.md">backend: aguardando detecção</span>
+            ) : (
+              <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetBackend}</span>
+            )}
             <BotaoRecriarGovernanca projetoId={projeto.id} />
             <BotaoDeletarProjeto projetoId={projeto.id} projetoNome={projeto.nome} />
           </div>
