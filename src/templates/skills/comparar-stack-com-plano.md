@@ -60,13 +60,24 @@ Se o plano agregou tecnologias ou padrões que merecem entrar nos presets:
    - Ajuste a `descricao` e `destaque` para refletir o escopo ampliado
 3. Após editar os presets, execute a skill `contribuir-tecnologias.md` para
    registrar no catálogo qualquer tecnologia que ainda não conste
-4. Faça commit das alterações nos presets com a mensagem:
-   `"preset(s) <id1>, <id2> melhorado(s): <sumário do que foi adicionado>"`
+4. Faça commit das alterações nos presets no repositório da progenitora:
+
+   ```bash
+   cd {{caminhoRR}}
+   git add src/servidor/dados/presets.json
+   git commit -m "preset(s) <id1>, <id2> melhorado(s): <sumário do que foi adicionado>"
+   ```
 5. Se houver tecnologias novas no catálogo, faça um commit separado:
-   `"tecnologias novas incluídas: <lista das tecnologias>"`
+
+   ```bash
+   cd {{caminhoRR}}
+   git add src/servidor/dados/tecnologias.json
+   git commit -m "tecnologias novas incluídas: <lista das tecnologias>"
+   ```
 
 > **Importante:** São dois commits separados — um para os presets, outro para
 > as tecnologias — para manter o histórico limpo na progenitora.
+> O `{{caminhoRR}}` é a localização da progenitora neste computador.
 
 ### 5. Exemplo Prático
 

@@ -37,6 +37,21 @@ completa de tecnologias já catalogadas, com suas categorias e rankings.
 - **descricao:** Parágrafo explicando o que é, para que serve e em que contexto
   é mais indicado
 
+## Commitar as Alterações
+
+Após adicionar a tecnologia ao `tecnologias.json`, faça o commit no
+repositório da progenitora:
+
+```bash
+cd {{caminhoRR}}
+git add src/servidor/dados/tecnologias.json
+git commit -m "tecnologias novas incluídas: <nome da tecnologia>"
+```
+
+> O caminho `{{caminhoRR}}` é o diretório da progenitora neste mesmo
+> computador. Se o comando acima falhar, navegue manualmente até o diretório
+> da progenitora e execute o commit lá.
+
 ## Nota
 
 A progenitora é um projeto Next.js. Você pode editar o `tecnologias.json`
