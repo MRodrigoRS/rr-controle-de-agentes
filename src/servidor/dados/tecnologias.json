@@ -342,11 +342,88 @@
     "aplicabilidade": "Agendamento e controle de triggers no GAS",
     "descricao": "Serviço integrado do Google Apps Script para gerenciamento de triggers baseados em tempo (time-driven), eventos do Google Sheets (onEdit, onChange, onOpen) e formulários (onFormSubmit). Permite criar, listar e deletar triggers programaticamente. Essencial para processamento em lote e automações periódicas."
   },
-  {
+   {
     "nome": "Mercado Pago",
     "categoria": "Bibliotecas",
     "ranking": 12,
     "aplicabilidade": "Gateway de pagamentos latino-americano com API REST",
     "descricao": "Plataforma de pagamentos líder na América Latina que oferece API REST para processar pagamentos via cartão de crédito, boleto, PIX e carteiras digitais. Inclui suporte a assinaturas recorrentes (Preapproval API), checkout transparente e notificações via webhook (IPN). Integrável ao Google Apps Script via UrlFetchApp."
+  },
+  {
+    "nome": "Stripe",
+    "categoria": "Bibliotecas",
+    "ranking": 13,
+    "aplicabilidade": "Gateway de pagamentos global com checkout e assinaturas",
+    "descricao": "Plataforma de pagamentos online que oferece API REST e SDKs para processar pagamentos via cartão de crédito, débito e carteiras digitais. Inclui suporte a assinaturas recorrentes, checkout hospedado, portal do cliente e webhooks para notificação de eventos."
+  },
+  {
+    "nome": "Baileys",
+    "categoria": "Bibliotecas",
+    "ranking": 14,
+    "aplicabilidade": "Integração WhatsApp Web via WebSocket em Node.js",
+    "descricao": "Biblioteca Node.js que implementa o protocolo WhatsApp Web (WebSocket), permitindo enviar e receber mensagens, gerenciar sessões multi-dispositivo e interagir com contatos e grupos de forma programática. Ideal para chatbots e automações."
+  },
+  {
+    "nome": "dotenv",
+    "categoria": "Bibliotecas",
+    "ranking": 15,
+    "aplicabilidade": "Carregar variáveis de ambiente de arquivos .env",
+    "descricao": "Pacote Node.js que carrega variáveis de ambiente de um arquivo .env para process.env, separando configurações sensíveis do código-fonte. Padrão de facto em projetos JavaScript/TypeScript."
+  },
+  {
+    "nome": "clsx",
+    "categoria": "Bibliotecas",
+    "ranking": 16,
+    "aplicabilidade": "Concatenação condicional de classes CSS",
+    "descricao": "Utilitário leve para construir strings de classes CSS condicionalmente, aceitando strings, arrays e objetos. Essencial para componentes React com Tailwind CSS e shadcn/ui."
+  },
+  {
+    "nome": "Motion",
+    "categoria": "Bibliotecas",
+    "ranking": 17,
+    "aplicabilidade": "Animações declarativas para React e Web",
+    "descricao": "Biblioteca de animações React (sucessora do Framer Motion) que permite criar animações fluidas, transições de página, gestos e layouts animados com uma API declarativa. Suporta SSR e animações baseadas em scroll."
+  },
+  {
+    "nome": "Lucide React",
+    "categoria": "Bibliotecas",
+    "ranking": 18,
+    "aplicabilidade": "Conjunto de ícones SVG para React",
+    "descricao": "Pacote de ícones open-source em formato SVG para React, com mais de 1500 ícones consistentes, leves e personalizáveis por cor e tamanho via props."
+  },
+  {
+    "nome": "Sonner",
+    "categoria": "Bibliotecas",
+    "ranking": 19,
+    "aplicabilidade": "Notificações toast leves e acessíveis para React",
+    "descricao": "Componente de notificações toast (temporárias) para React com suporte a diferentes posições, tipos (sucesso, erro, promise), estilização com Tailwind e acessibilidade WAI-ARIA."
+  },
+  {
+    "nome": "TanStack Table",
+    "categoria": "Bibliotecas",
+    "ranking": 20,
+    "aplicabilidade": "Tabelas headless com ordenação, filtro e paginação",
+    "descricao": "Biblioteca headless (sem UI) para construir tabelas de dados em React com recursos como ordenação por coluna, filtro global, paginação, seleção de linhas e expansão, tudo controlado por estado."
+  },
+  {
+    "nome": "React QR Code",
+    "categoria": "Bibliotecas",
+    "ranking": 21,
+    "aplicabilidade": "Geração de QR codes no navegador com React",
+    "descricao": "Componente React para gerar QR codes dinamicamente no cliente, sem necessidade de chamadas de servidor ou APIs externas. Renderiza via canvas ou SVG com suporte a personalização de cores e tamanho."
+  },
+  {
+    "nome": "Class Variance Authority",
+    "categoria": "Bibliotecas",
+    "ranking": 22,
+    "aplicabilidade": "Gerenciamento de variantes de classe Tailwind",
+    "descricao": "Biblioteca para criar sistemas de design com variantes (ex: tamanhos small/medium/large ou cores primary/secondary) de componentes estilizados com Tailwind CSS, gerando tipagem TypeScript automaticamente."
+  },
+  {
+    "nome": "tailwind-merge",
+    "categoria": "Bibliotecas",
+    "ranking": 23,
+    "aplicabilidade": "Merge inteligente de classes Tailwind sem conflitos",
+    "descricao": "Utilitário que combina múltiplas strings de classes Tailwind resolvendo conflitos de forma inteligente, garantindo que a última classe de mesmo tipo prevaleça. Essencial para componentes com classes dinâmicas."
   }
 ]

@@ -52,7 +52,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     path.join(governancaDir, "sprints", "concluidas"),
     path.join(governancaDir, "livro-arquitetura"),
     path.join(governancaDir, "skills"),
-    path.join(caminhoAbs, "scripts"),
+    path.join(governancaDir, "scripts"),
   ];
 
   const todasPastas = new Set([...pastas, ...presetFrontend.pastas, ...presetBackend.pastas]);

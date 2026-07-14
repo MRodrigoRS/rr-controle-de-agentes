@@ -6,8 +6,7 @@
 
 ## Local
 
-Todos os scripts devem ficar em `scripts/` na raiz do projeto (conforme
-definido em `CONVENCOES.md`).
+Todos os scripts devem ficar em `governanca/scripts/`.
 
 ## Quando Criar
 

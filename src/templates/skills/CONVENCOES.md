@@ -22,9 +22,9 @@ projeto/
 ├── prisma/               ← schema e migrations do Prisma ORM
 ├── public/               ← assets estáticos da extensão de navegador
 ├── testes/               ← testes unitários, integração, e2e
-├── scripts/              ← automações: build, deploy, seed, tarefas
 ├── docs/                 ← documentação extra (diagramas, decisões técnicas)
 ├── governanca/           ← governança do projeto (gerado pela progenitora)
+│   └── scripts/          ← automações: build, deploy, seed, tarefas
 ├── .env.example
 ├── .gitignore
 ├── README.md
@@ -50,9 +50,9 @@ projeto/
 | `prisma/` | Schema e migrations do Prisma ORM |
 | `public/` | Assets estáticos (ícones, manifest da extensão) |
 | `testes/` | Testes organizados por tipo (unit/, integracao/, e2e/) |
-| `scripts/` | Automações: build, deploy, seed, migrações manuais |
 | `docs/` | Documentação extra que não cabe no livro de arquitetura |
-| `governanca/` | Governança do projeto (sprints, skills, arquitetura) |
+| `governanca/` | Governança do projeto (sprints, skills, scripts, arquitetura) |
+| `governanca/scripts/` | Automações: build, deploy, seed, migrações manuais |
 
 ## Notas
 
