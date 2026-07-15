@@ -147,3 +147,14 @@ Crie um arquivo em `governanca/relatorios/` com o seguinte formato:
    itens prioritários)
 3. **Pergunte** se deseja transformar as recomendações em tarefas de sprint
 4. Se autorizado, crie as tarefas correspondentes nas sprints
+5. **Leia as sprints ativas** (arquivos em `governanca/sprints/`, exceto
+   `_template.md`). Para cada achado, identifique:
+   - As sprints futuras preveem telas ou interações que sofreriam do
+     mesmo problema de responsividade?
+   - Se sim, o mesmo padrão inadequado se repetirá nessas sprints?
+6. **Apresente ao usuário** cada sobreposição encontrada:
+   > "A Sprint 4 prevê uma tabela de relatórios. Na auditoria vi que as
+   > tabelas atuais não são roláveis horizontalmente em mobile. Quer que
+   > eu já deixe a tabela da Sprint 4 responsiva?"
+7. Se o usuário autorizar, **edite o arquivo da sprint** correspondente
+   adicionando a tarefa preventiva e seus critérios de aceite

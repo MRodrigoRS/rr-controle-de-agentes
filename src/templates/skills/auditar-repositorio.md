@@ -133,3 +133,14 @@ Crie um arquivo em `governanca/relatorios/` com o seguinte formato:
 3. **Pergunte** se deseja que os itens críticos/altos virem tarefas na
    sprint atual ou em uma sprint específica de correção
 4. Se o usuário autorizar, crie as tarefas correspondentes nas sprints
+5. **Leia as sprints ativas** (arquivos em `governanca/sprints/`, exceto
+   `_template.md`). Para cada achado crítico/alto, identifique:
+   - As sprints futuras preveem funcionalidades similares ao código onde
+     o problema foi encontrado?
+   - Se sim, o mesmo problema provavelmente se repetirá nessas sprints?
+6. **Apresente ao usuário** cada sobreposição encontrada:
+   > "A Sprint 3 prevê um formulário de cadastro. Na auditoria encontrei
+   > que os formulários atuais não têm validação de entrada. Quer que eu
+   > adicione validação como tarefa na Sprint 3 para evitar o mesmo problema?"
+7. Se o usuário autorizar, **edite o arquivo da sprint** correspondente
+   adicionando a tarefa preventiva e seus critérios de aceite
