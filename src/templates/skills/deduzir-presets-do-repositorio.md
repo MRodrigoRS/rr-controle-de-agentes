@@ -55,7 +55,7 @@ Classifique a similaridade:
 |-------|----------|------|
 | **Match alto** (>80% do preset presente) | O repositório segue fielmente o preset | Documente qual preset foi identificado |
 | **Match médio** (50-80%) | Stack próxima mas com diferenças significativas | Avalie se o repo é uma variação do preset |
-| **Match baixo** (<50%) | Stack muito diferente de qualquer preset | Identifique as tecnologias principais e considere criar novo preset |
+| **Match baixo** (<50%) | Stack muito diferente de qualquer preset | Pergunte ao usuário se deseja criar um novo preset na progenitora |
 
 ### 3. Avalie se o Repositório Melhora o Preset
 
@@ -147,5 +147,8 @@ shadcn/ui, Zod, Vitest, e estrutura `src/app/`, `src/componentes/`.
 - **Só adicione** tecnologias que sejam reutilizáveis (não específicas do
   domínio do repositório)
 - Se o repositório tiver uma stack completamente nova que não se encaixa
-  em nenhum preset existente, apenas documente — não crie um preset novo
+  em nenhum preset existente, **pergunte ao usuário** se deseja criar um novo
+  preset na progenitora partindo da stack detectada. Se autorizado, crie o
+  preset seguindo o formato dos existentes em `presets.json`, registre
+  tecnologias inéditas via `contribuir-tecnologias.md`, e faça commit.
 - Prefira sempre atualizar um preset existente a criar um novo

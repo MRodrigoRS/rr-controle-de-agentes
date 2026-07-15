@@ -47,6 +47,7 @@ Pergunte: *"Com a visão completa do plano, posso reescrevê-lo aplicando a stac
 | **Preset é superior** em todos os aspectos relevantes | Reescreva o plano/PRD para refletir a stack do preset. Explique as substituições. |
 | **Plano agrega** tecnologias/padrões que o preset não tem | **Não reescreva o plano ainda.** Primeiro atualize os presets na progenitora para incorporar o que o plano traz de melhor, depois use a skill `contribuir-tecnologias.md` para registrar tecnologias inéditas no catálogo. Só então gere uma nova governança com os presets atualizados. |
 | **Misto** — cada lado tem vantagens | Siga os dois caminhos: (1) atualize os presets com o que o plano agrega, (2) reescreva o plano aplicando o que o preset tem de melhor. |
+| **Stack do plano é totalmente nova** — nenhum match com preset existente | Pergunte ao usuário se deseja criar um novo preset na progenitora partindo da stack do plano. Se autorizado, crie o preset seguindo o formato dos existentes em `presets.json`, registre tecnologias inéditas via `contribuir-tecnologias.md`, e faça commit. |
 
 ### 4. Como Atualizar os Presets
 
@@ -103,3 +104,6 @@ que o preset `gas-sheets` não inclui.
   demais do domínio) podem ficar só no plano, sem entrar no preset
 - **Nunca remova** tecnologias do preset baseadas apenas no plano — o preset
   é a stack padrão para todos os projetos futuros
+- Se o plano trouxer uma stack completamente diferente dos presets
+  existentes, **pergunte ao usuário** se quer transformá-la em um novo
+  preset para projetos futuros
