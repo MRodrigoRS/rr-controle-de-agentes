@@ -425,5 +425,26 @@
     "ranking": 23,
     "aplicabilidade": "Merge inteligente de classes Tailwind sem conflitos",
     "descricao": "Utilitário que combina múltiplas strings de classes Tailwind resolvendo conflitos de forma inteligente, garantindo que a última classe de mesmo tipo prevaleça. Essencial para componentes com classes dinâmicas."
+  },
+  {
+    "nome": "WPF",
+    "categoria": "Frontend",
+    "ranking": 5,
+    "aplicabilidade": "Aplicações desktop nativas Windows com XAML",
+    "descricao": "Windows Presentation Foundation (WPF) é o framework de UI da Microsoft para construir aplicações desktop Windows ricas e interativas usando XAML para layout declarativo, data binding, estilos, templates e animações."
+  },
+  {
+    "nome": "OpenCvSharp4",
+    "categoria": "Bibliotecas",
+    "ranking": 24,
+    "aplicabilidade": "Processamento de imagens e vídeos com OpenCV em .NET",
+    "descricao": "Wrapper .NET da biblioteca OpenCV (Open Source Computer Vision Library) que permite processamento de imagens, detecção de objetos, reconhecimento facial, análise de vídeo e extração de características visuais em aplicações C#."
+  },
+  {
+    "nome": ".NET",
+    "categoria": "Runtimes & Build",
+    "ranking": 8,
+    "aplicabilidade": "Plataforma de desenvolvimento cross-platform da Microsoft",
+    "descricao": "Plataforma de desenvolvimento gratuita, open-source e cross-platform da Microsoft para construir aplicações web, desktop, mobile, cloud, IoT e IA. Suporta múltiplas linguagens (C#, F#, VB.NET) e executa em Windows, Linux e macOS."
   }
 ]
