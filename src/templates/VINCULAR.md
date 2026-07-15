@@ -38,7 +38,58 @@ encontrou. Documente:
 - Estrutura de diretórios existente
 - Decisões arquiteturais aparentes
 
-## 4. Crie as Sprints
+## 3.5 — Limpe a Documentação Legada
+
+O repositório existente pode conter documentação espalhada que a
+governança já substitui. Organize o repositório deixando apenas o
+código e configurações de build.
+
+### O que manter (intocado)
+
+```
+src/              prisma/           public/
+testes/           .env.example      .gitignore
+package.json      tsconfig.json     next.config.*
+Dockerfile        docker-compose.*  .clasp.json
+appsscript.json   go.mod
+*.csproj          Cargo.toml        requirements.txt
+```
+
+### O que adaptar (mova para `governanca/scripts/`)
+
+```
+scripts/          (todo o conteúdo da pasta)
+dev.sh            seed.js           deploy.sh
+*.ps1             *.sh              Makefile
+```
+
+Após mover, registre os scripts disponíveis em `AGENTS.md` nas notas
+persistentes, no formato:
+```
+Scripts disponíveis: governanca/scripts/dev.ps1, governanca/scripts/deploy.sh
+```
+
+### O que remover (governança substitui)
+
+```
+README.md         docs/             CHANGELOG.md
+CONTRIBUTING.md   architecture.md   requirements.md
+wiki/             *.md na raiz      (pergunta ao usuário um por um)
+```
+
+### Execução
+
+1. **Varra o repositório** catalogando o que entra em cada categoria
+2. **Apresente as listas** ao usuário (o que mantém, o que move, o que exclui)
+3. Pergunte: *"Posso prosseguir com a limpeza?"*
+4. Se autorizar:
+   - **Mova scripts** para `governanca/scripts/`
+   - **Exclua** documentação legada com `git rm` (ou delete se não versionado)
+   - **Preserve** código e configurações
+   - **Registre** os scripts movidos nas notas persistentes do `AGENTS.md`
+5. Se o usuário quiser manter algum arquivo específico, respeite
+
+## 5 — Crie as Sprints
 
 As sprints devem **combinar o código existente com o plano do usuário**:
 
@@ -47,7 +98,7 @@ As sprints devem **combinar o código existente com o plano do usuário**:
 - Cada sprint posterior incrementa uma funcionalidade do plano
 - Use o template em `governanca/sprints/_template.md` como base
 
-## 5. Habilite a Governança
+## 6 — Habilite a Governança
 
 Após documentar tudo, apresente ao usuário:
 
