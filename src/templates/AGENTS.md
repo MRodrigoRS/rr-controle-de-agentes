@@ -11,8 +11,10 @@ Só comece a codificar depois de concluir o onboarding com o usuário.
 
 ## Stack Tecnológica
 
+=== INÍCIO DA STACK DETECTADA ===
 - **Frontend:** {{frontend}}
 - **Backend:** {{backend}}
+=== FIM DA STACK DETECTADA ===
 
 ## Cláusulas Pétreas
 

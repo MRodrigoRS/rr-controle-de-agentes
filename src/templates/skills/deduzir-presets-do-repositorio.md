@@ -106,7 +106,24 @@ Então atualize o preset na progenitora:
 > superior ou complementar. Se o repositório usa uma stack mais antiga
 > ou inferior, não altere o preset.
 
-### 4. Exemplo Prático
+### 4. Atualize a Stack no AGENTS.md
+
+Com a stack detectada e os presets definidos, edite o arquivo
+`governanca/AGENTS.md` no repositório do projeto para refletir
+a stack real detectada:
+
+1. Localize o bloco entre `=== INÍCIO DA STACK DETECTADA ===` e
+   `=== FIM DA STACK DETECTADA ===`
+2. Substitua o conteúdo pelas tecnologias identificadas:
+   ```markdown
+   === INÍCIO DA STACK DETECTADA ===
+   - **Frontend:** Next.js 16 (React, Tailwind CSS, shadcn/ui)
+   - **Backend:** Google Apps Script (GmailApp, Sheets, Drive)
+   === FIM DA STACK DETECTADA ===
+   ```
+3. Este bloco é permanente — não será perdido na regeneração da governança
+
+### 5. Exemplo Prático
 
 **Cenário:** Repositório tem `package.json` com Next.js 16, Tailwind CSS 4,
 shadcn/ui, Zod, Vitest, e estrutura `src/app/`, `src/componentes/`.
