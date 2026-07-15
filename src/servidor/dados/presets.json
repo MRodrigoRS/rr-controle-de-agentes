@@ -107,6 +107,21 @@
       }
     },
     {
+      "id": "wpf-desktop",
+      "nome": "WPF Desktop (.NET)",
+      "descricao": "Aplicação desktop Windows nativa com WPF, XAML e C#. Suporta padrão MVVM com INotifyPropertyChanged, data binding, estilos e templates. Ideal para ferramentas de produtividade, visualizadores de mídia, editores e processamento local intensivo.",
+      "destaque": "Desktop Windows nativo com WPF e XAML",
+      "stack": [".NET 8.0", "C#", "WPF", "XAML", "OpenCvSharp4", "Microsoft.Data.Sqlite"],
+      "pastas": ["src", "src/Controls", "src/Models", "src/Services", "src/Utils"],
+      "arquitetura": {
+        "frontendFramework": "WPF (.NET 8.0)",
+        "frontendEstilo": "WPF (XAML)",
+        "frontendTestes": "xUnit (recomendado)",
+        "lint": ".NET Roslyn Analyzers",
+        "formatacao": "dotnet format"
+      }
+    },
+    {
       "id": "nenhum",
       "nome": "Nenhum",
       "descricao": "Sem frontend definido. Apenas backend ou biblioteca. Útil para APIs puras, pacotes npm, workers e microsserviços.",
@@ -212,6 +227,21 @@
         "backendORM": "SpreadsheetApp API",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
+      }
+    },
+    {
+      "id": "sqlite-dotnet",
+      "nome": "SQLite + .NET",
+      "descricao": "Banco SQLite embutido em aplicações .NET via Microsoft.Data.Sqlite. Zero configuração de servidor — o banco é um único arquivo .db. Ideal para ferramentas desktop, MVPs, cache local e cenários onde simplicidade de infraestrutura é prioridade.",
+      "destaque": "Banco local embutido em .NET, zero setup",
+      "stack": [".NET 8.0", "C#", "SQLite", "Microsoft.Data.Sqlite"],
+      "pastas": ["src/Services", "src/Models"],
+      "arquitetura": {
+        "backendRuntime": ".NET 8.0 (in-process)",
+        "backendBanco": "SQLite",
+        "backendORM": "Microsoft.Data.Sqlite (ADO.NET)",
+        "lint": ".NET Roslyn Analyzers",
+        "formatacao": "dotnet format"
       }
     },
     {
