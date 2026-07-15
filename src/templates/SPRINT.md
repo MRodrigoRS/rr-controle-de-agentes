@@ -37,9 +37,18 @@ sessao_atual: 0
 ## Instruções ao Agente
 
 1. Comece sempre perguntando ao usuário se pode iniciar esta sprint.
-2. Execute cada tarefa em ordem e apresente o resultado parcial.
-3. Ao finalizar, marque `status: concluida` no front-matter e atualize `ultima_modificacao`.
-4. Apresente o resumo ao usuário e, se aprovado, faça o commit com a mensagem abaixo.
+2. Execute cada tarefa em ordem.
+3. **Após implementar cada tarefa**, execute a skill `escrever-testes.md`
+   em `governanca/skills/` para criar os testes correspondentes.
+4. **Se um teste falhar**, execute a skill `depurar-erros.md` em
+   `governanca/skills/` para depurar sistematicamente antes de avançar.
+5. **Antes de apresentar o resultado**, execute a skill `revisar-codigo.md`
+   em `governanca/skills/` para fazer a auto-revisão.
+6. Apresente o resultado parcial ao usuário.
+7. Ao finalizar, marque `status: concluida` no front-matter e atualize
+   `ultima_modificacao`.
+8. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
+   mensagem abaixo.
 
 ---
 

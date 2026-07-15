@@ -10,6 +10,9 @@ O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o agora.
 Ele contém as melhorias, correções ou funcionalidades que o usuário deseja
 implementar **a partir do repositório existente**.
 
+> Agora execute a skill `criar-prd.md` em `governanca/skills/` para transformar
+> o plano em um PRD estruturado com requisitos, critérios de aceite e escopo.
+
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `comparar-stack-com-plano.md` em
 > `governanca/skills/`. Ela orienta a comparação bidirecional entre a stack

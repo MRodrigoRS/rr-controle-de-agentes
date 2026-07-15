@@ -13,9 +13,13 @@ Apresente-se ao usuário e peça que ele descreva a visão do projeto:
 - Qual o público-alvo?
 - Existe algum prazo ou prioridade especial?
 
-> O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o para o usuário e pergunte se está correto ou se falta algo.
+> O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o para o
+> usuário e pergunte se está correto ou se falta algo.
 
 **Só avance após o usuário confirmar a visão.**
+
+> Agora execute a skill `criar-prd.md` em `governanca/skills/` para transformar
+> o plano em um PRD estruturado com requisitos, critérios de aceite e escopo.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `comparar-stack-com-plano.md` em

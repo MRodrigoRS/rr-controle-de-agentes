@@ -64,5 +64,9 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `arquivar-sprints.md` — como arquivar sprints concluídas
 - `auditar-repositorio.md` — como auditar o repositório em busca de vulnerabilidades e más práticas
 - `auditar-responsividade.md` — como auditar a compatibilidade com dispositivos móveis
+- `criar-prd.md` — como transformar o plano do projeto em um PRD estruturado
+- `escrever-testes.md` — como criar e manter testes adequados à stack
+- `revisar-codigo.md` — como revisar o código antes de apresentar ao usuário
+- `depurar-erros.md` — como depurar erros de forma sistemática
 
 ---
