@@ -22,6 +22,8 @@
    ```
    === INÍCIO DAS NOTAS PERSISTENTES DO AGENTE ===
 
+   Sprint ativa: 02-importacao.md
+
    Sessão 3 (13/07):
    - Implementei a autenticação JWT
    - Decisão: usar bcrypt em vez de argon2 por simplicidade
@@ -31,13 +33,19 @@
    === FIM DAS NOTAS PERSISTENTES DO AGENTE ===
    ```
 
+   A primeira linha das notas (após a marca de início) deve sempre conter a
+   **sprint ativa atual** no formato `Sprint ativa: NN-titulo.md`.
+   Isso permite que qualquer agente, em qualquer sessão, saiba exatamente
+   qual sprint está em andamento sem precisar escanear todos os arquivos.
+
 4. **Arquive sprints concluídas** (veja `arquivar-sprints.md`)
 
 ## Ao Iniciar uma Nova Sessão
 
 1. Leia o `AGENTS.md` — foque nas notas persistentes
-2. Abra a sprint atual — o front-matter diz onde está
-3. Procure por `← estou aqui` para retomar exatamente
+2. Identifique a **sprint ativa** pela linha `Sprint ativa:` nas notas
+3. Abra o arquivo da sprint — o front-matter diz onde está
+4. Procure por `← estou aqui` para retomar exatamente
 
 ## Formato do Resumo de Sessão
 

@@ -53,6 +53,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     path.join(governancaDir, "livro-arquitetura"),
     path.join(governancaDir, "skills"),
     path.join(governancaDir, "scripts"),
+    path.join(governancaDir, "relatorios"),
   ];
 
   const todasPastas = new Set([...pastas, ...presetFrontend.pastas, ...presetBackend.pastas]);
@@ -126,6 +127,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "comparar-stack-com-plano.md"), template: "skills/comparar-stack-com-plano.md", ctx },
     { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
     { destino: path.join(governancaDir, "skills", "deduzir-presets-do-repositorio.md"), template: "skills/deduzir-presets-do-repositorio.md", ctx },
+    { destino: path.join(governancaDir, "skills", "auditar-repositorio.md"), template: "skills/auditar-repositorio.md", ctx },
   ];
 
   if (params.regenerar) {

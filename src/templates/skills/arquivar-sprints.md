@@ -28,6 +28,11 @@ mv governanca/sprints/01-fundacao.md governanca/sprints/concluidas/01-fundacao.m
   ```
 - **Mantenha o template** `_template.md` sempre em `governanca/sprints/`
 - **Não arquive** sprints que ainda têm etapas pendentes
+- **Atualize as notas persistentes** em `AGENTS.md`:
+  - Se a sprint arquivada era a ativa, **troque a linha `Sprint ativa:`** para apontar
+    para a próxima sprint pendente, ou remova-a se não houver mais nenhuma
+  - Se uma sprint substituta foi criada (ex: após aprovação do usuário),
+    atualize para o nome dela
 
 ## Depois da Última Sprint
 
@@ -36,7 +41,8 @@ Se não houver mais sprints ativas em `governanca/sprints/` (exceto `_template.m
 1. **Pergunte ao usuário** se deseja continuar o desenvolvimento com novas sprints
 2. Se sim, **proponha uma nova sequência** baseada no que foi entregue e no que falta
 3. **Crie cada nova sprint** copiando `_template.md` para `NN-titulo.md` (ex: `03-nova-funcionalidade.md`, `04-outra-funcionalidade.md`)
-4. **Valide a ordem e o escopo** com o usuário antes de começar a primeira
+4. **Atualize as notas persistentes** em `AGENTS.md` com a nova sprint ativa
+5. **Valide a ordem e o escopo** com o usuário antes de começar a primeira
 
 ## Benefícios
 

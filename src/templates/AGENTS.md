@@ -62,5 +62,6 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `deduzir-presets-do-repositorio.md` — como deduzir presets a partir da stack de um repositório existente
 - `manter-contexto.md` — como gerenciar contexto entre sessões
 - `arquivar-sprints.md` — como arquivar sprints concluídas
+- `auditar-repositorio.md` — como auditar o repositório em busca de vulnerabilidades e más práticas
 
 ---
