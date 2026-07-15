@@ -128,6 +128,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
     { destino: path.join(governancaDir, "skills", "deduzir-presets-do-repositorio.md"), template: "skills/deduzir-presets-do-repositorio.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-repositorio.md"), template: "skills/auditar-repositorio.md", ctx },
+    { destino: path.join(governancaDir, "skills", "auditar-responsividade.md"), template: "skills/auditar-responsividade.md", ctx },
   ];
 
   if (params.regenerar) {

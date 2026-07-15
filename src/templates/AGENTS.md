@@ -63,5 +63,6 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `manter-contexto.md` — como gerenciar contexto entre sessões
 - `arquivar-sprints.md` — como arquivar sprints concluídas
 - `auditar-repositorio.md` — como auditar o repositório em busca de vulnerabilidades e más práticas
+- `auditar-responsividade.md` — como auditar a compatibilidade com dispositivos móveis
 
 ---
