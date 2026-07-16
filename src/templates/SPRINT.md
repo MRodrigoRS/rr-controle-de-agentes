@@ -44,10 +44,13 @@ sessao_atual: 0
    `governanca/skills/` para depurar sistematicamente antes de avançar.
 5. **Antes de apresentar o resultado**, execute a skill `revisar-codigo.md`
    em `governanca/skills/` para fazer a auto-revisão.
-6. Apresente o resultado parcial ao usuário.
-7. Ao finalizar, marque `status: concluida` no front-matter e atualize
+6. **Antes de finalizar a sprint**, execute a skill `mapear-logica-do-sistema.md`
+   em `governanca/skills/` para atualizar `livro-arquitetura/03-logica-do-sistema.md`
+   com a lógica implementada.
+7. Apresente o resultado parcial ao usuário.
+8. Ao finalizar, marque `status: concluida` no front-matter e atualize
    `ultima_modificacao`.
-8. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
+9. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
    mensagem abaixo.
 
 ---

@@ -132,5 +132,6 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `escrever-testes.md` — como criar e manter testes adequados à stack
 - `revisar-codigo.md` — como revisar o código antes de apresentar ao usuário
 - `depurar-erros.md` — como depurar erros de forma sistemática
+- `mapear-logica-do-sistema.md` — como documentar regras de negócio, fórmulas e fluxos do sistema
 
 ---

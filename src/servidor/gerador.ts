@@ -147,6 +147,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "escrever-testes.md"), template: "skills/escrever-testes.md", ctx },
     { destino: path.join(governancaDir, "skills", "revisar-codigo.md"), template: "skills/revisar-codigo.md", ctx },
     { destino: path.join(governancaDir, "skills", "depurar-erros.md"), template: "skills/depurar-erros.md", ctx },
+    { destino: path.join(governancaDir, "skills", "mapear-logica-do-sistema.md"), template: "skills/mapear-logica-do-sistema.md", ctx },
   ];
 
   arquivos.push({ destino: path.join(governancaDir, "PRD.md"), template: "PRD.md", ctx });
@@ -175,6 +176,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     arquivos.push(
       { destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md", ctx },
       { destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md", ctx },
+      { destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md", ctx },
     );
   }
 
