@@ -133,5 +133,6 @@ Consulte `governanca/skills/` para skills que acompanham este projeto:
 - `revisar-codigo.md` — como revisar o código antes de apresentar ao usuário
 - `depurar-erros.md` — como depurar erros de forma sistemática
 - `mapear-logica-do-sistema.md` — como documentar regras de negócio, fórmulas e fluxos do sistema
+- `superar-codigo.md` — como identificar oportunidades de melhoria além da correção de falhas
 
 ---
