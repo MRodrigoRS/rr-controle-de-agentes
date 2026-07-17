@@ -16,8 +16,6 @@ interface CriarProjetoParams {
 
 const MARCA_INICIO = "=== INÍCIO DAS NOTAS PERSISTENTES DO AGENTE ===";
 const MARCA_FIM = "=== FIM DAS NOTAS PERSISTENTES DO AGENTE ===";
-const MARCA_STACK_INICIO = "=== INÍCIO DA STACK DETECTADA ===";
-const MARCA_STACK_FIM = "=== FIM DA STACK DETECTADA ===";
 
 function extrairNotasPersistentes(caminhoAgents: string): string {
   if (!fs.existsSync(caminhoAgents)) return "";
@@ -35,17 +33,6 @@ function montarSecaoNotas(notas: string): string {
     return `\n${MARCA_INICIO}\n${notas}\n${MARCA_FIM}\n`;
   }
   return `\n${MARCA_INICIO}\n\nUse este espaço para anotações que devem persistir entre sessões:\ndecisões, observações, lembretes. Esta seção nunca é sobrescrita.\n\n(escreva suas notas abaixo)\n\n${MARCA_FIM}\n`;
-}
-
-function extrairStackPersistente(caminhoAgents: string): string | null {
-  if (!fs.existsSync(caminhoAgents)) return null;
-  const conteudo = fs.readFileSync(caminhoAgents, "utf-8");
-  const inicio = conteudo.indexOf(MARCA_STACK_INICIO);
-  const fim = conteudo.indexOf(MARCA_STACK_FIM);
-  if (inicio !== -1 && fim !== -1 && fim > inicio) {
-    return conteudo.slice(inicio, fim + MARCA_STACK_FIM.length);
-  }
-  return null;
 }
 
 export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
@@ -128,7 +115,6 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   const caminhoAgents = path.join(governancaDir, "AGENTS.md");
   const notasExistentes = extrairNotasPersistentes(caminhoAgents);
-  const stackExistente = extrairStackPersistente(caminhoAgents);
 
   const arquivos: { destino: string; template: string; ctx: Record<string, unknown> }[] = [
     { destino: caminhoAgents, template: "AGENTS.md", ctx },
@@ -185,16 +171,6 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     let conteudo = processarTemplate(template, templateCtx);
     if (template === "AGENTS.md") {
       conteudo += montarSecaoNotas(notasExistentes);
-      // Preserva o bloco de stack se foi editado manualmente pelo agente
-      if (stackExistente) {
-        const ini = conteudo.indexOf(MARCA_STACK_INICIO);
-        const fim = conteudo.indexOf(MARCA_STACK_FIM);
-        if (ini !== -1 && fim !== -1 && fim > ini) {
-          const antes = conteudo.slice(0, ini);
-          const depois = conteudo.slice(fim + MARCA_STACK_FIM.length);
-          conteudo = antes + stackExistente + depois;
-        }
-      }
     }
     fs.writeFileSync(destino, conteudo, "utf-8");
   }

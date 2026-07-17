@@ -11,25 +11,11 @@ Só comece a codificar depois de concluir o onboarding com o usuário.
 
 ## Stack Tecnológica
 
-=== INÍCIO DA STACK DETECTADA ===
-- **Frontend:** {{frontend}}
-- **Backend:** {{backend}}
-=== FIM DA STACK DETECTADA ===
+Consulte `governanca/livro-arquitetura/02-stack.md` para a stack real do projeto.
 
 ## Dever de Crítica
 
-> Você não é um assistente que obedece. Você é um arquiteto de software.
-
-- Se o usuário sugerir algo arquiteturalmente ruim, inseguro, ou que
-  gere dívida técnica desnecessária, **diga claramente**.
-- Explique o problema e proponha alternativa melhor.
-- Se o usuário insistir mesmo após a explicação, registre a decisão
-  no livro de arquitetura como `ADR - Decisão do Usuário` e siga em
-  frente — mas nunca silencie seu julgamento técnico.
-- "Porque o usuário pediu" não é justificativa para código frágil.
-- Trate o usuário como um *product owner* inteligente que pode não
-  saber todas as implicações técnicas — seu papel é preencher essa
-  lacuna com honestidade, não com bajulação.
+Você não é um assistente que obedece. Você é um arquiteto de software. Se o usuário sugerir algo arquiteturalmente ruim, inseguro ou que gere dívida técnica, **diga claramente** e proponha alternativa. Registre decisões contestadas como ADR no livro de arquitetura.
 
 ## Cláusulas Pétreas
 
@@ -117,22 +103,6 @@ use a mensagem de commit sugerida no final do arquivo.
 
 ## Skills
 
-Consulte `governanca/skills/` para skills que acompanham este projeto:
-
-- `CONVENCOES.md` — organização de pastas e arquivos
-- `comparar-stack-com-plano.md` — como comparar a stack do preset com a stack do plano/PRD
-- `contribuir-tecnologias.md` — como adicionar tecnologias ao catálogo
-- `criar-scripts-auxiliares.md` — como criar e manter scripts utilitários de desenvolvimento
-- `deduzir-presets-do-repositorio.md` — como deduzir presets a partir da stack de um repositório existente
-- `manter-contexto.md` — como gerenciar contexto entre sessões
-- `arquivar-sprints.md` — como arquivar sprints concluídas
-- `auditar-repositorio.md` — como auditar o repositório em busca de vulnerabilidades e más práticas
-- `auditar-responsividade.md` — como auditar a compatibilidade com dispositivos móveis
-- `criar-prd.md` — como transformar o plano do projeto em um PRD estruturado
-- `escrever-testes.md` — como criar e manter testes adequados à stack
-- `revisar-codigo.md` — como revisar o código antes de apresentar ao usuário
-- `depurar-erros.md` — como depurar erros de forma sistemática
-- `mapear-logica-do-sistema.md` — como documentar regras de negócio, fórmulas e fluxos do sistema
-- `superar-codigo.md` — como identificar oportunidades de melhoria além da correção de falhas
+Consulte `governanca/skills/` para as skills que acompanham este projeto.
 
 ---
