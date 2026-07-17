@@ -46,6 +46,7 @@
 2. Identifique a **sprint ativa** pela linha `Sprint ativa:` nas notas
 3. Abra o arquivo da sprint — o front-matter diz onde está
 4. Procure por `← estou aqui` para retomar exatamente
+5. **Pode notas obsoletas:** examine cada nota existente. Se uma nota referencia um relatório, débito técnico ou tarefa que já foi resolvido, remova-a. Mantenha apenas notas ainda relevantes para o trabalho atual.
 
 ## Formato do Resumo de Sessão
 

@@ -32,7 +32,7 @@ function montarSecaoNotas(notas: string): string {
   if (notas) {
     return `\n${MARCA_INICIO}\n${notas}\n${MARCA_FIM}\n`;
   }
-  return `\n${MARCA_INICIO}\n\nUse este espaço para anotações que devem persistir entre sessões:\ndecisões, observações, lembretes. Esta seção nunca é sobrescrita.\n\n(escreva suas notas abaixo)\n\n${MARCA_FIM}\n`;
+  return `\n${MARCA_INICIO}\n\nUse este espaço para anotações que devem persistir entre sessões:\ndecisões, observações, lembretes. Esta seção nunca é sobrescrita,\nmas anotações obsoletas devem ser removidas quando o débito\nassociado for resolvido.\n\n(escreva suas notas abaixo)\n\n${MARCA_FIM}\n`;
 }
 
 export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
