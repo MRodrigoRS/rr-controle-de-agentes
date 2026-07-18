@@ -38,12 +38,24 @@ sessao_atual: 0
 
 1. Comece sempre perguntando ao usuário se pode iniciar esta sprint.
 2. Execute cada tarefa em ordem.
-3. **Após implementar cada tarefa**, execute a skill `escrever-testes.md`
-   em `governanca/skills/` para criar os testes correspondentes.
-4. **Se um teste falhar**, execute a skill `depurar-erros.md` em
-   `governanca/skills/` para depurar sistematicamente antes de avançar.
-5. **Antes de apresentar o resultado**, execute a skill `revisar-codigo.md`
-   em `governanca/skills/` para fazer a auto-revisão.
+3. **Testes:** após implementar cada tarefa, escreva os testes
+   correspondentes. Consulte `escrever-testes.md` em `governanca/skills/`
+   se precisar do padrão de ferramentas e cobertura por stack.
+4. **Se um teste falhar**, depure seguindo este fluxo:
+   - Reproduza o erro e capture a mensagem completa
+   - Entenda o erro: o que era esperado vs. o que aconteceu?
+   - Isole a causa (busca binária, logs, stack trace)
+   - Levante 1-3 hipóteses
+   - Teste a mais provável (uma mudança de cada vez)
+   - Corrija e verifique (todos os testes passando)
+   - Previna regressão: escreva um teste que reproduza o bug
+5. **Antes de apresentar o resultado**, percorra este checklist:
+   - [ ] Funcionalidade atende o requisito (sem extras)
+   - [ ] Edge cases: vazio, nulo, limites, concorrência, falha externa
+   - [ ] Segurança: inputs validados, sem credenciais hardcoded
+   - [ ] Código: sem código morto, duplicado, nomes claros, sem `any`
+   - [ ] Manutenibilidade: lógica no lugar certo, sem constantes mágicas
+   - [ ] Testes passando
 6. **Antes de finalizar a sprint**, execute a skill `mapear-logica-do-sistema.md`
    em `governanca/skills/` para atualizar `livro-arquitetura/03-logica-do-sistema.md`
    com a lógica implementada.
@@ -54,7 +66,9 @@ sessao_atual: 0
    seção `## Aprendizados e Decisões` abaixo com os aprendizados técnicos
    importantes e as decisões de design tomadas ou validadas nesta sprint.
    Isso garante rastreabilidade para sprints futuras.
-10. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
+10. **Arquive a sprint concluída** seguindo as instruções em
+    `## Como Arquivar` abaixo.
+11. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
     mensagem abaixo.
 
 ---
@@ -65,6 +79,28 @@ sessao_atual: 0
 ```
 sprint-{{numero}}: {{sugestaoCommit}}
 ```
+
+---
+
+## Como Arquivar
+
+Após aprovação do usuário e commit, arquive a sprint:
+
+```bash
+mkdir -p governanca/sprints/concluidas
+mv governanca/sprints/XX-titulo.md governanca/sprints/concluidas/XX-titulo.md
+```
+
+### Regras
+
+- **Nunca delete** uma sprint — apenas mova para `concluidas/`
+- **Atualize o front-matter** antes de arquivar (`status: concluido`)
+- **Mantenha o template** `_template.md` sempre em `sprints/`
+- **Atualize as notas persistentes** do `AGENTS.md`:
+  - Se a sprint arquivada era a ativa, troque `Sprint ativa:` para a próxima
+  - Se não houver mais sprints, remova a linha
+- **Se for a última sprint**, pergunte ao usuário se deseja continuar com
+  novas sprints; se sim, proponha e crie a sequência
 
 ---
 

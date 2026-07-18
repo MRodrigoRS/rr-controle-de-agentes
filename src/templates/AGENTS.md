@@ -113,4 +113,27 @@ use a mensagem de commit sugerida no final do arquivo.
 
 Consulte `governanca/skills/` para as skills que acompanham este projeto.
 
+## Gestão de Contexto
+
+### Ao Final de Cada Sessão
+
+1. Atualize o front-matter da sprint (`status`, `ultima_modificacao`, `sessao_atual`)
+2. Marque onde parou com `← estou aqui` no corpo da sprint
+3. Escreva o resumo da sessão nas notas persistentes (seção abaixo) no formato:
+   ```
+   Sessão N (data):
+   - O que foi feito
+   - Decisões tomadas
+   - Próximos passos
+   - Bloqueios (se houver)
+   ```
+4. Arquive sprints concluídas (veja template da sprint em `sprints/_template.md`)
+
+### Ao Iniciar uma Nova Sessão
+
+1. Leia as notas persistentes abaixo
+2. Identifique a sprint ativa pela linha `Sprint ativa:` nas notas
+3. Abra o arquivo da sprint e procure por `← estou aqui`
+4. Pode notas obsoletas: remova notas que referenciam tarefas ou débitos já resolvidos
+
 ---

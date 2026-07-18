@@ -88,10 +88,25 @@ que o preset `gas-sheets` não inclui.
 **Ação:**
 1. Adicionar ao `stack` do `gas-sheets`: `"GmailApp"`, `"DocumentApp"`,
    `"UrlFetchApp"`, `"ScriptApp"`
-2. Adicionar `"OAuth2"` se aplicável
-3. Rodar `contribuir-tecnologias.md` para registrar qualquer tecnologia
-   inédita no `tecnologias.json`
-4. Informar o usuário que os presets foram atualizados e oferecer regenerar
+ 2. Adicionar `"OAuth2"` se aplicável
+ 3. Para registrar tecnologia inédita, edite `{{caminhoRR}}src\servidor\dados\tecnologias.json`
+    seguindo o formato:
+    ```json
+    {
+      "nome": "NomeDaTecnologia",
+      "categoria": "categoria_existente",
+      "ranking": 1,
+      "aplicabilidade": "Breve descrição do caso de uso",
+      "descricao": "Descrição completa explicando o que é e para que serve"
+    }
+    ```
+    Depois faça commit na progenitora:
+    ```bash
+    cd {{caminhoRR}}
+    git add src/servidor/dados/tecnologias.json
+    git commit -m "tecnologias novas incluídas: <nome>"
+    ```
+ 4. Informar o usuário que os presets foram atualizados e oferecer regenerar
    a governança ou seguir com a atualizada
 
 ## Regras

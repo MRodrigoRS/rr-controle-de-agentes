@@ -10,8 +10,11 @@ O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o agora.
 Ele contém as melhorias, correções ou funcionalidades que o usuário deseja
 implementar **a partir do repositório existente**.
 
-> Agora execute a skill `criar-prd.md` em `governanca/skills/` para transformar
-> o plano em um PRD estruturado com requisitos, critérios de aceite e escopo.
+> **Crie o PRD:** pergunte ao usuário se deseja um PRD estruturado. Se sim,
+> analise o plano e extraia: resumo executivo, requisitos (tabela ID/descrição/
+> prioridade), critérios de aceite, fora de escopo. Crie `governanca/PRD.md`
+> usando o template em `governanca/PRD.md`. Apresente para validação e registre
+> nas notas persistentes do `AGENTS.md`.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `comparar-stack-com-plano.md` em
