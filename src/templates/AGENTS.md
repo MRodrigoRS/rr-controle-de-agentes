@@ -76,6 +76,14 @@ Regras técnicas que todo código deve seguir:
   `> Tem certeza que deseja excluir "Cliente XYZ"? Esta ação não pode ser desfeita.`
 - Use modal de confirmação (não `confirm()` nativo).
 
+### Consistência Visual
+
+- Sempre use componentes compartilhados para UI (Button, Input, Card, Modal).
+- Se notar um elemento com estilos inline, classes avulsas ou variações de
+  padding/cor/borda entre telas, extraia um componente imediatamente.
+- A estética deve ser uniforme em todas as páginas — contraste, espaçamento,
+  cantos arredondados e hover states devem seguir o mesmo padrão.
+
 ## Arquitetura
 
 Consulte `governanca/livro-arquitetura/` para visão geral da arquitetura do projeto.
