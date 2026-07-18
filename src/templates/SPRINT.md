@@ -50,8 +50,12 @@ sessao_atual: 0
 7. Apresente o resultado parcial ao usuário.
 8. Ao finalizar, marque `status: concluida` no front-matter e atualize
    `ultima_modificacao`.
-9. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
-   mensagem abaixo.
+9. **Documente aprendizados e decisões:** antes de finalizar, preencha a
+   seção `## Aprendizados e Decisões` abaixo com os aprendizados técnicos
+   importantes e as decisões de design tomadas ou validadas nesta sprint.
+   Isso garante rastreabilidade para sprints futuras.
+10. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
+    mensagem abaixo.
 
 ---
 
@@ -61,5 +65,23 @@ sessao_atual: 0
 ```
 sprint-{{numero}}: {{sugestaoCommit}}
 ```
+
+---
+
+## Aprendizados e Decisões
+
+*Preenchido pelo agente ao finalizar a sprint.*
+
+### Aprendizados Técnicos
+
+- *Liste descobertas importantes sobre APIs, bibliotecas, ferramentas ou
+  comportamento do sistema que valem para sprints futuras.*
+
+### Decisões de Design Confirmadas
+
+- *Liste decisões arquiteturais ou de implementação que foram tomadas ou
+  validadas nesta sprint.*
+
+---
 
 *Template gerado pelo RR Controle de Agentes.*
