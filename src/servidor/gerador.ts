@@ -35,6 +35,16 @@ function montarSecaoNotas(notas: string): string {
   return `\n${MARCA_INICIO}\n\nUse este espaço para anotações que devem persistir entre sessões:\ndecisões, observações, lembretes. Esta seção nunca é sobrescrita,\nmas anotações obsoletas devem ser removidas quando o débito\nassociado for resolvido.\n\n(escreva suas notas abaixo)\n\n${MARCA_FIM}\n`;
 }
 
+function limparArquivosObsoletos(owned: Set<string>, dir: string) {
+  if (!fs.existsSync(dir)) return;
+  for (const arquivo of fs.readdirSync(dir)) {
+    const caminho = path.join(dir, arquivo);
+    if (!owned.has(caminho) && arquivo.endsWith(".md") && fs.statSync(caminho).isFile()) {
+      fs.unlinkSync(caminho);
+    }
+  }
+}
+
 export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   const { nome, descricao, caminho, presetFrontend, presetBackend, repositorioExistente } = params;
   const caminhoAbs = path.resolve(caminho);
@@ -173,7 +183,12 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   }
 
   const catalogoMd = gerarCatalogoMarkdown();
-  fs.writeFileSync(path.join(governancaDir, "skills", "CATALOGO_TECNOLOGIAS.md"), catalogoMd, "utf-8");
+  const catalogoPath = path.join(governancaDir, "skills", "CATALOGO_TECNOLOGIAS.md");
+  fs.writeFileSync(catalogoPath, catalogoMd, "utf-8");
+
+  const ownedFiles = new Set(arquivos.map(a => a.destino));
+  ownedFiles.add(catalogoPath);
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "skills"));
 
   return { sucesso: true, caminho: caminhoAbs };
 }
