@@ -86,59 +86,20 @@
 - **Organização de arquivos** — arquivos com 500+ linhas que misturam
   tipos, lógica, UI e estilos
 
-## Formato do Relatório
+## Saída
 
-Crie um arquivo em `governanca/relatorios/` com o formato abaixo:
+Gere o relatório em `governanca/relatorios/auditoria-superacao.md`
+usando o template em `governanca/relatorios/_template.md`.
 
-```markdown
-# Oportunidades de Superação — {{data}}
+- Use `[BLOQ]` para código que representa risco real (ex: queries N+1
+  em produção que degradam performance visivelmente)
+- Use `[REC]` para oportunidades de alto impacto e baixo esforço
+- Use `[SUG]` para modernização, padrões emergentes e melhorias de
+  legibilidade que podem esperar
 
-**Projeto:** {{nomeProjeto}}
-
----
-
-## Resumo
-
-- Oportunidades encontradas: X
-- Alto impacto: X
-- Baixo esforço: X
-
----
-
-## Extração
-
-### [ALTO] Componente de tabela repetido
-
-- **Onde:** `src/pages/clientes.tsx:42`, `src/pages/pedidos.tsx:78`
-- **Problema:** mesma estrutura de tabela com colunas diferentes renderizada
-  manualmente em cada página
-- **Sugestão:** extrair `<TabelaGenerica colunas={...} dados={...} />`
-- **Impacto:** alto — elimina duplicação, centraliza manutenção
-- **Esforço:** baixo
-- **Tags:** duplicação, componente, organização
-
----
-
-## Simplificação
-
-...
-
-## Performance
-
-...
-
-## Modernização
-
-...
-
-## Testabilidade
-
-...
-
-## Legibilidade
-
-...
-```
+Ao preencher a seção `## Sprint Sugerida`, crie uma sprint com etapas
+por severidade. Para cada oportunidade, inclua a ação concreta e o
+arquivo afetado.
 
 ## Após Gerar o Relatório
 

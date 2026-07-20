@@ -65,65 +65,18 @@ Examine arquivo por arquivo em busca de:
 - **Nomenclatura inconsistente** — `camelCase`, `snake_case` e `kebab-case`
   misturados sem critério no mesmo contexto
 
-## Formato do Relatório
+## Saída
 
-Crie um arquivo em `governanca/relatorios/` com o seguinte formato:
+Gere o relatório em `governanca/relatorios/auditoria-repositorio.md`
+usando o template em `governanca/relatorios/_template.md`.
 
-```markdown
-# Auditoria: {{data}}
+- Use `[BLOQ]` para vulnerabilidades de segurança críticas ou más práticas
+  com risco de dados/estabilidade
+- Use `[REC]` para más práticas e inconsistências de alto impacto
+- Use `[SUG]` para inconsistências menores e melhorias de documentação
 
-**Escopo:** repositório completo (ou específico, se parcial)
-
----
-
-## Resumo
-
-- **Segurança:** X críticos, Y altos, Z médios, W baixos
-- **Más Práticas:** X encontradas
-- **Inconsistências:** X encontradas
-
----
-
-## Segurança
-
-### [CRÍTICO] Título do problema
-
-- **Arquivo:** `caminho/para/arquivo.ts:42`
-- **Problema:** descrição clara do que foi encontrado
-- **Impacto:** o que um atacante poderia fazer
-- **Correção sugerida:** como resolver
-- **Prioridade:** crítica / alta / média / baixa
-
-### [ALTA] Título do problema
-...
-
----
-
-## Más Práticas
-
-### Código morto / Duplicação / Nomes confusos
-
-- **Arquivo:** `caminho/para/arquivo.ts`
-- **Problema:** descrição
-- **Sugestão:** como refatorar
-
----
-
-## Inconsistências
-
-### Doc vs Código / Configuração conflitante
-
-- **Onde:** `caminho/para/arquivo.ts` vs `governanca/livro-arquitetura/01-visao-geral.md`
-- **Problema:** descrição da divergência
-- **Correção sugerida:** alinhar doc ao código, ou código à doc
-
----
-
-## Notas
-
-- Itens marcados como críticos/altos devem ser tratados na próxima sprint
-- Reexecute esta auditoria após as correções para verificar
-```
+Ao preencher a seção `## Sprint Sugerida`, crie uma sprint pronta para
+copiar com etapas por severidade. Cada achado deve virar uma tarefa.
 
 ## Após Gerar o Relatório
 

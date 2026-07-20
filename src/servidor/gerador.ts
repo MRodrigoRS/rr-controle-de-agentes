@@ -141,6 +141,8 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "superar-codigo.md"), template: "skills/superar-codigo.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-consistencia-visual.md"), template: "skills/auditar-consistencia-visual.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-prontidao-producao.md"), template: "skills/auditar-prontidao-producao.md", ctx },
+    { destino: path.join(governancaDir, "skills", "FAXINA-COMPLETA.md"), template: "skills/FAXINA-COMPLETA.md", ctx },
+    { destino: path.join(governancaDir, "relatorios", "_template.md"), template: "relatorios/_template.md", ctx },
   ];
 
   if (!fs.existsSync(path.join(governancaDir, "PRD.md"))) {

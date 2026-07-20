@@ -47,28 +47,18 @@ Para cada página/rota da aplicação, examine:
 
 ## Saída
 
-Gere um relatório em `governanca/relatorios/consistencia-visual.md` com:
+Gere o relatório em `governanca/relatorios/auditoria-consistencia.md`
+usando o template em `governanca/relatorios/_template.md`.
 
-```markdown
-# Relatório de Consistência Visual
+- Use `[BLOQ]` para divergências visuais severas que afetam usabilidade
+  (ex: elementos sobrepostos, cores contrastantes que prejudicam leitura)
+- Use `[REC]` para drift visual entre componentes equivalentes em
+  páginas diferentes (ex: botão com padding diferente, cor divergente)
+- Use `[SUG]` para extração de novos componentes e padronização de props
 
-## Componentes Driftados
-
-### Botões
-- `rounded-full` em `src/app/pedidos/page.tsx` — divergente do padrão `rounded-md`
-- Proposta: criar `ui/button.tsx` com prop `variant`
-
-### Inputs
-- padding `py-3` em `src/app/clientes/form.tsx` — divergente do padrão `py-2`
-- Proposta: adicionar prop `size` ao componente de input
-
-## Componentes Recomendados para Extração
-
-| Componente | Props sugeridas | Locais afetados |
-|------------|----------------|-----------------|
-| Button | variant, size, icon, loading, disabled | pedidos, clientes, dashboard |
-| Card | variant, padding, onClick | dashboard, relatorios |
-```
+Ao preencher a seção `## Sprint Sugerida`, crie uma sprint com etapas
+por severidade. Para cada componente proposto, inclua a criação do
+componente como tarefa + a substituição em todos os locais afetados.
 
 ## Prevenção
 

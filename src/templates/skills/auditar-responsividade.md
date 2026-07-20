@@ -80,64 +80,19 @@
 - Back button e gestos de navegação nativos funcionam?
 - **PWA:** o projeto poderia virar um PWA? (`manifest.json`, service worker)
 
-## Formato do Relatório
+## Saída
 
-Crie um arquivo em `governanca/relatorios/` com o seguinte formato:
+Gere o relatório em `governanca/relatorios/auditoria-responsividade.md`
+usando o template em `governanca/relatorios/_template.md`.
 
-```markdown
-# Auditoria de Responsividade Mobile — {{data}}
+- Use `[BLOQ]` para barras que impedem o uso em mobile (viewport ausente,
+  layout travado em largura fixa > 480px)
+- Use `[REC]` para problemas de UX mobile (botões pequenos, eventos mouse-only,
+  fontes em px)
+- Use `[SUG]` para oportunidades (PWA, mobile-first, breakpoints)
 
-**Projeto:** {{nomeProjeto}}
-**Stack Frontend:** {{frontend}}
-
----
-
-## Resumo
-
-- **Nível atual:** Nada responsivo / Parcialmente responsivo / Totalmente responsivo
-- **Esforço estimado:** Baixo / Médio / Alto para adaptar
-- **Recomendação:** Adaptar agora / Adaptar depois / Não adaptar (justificativa)
-
----
-
-## 1. Stack e Viabilidade
-
-(descrição da stack, se faz sentido para mobile, limitações da plataforma)
-
-## 2. Viewport e Meta
-
-- [x] Meta tag presente e correta
-- [ ] `user-scalable=no` detectado — remover
-
-## 3. Layout e CSS
-
-- [ ] Media queries: 0 encontradas
-- [ ] Elementos com largura fixa: 12 ocorrências (listar arquivos)
-- [ ] Fontes em px: 8 ocorrências
-- [ ] Overflow horizontal detectado em: `src/pages/relatorio.tsx`
-(manter apenas os itens relevantes, com localização e sugestão)
-
-## 4. Interação Touch
-
-- [ ] Botões com menos de 44px: 5 ocorrências
-- [ ] Eventos mouse-only: 3 ocorrências
-(etc)
-
-...
-
-## Recomendações Finais
-
-### Itens Prioritários
-
-1. Adicionar `<meta name="viewport">` — arquivo: `src/app/layout.tsx`
-2. Substituir `width: 400px` por `max-width: 100%` — arquivo: `src/componentes/card.tsx:15`
-3. ...
-
-### Oportunidades
-
-- Transformar em PWA para permitir instalação e uso offline
-- Adotar mobile-first com Tailwind breakpoints (`sm:`, `md:`, `lg:`)
-```
+Ao preencher a seção `## Sprint Sugerida`, crie uma sprint com etapas
+por severidade. Cada achado deve virar uma tarefa concreta.
 
 ## Após Gerar o Relatório
 

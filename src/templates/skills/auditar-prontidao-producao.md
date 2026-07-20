@@ -84,23 +84,16 @@
 
 ## Saída
 
-Relatório em `governanca/relatorios/prontidao-producao.md`:
+Gere o relatório em `governanca/relatorios/auditoria-producao.md`
+usando o template em `governanca/relatorios/_template.md`.
 
-```markdown
-# Auditoria de Prontidão para Produção
+- Use `[BLOQ]` para itens que impedem o deploy (build quebrado, segredo
+  exposto, sem health check, CORS `*`)
+- Use `[REC]` para itens com alto impacto mas sem bloqueio
+  (dependências não fixadas, sem rate limiting, sem backups)
+- Use `[SUG]` para itens desejáveis mas não urgentes
+  (compressão, Core Web Vitals, PWA)
 
-## Resumo
-- **Bloqueantes:** 2
-- **Recomendações:** 5
-- **OK:** 18
-
-## Bloqueantes
-- CORS configurado como `*` — corrigido
-- `.env.example` ausente — criado
-
-## Recomendações
-- Runtime: timeout de 5s em fetch para API de fretes — ajustado
-- Banco: migração sem rollback — documentado
-```
-
-Após corrigir os bloqueantes, pergunte ao usuário: *"Podemos prosseguir para produção?"*
+Ao preencher a seção `## Sprint Sugerida`, crie uma sprint com etapas
+por severidade. Cada checklist da auditoria que não passou deve virar
+uma tarefa concreta na etapa correspondente.
