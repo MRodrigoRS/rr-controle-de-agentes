@@ -11,15 +11,16 @@ em `governanca/relatorios/_template.md`.
 
 | Fase | Skill | Relatório gerado |
 |------|-------|-----------------|
+| 0 | `auditar-comercializacao.md` | `auditoria-comercializacao.md` |
 | 1 | `auditar-repositorio.md` | `auditoria-repositorio.md` |
 | 2 | `auditar-consistencia-visual.md` | `auditoria-consistencia.md` |
 | 3 | `auditar-responsividade.md` | `auditoria-responsividade.md` |
 | 4 | `superar-codigo.md` | `auditoria-superacao.md` |
 | 5 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
 
-**Por que esta ordem?** Corrige fundamentos (segurança, práticas) → unifica
-visual → garante mobile → otimiza → libera para produção. Cada fase constrói
-sobre a anterior.
+**Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
+→ corrige fundamentos (segurança, práticas) → unifica visual → garante
+mobile → otimiza → libera para produção.
 
 ## Como Executar
 
@@ -50,6 +51,7 @@ Após a última fase, gere o sumário unificado em
 
 | Fase | Bloqueantes | Recomendações | Sugestões | Status |
 |------|-------------|---------------|-----------|--------|
+| 0. Comercialização | X | Y | Z | Concluída |
 | 1. Repositório | X | Y | Z | Concluída |
 | 2. Consistência | X | Y | Z | Concluída |
 | 3. Responsividade | X | Y | Z | Concluída |
@@ -72,8 +74,8 @@ Após a última fase, gere o sumário unificado em
 *Para cada fase que gerou achados significativos, a sprint sugerida está
 no próprio relatório da fase (seção `## Sprint Sugerida`). Copie de lá.*
 
+- Fase 0: `auditoria-comercializacao.md` → `sprints/XX-correcoes-comercializacao.md`
 - Fase 1: `auditoria-repositorio.md` → `sprints/XX-correcoes-repositorio.md`
-- Fase 2: `auditoria-consistencia.md` → `sprints/XX-correcoes-consistencia.md`
 - ...
 ```
 
