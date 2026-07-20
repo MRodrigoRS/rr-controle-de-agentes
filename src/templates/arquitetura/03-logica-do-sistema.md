@@ -4,6 +4,8 @@
 > de dados, estados, workflows e integrações. Atualize sempre que uma sprint
 > implementar ou modificar lógica.
 
+**Gerado em:** {{data}}
+
 ---
 
 ## Regras de Negócio
@@ -82,6 +84,7 @@ envio de e-mail, atualização de relatórios.*
 
 ---
 
-> Template gerado pelo RR Controle de Agentes.
 > Mantenha atualizado — use a skill `mapear-logica-do-sistema.md` ao final
 > de cada sprint.
+
+*Template gerado pelo RR Controle de Agentes.*

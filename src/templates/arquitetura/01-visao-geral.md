@@ -1,6 +1,7 @@
-# Visão Geral da Arquitetura
+# Visão Geral da Arquitetura — {{nomeProjeto}}
 
 **Projeto:** {{nomeProjeto}}
+**Gerado em:** {{data}}
 
 ## Stack
 
@@ -20,3 +21,5 @@ src/
 ## Decisões Arquiteturais
 
 (registre aqui as decisões tomadas durante o desenvolvimento)
+
+*Template gerado pelo RR Controle de Agentes.*

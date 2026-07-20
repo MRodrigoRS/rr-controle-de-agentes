@@ -2,6 +2,8 @@
 
 > Gerado a partir do plano inicial do projeto. Atualize conforme o escopo evoluir.
 
+**Gerado em:** {{data}}
+
 ---
 
 ## Resumo Executivo

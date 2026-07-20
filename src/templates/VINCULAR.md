@@ -1,8 +1,10 @@
-# Vinculação de Repositório Existente
+# Vinculação — {{nomeProjeto}}
 
 > Este projeto já existia antes da governança. O agente deve examinar o
 > repositório e também considerar o plano/descrição fornecidos pelo usuário
 > sobre o que deseja fazer com ele.
+
+**Gerado em:** {{data}}
 
 ## 1. Leia o Plano do Usuário
 
@@ -41,7 +43,7 @@ encontrou. Documente:
 - Estrutura de diretórios existente
 - Decisões arquiteturais aparentes
 
-## 3.5 — Limpe a Documentação Legada
+## 4. Limpe a Documentação Legada
 
 O repositório existente pode conter documentação espalhada que a
 governança já substitui. Organize o repositório deixando apenas o
@@ -113,3 +115,5 @@ Após aprovação, faça o primeiro commit com a mensagem:
 ```
 sprint-00: vinculação de governança
 ```
+
+*Template gerado pelo RR Controle de Agentes.*

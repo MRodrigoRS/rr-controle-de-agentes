@@ -1,9 +1,15 @@
-# Plano / Descrição do Projeto: {{nomeProjeto}}
+# Plano — {{nomeProjeto}}
+
+**Gerado em:** {{data}}
+
+## Descrição
 
 {{descricao}}
 
----
+## Objetivos
+
+*Liste os objetivos principais do projeto. O que ele deve ser capaz de fazer?*
 
 *Este arquivo contém a descrição fornecida pelo usuário no momento da criação do projeto.*
 
-*Se houver um documento de requisitos (.md) mais completo, ele pode estar ao lado deste arquivo ou na raiz do projeto.*
+*Template gerado pelo RR Controle de Agentes.*

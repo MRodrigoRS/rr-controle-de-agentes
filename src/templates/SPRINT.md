@@ -4,7 +4,7 @@ ultima_modificacao: {{data}}
 sessao_atual: 0
 ---
 
-# Sprint {{numero}}: {{titulo}}
+# Sprint {{numero}}: {{titulo}} — {{nomeProjeto}}
 
 **Objetivo:** {{objetivo}}
 

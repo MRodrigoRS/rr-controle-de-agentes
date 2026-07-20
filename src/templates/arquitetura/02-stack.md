@@ -1,4 +1,7 @@
-# Detalhamento da Stack
+# Detalhamento da Stack — {{nomeProjeto}}
+
+**Projeto:** {{nomeProjeto}}
+**Gerado em:** {{data}}
 
 ## Frontend
 
@@ -17,3 +20,5 @@
 - **Lint:** {{lint}}
 - **Formatação:** {{formatacao}}
 - **CI/CD:** {{cicd}}
+
+*Template gerado pelo RR Controle de Agentes.*

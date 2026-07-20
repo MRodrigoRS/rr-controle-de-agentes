@@ -1,7 +1,9 @@
-# INICIALIZAÇÃO DO PROJETO: {{nomeProjeto}}
+# Inicialização — {{nomeProjeto}}
 
 > Instruções para o agente: siga os passos abaixo **em ordem**. Não pule etapas.
 > Cada passo só deve ser concluído após validação com o usuário.
+
+**Gerado em:** {{data}}
 
 ---
 
@@ -98,3 +100,5 @@ Com o ambiente pronto, inicie a Sprint 1:
 - Sempre valide com o usuário antes de decisões importantes.
 - Mantenha as notas persistentes em AGENTS.md atualizadas.
 - Registre decisões técnicas no livro de arquitetura.
+
+*Template gerado pelo RR Controle de Agentes.*
