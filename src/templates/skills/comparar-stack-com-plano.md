@@ -45,9 +45,8 @@ Pergunte: *"Com a visão completa do plano, posso reescrevê-lo aplicando a stac
 | Cenário | Ação |
 |---------|------|
 | **Preset é superior** em todos os aspectos relevantes | Reescreva o plano/PRD para refletir a stack do preset. Explique as substituições. |
-| **Plano agrega** tecnologias/padrões que o preset não tem | **Não reescreva o plano ainda.** Primeiro atualize os presets na progenitora para incorporar o que o plano traz de melhor, depois use a skill `contribuir-tecnologias.md` para registrar tecnologias inéditas no catálogo. Só então gere uma nova governança com os presets atualizados. |
-| **Misto** — cada lado tem vantagens | Siga os dois caminhos: (1) atualize os presets com o que o plano agrega, (2) reescreva o plano aplicando o que o preset tem de melhor. |
-| **Stack do plano é totalmente nova** — nenhum match com preset existente | Pergunte ao usuário se deseja criar um novo preset na progenitora partindo da stack do plano. Se autorizado, crie o preset seguindo o formato dos existentes em `presets.json`, registre tecnologias inéditas via `contribuir-tecnologias.md`, e faça commit. |
+| **Plano agrega** tecnologias/padrões que o preset não tem | **Não reescreva o plano ainda.** Primeiro atualize os presets na progenitora para incorporar o que o plano traz de melhor, registre tecnologias inéditas no catálogo seguindo as instruções na seção "Contribuir Novas Tecnologias" abaixo. Só então gere uma nova governança com os presets atualizados. |
+| **Stack do plano é totalmente nova** — nenhum match com preset existente | Pergunte ao usuário se deseja criar um novo preset na progenitora partindo da stack do plano. Se autorizado, crie o preset seguindo o formato dos existentes em `presets.json`, registre tecnologias inéditas (veja "Contribuir Novas Tecnologias" abaixo), e faça commit. |
 
 ### 4. Como Atualizar os Presets
 
@@ -59,8 +58,8 @@ Se o plano agregou tecnologias ou padrões que merecem entrar nos presets:
    - Se aplicável, adicione pastas novas em `pastas`
    - Atualize os campos em `arquitetura` se necessário
    - Ajuste a `descricao` e `destaque` para refletir o escopo ampliado
-3. Após editar os presets, execute a skill `contribuir-tecnologias.md` para
-   registrar no catálogo qualquer tecnologia que ainda não conste
+3. Registre qualquer tecnologia inédita no catálogo seguindo as instruções
+   na seção "Contribuir Novas Tecnologias" abaixo
 4. Faça commit das alterações nos presets no repositório da progenitora:
 
    ```bash
@@ -89,7 +88,12 @@ que o preset `gas-sheets` não inclui.
 1. Adicionar ao `stack` do `gas-sheets`: `"GmailApp"`, `"DocumentApp"`,
    `"UrlFetchApp"`, `"ScriptApp"`
  2. Adicionar `"OAuth2"` se aplicável
- 3. Para registrar tecnologia inédita, edite `{{caminhoRR}}src\servidor\dados\tecnologias.json`
+
+### Contribuir Novas Tecnologias
+
+Se alguma tecnologia do plano não existir no catálogo, registre-a:
+
+ 3. Edite `{{caminhoRR}}src\servidor\dados\tecnologias.json` seguindo o formato:
     seguindo o formato:
     ```json
     {
