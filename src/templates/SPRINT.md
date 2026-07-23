@@ -59,7 +59,11 @@ sessao_atual: 0
 6. **Antes de finalizar a sprint**, execute a skill `mapear-logica-do-sistema.md`
    em `governanca/skills/` para atualizar `livro-arquitetura/03-logica-do-sistema.md`
    com a lógica implementada.
-7. Apresente o resultado parcial ao usuário.
+   6b. **(Opcional) Se houver comportamento autônomo novo** (triggers, jobs,
+   webhooks, workers, middleware, cascatas de banco), execute a skill
+   `mapear-comportamento-autonomo.md` para documentá-lo em
+   `livro-arquitetura/04-comportamento-autonomo.md`.
+ 7. Apresente o resultado parcial ao usuário.
 8. Ao finalizar, marque `status: concluida` no front-matter e atualize
    `ultima_modificacao`.
 9. **Documente aprendizados e decisões:** antes de finalizar, preencha a
