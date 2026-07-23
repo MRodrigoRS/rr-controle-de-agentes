@@ -446,5 +446,33 @@
     "ranking": 8,
     "aplicabilidade": "Plataforma de desenvolvimento cross-platform da Microsoft",
     "descricao": "Plataforma de desenvolvimento gratuita, open-source e cross-platform da Microsoft para construir aplicações web, desktop, mobile, cloud, IoT e IA. Suporta múltiplas linguagens (C#, F#, VB.NET) e executa em Windows, Linux e macOS."
+  },
+  {
+    "nome": "Chart.js",
+    "categoria": "Bibliotecas",
+    "ranking": 25,
+    "aplicabilidade": "Criação de gráficos dinâmicos e interativos em JavaScript",
+    "descricao": "Biblioteca JavaScript open-source para criação de gráficos responsivos e interativos (barras, linhas, pizza, radar, etc.) renderizados via Canvas HTML5. Leve, flexível e extensível, suporta animações, tooltips e legendas customizáveis. Ideal para dashboards e visualização de dados."
+  },
+  {
+    "nome": "SweetAlert2",
+    "categoria": "Bibliotecas",
+    "ranking": 26,
+    "aplicabilidade": "Modais e alertas estilizados e responsivos para web",
+    "descricao": "Biblioteca JavaScript que substitui os alertas, confirmações e prompts nativos do navegador por modais bonitos, responsivos e personalizáveis. Suporta ícones, animações, HTML no conteúdo, botões customizados, filas de modais e integração com frameworks. Essencial para feedback visual ao usuário."
+  },
+  {
+    "nome": "Bootstrap Icons",
+    "categoria": "Frontend",
+    "ranking": 6,
+    "aplicabilidade": "Conjunto de ícones SVG para interfaces Bootstrap",
+    "descricao": "Conjunto oficial de ícones SVG da equipe Bootstrap, com mais de 1.900 ícones de código aberto, consistentes com a identidade visual do Bootstrap. Leves, responsivos e personalizáveis por cor, tamanho e rotação via CSS. Ideais para complementar o Bootstrap em dashboards e interfaces administrativas."
+  },
+  {
+    "nome": "clasp",
+    "categoria": "Runtimes & Build",
+    "ranking": 9,
+    "aplicabilidade": "Gerenciamento e deploy de projetos Google Apps Script via terminal",
+    "descricao": "Ferramenta de linha de comando (CLI) oficial do Google que permite criar, clonar, editar, versionar e fazer deploy de projetos Google Apps Script localmente. Integra-se com git, VS Code e IDEs para desenvolvimento profissional. Essencial para desenvolvimento GAS com controle de versão e CI/CD."
   }
 ]
