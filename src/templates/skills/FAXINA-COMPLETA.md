@@ -17,10 +17,11 @@ em `governanca/relatorios/_template.md`.
 | 3 | `auditar-responsividade.md` | `auditoria-responsividade.md` |
 | 4 | `superar-codigo.md` | `auditoria-superacao.md` |
 | 5 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
+| 6 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas) → unifica visual → garante
-mobile → otimiza → libera para produção.
+mobile → otimiza → libera para produção → posiciona no mercado.
 
 ## Como Executar
 
@@ -57,6 +58,7 @@ Após a última fase, gere o sumário unificado em
 | 3. Responsividade | X | Y | Z | Concluída |
 | 4. Superação | X | Y | Z | Concluída |
 | 5. Produção | X | Y | Z | Concluída |
+| 6. Competitividade | X | Y | Z | Concluída |
 | **Total** | **X** | **Y** | **Z** | |
 
 ---

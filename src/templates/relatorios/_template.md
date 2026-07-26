@@ -16,7 +16,7 @@
 ---
 
 ## Bloqueantes
-
+ 
 *Itens que impedem o deploy ou representam risco crítico de segurança,
 dados ou estabilidade.*
 
