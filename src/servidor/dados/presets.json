@@ -5,7 +5,7 @@
       "nome": "Next.js (App Router)",
       "descricao": "Framework fullstack para produção com React 19, renderização híbrida (SSR + SSG + ISR) e React Server Components. Ideal para SaaS corporativos, portais e aplicações que precisam de SEO e performance.",
       "destaque": "Fullstack com React Server Components",
-      "stack": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "shadcn/ui", "Zod", "Biome", "Vitest", "Testing Library", "MSW", "pnpm"],
+      "stack": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "shadcn/ui", "Radix UI", "Zod", "React Hook Form", "Zustand", "Lucide React", "Motion", "@supabase/ssr", "Biome", "Vitest", "Testing Library", "MSW", "pnpm"],
       "pastas": ["src/app", "src/componentes", "src/lib", "src/servidor"],
       "arquitetura": {
         "frontendFramework": "Next.js 16 (App Router)",
@@ -171,7 +171,7 @@
       "nome": "Supabase (Cloud)",
       "descricao": "Plataforma backend completa na nuvem: banco PostgreSQL, autenticação, storage, Realtime e Edge Functions. Tudo gerenciado via dashboard ou SDK. Ideal para startups e MVPs que precisam de backend rico sem gerenciar servidores.",
       "destaque": "Backend cloud completo: banco + auth + realtime",
-      "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Biome", "Vitest", "GitHub Actions"],
+      "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Stripe", "Biome", "Vitest", "GitHub Actions"],
       "pastas": ["src/dados", "src/servidor"],
       "arquitetura": {
         "backendRuntime": "Node.js 22 + Supabase SDK",
