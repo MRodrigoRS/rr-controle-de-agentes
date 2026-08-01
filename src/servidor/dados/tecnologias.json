@@ -474,5 +474,40 @@
     "ranking": 9,
     "aplicabilidade": "Gerenciamento e deploy de projetos Google Apps Script via terminal",
     "descricao": "Ferramenta de linha de comando (CLI) oficial do Google que permite criar, clonar, editar, versionar e fazer deploy de projetos Google Apps Script localmente. Integra-se com git, VS Code e IDEs para desenvolvimento profissional. Essencial para desenvolvimento GAS com controle de versão e CI/CD."
+  },
+  {
+    "nome": "Radix UI",
+    "categoria": "Bibliotecas",
+    "ranking": 27,
+    "aplicabilidade": "Primitivas headless acessíveis para React",
+    "descricao": "Conjunto de primitivas de UI sem estilização (headless) para React, com comportamento acessível (WAI-ARIA) pronto para uso. Base das bibliotecas como shadcn/ui. Inclui Dialog, Select, Slot, Tabs, Dropdown e mais, totalmente customizáveis com Tailwind CSS."
+  },
+  {
+    "nome": "@supabase/ssr",
+    "categoria": "Bibliotecas",
+    "ranking": 28,
+    "aplicabilidade": "Sessão do Supabase Auth via cookies em aplicações SSR",
+    "descricao": "Pacote oficial do Supabase para gerenciar a sessão de autenticação usando cookies em aplicações server-side, especialmente Next.js App Router. Compatível com os utilitários de cookies do Next, permitindo Server Components acessarem o usuário logado com segurança."
+  },
+  {
+    "nome": "Supabase Storage",
+    "categoria": "Bibliotecas",
+    "ranking": 29,
+    "aplicabilidade": "Armazenamento de arquivos e mídias no backend Supabase",
+    "descricao": "Serviço de armazenamento de objetos do Supabase para upload, download e gerenciamento de arquivos (imagens, anexos, vídeos) com autenticação e políticas de acesso por bucket. Acessado via Supabase Client, com integração nativa ao PostgreSQL e RLS."
+  },
+  {
+    "nome": "Supabase Realtime",
+    "categoria": "Bibliotecas",
+    "ranking": 30,
+    "aplicabilidade": "Sincronização de dados em tempo real via WebSockets",
+    "descricao": "Serviço de tempo real do Supabase baseado em WebSockets e PostgreSQL Logical Replication. Permite propagar mudanças de tabelas para clientes conectados, ideal para kanbans, chat, notificações e dashboards ao vivo. Acessado via Supabase Client."
+  },
+  {
+    "nome": "Vercel",
+    "categoria": "Runtimes & Build",
+    "ranking": 10,
+    "aplicabilidade": "Hospedagem e deploy de aplicações Next.js e frontends",
+    "descricao": "Plataforma de nuvem para deploy de frontends e funções serverless, criadora do Next.js. Oferece previews por pull request, escala automática, edge network global e integração contínua com Git. Padrão para publicar aplicações Next.js em produção."
   }
 ]
