@@ -509,5 +509,47 @@
     "ranking": 10,
     "aplicabilidade": "Hospedagem e deploy de aplicações Next.js e frontends",
     "descricao": "Plataforma de nuvem para deploy de frontends e funções serverless, criadora do Next.js. Oferece previews por pull request, escala automática, edge network global e integração contínua com Git. Padrão para publicar aplicações Next.js em produção."
+  },
+  {
+    "nome": "Blazor",
+    "categoria": "Frontend",
+    "ranking": 10,
+    "aplicabilidade": "Fullstack web em C# com Razor Components e Interactive Server/WebAssembly",
+    "descricao": "Framework web da Microsoft que permite escrever interfaces interativas em C# e Razor, sem trocar de linguagem para JavaScript. O modelo unificado do .NET 8/9 combina renderização no servidor, WebAssembly e streaming sem reescrita."
+  },
+  {
+    "nome": "Razor",
+    "categoria": "Frontend",
+    "ranking": 10,
+    "aplicabilidade": "Sintaxe de markup para componentes e páginas em aplicações ASP.NET/Blazor",
+    "descricao": "Motor de template da Microsoft que mistura HTML com código C# (@). É a base do Blazor e das Razor Pages, permitindo componentes reutilizáveis, layouts e renderização dinâmica no servidor."
+  },
+  {
+    "nome": "MudBlazor",
+    "categoria": "Frontend",
+    "ranking": 10,
+    "aplicabilidade": "Biblioteca de componentes Material Design para Blazor",
+    "descricao": "Suite de componentes UI prontos (botões, tabelas, formulários, modais, charts) em Material Design para Blazor. Acelera a construção de dashboards e sistemas internos sem escrever CSS customizado."
+  },
+  {
+    "nome": "ASP.NET Core",
+    "categoria": "Backend",
+    "ranking": 10,
+    "aplicabilidade": "APIs REST e servidores web enterprise em C#",
+    "descricao": "Framework web da Microsoft para construir APIs, aplicações e microsserviços em C#. Inclui minimal APIs, controllers, autenticação com Identity/JWT, injeção de dependência nativa e desempenho de alto nível. Base do Blazor Server."
+  },
+  {
+    "nome": "EF Core",
+    "categoria": "Backend",
+    "ranking": 10,
+    "aplicabilidade": "ORM Code-First para .NET com migrações versionadas",
+    "descricao": "Entity Framework Core é o ORM oficial do .NET. Permite mapear classes C# para tabelas (Code-First), gerar e aplicar migrações, e consultar dados com LINQ type-safe. Suporta PostgreSQL, SQL Server, SQLite e MySQL."
+  },
+  {
+    "nome": "bUnit",
+    "categoria": "Qualidade & Testes",
+    "ranking": 10,
+    "aplicabilidade": "Testes de componentes Razor/Blazor com xUnit ou NUnit",
+    "descricao": "Framework de testes para componentes Blazor e Razor. Renderiza o componente em memória e permite assertar sobre o markup renderizado, eventos e interações, complementando o xUnit para testes de UI."
   }
 ]

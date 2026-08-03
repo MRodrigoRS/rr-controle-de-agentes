@@ -58,6 +58,22 @@ go test -v ./...           # verbose
 go test -cover ./...       # cobertura
 ```
 
+### .NET (Blazor / ASP.NET Core)
+
+| Tipo | Ferramenta | Localização |
+|------|-----------|-------------|
+| Unitário | xUnit | `testes/unit/` — espelha `src/` |
+| Componente (Razor) | bUnit | `testes/unit/componentes/` |
+| Integração/API | xUnit + WebApplicationFactory | `testes/integracao/` |
+| Cobertura | coverlet | `dotnet test --collect:"XPlat Code Coverage"` |
+
+**Comandos:**
+```bash
+dotnet test                     # todos os testes
+dotnet test --filter Category=Unit  # filtro por categoria
+dotnet test -c Release --collect:"XPlat Code Coverage"  # cobertura
+```
+
 ### Node.js (Express, Fastify)
 
 | Tipo | Ferramenta | Localização |

@@ -122,6 +122,21 @@
       }
     },
     {
+      "id": "blazor-web",
+      "nome": "Blazor Web App (.NET)",
+      "descricao": "Fullstack em C# sem trocar de linguagem: Blazor Web App com Razor Components, Interactive Server, layouts, páginas e componentes reutilizáveis. Ideal para sistemas de linha de negócio, dashboards e ferramentas internas onde o time é C#.",
+      "destaque": "Fullstack C# com Razor Components",
+      "stack": [".NET 9", "C#", "Blazor", "Razor", "MudBlazor", "FluentValidation", "bUnit", "xUnit", ".NET Roslyn Analyzers", "dotnet format"],
+      "pastas": ["src/Components", "src/Components/Pages", "src/Components/Layout", "src/Servicos", "src/Dados"],
+      "arquitetura": {
+        "frontendFramework": "Blazor Web App (.NET 9)",
+        "frontendEstilo": "Razor + MudBlazor",
+        "frontendTestes": "xUnit + bUnit",
+        "lint": ".NET Roslyn Analyzers",
+        "formatacao": "dotnet format"
+      }
+    },
+    {
       "id": "nenhum",
       "nome": "Nenhum",
       "descricao": "Sem frontend definido. Apenas backend ou biblioteca. Útil para APIs puras, pacotes npm, workers e microsserviços.",
@@ -242,6 +257,22 @@
         "backendORM": "Microsoft.Data.Sqlite (ADO.NET)",
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format"
+      }
+    },
+    {
+      "id": "aspnet-core-api",
+      "nome": "ASP.NET Core + EF Core",
+      "descricao": "API e servidor enterprise em C# com ASP.NET Core Web API, Entity Framework Core (Code-First com migrações) e PostgreSQL. Inclui autenticação com Identity/JWT, validação com FluentValidation e CI via GitHub Actions. Ideal para sistemas corporativos, SaaS e integrações B2B.",
+      "destaque": "API enterprise em C# com EF Core",
+      "stack": [".NET 9", "C#", "ASP.NET Core", "EF Core", "PostgreSQL", "FluentValidation", "xUnit", "Docker Compose", "GitHub Actions"],
+      "pastas": ["src/Dados", "src/Servicos", "src/Modelos"],
+      "arquitetura": {
+        "backendRuntime": ".NET 9 + ASP.NET Core",
+        "backendBanco": "PostgreSQL",
+        "backendORM": "EF Core",
+        "lint": ".NET Roslyn Analyzers",
+        "formatacao": "dotnet format",
+        "cicd": "GitHub Actions"
       }
     },
     {

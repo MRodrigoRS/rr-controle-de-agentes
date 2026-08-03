@@ -102,6 +102,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     cicd: be.cicd || "A definir",
     ehGo: (be.backendRuntime || "").toLowerCase().includes("go 1"),
     ehGas: (be.backendRuntime || "").toLowerCase().includes("google apps script"),
+    ehDotnet: (be.backendRuntime || "").toLowerCase().includes(".net"),
     setupBackend: "`package.json`, configs de banco/CI",
   };
 
@@ -109,6 +110,8 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     ctx.setupBackend = "`go.mod`, configs de banco/CI";
   } else if (ctx.ehGas) {
     ctx.setupBackend = "`.clasp.json`, configs do Google Apps Script";
+  } else if (ctx.ehDotnet) {
+    ctx.setupBackend = "`.csproj`, configs de banco/CI";
   }
 
   const ctxSprint = {
