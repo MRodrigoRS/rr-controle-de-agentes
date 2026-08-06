@@ -27,7 +27,7 @@ Apresente-se ao usuário e peça que ele descreva a visão do projeto:
 > nas notas persistentes do `AGENTS.md`.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
-> antes de executar a skill `comparar-stack-com-plano.md` em
+> antes de executar a skill `alinhar-stack-com-presets.md` em
 > `governanca/skills/`. Ela orienta a comparação bidirecional entre a stack do
 > preset e a stack do plano, e a decisão de qual caminho seguir.
 
@@ -78,6 +78,8 @@ Com a stack validada, configure o ambiente:
     - Crie os arquivos conforme a stack definida
     {{/if}}
  2. Crie os scripts auxiliares seguindo a skill `criar-scripts-auxiliares.md` em `governanca/skills/`.
+    {{#if temPostgres}}Se o projeto tem banco PostgreSQL, crie o script de extração
+    do modelo de dados seguindo a skill `criar-extrair-modelo.md` em `governanca/skills/`.{{/if}}
  3. Instale as dependências e verifique se o build base funciona.
  4. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
 

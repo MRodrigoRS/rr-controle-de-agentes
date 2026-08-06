@@ -42,7 +42,7 @@ export function gerarCatalogoMarkdown(): string {
   md += "```json\n";
   md += '{"nome": "Tecnologia", "categoria": "Categoria", "ranking": 1, "aplicabilidade": "...", "descricao": "..."}\n';
   md += "```\n\n";
-  md += "Consulte a skill `comparar-stack-com-plano.md` para instruções de como contribuir com novas tecnologias.\n";
+  md += "Consulte a skill `alinhar-stack-com-presets.md` para instruções de como contribuir com novas tecnologias.\n";
 
   return md;
 }

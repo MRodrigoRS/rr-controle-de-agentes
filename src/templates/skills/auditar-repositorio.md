@@ -1,8 +1,9 @@
 # Skill: Auditar Repositório
 
 > Instrui o agente a examinar minuciosamente todo o repositório em busca de
-> vulnerabilidades de segurança, más práticas de código e inconsistências
-> entre documentação e implementação, gerando um relatório estruturado.
+> vulnerabilidades de segurança, más práticas de código, inconsistências
+> entre documentação e implementação, e oportunidades de evolução do código,
+> gerando um relatório estruturado.
 
 ## Quando Executar
 
@@ -10,8 +11,8 @@
   o estado atual do código
 - **Antes de uma sprint crítica** (ex: colocar em produção, integrar
   pagamento) — para garantir que não há problemas conhecidos
+- **Periodicamente** (a cada 3-4 sprints) — junto com a superação do código
 - **Sempre que o usuário solicitar** explicitamente uma auditoria
-- **Periodicamente** (a cada 3-4 sprints) como boa prática
 
 ## Categorias de Análise
 
@@ -65,6 +66,33 @@ Examine arquivo por arquivo em busca de:
 - **Nomenclatura inconsistente** — `camelCase`, `snake_case` e `kebab-case`
   misturados sem critério no mesmo contexto
 
+### 4. Oportunidades de Melhoria
+
+O que *poderia ser melhor* — itens de extração, simplificação, performance,
+modernização e testabilidade. Itens de legibilidade (nomes confusos, código
+morto, funções longas) já estão cobertos em Más Práticas:
+
+- **Extração** — componente de UI repetido que deveria estar encapsulado;
+  lógica/validação/cálculo repetidos em vários arquivos; estado+efeitos que
+  se repetem e virariam um hook customizado; helpers espalhados que pertencem
+  a `src/lib/`
+- **Simplificação** — código verboso que uma library moderna resolveria em
+  poucas linhas (validação manual → Zod, fetch raw → axios, datas →
+  date-fns); aninhamento profundo que um early return resolveria; muitos
+  booleanos de estado que uma máquina de estados unificaria; `switch`/`if-else`
+  grande que polimorfismo ou dicionário substituiria
+- **Performance** — loops row-by-row no GAS (`getValue`/`setValue`) em vez de
+  batch; re-renders no React (estado muito alto na árvore, falta de
+  `useMemo`/`useCallback`); queries N+1 que deveriam ser `include`/batch;
+  assets pesados sem lazy loading; requisições independentes em série que
+  poderiam ser `Promise.all`
+- **Modernização** — APIs/sintaxe descontinuadas (`pages` vs `app` router,
+  `require` vs `import`, axios vs fetch nativo); ferramentas mais recentes
+  (ESLint → Biome, npm → pnpm, Webpack → Vite/Turbopack); padrões emergentes
+  (Server Actions, `next/image`)
+- **Testabilidade** — lógica pura e efeitos colaterais misturados; dependências
+  hardcoded (API/banco no meio da lógica de negócio, sem injeção/adapter)
+
 ## Saída
 
 Gere o relatório em `governanca/relatorios/auditoria-repositorio.md`
@@ -72,8 +100,10 @@ usando o template em `governanca/relatorios/_template.md`.
 
 - Use `[BLOQ]` para vulnerabilidades de segurança críticas ou más práticas
   com risco de dados/estabilidade
-- Use `[REC]` para más práticas e inconsistências de alto impacto
-- Use `[SUG]` para inconsistências menores e melhorias de documentação
+- Use `[REC]` para más práticas, inconsistências e oportunidades de alto
+  impacto e baixo esforço
+- Use `[SUG]` para inconsistências menores, melhorias de documentação e
+  oportunidades de modernização que podem esperar
 
 Ao preencher a seção `## Sprint Sugerida`, crie uma sprint pronta para
 copiar com etapas por severidade. Cada achado deve virar uma tarefa.

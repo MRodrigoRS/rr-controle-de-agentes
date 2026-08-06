@@ -84,6 +84,24 @@ Regras técnicas que todo código deve seguir:
 - A estética deve ser uniforme em todas as páginas — contraste, espaçamento,
   cantos arredondados e hover states devem seguir o mesmo padrão.
 
+{{#if temPostgres}}
+### Modelo de Dados
+
+A fonte da verdade do schema é o estado **atual** do banco, extraído pelo
+script `governanca/scripts/extrair-modelo.ps1` — **não** as migrations acumuladas.
+
+- Antes de consultar ou alterar o banco, execute o script para regenerar `modelo-de-dados/`.
+- **Mantenha sempre atualizado:** após aplicar novas migrations, regenere o modelo antes de prosseguir.
+- Leia `modelo-de-dados/index.md` para a visão macro (domínios e dependências);
+  abra a página do domínio (`modelo-de-dados/tabelas/`) apenas quando precisar dos detalhes.
+- Se tabelas caírem em "Outros", atualize o mapeamento em
+  `governanca/scripts/extrair-modelo.ts` e regenere.
+- **Exceção:** migrations podem ser consultadas diretamente apenas quando for
+  necessário confirmar dados sensíveis ou específicos que o modelo extraído
+  não cobre (ex: valores de seed, defaults com dados sensíveis, histórico de
+  alterações).
+{{/if}}
+
 ## Arquitetura
 
 Consulte `governanca/livro-arquitetura/` para visão geral da arquitetura do projeto.
@@ -112,6 +130,28 @@ use a mensagem de commit sugerida no final do arquivo.
 ## Skills
 
 Consulte `governanca/skills/` para as skills que acompanham este projeto.
+Abra **apenas** a skill relevante para a tarefa atual:
+
+| Skill | Quando usar |
+|---|---|
+| `CONVENCOES.md` | Organizar pastas, criar estrutura, mover arquivos |
+| `alinhar-stack-com-presets.md` | Plano/PRD com esboço de stack; vinculação de repositório existente |
+| `criar-scripts-auxiliares.md` | Setup do ambiente; automatizar tarefas repetitivas |
+| `escrever-testes.md` | A cada tarefa: padrões de teste por stack e depuração de testes falhando |
+| `mapear-logica-do-sistema.md` | Ao final de cada sprint (atualiza `livro-arquitetura/03-logica-do-sistema.md`) |
+| `mapear-comportamento-autonomo.md` | Quando existir trigger/job/webhook/worker novo (atualiza `livro-arquitetura/04-comportamento-autonomo.md`) |
+{{#if temPostgres}}| `criar-extrair-modelo.md` | Projetos PostgreSQL: criar o script que extrai `modelo-de-dados/` do banco real |{{/if}}
+| `auditar-repositorio.md` | Auditoria de segurança, más práticas, inconsistências e oportunidades (onboarding, antes de produção, periódico) |
+| `auditar-responsividade.md` | Auditoria mobile (onboarding, antes de release) |
+| `auditar-consistencia-visual.md` | Unificar a aparência da UI em componentes compartilhados |
+| `auditar-prontidao-producao.md` | Antes do primeiro deploy e após mudanças de infraestrutura/segurança |
+| `auditar-comercializacao.md` | Antes de ativar pagamentos reais; após integrar provedor de pagamento |
+| `auditar-competitividade.md` | Análise de mercado, concorrência e precificação |
+{{#if ehGas}}| `reformar-repositorio-gas.md` | Projetos GAS: reforma de repositório (performance de I/O, LockService, quotas, segurança, deploy) |{{/if}}
+| `FAXINA-COMPLETA.md` | "Faxina geral" orquestrando todas as auditorias em sequência |
+
+`CATALOGO_TECNOLOGIAS.md` é o catálogo de tecnologias da progenitora — consulte
+antes de escolher ou propor novas tecnologias.
 
 ## Gestão de Contexto
 
@@ -127,7 +167,7 @@ Consulte `governanca/skills/` para as skills que acompanham este projeto.
    - Próximos passos
    - Bloqueios (se houver)
    ```
-4. Arquive sprints concluídas (veja template da sprint em `sprints/_template.md`)
+4. Arquive sprints concluídas (veja `Arquivamento de Sprints` abaixo)
 
 ### Ao Iniciar uma Nova Sessão
 
@@ -135,5 +175,23 @@ Consulte `governanca/skills/` para as skills que acompanham este projeto.
 2. Identifique a sprint ativa pela linha `Sprint ativa:` nas notas
 3. Abra o arquivo da sprint e procure por `← estou aqui`
 4. Pode notas obsoletas: remova notas que referenciam tarefas ou débitos já resolvidos
+
+### Arquivamento de Sprints
+
+Após aprovação do usuário e commit, arquive a sprint:
+
+```bash
+mkdir -p governanca/sprints/concluidas
+mv governanca/sprints/XX-titulo.md governanca/sprints/concluidas/XX-titulo.md
+```
+
+- **Nunca delete** uma sprint — apenas mova para `concluidas/`
+- **Atualize o front-matter** antes de arquivar (`status: concluido`)
+- **Mantenha o template** `_template.md` sempre em `sprints/`
+- **Atualize as notas persistentes**: se a sprint arquivada era a ativa,
+  troque `Sprint ativa:` para a próxima; se não houver mais sprints,
+  remova a linha
+- **Se for a última sprint**, pergunte ao usuário se deseja continuar com
+  novas sprints; se sim, proponha e crie a sequência
 
 ---

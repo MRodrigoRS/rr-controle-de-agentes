@@ -21,7 +21,7 @@
 
 - [ ] Build passa sem erros
 - [ ] Testes implementados e passando
-- [ ] Código revisado (veja `revisar-codigo.md`)
+- [ ] Código revisado (sem código morto, duplicado ou `any`)
 - [ ] Documentação atualizada (`livro-arquitetura/`)
 
 ## Fora de Escopo

@@ -16,7 +16,9 @@ O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do 
 4. Gera `governanca/sprints/_template.md` para o agente preencher
 5. Gera `governanca/livro-arquitetura/` com docs da stack
 6. Gera `governanca/skills/` com skills que nascem com o projeto:
-   - `contribuir-tecnologias.md` — instrui o agente a adicionar tecnologias novas ao catálogo da progenitora
+   - `alinhar-stack-com-presets.md` — instrui o agente a alinhar a stack do
+     plano/repositório com os presets da progenitora e a contribuir com
+     novas tecnologias ao catálogo
    - `CATALOGO_TECNOLOGIAS.md` — lista completa de tecnologias catalogadas
 7. Web UI: cria projeto e lista projetos criados — só
 
@@ -32,9 +34,11 @@ meu-projeto/
 │   ├── livro-arquitetura/
 │   │   ├── 01-visao-geral.md
 │   │   └── 02-stack.md
-│   └── skills/
-│       ├── contribuir-tecnologias.md  ← skill ativa
-│       └── CATALOGO_TECNOLOGIAS.md    ← catálogo para consulta
+│   ├── skills/
+│   │   ├── alinhar-stack-com-presets.md ← skill ativa
+│   │   └── CATALOGO_TECNOLOGIAS.md    ← catálogo para consulta
+│   ├── scripts/                ← scripts do projeto (não regeneram)
+│   └── templates/              ← modelos virgens (regeneram; projetos PostgreSQL)
 ├── src/                         ← estrutura base (se preset)
 └── package.json
 ```
@@ -66,8 +70,8 @@ rr-controle-de-agentes-1.1/
 │       ├── INICIO.md
 │       ├── SPRINT.md
 │       ├── arquitetura/
-│       └── skills/
-│           └── contribuir-tecnologias.md
+│   └── skills/
+│       └── alinhar-stack-com-presets.md
 ├── dados/
 │   └── projetos.json            ← registro de projetos criados
 └── PLANO.md

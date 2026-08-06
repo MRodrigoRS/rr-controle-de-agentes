@@ -24,7 +24,8 @@ projeto/
 ├── testes/               ← testes unitários, integração, e2e
 ├── docs/                 ← documentação extra (diagramas, decisões técnicas)
 ├── governanca/           ← governança do projeto (gerado pela progenitora)
-│   ├── scripts/          ← automações: build, deploy, seed, tarefas
+│   ├── scripts/          ← automações do projeto: build, deploy, seed, tarefas (não regenera)
+│   ├── templates/        ← modelos virgens que regeneram (projetos PostgreSQL)
 │   └── relatorios/       ← relatórios de auditoria e análise
 ├── .env.example
 ├── .gitignore
@@ -53,7 +54,8 @@ projeto/
 | `testes/` | Testes organizados por tipo (unit/, integracao/, e2e/) |
 | `docs/` | Documentação extra que não cabe no livro de arquitetura |
 | `governanca/` | Governança do projeto (sprints, skills, scripts, relatorios, arquitetura) |
-| `governanca/scripts/` | Automações: build, deploy, seed, migrações manuais |
+| `governanca/scripts/` | Automações do projeto: build, deploy, seed, migrações manuais (não regenera) |
+| `governanca/templates/` | Modelos virgens que regeneram (ex: extrair-modelo em projetos PostgreSQL) |
 | `governanca/relatorios/` | Relatórios de auditoria e análise do repositório |
 
 ## Notas

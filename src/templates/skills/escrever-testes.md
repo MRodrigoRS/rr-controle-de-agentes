@@ -109,6 +109,18 @@ describe("módulo / funcionalidade", () => {
 });
 ```
 
+## Depuração de Testes Falhando
+
+Quando um teste falhar, siga este fluxo:
+
+1. Reproduza o erro e capture a mensagem completa
+2. Entenda o erro: o que era esperado vs. o que aconteceu?
+3. Isole a causa (busca binária, logs, stack trace)
+4. Levante 1-3 hipóteses
+5. Teste a mais provável (uma mudança de cada vez)
+6. Corrija e verifique (todos os testes passando)
+7. Previna regressão: escreva um teste que reproduza o bug
+
 ## Regras
 
 - **Nunca commitar sem testes** — a menos que o usuário autorize

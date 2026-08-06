@@ -60,14 +60,14 @@ um script. Exemplos comuns:
 
 | Situação | Script sugerido |
 |----------|-----------------|
-| Precisa extrair o modelo de dados do banco e gerar documentação | `scripts/extrair-modelo.ps1` |
+| Extrair o modelo de dados do banco PostgreSQL e gerar documentação | **Padrão:** siga a skill `criar-extrair-modelo.md` (gera `scripts/extrair-modelo.ps1`) |
 | Precisa importar dados de um CSV para o banco regularmente | `scripts/importar-csv.ps1` |
 | Precisa limpar dados de teste antes de cada sessão | `scripts/limpar-dados.ps1` |
 | Precisa criar um backup manual do banco | `scripts/backup.ps1` |
 | Precisa reiniciar serviços (DB, cache, etc.) | `scripts/restart-servicos.ps1` |
 | Precisa gerar relatório de uso/debug | `scripts/relatorio.ps1` |
 
-## Extrutura de um Script
+## Estrutura de um Script
 
 Siga este modelo para criar scripts no Windows (PowerShell):
 

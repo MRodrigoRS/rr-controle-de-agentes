@@ -66,6 +66,10 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     path.join(governancaDir, "relatorios"),
   ];
 
+  if ((presetBackend.arquitetura.backendBanco || "").includes("PostgreSQL")) {
+    pastas.push(path.join(governancaDir, "templates"));
+  }
+
   const todasPastas = new Set([...pastas, ...presetFrontend.pastas, ...presetBackend.pastas]);
   for (const pasta of todasPastas) {
     fs.mkdirSync(pasta, { recursive: true });
@@ -101,8 +105,9 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     formatacao: fe.formatacao || be.formatacao || "A definir",
     cicd: be.cicd || "A definir",
     ehGo: (be.backendRuntime || "").toLowerCase().includes("go 1"),
-    ehGas: (be.backendRuntime || "").toLowerCase().includes("google apps script"),
+    ehGas: (be.backendRuntime || "").toLowerCase().includes("google apps script") || presetFrontend.id === "gas-web-app",
     ehDotnet: (be.backendRuntime || "").toLowerCase().includes(".net"),
+    temPostgres: (be.backendBanco || "").includes("PostgreSQL"),
     setupBackend: "`package.json`, configs de banco/CI",
   };
 
@@ -134,15 +139,13 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "PLANO.md"), template: "PLANO.md", ctx },
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
     { destino: path.join(governancaDir, "skills", "CONVENCOES.md"), template: "skills/CONVENCOES.md", ctx },
-    { destino: path.join(governancaDir, "skills", "comparar-stack-com-plano.md"), template: "skills/comparar-stack-com-plano.md", ctx },
+    { destino: path.join(governancaDir, "skills", "alinhar-stack-com-presets.md"), template: "skills/alinhar-stack-com-presets.md", ctx },
     { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
-    { destino: path.join(governancaDir, "skills", "deduzir-presets-do-repositorio.md"), template: "skills/deduzir-presets-do-repositorio.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-repositorio.md"), template: "skills/auditar-repositorio.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-responsividade.md"), template: "skills/auditar-responsividade.md", ctx },
     { destino: path.join(governancaDir, "skills", "escrever-testes.md"), template: "skills/escrever-testes.md", ctx },
     { destino: path.join(governancaDir, "skills", "mapear-logica-do-sistema.md"), template: "skills/mapear-logica-do-sistema.md", ctx },
     { destino: path.join(governancaDir, "skills", "mapear-comportamento-autonomo.md"), template: "skills/mapear-comportamento-autonomo.md", ctx },
-    { destino: path.join(governancaDir, "skills", "superar-codigo.md"), template: "skills/superar-codigo.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-consistencia-visual.md"), template: "skills/auditar-consistencia-visual.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-prontidao-producao.md"), template: "skills/auditar-prontidao-producao.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-comercializacao.md"), template: "skills/auditar-comercializacao.md", ctx },
@@ -150,6 +153,22 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "FAXINA-COMPLETA.md"), template: "skills/FAXINA-COMPLETA.md", ctx },
     { destino: path.join(governancaDir, "relatorios", "_template.md"), template: "relatorios/_template.md", ctx },
   ];
+
+  if (ctx.ehGas) {
+    arquivos.push({
+      destino: path.join(governancaDir, "skills", "reformar-repositorio-gas.md"),
+      template: "skills/reformar-repositorio-gas.md",
+      ctx,
+    });
+  }
+
+  if (ctx.temPostgres) {
+    arquivos.push(
+      { destino: path.join(governancaDir, "skills", "criar-extrair-modelo.md"), template: "skills/criar-extrair-modelo.md", ctx },
+      { destino: path.join(governancaDir, "templates", "extrair-modelo.ts"), template: "scripts/extrair-modelo.ts", ctx },
+      { destino: path.join(governancaDir, "templates", "extrair-modelo.ps1"), template: "scripts/extrair-modelo.ps1", ctx },
+    );
+  }
 
   if (!fs.existsSync(path.join(governancaDir, "PRD.md"))) {
     arquivos.push({ destino: path.join(governancaDir, "PRD.md"), template: "PRD.md", ctx });

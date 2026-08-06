@@ -48,12 +48,12 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
           </div>
           <div className="flex items-center gap-3">
             {projeto.presetFrontend === "nenhum" && projeto.vinculado ? (
-              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill deduzir-presets-do-repositorio.md">frontend: aguardando detecção</span>
+              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill alinhar-stack-com-presets.md">frontend: aguardando detecção</span>
             ) : (
               <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetFrontend}</span>
             )}
             {projeto.presetBackend === "nenhum" && projeto.vinculado ? (
-              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill deduzir-presets-do-repositorio.md">backend: aguardando detecção</span>
+              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill alinhar-stack-com-presets.md">backend: aguardando detecção</span>
             ) : (
               <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetBackend}</span>
             )}

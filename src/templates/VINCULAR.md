@@ -19,7 +19,7 @@ implementar **a partir do repositório existente**.
 > nas notas persistentes do `AGENTS.md`.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
-> antes de executar a skill `comparar-stack-com-plano.md` em
+> antes de executar a skill `alinhar-stack-com-presets.md` em
 > `governanca/skills/`. Ela orienta a comparação bidirecional entre a stack
 > identificada no repositório e a stack do plano.
 
@@ -31,7 +31,7 @@ implementar **a partir do repositório existente**.
 - Examine a estrutura de pastas para entender a organização
 - Verifique se há ferramentas de teste, lint, build configuradas
 - Identifique serviços externos (bancos, APIs, gateways de pagamento)
-- Execute a skill `deduzir-presets-do-repositorio.md` em `governanca/skills/`
+- Execute a skill `alinhar-stack-com-presets.md` em `governanca/skills/`
   para comparar a stack detectada com os presets da progenitora
 
 ## 3. Preencha o Livro de Arquitetura
