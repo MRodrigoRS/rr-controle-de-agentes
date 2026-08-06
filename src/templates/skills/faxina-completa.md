@@ -1,4 +1,4 @@
-# FAXINA COMPLETA
+# Skill: Faxina Completa
 
 > Meta-skill que orquestra todas as auditorias do projeto em uma única
 > varredura, do código interno à liberação para produção. Execute quando
@@ -17,7 +17,7 @@ em `governanca/relatorios/_template.md`.
 | 3 | `auditar-responsividade.md` | `auditoria-responsividade.md` |
 | 4 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
 | 5 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
-{{#if ehGas}}| 6 | `reformar-repositorio-gas.md` | `auditoria-gas.md` |{{/if}}
+{{#if ehGas}}| 6 | `auditar-repositorio-gas.md` | `auditoria-gas.md` |{{/if}}
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas e oportunidades de evolução) →

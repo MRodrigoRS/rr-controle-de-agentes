@@ -1,4 +1,4 @@
-# Skill: Escrever Testes
+# Skill: Criar Testes
 
 > Orienta o agente a criar e manter testes adequados à stack do projeto,
 > seguindo as convenções e garantindo cobertura mínima aceitável.

@@ -108,7 +108,7 @@ Consulte `governanca/livro-arquitetura/` para visão geral da arquitetura do pro
 
 ## Estrutura de Pastas
 
-Siga a convenção em `governanca/skills/CONVENCOES.md` para organização dos diretórios.
+Siga a convenção em `governanca/skills/convencoes-estrutura-de-pastas.md` para organização dos diretórios.
 
 ## Sprints
 
@@ -134,10 +134,10 @@ Abra **apenas** a skill relevante para a tarefa atual:
 
 | Skill | Quando usar |
 |---|---|
-| `CONVENCOES.md` | Organizar pastas, criar estrutura, mover arquivos |
+| `convencoes-estrutura-de-pastas.md` | Organizar pastas, criar estrutura, mover arquivos |
 | `alinhar-stack-com-presets.md` | Plano/PRD com esboço de stack; vinculação de repositório existente |
 | `criar-scripts-auxiliares.md` | Setup do ambiente; automatizar tarefas repetitivas |
-| `escrever-testes.md` | A cada tarefa: padrões de teste por stack e depuração de testes falhando |
+| `criar-testes.md` | A cada tarefa: padrões de teste por stack e depuração de testes falhando |
 | `mapear-logica-do-sistema.md` | Ao final de cada sprint (atualiza `livro-arquitetura/03-logica-do-sistema.md`) |
 | `mapear-comportamento-autonomo.md` | Quando existir trigger/job/webhook/worker novo (atualiza `livro-arquitetura/04-comportamento-autonomo.md`) |
 {{#if temPostgres}}| `criar-extrair-modelo.md` | Projetos PostgreSQL: criar o script que extrai `modelo-de-dados/` do banco real |{{/if}}
@@ -147,8 +147,8 @@ Abra **apenas** a skill relevante para a tarefa atual:
 | `auditar-prontidao-producao.md` | Antes do primeiro deploy e após mudanças de infraestrutura/segurança |
 | `auditar-comercializacao.md` | Antes de ativar pagamentos reais; após integrar provedor de pagamento |
 | `auditar-competitividade.md` | Análise de mercado, concorrência e precificação |
-{{#if ehGas}}| `reformar-repositorio-gas.md` | Projetos GAS: reforma de repositório (performance de I/O, LockService, quotas, segurança, deploy) |{{/if}}
-| `FAXINA-COMPLETA.md` | "Faxina geral" orquestrando todas as auditorias em sequência |
+{{#if ehGas}}| `auditar-repositorio-gas.md` | Projetos GAS: reforma de repositório (performance de I/O, LockService, quotas, segurança, deploy) |{{/if}}
+| `faxina-completa.md` | "Faxina geral" orquestrando todas as auditorias em sequência |
 
 `CATALOGO_TECNOLOGIAS.md` é o catálogo de tecnologias da progenitora — consulte
 antes de escolher ou propor novas tecnologias.

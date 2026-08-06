@@ -138,26 +138,26 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: caminhoAgents, template: "AGENTS.md", ctx },
     { destino: path.join(governancaDir, "PLANO.md"), template: "PLANO.md", ctx },
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
-    { destino: path.join(governancaDir, "skills", "CONVENCOES.md"), template: "skills/CONVENCOES.md", ctx },
+    { destino: path.join(governancaDir, "skills", "convencoes-estrutura-de-pastas.md"), template: "skills/convencoes-estrutura-de-pastas.md", ctx },
     { destino: path.join(governancaDir, "skills", "alinhar-stack-com-presets.md"), template: "skills/alinhar-stack-com-presets.md", ctx },
     { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-repositorio.md"), template: "skills/auditar-repositorio.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-responsividade.md"), template: "skills/auditar-responsividade.md", ctx },
-    { destino: path.join(governancaDir, "skills", "escrever-testes.md"), template: "skills/escrever-testes.md", ctx },
+    { destino: path.join(governancaDir, "skills", "criar-testes.md"), template: "skills/criar-testes.md", ctx },
     { destino: path.join(governancaDir, "skills", "mapear-logica-do-sistema.md"), template: "skills/mapear-logica-do-sistema.md", ctx },
     { destino: path.join(governancaDir, "skills", "mapear-comportamento-autonomo.md"), template: "skills/mapear-comportamento-autonomo.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-consistencia-visual.md"), template: "skills/auditar-consistencia-visual.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-prontidao-producao.md"), template: "skills/auditar-prontidao-producao.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-comercializacao.md"), template: "skills/auditar-comercializacao.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-competitividade.md"), template: "skills/auditar-competitividade.md", ctx },
-    { destino: path.join(governancaDir, "skills", "FAXINA-COMPLETA.md"), template: "skills/FAXINA-COMPLETA.md", ctx },
+    { destino: path.join(governancaDir, "skills", "faxina-completa.md"), template: "skills/faxina-completa.md", ctx },
     { destino: path.join(governancaDir, "relatorios", "_template.md"), template: "relatorios/_template.md", ctx },
   ];
 
   if (ctx.ehGas) {
     arquivos.push({
-      destino: path.join(governancaDir, "skills", "reformar-repositorio-gas.md"),
-      template: "skills/reformar-repositorio-gas.md",
+      destino: path.join(governancaDir, "skills", "auditar-repositorio-gas.md"),
+      template: "skills/auditar-repositorio-gas.md",
       ctx,
     });
   }

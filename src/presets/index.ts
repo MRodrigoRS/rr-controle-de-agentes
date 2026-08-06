@@ -60,7 +60,7 @@ export function obterCriteriosQualidade(): { titulo: string; descricao: string }
     { titulo: "Build sem erros", descricao: "Código deve passar em `npm run build` (ou equivalente) sem erros." },
     { titulo: "Commits descritivos", descricao: "Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê." },
     { titulo: "Testes incrementais", descricao: "Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades." },
-    { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em `CONVENCOES.md`. Não crie pastas soltas na raiz do projeto." },
+    { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em `convencoes-estrutura-de-pastas.md`. Não crie pastas soltas na raiz do projeto." },
     { titulo: "Documentação de decisões", descricao: "Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`." },
   ];
 }

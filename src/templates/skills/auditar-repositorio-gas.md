@@ -1,4 +1,4 @@
-# Skill: Reformar Repositório Google Apps Script
+# Skill: Auditar Repositório Google Apps Script
 
 > Instrui o agente a auditar e reformar qualquer repositório baseado na stack
 > Google Apps Script (GAS), aplicando as práticas de performance, segurança

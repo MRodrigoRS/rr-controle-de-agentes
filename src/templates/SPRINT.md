@@ -39,7 +39,7 @@ sessao_atual: 0
 1. Comece sempre perguntando ao usuário se pode iniciar esta sprint.
 2. Execute cada tarefa em ordem.
 3. **Testes:** após implementar cada tarefa, escreva os testes
-   correspondentes seguindo `escrever-testes.md` em `governanca/skills/`
+   correspondentes seguindo `criar-testes.md` em `governanca/skills/`
    (padrão de ferramentas, cobertura por stack e fluxo de depuração
    quando um teste falhar).
 4. **Antes de apresentar o resultado**, percorra este checklist:
