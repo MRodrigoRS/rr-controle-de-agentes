@@ -241,6 +241,14 @@ class JanelaPrincipal(QMainWindow):
         layout_matriz.addWidget(btn_procurar_matriz)
         layout_regras.addLayout(layout_matriz)
 
+        # Linha 1.5: Nome Base Personalizado para Subpastas
+        layout_nome_base = QHBoxLayout()
+        layout_nome_base.addWidget(QLabel("Nome Base das Subpastas:"))
+        self.txt_nome_base = QLineEdit()
+        self.txt_nome_base.setPlaceholderText("Ex: Vídeos (ou Apresentações, Cursos, etc.)")
+        layout_nome_base.addWidget(self.txt_nome_base, stretch=3)
+        layout_regras.addLayout(layout_nome_base)
+
         # Linha 2: Algoritmo de Divisão
         layout_algos = QHBoxLayout()
 
@@ -449,7 +457,9 @@ class JanelaPrincipal(QMainWindow):
         """Calcula o resultado da divisão com base na aba/categoria ativa e regras."""
         idx_aba = self.tabs_categorias.currentIndex()
         cat_map = {0: "Vídeos", 1: "Áudios", 2: "Imagens", 3: "Documentos", 4: "Atípicos"}
-        nome_base = cat_map.get(idx_aba, "Grupo")
+
+        nome_digitado = self.txt_nome_base.text().strip()
+        nome_base = nome_digitado if nome_digitado else cat_map.get(idx_aba, "Grupo")
 
         # Pega arquivos da categoria atual
         widget = self.tabs_categorias.currentWidget()
@@ -507,7 +517,11 @@ class JanelaPrincipal(QMainWindow):
         matriz = self.txt_pasta_matriz.text().strip() or "Arquivos_Organizados"
 
         dialog = DialogPreviewSimulacao(resultado, matriz, self)
-        dialog.exec()
+        if dialog.exec():
+            widget = self.tabs_categorias.currentWidget()
+            if isinstance(widget, TabelaArquivos):
+                widget.carregar_arquivos(widget.arquivos_mapeados)
+            self._recalcular_totais()
 
     def _executar_movimentacao(self) -> None:
         if not self.todos_arquivos or not self.sessao_atual:
