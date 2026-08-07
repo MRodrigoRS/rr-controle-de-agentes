@@ -80,6 +80,21 @@ class DialogPreviewSimulacao(QDialog):
         layout_resumo.addWidget(self.lbl_sobredim)
         layout_principal.addWidget(box_resumo)
 
+        # Barra de Ações Rápidas de Visualização (Expandir / Recolher)
+        layout_controles = QHBoxLayout()
+        btn_expandir = QPushButton("📂 Expandir Todas as Pastas")
+        btn_expandir.setObjectName("btn_secundario")
+        btn_expandir.clicked.connect(self._expandir_todas_pastas)
+
+        btn_recolher = QPushButton("📁 Recolher Todas as Pastas")
+        btn_recolher.setObjectName("btn_secundario")
+        btn_recolher.clicked.connect(self._recolher_todas_pastas)
+
+        layout_controles.addWidget(btn_expandir)
+        layout_controles.addWidget(btn_recolher)
+        layout_controles.addStretch()
+        layout_principal.addLayout(layout_controles)
+
         # --- PAINÉIS LADO A LADO ---
         layout_dual = QHBoxLayout()
 
@@ -354,3 +369,13 @@ class DialogPreviewSimulacao(QDialog):
                     import subprocess
 
                     subprocess.Popen(["xdg-open", caminho])
+
+    def _expandir_todas_pastas(self) -> None:
+        """Expande todas as pastas nas duas árvores simultaneamente."""
+        self.tree_origem.expandAll()
+        self.tree_destino.expandAll()
+
+    def _recolher_todas_pastas(self) -> None:
+        """Recolhe todas as pastas nas duas árvores simultaneamente."""
+        self.tree_origem.collapseAll()
+        self.tree_destino.collapseAll()
