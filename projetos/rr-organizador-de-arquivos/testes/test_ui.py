@@ -71,4 +71,5 @@ def test_dialog_preview_simulacao(qtbot):
     qtbot.addWidget(dialog)
 
     assert "Simulação Prévia da Organização" in dialog.windowTitle()
-    assert dialog.tree.topLevelItemCount() == 2  # Raiz + Nó de Alerta Sobredimensionado
+    assert dialog.tree_destino.topLevelItemCount() == 2  # Raiz + Nó de Alerta Sobredimensionado
+    assert dialog.tree_origem.topLevelItemCount() == 1  # Pasta de origem HD
