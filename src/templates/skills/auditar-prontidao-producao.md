@@ -10,7 +10,9 @@
 2. Para cada item, marque **OK**, **Bloqueante**, **Recomendado** ou **N/A**
 3. Gere relatório em `governanca/relatorios/prontidao-producao.md`
 4. Corrija todos os itens **Bloqueantes** antes do deploy
-5. Apresente o relatório ao usuário com as ações tomadas
+5. **Execute a skill `auditar-textos-usuario.md`** — garanta que nada de
+   jargão técnico ou contatos/valores fictícios irá a público no que o cliente vê
+6. Apresente o relatório ao usuário com as ações tomadas
 
 ---
 

@@ -72,7 +72,7 @@ Com a stack validada, configure o ambiente:
 
  1. Crie os arquivos de configuração do projeto:
     {{#if temPresets}}
-    - Frontend: `package.json`, `tsconfig.json`, configs de build/lint
+    - Frontend: {{setupFrontend}}
     - Backend: {{setupBackend}}
     {{else}}
     - Crie os arquivos conforme a stack definida
@@ -103,4 +103,4 @@ Com o ambiente pronto, inicie a Sprint 1:
 - Mantenha as notas persistentes em AGENTS.md atualizadas.
 - Registre decisões técnicas no livro de arquitetura.
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

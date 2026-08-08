@@ -11,6 +11,17 @@ interface PresetOpcao {
   stack: string[];
 }
 
+interface FullstackOpcao {
+  id: string;
+  nome: string;
+  categoria: string;
+  destaque?: string;
+  frontend: string;
+  backend: string;
+  objetivo: string;
+  vantagens: string[];
+}
+
 function CardPreset({ item, selecionado, aoSelecionar, nome }: { item: PresetOpcao; selecionado: boolean; aoSelecionar: () => void; nome: string }) {
   return (
     <label className={`block cursor-pointer rounded-xl border p-4 transition ${selecionado ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"}`}>
@@ -37,10 +48,44 @@ function CardPreset({ item, selecionado, aoSelecionar, nome }: { item: PresetOpc
   );
 }
 
+function CardFullstack({ combo, fe, be, selecionado, aoSelecionar }: { combo: FullstackOpcao; fe: PresetOpcao | undefined; be: PresetOpcao | undefined; selecionado: boolean; aoSelecionar: () => void }) {
+  return (
+    <button type="button" onClick={aoSelecionar}
+      className={`block cursor-pointer rounded-xl border p-4 text-left transition ${selecionado ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"}`}>
+      <div className="flex items-center justify-between gap-2">
+        <span className="font-semibold text-[#e6edf3]">{combo.nome}</span>
+        <span className="rounded-full bg-[#58a6ff]/10 px-2 py-0.5 text-xs text-[#58a6ff] whitespace-nowrap">{combo.categoria}</span>
+      </div>
+      {combo.destaque && <p className="mt-0.5 text-xs text-[#58a6ff]">{combo.destaque}</p>}
+      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-sm">
+        <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9]">{fe?.nome ?? combo.frontend}</span>
+        <span className="text-[#8b949e]">+</span>
+        <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9]">{be?.nome ?? combo.backend}</span>
+      </div>
+      <p className="mt-2 text-sm text-[#8b949e]">{combo.objetivo}</p>
+      {combo.vantagens.length > 0 && (
+        <ul className="mt-2 space-y-1">
+          {combo.vantagens.map((v, i) => (
+            <li key={i} className="flex gap-1.5 text-xs text-[#8b949e]">
+              <span className="text-[#58a6ff]">•</span>
+              <span>{v}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      {selecionado && (
+        <p className="mt-2 text-xs font-medium text-[#58a6ff]">✓ Selecionado</p>
+      )}
+    </button>
+  );
+}
+
 export default function CriarProjeto() {
   const router = useRouter();
   const [frontends, setFrontends] = useState<PresetOpcao[]>([]);
   const [backends, setBackends] = useState<PresetOpcao[]>([]);
+  const [fullstacks, setFullstacks] = useState<FullstackOpcao[]>([]);
+  const [aba, setAba] = useState<"conjuntos" | "livre">("conjuntos");
   const [carregando, setCarregando] = useState(true);
   const [tipo, setTipo] = useState<"novo" | "vincular">("novo");
   const [nome, setNome] = useState("");
@@ -78,6 +123,7 @@ export default function CriarProjeto() {
       .then((data) => {
         setFrontends(data.frontend);
         setBackends(data.backend);
+        setFullstacks(data.fullstacks ?? []);
         if (data.frontend.length > 0) setFrontend(data.frontend[0].id);
         if (data.backend.length > 0) setBackend(data.backend[0].id);
         setCarregando(false);
@@ -230,24 +276,59 @@ export default function CriarProjeto() {
         {tipo === "novo" && (
           <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
             <h2 className="font-semibold text-[#e6edf3]">Stack Tecnológica</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {frontends.length > 0 && (
-                <div className="space-y-3">
-                  <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
-                  {frontends.map((f) => (
-                    <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
-                  ))}
-                </div>
-              )}
-              {backends.length > 0 && (
-                <div className="space-y-3">
-                  <p className="text-sm font-medium text-[#8b949e]">Backend</p>
-                  {backends.map((b) => (
-                    <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
-                  ))}
-                </div>
-              )}
+
+            <div className="flex gap-1 rounded-lg bg-[#0d1117] p-1">
+              <button type="button" onClick={() => setAba("conjuntos")}
+                className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition ${aba === "conjuntos" ? "bg-[#21262d] text-[#e6edf3]" : "text-[#8b949e] hover:text-[#c9d1d9]"}`}>
+                Conjuntos Recomendados
+              </button>
+              <button type="button" onClick={() => setAba("livre")}
+                className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition ${aba === "livre" ? "bg-[#21262d] text-[#e6edf3]" : "text-[#8b949e] hover:text-[#c9d1d9]"}`}>
+                Escolha Livre
+              </button>
             </div>
+
+            {aba === "conjuntos" ? (
+              <div className="space-y-3">
+                <p className="text-sm text-[#8b949e]">
+                  Combinações prontas com as melhores tecnologias para cada tipo de produto.
+                  Clique num conjunto para selecionar frontend e backend. Para montar manualmente,
+                  use a aba <span className="text-[#c9d1d9]">Escolha Livre</span>.
+                </p>
+                {fullstacks.length === 0 ? (
+                  <p className="text-sm text-[#8b949e]">Nenhum conjunto recomendado disponível.</p>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {fullstacks.map((c) => (
+                      <CardFullstack key={c.id} combo={c}
+                        fe={frontends.find((f) => f.id === c.frontend)}
+                        be={backends.find((b) => b.id === c.backend)}
+                        selecionado={frontend === c.frontend && backend === c.backend}
+                        aoSelecionar={() => { setFrontend(c.frontend); setBackend(c.backend); }} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2">
+                {frontends.length > 0 && (
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium text-[#8b949e]">Frontend</p>
+                    {frontends.map((f) => (
+                      <CardPreset key={f.id} item={f} selecionado={frontend === f.id} aoSelecionar={() => setFrontend(f.id)} nome="frontend" />
+                    ))}
+                  </div>
+                )}
+                {backends.length > 0 && (
+                  <div className="space-y-3">
+                    <p className="text-sm font-medium text-[#8b949e]">Backend</p>
+                    {backends.map((b) => (
+                      <CardPreset key={b.id} item={b} selecionado={backend === b.id} aoSelecionar={() => setBackend(b.id)} nome="backend" />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 

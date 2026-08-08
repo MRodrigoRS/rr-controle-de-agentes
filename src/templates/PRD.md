@@ -30,4 +30,4 @@
 
 ---
 
-*Template gerado pelo RR Controle de Agentes. Edite e mantenha atualizado durante o desenvolvimento.*
+*Template gerado por RR Software (Rodrigo Rafael). Edite e mantenha atualizado durante o desenvolvimento.*

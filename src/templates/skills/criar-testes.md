@@ -84,6 +84,73 @@ dotnet test -c Release --collect:"XPlat Code Coverage"  # cobertura
 
 **Comandos:** mesmos do Next.js acima.
 
+### Python (FastAPI / NiceGUI)
+
+| Tipo | Ferramenta | Localização |
+|------|-----------|-------------|
+| Unitário | pytest | `testes/unit/` — espelha `src/` |
+| API | pytest + httpx (TestClient) | `testes/integracao/api/` |
+| UI (NiceGUI) | pytest + utilitários do NiceGUI | `testes/ui/` |
+| Cobertura | pytest-cov | `testes/` |
+
+**Comandos:**
+```bash
+uv run pytest                     # todos os testes
+uv run pytest testes/unit/        # filtro por diretório
+uv run pytest --cov=src --cov-report=term-missing   # cobertura
+```
+
+**Convenções:**
+- Nome de arquivos: `test_<modulo>.py`; funções `test_<comportamento>` ou classes `Test<Modulo>`
+- API: use `TestClient`/`httpx` contra a app FastAPI com banco de teste isolado (SQLite em memória ou banco descartável)
+- Regras de negócio: testes unitários puros nas funções de `src/servicos/`, sem tocar banco/HTTP
+
+### Python Desktop (PySide6)
+
+| Tipo | Ferramenta | Localização |
+|------|-----------|-------------|
+| Unitário | pytest | `testes/unit/` — espelha `src/` |
+| UI (Qt) | pytest + pytest-qt (`qtbot`) | `testes/ui/` |
+| Persistência | pytest + banco temporário | `testes/dados/` |
+| Cobertura | pytest-cov | `testes/` |
+
+**Comandos:**
+```bash
+uv run pytest                     # todos os testes
+uv run pytest testes/ui/          # testes da interface
+uv run pytest --cov=src --cov-report=term-missing   # cobertura
+```
+
+**Convenções:**
+- Teste o **comportamento**, não o widget em si — use `qtbot` para simular
+  cliques, entrada de texto e verificar o estado resultante
+- Regras de negócio: testes unitários puros em `src/servicos/`, sem instanciar a UI
+- Persistência: banco SQLite temporário (`tmp_path`), nunca o banco real do usuário
+
+### Mobile (MAUI / Flutter / React Native)
+
+| Stack | Tipo | Ferramenta | Localização |
+|-------|------|-----------|-------------|
+| MAUI | Unit (ViewModels/Services) | xUnit + Moq | `testes/unit/` |
+| MAUI | Integração de API | xUnit + HttpClient fake | `testes/integracao/` |
+| Flutter | Unit / Widget | Flutter Test | `test/<modulo>_test.dart` |
+| Flutter | Integração | integration_test | `integration_test/` |
+| React Native | Unit / Componente | Jest + Testing Library | `src/__tests__/` |
+| React Native | E2E | Detox ou Maestro | `e2e/` |
+
+**Comandos:**
+```bash
+dotnet test                        # MAUI (xUnit)
+flutter test                       # Flutter (unit + widget)
+flutter test integration_test      # Flutter (integração)
+npx jest                           # React Native
+```
+
+**Convenções:**
+- Teste ViewModels/Services isolando dependências com mock (Moq / manual fakes) — nunca o emulador no teste unitário
+- Regras de negócio fora dos widgets/Views — em camadas testáveis (`Services`/`servicos`/`lib`)
+- Permissões, deep links e notificações exigem validação em **dispositivo físico**
+
 ## Cobertura Mínima
 
 - **Funções puras** (helpers, utils, validações): 90%+ de cobertura

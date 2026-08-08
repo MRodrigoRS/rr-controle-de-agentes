@@ -75,7 +75,7 @@ Todo template deve incluir:
 E todo template deve terminar com:
 
 ```markdown
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*
 ```
 
 ### Exceções
@@ -117,5 +117,5 @@ Todo template, sem exceção, termina com o rodapé de autoria. A única variaç
 é o `AGENTS.md`, que coloca a atribuição no topo como blockquote.
 
 ```markdown
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*
 ```

@@ -87,4 +87,4 @@ envio de e-mail, atualização de relatórios.*
 > Mantenha atualizado — use a skill `mapear-logica-do-sistema.md` ao final
 > de cada sprint.
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

@@ -21,4 +21,16 @@
 - **Formatação:** {{formatacao}}
 - **CI/CD:** {{cicd}}
 
-*Template gerado pelo RR Controle de Agentes.*
+## Stack Completa
+
+Todas as tecnologias previstas pelos presets — use-as desde o início quando
+a funcionalidade exigir. Não reinvente o que já está na stack.
+
+{{#if stackFrontend}}
+- **Frontend:** {{stackFrontend}}
+{{/if}}
+{{#if stackBackend}}
+- **Backend:** {{stackBackend}}
+{{/if}}
+
+*Template gerado por RR Software (Rodrigo Rafael).*

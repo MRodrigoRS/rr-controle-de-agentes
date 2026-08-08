@@ -137,6 +137,96 @@
       }
     },
     {
+      "id": "pyside6-desktop",
+      "nome": "PySide6 Desktop (Python)",
+      "descricao": "Aplicação desktop Windows nativa em Python com PySide6 (Qt 6), visual moderno via Qt Fusion + QSS. Distribuição como executável standalone compilado com Nuitka (sem Python instalado na máquina do usuário). Livre e gratuita — sem enforcement de licença.",
+      "destaque": "Desktop nativo Python, executável livre",
+      "stack": ["Python 3.12", "PySide6 (Qt 6)", "Qt Widgets + QSS", "Nuitka", "pytest-qt", "Ruff", "mypy", "pre-commit", "uv"],
+      "pastas": ["src/ui", "src/ui/janelas", "src/ui/componentes", "src/recursos"],
+      "arquitetura": {
+        "frontendFramework": "PySide6 (Qt 6)",
+        "frontendEstilo": "Qt Widgets + QSS (Fusion)",
+        "frontendTestes": "pytest + pytest-qt",
+        "lint": "Ruff",
+        "formatacao": "Ruff"
+      }
+    },
+    {
+      "id": "pyside6-desktop-comercial",
+      "nome": "PySide6 Desktop Comercial (Python)",
+      "descricao": "Aplicação desktop Windows nativa em Python com PySide6 (Qt 6), visual moderno via Qt Fusion + QSS, destinada a produto comercializável. Executável compilado com Nuitka + ofuscação runtime e licenciamento via PyArmor (licença com vencimento, bind de hardware e trial), empacotado em instalador Inno Setup.",
+      "destaque": "Executável protegido com licenciamento",
+      "stack": ["Python 3.12", "PySide6 (Qt 6)", "Qt Widgets + QSS", "Nuitka", "PyArmor", "Inno Setup", "pytest-qt", "Ruff", "mypy", "pre-commit", "uv"],
+      "pastas": ["src/ui", "src/ui/janelas", "src/ui/componentes", "src/recursos"],
+      "arquitetura": {
+        "frontendFramework": "PySide6 (Qt 6)",
+        "frontendEstilo": "Qt Widgets + QSS (Fusion)",
+        "frontendTestes": "pytest + pytest-qt",
+        "lint": "Ruff",
+        "formatacao": "Ruff"
+      }
+    },
+    {
+      "id": "nicegui-python",
+      "nome": "NiceGUI (Python)",
+      "descricao": "Interface web moderna e responsiva 100% em Python com NiceGUI, construído sobre Quasar (Vue) e Tailwind CSS embutidos — sem HTML/JS/CSS manual. Interfaces reativas via WebSocket, ideais para dashboards administrativos, ferramentas internas e produtos SaaS que preferem manter uma única linguagem.",
+      "destaque": "UI moderna em Python puro (Quasar + Tailwind)",
+      "stack": ["Python 3.12", "NiceGUI", "Quasar", "Tailwind CSS", "uv", "Ruff", "pytest", "pre-commit"],
+      "pastas": ["src/ui", "src/ui/componentes", "src/ui/paginas"],
+      "arquitetura": {
+        "frontendFramework": "NiceGUI (Python) + FastAPI subjacente",
+        "frontendEstilo": "Quasar + Tailwind (embutidos no NiceGUI)",
+        "frontendTestes": "pytest + utilidades de teste do NiceGUI",
+        "lint": "Ruff",
+        "formatacao": "Ruff"
+      }
+    },
+    {
+      "id": "maui-app",
+      "nome": "MAUI (C#/.NET)",
+      "descricao": "Aplicativo mobile cross-platform (Android, iOS, Windows, macOS) em C# com .NET MAUI, XAML e Shell navigation. MVVM com CommunityToolkit.Mvvm e visual nativo por plataforma. Testes de ViewModels/Services com xUnit + Moq.",
+      "destaque": "Mobile cross-platform em C#/.NET",
+      "stack": [".NET 9", "C#", "MAUI", "XAML", "CommunityToolkit.Mvvm", "MAUI Community Toolkit", "MAUI Essentials", "FluentValidation", "xUnit", "Moq", ".NET Roslyn Analyzers", "dotnet format"],
+      "pastas": ["src/Views", "src/ViewModels", "src/Models", "src/Services", "src/Resources"],
+      "arquitetura": {
+        "frontendFramework": "MAUI (.NET 9)",
+        "frontendEstilo": "XAML (MAUI, Shell)",
+        "frontendTestes": "xUnit + Moq (ViewModels/Services)",
+        "lint": ".NET Roslyn Analyzers",
+        "formatacao": "dotnet format"
+      }
+    },
+    {
+      "id": "flutter-app",
+      "nome": "Flutter (Dart)",
+      "descricao": "Aplicativo mobile cross-platform (Android, iOS, web, desktop) em Dart com Flutter e Material 3. UI declarativa de alta performance com hot reload, estado com Riverpod e navegação com GoRouter.",
+      "destaque": "Mobile e além, UI declarativa",
+      "stack": ["Dart", "Flutter 3", "Material Design 3", "GoRouter", "Riverpod", "Flutter Test", "integration_test", "flutter_lints", "dart format"],
+      "pastas": ["lib/ui", "lib/ui/screens", "lib/ui/widgets", "lib/modelos", "lib/servicos", "lib/dados"],
+      "arquitetura": {
+        "frontendFramework": "Flutter 3 (Dart)",
+        "frontendEstilo": "Material Design 3",
+        "frontendTestes": "Flutter Test + integration_test",
+        "lint": "flutter_lints",
+        "formatacao": "dart format"
+      }
+    },
+    {
+      "id": "react-native-expo",
+      "nome": "React Native + Expo",
+      "descricao": "Aplicativo mobile cross-platform (Android, iOS, web) em TypeScript com React Native e Expo SDK. Navegação com expo-router, estado com Zustand, dados com TanStack Query e OTA updates via Expo. Builds gerenciados e deploys simples.",
+      "destaque": "Mobile em TypeScript com Expo",
+      "stack": ["React Native", "Expo SDK", "TypeScript 5", "expo-router", "Zustand", "TanStack Query", "React Hook Form", "Zod", "Jest", "Testing Library", "Biome"],
+      "pastas": ["src/app", "src/componentes", "src/hooks", "src/estado", "src/lib"],
+      "arquitetura": {
+        "frontendFramework": "React Native + Expo",
+        "frontendEstilo": "Componentes nativos + StyleSheet",
+        "frontendTestes": "Jest + Testing Library",
+        "lint": "Biome",
+        "formatacao": "Biome"
+      }
+    },
+    {
       "id": "nenhum",
       "nome": "Nenhum",
       "descricao": "Sem frontend definido. Apenas backend ou biblioteca. Útil para APIs puras, pacotes npm, workers e microsserviços.",
@@ -276,6 +366,37 @@
       }
     },
     {
+      "id": "python-sqlite",
+      "nome": "Python + SQLite (Local)",
+      "descricao": "Persistência local embutida em aplicações Python (desktop ou ferramenta local) com SQLAlchemy 2 + Alembic e SQLite em arquivo único. Zero servidor de banco. Curadoria de ponta: Ruff, mypy, pytest, uv. Ideal para apps desktop e utilitários locais.",
+      "destaque": "Banco local embutido em Python, zero setup",
+      "stack": ["Python 3.12", "SQLite", "SQLAlchemy 2", "Alembic", "Pydantic v2", "pytest", "Ruff", "mypy", "uv"],
+      "pastas": ["src/dados", "src/modelos", "src/servicos"],
+      "arquitetura": {
+        "backendRuntime": "Python 3.12 (in-process)",
+        "backendBanco": "SQLite",
+        "backendORM": "SQLAlchemy 2 + Alembic",
+        "lint": "Ruff",
+        "formatacao": "Ruff"
+      }
+    },
+    {
+      "id": "python-fastapi",
+      "nome": "Python + FastAPI",
+      "descricao": "Backend moderno e fortemente tipado em Python com FastAPI, SQLAlchemy 2 + Alembic (migrações), Pydantic v2 e PostgreSQL. Curadoria de código de ponta: Ruff (lint + formatação), mypy (checagem de tipos), pytest + httpx (testes), pre-commit e uv como gerenciador de dependências. Ideal para APIs REST, SaaS e integrações corporativas.",
+      "destaque": "API Python moderna com curadoria de código de ponta",
+      "stack": ["Python 3.12", "FastAPI", "SQLAlchemy 2", "Alembic", "Pydantic v2", "PostgreSQL", "pytest", "httpx", "Ruff", "mypy", "pre-commit", "uv", "GitHub Actions"],
+      "pastas": ["src/api", "src/servicos", "src/dados", "src/modelos", "testes"],
+      "arquitetura": {
+        "backendRuntime": "Python 3.12 + FastAPI",
+        "backendBanco": "PostgreSQL",
+        "backendORM": "SQLAlchemy 2 + Alembic",
+        "lint": "Ruff",
+        "formatacao": "Ruff",
+        "cicd": "GitHub Actions"
+      }
+    },
+    {
       "id": "nenhum",
       "nome": "Nenhum",
       "descricao": "Sem backend definido. Apenas frontend estático ou biblioteca frontend. Útil para sites estáticos, landing pages e aplicações que não persistem dados.",
@@ -285,6 +406,242 @@
       "arquitetura": {
         "backendRuntime": "Nenhum"
       }
+    }
+  ],
+  "fullstacks": [
+    {
+      "id": "web-saas",
+      "nome": "SaaS Web (Next.js + Supabase)",
+      "categoria": "Web",
+      "destaque": "Carro-chefe",
+      "frontend": "nextjs-app-router",
+      "backend": "supabase-online",
+      "objetivo": "SaaS ou portal com autenticação, storage, realtime e pagamentos gerenciados.",
+      "vantagens": [
+        "Next.js fullstack + Supabase (Postgres + Auth + Storage + Realtime)",
+        "Stripe e @supabase/ssr já embutidos no preset",
+        "Zero infraestrutura própria"
+      ]
+    },
+    {
+      "id": "web-corporativo",
+      "nome": "Portal Corporativo (Next.js + Postgres)",
+      "categoria": "Web",
+      "frontend": "nextjs-app-router",
+      "backend": "postgres-drizzle",
+      "objetivo": "Portal ou ERP com banco PostgreSQL próprio e ORM leve.",
+      "vantagens": [
+        "Controle total da infraestrutura via Docker",
+        "Drizzle com SQL puro e tipagem forte",
+        "Migrações versionadas"
+      ]
+    },
+    {
+      "id": "dashboard-spa",
+      "nome": "Dashboard SPA (Vite + tRPC)",
+      "categoria": "Web",
+      "frontend": "vite-react-ts",
+      "backend": "trpc-backend",
+      "objetivo": "Painel administrativo SPA com API type-safe ponta a ponta.",
+      "vantagens": [
+        "tRPC elimina contratos REST manuais",
+        "Tipos inferidos do backend para o frontend",
+        "SPA ultrarrápida com Vite"
+      ]
+    },
+    {
+      "id": "mvp-local",
+      "nome": "MVP Local (Vite + SQLite)",
+      "categoria": "Web",
+      "frontend": "vite-react-ts",
+      "backend": "sqlite-local",
+      "objetivo": "MVP ou ferramenta interna local com zero setup de banco.",
+      "vantagens": [
+        "Hono + Prisma + SQLite em arquivo único",
+        "Prototipação rápida",
+        "Migrações simples"
+      ]
+    },
+    {
+      "id": "landing",
+      "nome": "Landing Page Estática (HTML/CSS/JS)",
+      "categoria": "Web",
+      "frontend": "html-css-js",
+      "backend": "nenhum",
+      "objetivo": "Landing page ou site institucional estático.",
+      "vantagens": [
+        "Sem framework, leve e rápido",
+        "Deploy em qualquer host estático"
+      ]
+    },
+    {
+      "id": "3d-experiencia",
+      "nome": "Experiência 3D (Three.js + Go)",
+      "categoria": "Jogos & 3D",
+      "frontend": "threejs-rapier-gsap",
+      "backend": "go-fiber-postgres",
+      "objetivo": "Visualização 3D interativa com física e API de baixa latência.",
+      "vantagens": [
+        "Three.js + Rapier para WebGL e física realista",
+        "GSAP para animações profissionais",
+        "Go Fiber para backend concorrente"
+      ]
+    },
+    {
+      "id": "jogo-multiplayer",
+      "nome": "Jogo 2D / Tempo Real (PixiJS + Go)",
+      "categoria": "Jogos & 3D",
+      "frontend": "pixijs-gsap-zustand",
+      "backend": "go-fiber-postgres",
+      "objetivo": "Jogo 2D ou visualização pesada com estado global e backend concorrente.",
+      "vantagens": [
+        "PixiJS renderiza via WebGL",
+        "Zustand gerencia o estado global",
+        "Go nativo para tempo real"
+      ]
+    },
+    {
+      "id": "google-script",
+      "nome": "Produto Google (GAS Web App + Sheets)",
+      "categoria": "Google",
+      "frontend": "gas-web-app",
+      "backend": "gas-sheets",
+      "objetivo": "Produto 100% no ecossistema Google, com planilha como banco.",
+      "vantagens": [
+        "Custo próximo de zero (sem servidor)",
+        "Sheets + Drive + Gmail + Docs",
+        "Pagamentos via Mercado Pago"
+      ]
+    },
+    {
+      "id": "extensao-navegador",
+      "nome": "Extensão de Navegador (MV3 + Supabase)",
+      "categoria": "Extensão",
+      "frontend": "browser-extension-mv3",
+      "backend": "supabase-online",
+      "objetivo": "Extensão Chrome/Edge com backend cloud gerenciado.",
+      "vantagens": [
+        "Manifest V3 + WXT moderno",
+        "Supabase para auth, storage e dados do usuário"
+      ]
+    },
+    {
+      "id": "desktop-windows",
+      "nome": "Desktop Windows (WPF + SQLite)",
+      "categoria": "Desktop",
+      "frontend": "wpf-desktop",
+      "backend": "sqlite-dotnet",
+      "objetivo": "Aplicação desktop Windows nativa com banco local embutido.",
+      "vantagens": [
+        "WPF + MVVM",
+        "SQLite embutido (Microsoft.Data.Sqlite)",
+        "Processamento local intensivo"
+      ]
+    },
+    {
+      "id": "dotnet-fullstack",
+      "nome": "Fullstack .NET (Blazor + ASP.NET Core)",
+      "categoria": ".NET",
+      "frontend": "blazor-web",
+      "backend": "aspnet-core-api",
+      "objetivo": "Sistema web fullstack 100% em C#/.NET.",
+      "vantagens": [
+        "Uma única linguagem em todo o projeto",
+        "Razor Components + EF Core + PostgreSQL",
+        "Testes com xUnit + bUnit"
+      ]
+    },
+    {
+      "id": "python-fullstack",
+      "nome": "Fullstack Python (NiceGUI + FastAPI)",
+      "categoria": "Python",
+      "frontend": "nicegui-python",
+      "backend": "python-fastapi",
+      "objetivo": "Produto fullstack 100% Python com UI moderna e curadoria de ponta.",
+      "vantagens": [
+        "NiceGUI com Quasar + Tailwind",
+        "FastAPI tipado com Pydantic",
+        "Curadoria de ponta (Ruff, mypy, pytest, uv)"
+      ]
+    },
+    {
+      "id": "desktop-python",
+      "nome": "Desktop Python Livre (PySide6 + SQLite)",
+      "categoria": "Python",
+      "frontend": "pyside6-desktop",
+      "backend": "python-sqlite",
+      "objetivo": "Aplicativo desktop Windows nativo com banco local e executável standalone gratuito.",
+      "vantagens": [
+        "PySide6 (Qt 6) com visual moderno",
+        "SQLite embutido via SQLAlchemy + Alembic",
+        "Executável compilado com Nuitka, sem Python instalado"
+      ]
+    },
+    {
+      "id": "desktop-python-comercial",
+      "nome": "Desktop Python Comercial (PySide6 + SQLite)",
+      "categoria": "Python",
+      "destaque": "Proteção e licenciamento",
+      "frontend": "pyside6-desktop-comercial",
+      "backend": "python-sqlite",
+      "objetivo": "Aplicativo desktop Windows comercializável, com banco local e executável protegido contra engenharia reversa e pirataria.",
+      "vantagens": [
+        "Nuitka (compile real) + PyArmor (ofuscação runtime)",
+        "Licença com vencimento, bind de hardware e trial",
+        "Instalador Inno Setup e teste em máquina limpa"
+      ]
+    },
+    {
+      "id": "mobile-dotnet-fullstack",
+      "nome": "Mobile .NET (MAUI + API)",
+      "categoria": "Mobile",
+      "frontend": "maui-app",
+      "backend": "aspnet-core-api",
+      "objetivo": "Aplicativo mobile com backend próprio em C#/.NET (API + PostgreSQL).",
+      "vantagens": [
+        "Uma linguagem em todo o stack",
+        "MAUI + ASP.NET Core + EF Core",
+        "Testes com xUnit + Moq"
+      ]
+    },
+    {
+      "id": "mobile-dotnet-local",
+      "nome": "Mobile MAUI Offline (SQLite local)",
+      "categoria": "Mobile",
+      "frontend": "maui-app",
+      "backend": "sqlite-dotnet",
+      "objetivo": "Aplicativo mobile offline-first com dados locais embutidos no dispositivo.",
+      "vantagens": [
+        "SQLite embutido no dispositivo",
+        "Sincronização offline-first",
+        "Zero infraestrutura"
+      ]
+    },
+    {
+      "id": "mobile-flutter-supabase",
+      "nome": "Mobile Flutter + Supabase",
+      "categoria": "Mobile",
+      "frontend": "flutter-app",
+      "backend": "supabase-online",
+      "objetivo": "Aplicativo mobile com backend gerenciado (auth, realtime, storage).",
+      "vantagens": [
+        "Auth + Realtime + Storage gerenciados",
+        "Hot reload do Flutter",
+        "Escala sem operar servidor"
+      ]
+    },
+    {
+      "id": "mobile-expo-supabase",
+      "nome": "Mobile Expo + Supabase",
+      "categoria": "Mobile",
+      "frontend": "react-native-expo",
+      "backend": "supabase-online",
+      "objetivo": "Aplicativo mobile em TypeScript com backend gerenciado e atualização OTA.",
+      "vantagens": [
+        "Expo Updates (OTA)",
+        "Supabase para auth, dados e storage",
+        "TypeScript ponta a ponta"
+      ]
     }
   ]
 }

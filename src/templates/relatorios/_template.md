@@ -150,4 +150,4 @@ fix: correcoes da auditoria [NOME] ([DATA])
 - *Liste decisões tomadas durante as correções*
 ```
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

@@ -33,8 +33,20 @@ export interface PresetBackend {
   };
 }
 
+export interface FullstackRecomendado {
+  id: string;
+  nome: string;
+  categoria: string;
+  destaque?: string;
+  frontend: string;
+  backend: string;
+  objetivo: string;
+  vantagens: string[];
+}
+
 export const presetsFrontend: PresetFrontend[] = dados.frontend;
 export const presetsBackend: PresetBackend[] = dados.backend;
+export const presetsFullstack: FullstackRecomendado[] = dados.fullstacks;
 
 export function obterFrontend(id: string): PresetFrontend | undefined {
   return presetsFrontend.find((p) => p.id === id);

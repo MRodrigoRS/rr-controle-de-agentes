@@ -116,4 +116,4 @@ Após aprovação, faça o primeiro commit com a mensagem:
 sprint-00: vinculação de governança
 ```
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

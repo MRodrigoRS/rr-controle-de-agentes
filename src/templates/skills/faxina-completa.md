@@ -15,13 +15,15 @@ em `governanca/relatorios/_template.md`.
 | 1 | `auditar-repositorio.md` | `auditoria-repositorio.md` |
 | 2 | `auditar-consistencia-visual.md` | `auditoria-consistencia.md` |
 | 3 | `auditar-responsividade.md` | `auditoria-responsividade.md` |
-| 4 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
-| 5 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
-{{#if ehGas}}| 6 | `auditar-repositorio-gas.md` | `auditoria-gas.md` |{{/if}}
+| 4 | `auditar-textos-usuario.md` | `auditoria-textos.md` |
+| 5 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
+| 6 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
+{{#if ehGas}}| 7 | `auditar-repositorio-gas.md` | `auditoria-gas.md` |{{/if}}
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas e oportunidades de evolução) →
-unifica visual → garante mobile → libera para produção → posiciona no mercado.
+unifica visual → garante mobile → ajusta a comunicação com o cliente →
+libera para produção → posiciona no mercado.
 
 ## Como Executar
 
@@ -56,9 +58,10 @@ Após a última fase, gere o sumário unificado em
 | 1. Repositório | X | Y | Z | Concluída |
 | 2. Consistência | X | Y | Z | Concluída |
 | 3. Responsividade | X | Y | Z | Concluída |
-| 4. Produção | X | Y | Z | Concluída |
-| 5. Competitividade | X | Y | Z | Concluída |
-{{#if ehGas}}| 6. Reforma GAS | X | Y | Z | Concluída |{{/if}}
+| 4. Textos | X | Y | Z | Concluída |
+| 5. Produção | X | Y | Z | Concluída |
+| 6. Competitividade | X | Y | Z | Concluída |
+{{#if ehGas}}| 7. Reforma GAS | X | Y | Z | Concluída |{{/if}}
 | **Total** | **X** | **Y** | **Z** | |
 
 ---

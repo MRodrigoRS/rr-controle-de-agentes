@@ -2,6 +2,11 @@
 
 > Arquivo gerado automaticamente por RR Controle de Agentes.
 
+## Identidade
+
+- **Marca:** RR Software
+- **Autor:** Rodrigo Rafael
+
 ## Primeira Sessão
 
 Se este é o primeiro contato com o projeto, **leia `governanca/INICIO.md` agora**.
@@ -70,6 +75,22 @@ Regras técnicas que todo código deve seguir:
 - Erro de servidor: "Erro interno. Tente novamente mais tarde."
 - Erro de validação: exiba o campo e a mensagem clara do problema.
 
+### Linguagem para o Usuário
+
+Todo texto que o cliente vê (toasts, mensagens, labels, placeholders, telas
+de erro, e-mails) deve estar em **linguagem de negócio** — nunca com jargão
+técnico:
+
+- **Proibido:** nomes de serviços internos (Supabase, Redis, API, fila),
+  tabelas/colunas ("id já existe na tabela clientes"), termos de engenharia
+  (endpoint, payload, CRUD, cache, migration, status HTTP) e detalhes de
+  implementação ("imagem compactada para formato xx")
+- **Nunca** use contatos, endereços ou dados fictícios/de exemplo
+  ((99) 99999-8888, teste@teste, "Lorem ipsum") — confirme os reais com o usuário
+- Exemplos:
+  - "Imagem compactada e salva no supabase" → "Imagem do produto salva"
+  - "Erro: id já existe na tabela clientes" → "Já existe um cliente com esse cadastro"
+
 ### Confirmação Antes de Excluir
 
 - Toda ação de exclusão deve pedir confirmação com nome do registro:
@@ -100,6 +121,47 @@ script `governanca/scripts/extrair-modelo.ps1` — **não** as migrations acumul
   necessário confirmar dados sensíveis ou específicos que o modelo extraído
   não cobre (ex: valores de seed, defaults com dados sensíveis, histórico de
   alterações).
+{{/if}}
+
+{{#if ehDesktopPython}}
+### Distribuição Desktop
+
+O produto final é o **executável/instalador** gerado pelo script
+`governanca/scripts/build.ps1` — nunca o código-fonte. Mantenha atualizado:
+após cada release, regenere e teste a distribuição (veja a skill
+`criar-instalador-desktop.md`).
+
+- Teste sempre o executável em **máquina limpa sem Python instalado**
+- Distribua apenas `dist/` + o instalador — nunca o código-fonte
+
+{{#if ehDesktopComercial}}
+**Comercial — proteção anti-reversão e anti-pirataria:**
+
+- Binário compilado com **Nuitka** + ofuscação runtime com **PyArmor**
+- A proteção real é a **licença** assinada (HMAC/Ed25519), com **vencimento**
+  e **bind de hardware** — o binário apenas dificulta a análise
+- **Nunca** hardcode validações de licença, chaves de assinatura ou flags
+  "pro" no código — seriam removidas por engenharia reversa
+- Guarde `pyarmor.key` e o certificado da máquina **fora do repositório**
+- A validação de licença roda em ponto único, antes do fluxo principal
+{{/if}}
+{{/if}}
+
+{{#if ehMobile}}
+### Desenvolvimento Mobile
+
+- **Offline-first:** quando fizer sentido, o app funciona sem conexão (cache
+  local + fila de sincronização para reenviar ao voltar online)
+- **Segurança:** tokens e credenciais no armazenamento seguro da plataforma
+  (SecureStorage / Keychain / Keystore / EncryptedSharedPreferences) — nunca
+  em texto plano ou em armazenamento não criptografado
+- **Permissões:** solicite apenas as mínimas necessárias, no momento do uso,
+  com justificativa clara para o usuário
+- **Testes:** valide em emulador **e** em dispositivo físico (Android e iOS),
+  incluindo aparelhos de baixa resolução e versões antigas de SO
+- **Release:** assine o build de release (keystore / App Store Connect),
+  versionamento semântico e atualização OTA quando aplicável
+  (Expo Updates, App Center)
 {{/if}}
 
 ## Arquitetura
@@ -141,12 +203,14 @@ Abra **apenas** a skill relevante para a tarefa atual:
 | `mapear-logica-do-sistema.md` | Ao final de cada sprint (atualiza `livro-arquitetura/03-logica-do-sistema.md`) |
 | `mapear-comportamento-autonomo.md` | Quando existir trigger/job/webhook/worker novo (atualiza `livro-arquitetura/04-comportamento-autonomo.md`) |
 {{#if temPostgres}}| `criar-extrair-modelo.md` | Projetos PostgreSQL: criar o script que extrai `modelo-de-dados/` do banco real |{{/if}}
+{{#if ehDesktopPython}}| `criar-instalador-desktop.md` | Projetos desktop (PySide6): gerar executável standalone (e licença, se comercial) |{{/if}}
 | `auditar-repositorio.md` | Auditoria de segurança, más práticas, inconsistências e oportunidades (onboarding, antes de produção, periódico) |
 | `auditar-responsividade.md` | Auditoria mobile (onboarding, antes de release) |
 | `auditar-consistencia-visual.md` | Unificar a aparência da UI em componentes compartilhados |
 | `auditar-prontidao-producao.md` | Antes do primeiro deploy e após mudanças de infraestrutura/segurança |
 | `auditar-comercializacao.md` | Antes de ativar pagamentos reais; após integrar provedor de pagamento |
 | `auditar-competitividade.md` | Análise de mercado, concorrência e precificação |
+| `auditar-textos-usuario.md` | Antes de releases: remover jargão técnico e contatos/valores fictícios dos textos que o cliente vê |
 {{#if ehGas}}| `auditar-repositorio-gas.md` | Projetos GAS: reforma de repositório (performance de I/O, LockService, quotas, segurança, deploy) |{{/if}}
 | `faxina-completa.md` | "Faxina geral" orquestrando todas as auditorias em sequência |
 

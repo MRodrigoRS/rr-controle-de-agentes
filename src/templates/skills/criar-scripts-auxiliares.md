@@ -53,6 +53,40 @@ Para cada stack, crie os scripts aplicáveis:
 | `scripts/test.ps1` | `go test ./...` | Rodar testes |
 | `scripts/lint.ps1` | `golangci-lint run` | Verificar lint |
 
+### Python (FastAPI / NiceGUI)
+
+| Nome | Comando | Quando usar |
+|------|---------|-------------|
+| `scripts/dev.ps1` | `uv run uvicorn src.api.main:app --reload` | Iniciar servidor de desenvolvimento |
+| `scripts/test.ps1` | `uv run pytest` | Rodar testes |
+| `scripts/lint.ps1` | `uv run ruff check .` | Verificar lint |
+| `scripts/format.ps1` | `uv run ruff format .` | Formatar código |
+| `scripts/typecheck.ps1` | `uv run mypy src` | Verificar tipos |
+| `scripts/migrate.ps1` | `uv run alembic upgrade head` | Aplicar migrações do banco |
+
+### Python Desktop (PySide6)
+
+| Nome | Comando | Quando usar |
+|------|---------|-------------|
+| `scripts/dev.ps1` | `uv run python -m src.ui.main` | Iniciar o app em desenvolvimento |
+| `scripts/test.ps1` | `uv run pytest` | Rodar testes (pytest + pytest-qt) |
+| `scripts/lint.ps1` | `uv run ruff check .` | Verificar lint |
+| `scripts/format.ps1` | `uv run ruff format .` | Formatar código |
+| `scripts/typecheck.ps1` | `uv run mypy src` | Verificar tipos |
+| `scripts/build.ps1` | `uv run python -m nuitka --standalone ...` | Compilar o executável (veja a skill `criar-instalador-desktop.md`) |
+| `scripts/migrate.ps1` | `uv run alembic upgrade head` | Aplicar migrações do banco SQLite |
+
+### Mobile (MAUI / Flutter / React Native)
+
+| Nome | Comando | Quando usar |
+|------|---------|-------------|
+| `scripts/run-android.ps1` | `dotnet build -t:Run -f net9.0-android` | Rodar MAUI no Android (emulador/dispositivo) |
+| `scripts/run-flutter.ps1` | `flutter run` | Rodar Flutter (device/emulador) |
+| `scripts/run-expo.ps1` | `npx expo start` | Rodar Expo/React Native |
+| `scripts/test.ps1` | `dotnet test` / `flutter test` / `npx jest` | Rodar testes conforme a stack |
+| `scripts/lint.ps1` | `dotnet format --verify-no-changes` / `flutter analyze` / `npx biome check` | Verificar lint |
+| `scripts/format.ps1` | `dotnet format` / `dart format .` / `npx biome format` | Formatar código |
+
 ## Scripts Descobertos
 
 Sempre que você ou o usuário perceber uma tarefa manual repetitiva, crie

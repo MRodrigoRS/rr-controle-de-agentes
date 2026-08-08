@@ -18,10 +18,33 @@ projeto/
 │   ├── popup/            ← popup da extensão de navegador
 │   ├── background/       ← service worker da extensão de navegador
 │   ├── content/          ← content scripts da extensão de navegador
-│   └── html/             ← páginas HTML do Google Apps Script
+│   ├── html/             ← páginas HTML do Google Apps Script
+│   ├── api/              ← rotas/endpoints (FastAPI)
+│   ├── servicos/         ← lógica de negócio (Python)
+│   ├── modelos/          ← modelos/entidades de banco (SQLAlchemy)
+│   ├── ui/               ← interfaces NiceGUI
+│   │   ├── componentes/  ← componentes de UI reutilizáveis (NiceGUI)
+│   │   └── paginas/      ← páginas/rotas da UI (NiceGUI)
+│   │   ├── janelas/      ← janelas da aplicação desktop (PySide6)
+│   │   └── componentes/  ← componentes Qt reutilizáveis (PySide6)
+│   ├── recursos/         ← ícones, imagens, QSS (desktop PySide6)
+│   ├── Views/            ← telas da aplicação MAUI (.NET)
+│   ├── ViewModels/       ← view models da aplicação MAUI
+│   ├── Models/           ← modelos de dados (MAUI)
+│   ├── Services/         ← serviços e acesso a dados (MAUI)
+│   ├── Resources/        ← recursos visuais (MAUI)
+│   ├── hooks/            ← hooks React (React Native)
+│   └── dados/            ← schemas de banco, tipos, ORM, conexões, migrations
+├── lib/                  ← código da aplicação Flutter
+│   ├── ui/
+│   │   ├── screens/      ← telas (Flutter)
+│   │   └── widgets/      ← widgets reutilizáveis (Flutter)
+│   ├── modelos/          ← modelos de dados (Flutter)
+│   ├── servicos/         ← serviços (Flutter)
+│   └── dados/            ← acesso a dados (Flutter)
 ├── prisma/               ← schema e migrations do Prisma ORM
 ├── public/               ← assets estáticos da extensão de navegador
-├── testes/               ← testes unitários, integração, e2e
+├── testes/               ← testes unitários, integração, e2e (também pytest)
 ├── docs/                 ← documentação extra (diagramas, decisões técnicas)
 ├── governanca/           ← governança do projeto (gerado pela progenitora)
 │   ├── scripts/          ← automações do projeto: build, deploy, seed, tarefas (não regenera)
@@ -49,6 +72,26 @@ projeto/
 | `src/background/` | Service worker da extensão de navegador |
 | `src/content/` | Content scripts da extensão de navegador |
 | `src/html/` | Páginas HTML do Google Apps Script |
+| `src/api/` | Rotas e endpoints (FastAPI) |
+| `src/servicos/` | Lógica de negócio e casos de uso (Python) |
+| `src/modelos/` | Modelos/entidades de banco (SQLAlchemy) |
+| `src/ui/` | Interfaces NiceGUI |
+| `src/ui/componentes/` | Componentes de UI reutilizáveis (NiceGUI) |
+| `src/ui/paginas/` | Páginas/rotas da UI (NiceGUI) |
+| `src/ui/janelas/` | Janelas da aplicação desktop (PySide6) |
+| `src/recursos/` | Ícones, imagens e QSS (desktop PySide6) |
+| `src/Views/` | Telas da aplicação MAUI (.NET) |
+| `src/ViewModels/` | View models da aplicação MAUI |
+| `src/Models/` | Modelos de dados (MAUI) |
+| `src/Services/` | Serviços e acesso a dados (MAUI) |
+| `src/Resources/` | Recursos visuais (MAUI) |
+| `src/hooks/` | Hooks React reutilizáveis (React Native) |
+| `lib/ui/` | Telas e widgets da aplicação Flutter |
+| `lib/ui/screens/` | Telas (Flutter) |
+| `lib/ui/widgets/` | Widgets reutilizáveis (Flutter) |
+| `lib/modelos/` | Modelos de dados (Flutter) |
+| `lib/servicos/` | Serviços (Flutter) |
+| `lib/dados/` | Acesso a dados (Flutter) |
 | `prisma/` | Schema e migrations do Prisma ORM |
 | `public/` | Assets estáticos (ícones, manifest da extensão) |
 | `testes/` | Testes organizados por tipo (unit/, integracao/, e2e/) |

@@ -103,4 +103,4 @@ Após aprovação do usuário e commit, arquive a sprint seguindo as regras de
 
 ---
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

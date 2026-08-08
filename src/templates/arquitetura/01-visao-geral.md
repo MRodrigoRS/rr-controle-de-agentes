@@ -22,4 +22,4 @@ src/
 
 (registre aqui as decisões tomadas durante o desenvolvimento)
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

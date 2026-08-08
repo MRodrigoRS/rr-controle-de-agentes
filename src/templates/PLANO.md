@@ -12,4 +12,4 @@
 
 *Este arquivo contém a descrição fornecida pelo usuário no momento da criação do projeto.*
 
-*Template gerado pelo RR Controle de Agentes.*
+*Template gerado por RR Software (Rodrigo Rafael).*

@@ -551,5 +551,194 @@
     "ranking": 10,
     "aplicabilidade": "Testes de componentes Razor/Blazor com xUnit ou NUnit",
     "descricao": "Framework de testes para componentes Blazor e Razor. Renderiza o componente em memória e permite assertar sobre o markup renderizado, eventos e interações, complementando o xUnit para testes de UI."
+  },
+  {
+    "nome": "FastAPI",
+    "categoria": "Backend",
+    "ranking": 11,
+    "aplicabilidade": "APIs REST modernas e tipadas em Python",
+    "descricao": "Framework web Python moderno e assíncrono com validação automática via Pydantic, documentação OpenAPI/Swagger gerada automaticamente e alto desempenho. Padrão atual para APIs Python em produção."
+  },
+  {
+    "nome": "SQLAlchemy 2",
+    "categoria": "Backend",
+    "ranking": 12,
+    "aplicabilidade": "ORM Python com suporte a múltiplos bancos relacionais",
+    "descricao": "ORM de referência do Python. A versão 2 tem API tipada com `Mapped`/`mapped_column`, consultas expressivas e suporte completo a PostgreSQL, SQLite e MySQL. Geralmente acompanhado do Alembic para migrações."
+  },
+  {
+    "nome": "Alembic",
+    "categoria": "Backend",
+    "ranking": 13,
+    "aplicabilidade": "Migrações versionadas de banco para SQLAlchemy",
+    "descricao": "Ferramenta oficial de migrações do SQLAlchemy. Gera scripts de migração (upgrade/downgrade), versiona o schema no banco e permite rollback — essencial para evoluir o modelo com segurança."
+  },
+  {
+    "nome": "Pydantic v2",
+    "categoria": "Backend",
+    "ranking": 14,
+    "aplicabilidade": "Validação e serialização de dados tipada em Python",
+    "descricao": "Biblioteca de validação de dados baseada em tipos com performance em Rust (pydantic-core). Modela entradas/saídas com segurança, serve de base para o FastAPI e elimina validação manual."
+  },
+  {
+    "nome": "NiceGUI",
+    "categoria": "Frontend",
+    "ranking": 11,
+    "aplicabilidade": "Interfaces web modernas em Python puro",
+    "descricao": "Framework Python para construir UIs web reativas com código Python puro, baseado em Quasar (Vue) e Tailwind CSS. Dispensa HTML/JS/CSS manual e mantém uma única linguagem no projeto."
+  },
+  {
+    "nome": "httpx",
+    "categoria": "Bibliotecas",
+    "ranking": 31,
+    "aplicabilidade": "Cliente HTTP assíncrono/síncrono para Python",
+    "descricao": "Cliente HTTP moderno para Python com API familiar ao requests, suporte a HTTP/2, async e testes de API via TestClient do FastAPI. Padrão para testes de integração de endpoints."
+  },
+  {
+    "nome": "Ruff",
+    "categoria": "Qualidade & Testes",
+    "ranking": 11,
+    "aplicabilidade": "Lint e formatação de Python em altíssima velocidade",
+    "descricao": "Linter e formatador de Python escrito em Rust, substituto moderno de flake8/black/isort. Velocidade extrema, regras ativas por padrão e formatação integrada — a curadoria de código atual do ecossistema."
+  },
+  {
+    "nome": "mypy",
+    "categoria": "Qualidade & Testes",
+    "ranking": 12,
+    "aplicabilidade": "Checagem estática de tipos em Python",
+    "descricao": "Type checker estático para Python. Valida anotações de tipo em tempo de desenvolvimento, prevenindo bugs de contrato antes de rodar. Essencial para bases de código tipadas com FastAPI/Pydantic."
+  },
+  {
+    "nome": "pre-commit",
+    "categoria": "Qualidade & Testes",
+    "ranking": 13,
+    "aplicabilidade": "Hooks de git para manter qualidade no commit",
+    "descricao": "Framework para gerenciar hooks de git (pre-commit, pre-push) que rodam Ruff, mypy e formatação automaticamente antes de cada commit, garantindo que o repositório nunca recebe código fora do padrão."
+  },
+  {
+    "nome": "uv",
+    "categoria": "Runtimes & Build",
+    "ranking": 11,
+    "aplicabilidade": "Gerenciador de projetos e dependências Python moderno",
+    "descricao": "Gerenciador de pacotes e projetos Python escrito em Rust, com resolução de dependências rápida, ambiente virtual gerenciado, sincronização declarativa e integração com pyproject.toml. Substituto moderno de pip/poetry."
+  },
+  {
+    "nome": "PySide6",
+    "categoria": "Frontend",
+    "ranking": 12,
+    "aplicabilidade": "Aplicações desktop nativas em Python com Qt 6",
+    "descricao": "Binding oficial do Qt 6 para Python (LGPL). Widgets, dialogs, tabelas e formulários com visual nativo e profissional via Qt Fusion + QSS. Padrão da indústria para desktop Python comercial."
+  },
+  {
+    "nome": "Nuitka",
+    "categoria": "Runtimes & Build",
+    "ranking": 12,
+    "aplicabilidade": "Compilar aplicações Python em executáveis nativos",
+    "descricao": "Compilador Python que traduz o código para C e gera executável standalone sem Python instalado. Dificulta engenharia reversa (não há .pyc extraível) e reduz o tempo de inicialização."
+  },
+  {
+    "nome": "PyArmor",
+    "categoria": "Runtimes & Build",
+    "ranking": 13,
+    "aplicabilidade": "Ofuscação e licenciamento de código Python comercial",
+    "descricao": "Ferramenta de ofuscação runtime e licenciamento: gera licenças com vencimento, bind de hardware (MAC/IPv4/IPv6), trial e restrições. A proteção de fato para produtos Python comercializáveis, combinada com Nuitka."
+  },
+  {
+    "nome": "pytest-qt",
+    "categoria": "Qualidade & Testes",
+    "ranking": 14,
+    "aplicabilidade": "Testes de interfaces PySide6/PyQt com pytest",
+    "descricao": "Plugin do pytest que fornece a fixture qtbot para testar widgets Qt: simular cliques, entrada de texto, sinais e verificar o estado da UI em testes unitários confiáveis."
+  },
+  {
+    "nome": "Inno Setup",
+    "categoria": "Runtimes & Build",
+    "ranking": 14,
+    "aplicabilidade": "Instaladores Windows para distribuição de aplicativos",
+    "descricao": "Compilador de instaladores Windows (ISCC.exe) gratuito e maduro. Gera setup.exe com registro, atalhos, desinstalador e dependências — o padrão para empacotar executáveis de desktop."
+  },
+  {
+    "nome": "MAUI",
+    "categoria": "Frontend",
+    "ranking": 13,
+    "aplicabilidade": "Aplicativos mobile cross-platform em C#/.NET",
+    "descricao": ".NET Multi-platform App UI: um único projeto C#/XAML para Android, iOS, Windows e macOS, com visual nativo por plataforma. Sucessor do Xamarin.Forms, ideal para times .NET."
+  },
+  {
+    "nome": "Flutter",
+    "categoria": "Frontend",
+    "ranking": 13,
+    "aplicabilidade": "Aplicativos mobile e multi-plataforma em Dart",
+    "descricao": "UI toolkit do Google para compilar nativamente Android, iOS, web e desktop a partir de um único código Dart. UI declarativa, alta performance com hot reload e Material Design 3."
+  },
+  {
+    "nome": "React Native",
+    "categoria": "Frontend",
+    "ranking": 13,
+    "aplicabilidade": "Aplicativos mobile em TypeScript/JavaScript",
+    "descricao": "Framework da Meta para construir apps nativos Android/iOS com React e TypeScript. Combinado com Expo SDK simplifica builds, OTA updates e deploys em lojas."
+  },
+  {
+    "nome": "Dart",
+    "categoria": "Linguagens",
+    "ranking": 9,
+    "aplicabilidade": "Linguagem do Flutter, também usada em backend e scripts",
+    "descricao": "Linguagem otimizada para UI, tipada e com compilação AOT/JIT. Base do Flutter, com sintaxe familiar a C#/Java e suporte a async nativo."
+  },
+  {
+    "nome": "CommunityToolkit.Mvvm",
+    "categoria": "Bibliotecas",
+    "ranking": 32,
+    "aplicabilidade": "MVVM simplificado em .NET (MAUI, WPF)",
+    "descricao": "Kit da Microsoft com MVVM Toolkit: observáveis, commands e source generators que eliminam boilerplate em ViewModels. Padrão para MAUI e WPF."
+  },
+  {
+    "nome": "MAUI Community Toolkit",
+    "categoria": "Bibliotecas",
+    "ranking": 33,
+    "aplicabilidade": "Controles e behaviors extras para MAUI",
+    "descricao": "Coleção da comunidade com controles adicionais, behaviors, converters e helpers para acelerar o desenvolvimento MAUI."
+  },
+  {
+    "nome": "MAUI Essentials",
+    "categoria": "Bibliotecas",
+    "ranking": 34,
+    "aplicabilidade": "APIs nativas do dispositivo em MAUI",
+    "descricao": "Acesso a funcionalidades do dispositivo (permissões, SecureStorage, conectividade, compartilhamento, biometria) por uma API unificada em .NET MAUI."
+  },
+  {
+    "nome": "GoRouter",
+    "categoria": "Bibliotecas",
+    "ranking": 35,
+    "aplicabilidade": "Navegação declarativa em Flutter",
+    "descricao": "Router declarativo para Flutter com rotas nomeadas, deep linking e redirecionamentos. Padrão moderno de navegação em apps Flutter."
+  },
+  {
+    "nome": "Riverpod",
+    "categoria": "Bibliotecas",
+    "ranking": 36,
+    "aplicabilidade": "Gerenciamento de estado em Flutter",
+    "descricao": "Solução de estado para Flutter compilável e testável, evolução do Provider. Estados reativos com injeção de dependência e sem BuildContext no estado."
+  },
+  {
+    "nome": "expo-router",
+    "categoria": "Bibliotecas",
+    "ranking": 37,
+    "aplicabilidade": "Navegação baseada em arquivos no React Native/Expo",
+    "descricao": "Router de arquivos para Expo inspirado no Next.js: cada arquivo em src/app vira uma rota, com deep linking e layouts nativos."
+  },
+  {
+    "nome": "FluentValidation",
+    "categoria": "Bibliotecas",
+    "ranking": 38,
+    "aplicabilidade": "Validação de modelos fluida em .NET",
+    "descricao": "Biblioteca de validação declarativa para .NET com regras fluentes e mensagens localizáveis. Usada em MAUI e ASP.NET Core para validar entradas de forma consistente."
+  },
+  {
+    "nome": "Moq",
+    "categoria": "Qualidade & Testes",
+    "ranking": 15,
+    "aplicabilidade": "Mocks para testes unitários em .NET",
+    "descricao": "Framework de mocking para .NET que cria fakes de interfaces/classes em testes xUnit, isolando ViewModels e Services de dependências externas."
   }
 ]

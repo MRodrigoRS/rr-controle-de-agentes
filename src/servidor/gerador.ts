@@ -72,7 +72,8 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   const todasPastas = new Set([...pastas, ...presetFrontend.pastas, ...presetBackend.pastas]);
   for (const pasta of todasPastas) {
-    fs.mkdirSync(pasta, { recursive: true });
+    const caminhoPasta = path.isAbsolute(pasta) ? pasta : path.join(caminhoAbs, pasta);
+    fs.mkdirSync(caminhoPasta, { recursive: true });
   }
 
   const clausulas = obterClausulasPadrao();
@@ -104,19 +105,35 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     lint: fe.lint || be.lint || "A definir",
     formatacao: fe.formatacao || be.formatacao || "A definir",
     cicd: be.cicd || "A definir",
+    stackFrontend: presetFrontend.stack.join(", "),
+    stackBackend: presetBackend.stack.join(", "),
     ehGo: (be.backendRuntime || "").toLowerCase().includes("go 1"),
     ehGas: (be.backendRuntime || "").toLowerCase().includes("google apps script") || presetFrontend.id === "gas-web-app",
-    ehDotnet: (be.backendRuntime || "").toLowerCase().includes(".net"),
+    ehDotnet: (be.backendRuntime || "").toLowerCase().includes(".net") || presetFrontend.id === "maui-app",
+    ehPython: (be.backendRuntime || "").toLowerCase().includes("python") || ["nicegui-python", "pyside6-desktop", "pyside6-desktop-comercial"].includes(presetFrontend.id),
+    ehDesktopPython: ["pyside6-desktop", "pyside6-desktop-comercial"].includes(presetFrontend.id),
+    ehDesktopComercial: presetFrontend.id === "pyside6-desktop-comercial",
+    ehMobile: ["maui-app", "flutter-app", "react-native-expo"].includes(presetFrontend.id),
+    ehFlutter: presetFrontend.id === "flutter-app",
     temPostgres: (be.backendBanco || "").includes("PostgreSQL"),
     setupBackend: "`package.json`, configs de banco/CI",
+    setupFrontend: "`package.json`, `tsconfig.json`, configs de build/lint",
   };
 
   if (ctx.ehGo) {
     ctx.setupBackend = "`go.mod`, configs de banco/CI";
   } else if (ctx.ehGas) {
     ctx.setupBackend = "`.clasp.json`, configs do Google Apps Script";
+    ctx.setupFrontend = "`.clasp.json`, HTML/JS do Google Apps Script";
   } else if (ctx.ehDotnet) {
     ctx.setupBackend = "`.csproj`, configs de banco/CI";
+    ctx.setupFrontend = "`.csproj`, configs de build";
+  } else if (ctx.ehPython) {
+    ctx.setupBackend = "`pyproject.toml`, configs de banco/CI";
+    ctx.setupFrontend = "`pyproject.toml`, configs de build";
+  } else if (ctx.ehFlutter) {
+    ctx.setupBackend = "`pubspec.yaml`, configs de banco/CI";
+    ctx.setupFrontend = "`pubspec.yaml`, configs de build";
   }
 
   const ctxSprint = {
@@ -150,6 +167,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "skills", "auditar-prontidao-producao.md"), template: "skills/auditar-prontidao-producao.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-comercializacao.md"), template: "skills/auditar-comercializacao.md", ctx },
     { destino: path.join(governancaDir, "skills", "auditar-competitividade.md"), template: "skills/auditar-competitividade.md", ctx },
+    { destino: path.join(governancaDir, "skills", "auditar-textos-usuario.md"), template: "skills/auditar-textos-usuario.md", ctx },
     { destino: path.join(governancaDir, "skills", "faxina-completa.md"), template: "skills/faxina-completa.md", ctx },
     { destino: path.join(governancaDir, "relatorios", "_template.md"), template: "relatorios/_template.md", ctx },
   ];
@@ -168,6 +186,14 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
       { destino: path.join(governancaDir, "templates", "extrair-modelo.ts"), template: "scripts/extrair-modelo.ts", ctx },
       { destino: path.join(governancaDir, "templates", "extrair-modelo.ps1"), template: "scripts/extrair-modelo.ps1", ctx },
     );
+  }
+
+  if (ctx.ehDesktopPython) {
+    arquivos.push({
+      destino: path.join(governancaDir, "skills", "criar-instalador-desktop.md"),
+      template: "skills/criar-instalador-desktop.md",
+      ctx,
+    });
   }
 
   if (!fs.existsSync(path.join(governancaDir, "PRD.md"))) {
