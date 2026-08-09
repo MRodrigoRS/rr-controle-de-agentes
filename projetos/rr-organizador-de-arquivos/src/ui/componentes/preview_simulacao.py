@@ -411,12 +411,6 @@ class DialogPreviewSimulacao(QDialog):
             else:
                 self._marcar_no_e_filhos_recursivo(child, is_checked, origem_is_esquerda)
 
-        self._atualizar_estados_pastas_pai()
-        self._atualizar_metricas()
-
-        self.tree_origem.blockSignals(False)
-        self.tree_destino.blockSignals(False)
-
     def _atualizar_estados_pastas_pai(self) -> None:
         """Atualiza a caixa de seleção de cada pasta pai (Checked / Unchecked / Partial)."""
         for pasta_node in self.mapa_pastas_origem_nos.values():
