@@ -80,18 +80,20 @@ class DialogPreviewSimulacao(QDialog):
         layout_resumo.addWidget(self.lbl_sobredim)
         layout_principal.addWidget(box_resumo)
 
-        # Barra de Ações Rápidas de Visualização (Expandir / Recolher)
+        # Barra de Ações Rápidas de Visualização e Seleção (Toggle Buttons)
         layout_controles = QHBoxLayout()
-        btn_expandir = QPushButton("📂 Expandir Todas as Pastas")
-        btn_expandir.setObjectName("btn_secundario")
-        btn_expandir.clicked.connect(self._expandir_todas_pastas)
+        self._pastas_expandidas = True
+        self.btn_toggle_expandir = QPushButton("📁 Recolher Tudo")
+        self.btn_toggle_expandir.setObjectName("btn_secundario")
+        self.btn_toggle_expandir.clicked.connect(self._toggle_expandir_pastas)
 
-        btn_recolher = QPushButton("📁 Recolher Todas as Pastas")
-        btn_recolher.setObjectName("btn_secundario")
-        btn_recolher.clicked.connect(self._recolher_todas_pastas)
+        self._todos_marcados = True
+        self.btn_toggle_marcar = QPushButton("☐ Desmarcar Todos")
+        self.btn_toggle_marcar.setObjectName("btn_secundario")
+        self.btn_toggle_marcar.clicked.connect(self._toggle_marcar_todos)
 
-        layout_controles.addWidget(btn_expandir)
-        layout_controles.addWidget(btn_recolher)
+        layout_controles.addWidget(self.btn_toggle_expandir)
+        layout_controles.addWidget(self.btn_toggle_marcar)
         layout_controles.addStretch()
         layout_principal.addLayout(layout_controles)
 
@@ -370,12 +372,49 @@ class DialogPreviewSimulacao(QDialog):
 
                     subprocess.Popen(["xdg-open", caminho])
 
-    def _expandir_todas_pastas(self) -> None:
-        """Expande todas as pastas nas duas árvores simultaneamente."""
-        self.tree_origem.expandAll()
-        self.tree_destino.expandAll()
+    def _toggle_expandir_pastas(self) -> None:
+        """Alterna entre expandir e recolher todas as pastas nas duas árvores."""
+        if self._pastas_expandidas:
+            self.tree_origem.collapseAll()
+            self.tree_destino.collapseAll()
+            self.btn_toggle_expandir.setText("📂 Expandir Tudo")
+            self._pastas_expandidas = False
+        else:
+            self.tree_origem.expandAll()
+            self.tree_destino.expandAll()
+            self.btn_toggle_expandir.setText("📁 Recolher Tudo")
+            self._pastas_expandidas = True
 
-    def _recolher_todas_pastas(self) -> None:
-        """Recolhe todas as pastas nas duas árvores simultaneamente."""
-        self.tree_origem.collapseAll()
-        self.tree_destino.collapseAll()
+    def _toggle_marcar_todos(self) -> None:
+        """Alterna entre marcar e desmarcar todos os itens em ambas as árvores."""
+        self.tree_origem.blockSignals(True)
+        self.tree_destino.blockSignals(True)
+
+        novo_estado = not self._todos_marcados
+        state_enum = Qt.CheckState.Checked if novo_estado else Qt.CheckState.Unchecked
+
+        todos_os_arquivos: List[Arquivo] = []
+        for p in self.resultado.pastas:
+            todos_os_arquivos.extend(p.arquivos)
+        todos_os_arquivos.extend(self.resultado.arquivos_sobredimensionados)
+
+        for arq in todos_os_arquivos:
+            arq.marcado = novo_estado
+            node_orig = self.mapa_nos_origem.get(id(arq))
+            if node_orig:
+                node_orig.setCheckState(0, state_enum)
+            node_dest = self.mapa_nos_destino.get(id(arq))
+            if node_dest:
+                node_dest.setCheckState(0, state_enum)
+
+        self._atualizar_estados_pastas_pai()
+        self._atualizar_metricas()
+
+        self.tree_origem.blockSignals(False)
+        self.tree_destino.blockSignals(False)
+
+        self._todos_marcados = novo_estado
+        if novo_estado:
+            self.btn_toggle_marcar.setText("☐ Desmarcar Todos")
+        else:
+            self.btn_toggle_marcar.setText("☑️ Marcar Todos")
