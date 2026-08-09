@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 from typing import Dict, List, Optional
 
 from PySide6.QtCore import Qt
@@ -151,7 +152,7 @@ class DialogPreviewSimulacao(QDialog):
         layout_principal.addLayout(layout_botoes)
 
     def _popular_arvore_origem(self) -> None:
-        """Popula a árvore da esquerda agrupada por pastas de origem originais do HD."""
+        """Popula a árvore da esquerda agrupada por subpastas reais do HD de forma aninhada."""
         self.tree_origem.blockSignals(True)
         self.tree_origem.clear()
         self.mapa_nos_origem.clear()
@@ -162,46 +163,111 @@ class DialogPreviewSimulacao(QDialog):
             todos_os_arquivos.extend(p.arquivos)
         todos_os_arquivos.extend(self.resultado.arquivos_sobredimensionados)
 
-        # Agrupa arquivos por pasta pai de origem
-        grupos_origem: Dict[str, List[Arquivo]] = {}
+        if not todos_os_arquivos:
+            self.tree_origem.blockSignals(False)
+            return
+
+        caminhos_orig = [arq.caminho_original for arq in todos_os_arquivos]
+        try:
+            raiz_comum = os.path.commonpath(caminhos_orig)
+        except ValueError:
+            raiz_comum = os.path.dirname(caminhos_orig[0])
+
+        nome_raiz = os.path.basename(raiz_comum) or raiz_comum
+
+        nos_diretorios: Dict[str, QTreeWidgetItem] = {}
+        tamanhos_diretorios: Dict[str, int] = {}
+        qtd_arquivos_diretorios: Dict[str, int] = {}
+
+        # Primeiro passo: acumula tamanhos e quantidades para cada subpasta
         for arq in todos_os_arquivos:
-            dir_pai = os.path.dirname(arq.caminho_original) or "Pasta Raiz"
-            if dir_pai not in grupos_origem:
-                grupos_origem[dir_pai] = []
-            grupos_origem[dir_pai].append(arq)
+            dir_abs = os.path.dirname(arq.caminho_original)
+            rel_dir = "" if dir_abs == raiz_comum else os.path.relpath(dir_abs, raiz_comum)
+            partes = Path(rel_dir).parts if rel_dir else ()
 
-        for dir_path, arqs in grupos_origem.items():
-            nome_dir = os.path.basename(dir_path) or dir_path
-            tamanho_total = sum(a.tamanho_bytes for a in arqs)
-            node_pasta = QTreeWidgetItem(
-                self.tree_origem,
-                [
-                    f"📁 {nome_dir} ({len(arqs)} arquivos - {formatar_tamanho(tamanho_total)})",
-                    formatar_tamanho(tamanho_total),
-                ],
-            )
-            node_pasta.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
-            node_pasta.setFlags(
-                node_pasta.flags()
-                | Qt.ItemFlag.ItemIsUserCheckable
-                | Qt.ItemFlag.ItemIsAutoTristate
-            )
-            node_pasta.setCheckState(0, Qt.CheckState.Checked)
-            node_pasta.setData(0, Qt.ItemDataRole.UserRole, dir_path)
-            node_pasta.setExpanded(True)
-            self.mapa_pastas_origem_nos[dir_path] = node_pasta
+            caminho_parcial = ""
+            for parte in partes:
+                caminho_parcial = os.path.join(caminho_parcial, parte) if caminho_parcial else parte
+                tamanhos_diretorios[caminho_parcial] = (
+                    tamanhos_diretorios.get(caminho_parcial, 0) + arq.tamanho_bytes
+                )
+                qtd_arquivos_diretorios[caminho_parcial] = (
+                    qtd_arquivos_diretorios.get(caminho_parcial, 0) + 1
+                )
 
-            for arq in arqs:
-                node_arq = QTreeWidgetItem(
-                    node_pasta, [f"📄 {arq.nome_arquivo}", formatar_tamanho(arq.tamanho_bytes)]
-                )
-                node_arq.setIcon(0, ProviderIcones.obter_icone_categoria(arq.categoria))
-                node_arq.setFlags(node_arq.flags() | Qt.ItemFlag.ItemIsUserCheckable)
-                node_arq.setCheckState(
-                    0, Qt.CheckState.Checked if arq.marcado else Qt.CheckState.Unchecked
-                )
-                node_arq.setData(0, Qt.ItemDataRole.UserRole, arq)
-                self.mapa_nos_origem[id(arq)] = node_arq
+            tamanhos_diretorios[""] = tamanhos_diretorios.get("", 0) + arq.tamanho_bytes
+            qtd_arquivos_diretorios[""] = qtd_arquivos_diretorios.get("", 0) + 1
+
+        # Nó Raiz da Origem
+        qtd_tot = qtd_arquivos_diretorios.get("", 0)
+        tam_tot = tamanhos_diretorios.get("", 0)
+        node_raiz = QTreeWidgetItem(
+            self.tree_origem,
+            [
+                f"📁 {nome_raiz} ({qtd_tot} arquivos - {formatar_tamanho(tam_tot)})",
+                formatar_tamanho(tam_tot),
+            ],
+        )
+        node_raiz.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
+        node_raiz.setFlags(
+            node_raiz.flags() | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsAutoTristate
+        )
+        node_raiz.setCheckState(0, Qt.CheckState.Checked)
+        node_raiz.setData(0, Qt.ItemDataRole.UserRole, raiz_comum)
+        node_raiz.setExpanded(True)
+        self.mapa_pastas_origem_nos[raiz_comum] = node_raiz
+        nos_diretorios[""] = node_raiz
+
+        # Segundo passo: cria a hierarquia de nós de subpastas aninhadas
+        for arq in todos_os_arquivos:
+            dir_abs = os.path.dirname(arq.caminho_original)
+            rel_dir = "" if dir_abs == raiz_comum else os.path.relpath(dir_abs, raiz_comum)
+            partes = Path(rel_dir).parts if rel_dir else ()
+
+            no_pai_atual = node_raiz
+            caminho_parcial = ""
+
+            for parte in partes:
+                caminho_parcial = os.path.join(caminho_parcial, parte) if caminho_parcial else parte
+
+                if caminho_parcial not in nos_diretorios:
+                    qtd = qtd_arquivos_diretorios.get(caminho_parcial, 0)
+                    tam = tamanhos_diretorios.get(caminho_parcial, 0)
+                    abs_path_sub = os.path.join(raiz_comum, caminho_parcial)
+
+                    novo_no = QTreeWidgetItem(
+                        no_pai_atual,
+                        [
+                            f"📁 {parte} ({qtd} arquivos - {formatar_tamanho(tam)})",
+                            formatar_tamanho(tam),
+                        ],
+                    )
+                    novo_no.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
+                    novo_no.setFlags(
+                        novo_no.flags()
+                        | Qt.ItemFlag.ItemIsUserCheckable
+                        | Qt.ItemFlag.ItemIsAutoTristate
+                    )
+                    novo_no.setCheckState(0, Qt.CheckState.Checked)
+                    novo_no.setData(0, Qt.ItemDataRole.UserRole, abs_path_sub)
+                    novo_no.setExpanded(True)
+
+                    nos_diretorios[caminho_parcial] = novo_no
+                    self.mapa_pastas_origem_nos[abs_path_sub] = novo_no
+
+                no_pai_atual = nos_diretorios[caminho_parcial]
+
+            # Adiciona o arquivo sob o seu nó de pasta correspondente
+            node_arq = QTreeWidgetItem(
+                no_pai_atual, [f"📄 {arq.nome_arquivo}", formatar_tamanho(arq.tamanho_bytes)]
+            )
+            node_arq.setIcon(0, ProviderIcones.obter_icone_categoria(arq.categoria))
+            node_arq.setFlags(node_arq.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+            node_arq.setCheckState(
+                0, Qt.CheckState.Checked if arq.marcado else Qt.CheckState.Unchecked
+            )
+            node_arq.setData(0, Qt.ItemDataRole.UserRole, arq)
+            self.mapa_nos_origem[id(arq)] = node_arq
 
         self.tree_origem.blockSignals(False)
 
@@ -300,24 +366,7 @@ class DialogPreviewSimulacao(QDialog):
 
         # Se for alteração em uma pasta
         if isinstance(data, str) or isinstance(data, PastaProposta):
-            for i in range(item.childCount()):
-                child = item.child(i)
-                child.setCheckState(
-                    0, Qt.CheckState.Checked if is_checked else Qt.CheckState.Unchecked
-                )
-                child_arq = child.data(0, Qt.ItemDataRole.UserRole)
-                if isinstance(child_arq, Arquivo):
-                    child_arq.marcado = is_checked
-                    # Atualiza o nó espelho do outro lado
-                    node_espelho = (
-                        self.mapa_nos_destino.get(id(child_arq))
-                        if origem_is_esquerda
-                        else self.mapa_nos_origem.get(id(child_arq))
-                    )
-                    if node_espelho:
-                        node_espelho.setCheckState(
-                            0, Qt.CheckState.Checked if is_checked else Qt.CheckState.Unchecked
-                        )
+            self._marcar_no_e_filhos_recursivo(item, is_checked, origem_is_esquerda)
 
         # Se for alteração em um arquivo individual
         elif isinstance(data, Arquivo):
@@ -331,6 +380,36 @@ class DialogPreviewSimulacao(QDialog):
                 node_espelho.setCheckState(
                     0, Qt.CheckState.Checked if is_checked else Qt.CheckState.Unchecked
                 )
+
+        self._atualizar_estados_pastas_pai()
+        self._atualizar_metricas()
+
+        self.tree_origem.blockSignals(False)
+        self.tree_destino.blockSignals(False)
+
+    def _marcar_no_e_filhos_recursivo(
+        self, node: QTreeWidgetItem, is_checked: bool, origem_is_esquerda: bool
+    ) -> None:
+        """Marca ou desmarca recursivamente um nó de pasta e todos os seus filhos aninhados."""
+        state_enum = Qt.CheckState.Checked if is_checked else Qt.CheckState.Unchecked
+        node.setCheckState(0, state_enum)
+
+        for i in range(node.childCount()):
+            child = node.child(i)
+            child.setCheckState(0, state_enum)
+            child_data = child.data(0, Qt.ItemDataRole.UserRole)
+
+            if isinstance(child_data, Arquivo):
+                child_data.marcado = is_checked
+                node_espelho = (
+                    self.mapa_nos_destino.get(id(child_data))
+                    if origem_is_esquerda
+                    else self.mapa_nos_origem.get(id(child_data))
+                )
+                if node_espelho:
+                    node_espelho.setCheckState(0, state_enum)
+            else:
+                self._marcar_no_e_filhos_recursivo(child, is_checked, origem_is_esquerda)
 
         self._atualizar_estados_pastas_pai()
         self._atualizar_metricas()
