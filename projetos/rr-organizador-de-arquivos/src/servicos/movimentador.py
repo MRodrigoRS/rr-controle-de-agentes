@@ -70,6 +70,22 @@ class ServicoMovimentador:
                 pastas_origem_afetadas.add(os.path.dirname(caminho_origem))
 
                 caminho_alvo = str(subpasta_destino / arq.nome_arquivo)
+
+                # Se o arquivo já estiver exatamente no destino final, pula movimentação física
+                if os.path.abspath(caminho_origem) == os.path.abspath(caminho_alvo):
+                    arq.caminho_novo = caminho_origem
+                    arq.status_organizacao = "organizado"
+                    self.repo_arquivo.atualizar_caminho_novo_e_status(
+                        caminho_novo=caminho_origem,
+                        status="organizado",
+                        arquivo_id=arq.id,
+                        caminho_original=arq.caminho_original,
+                    )
+                    contador += 1
+                    if progresso_cb:
+                        progresso_cb(contador, total_arquivos, arq.nome_arquivo)
+                    continue
+
                 caminho_alvo_final = self.gerar_caminho_sem_colisao(caminho_alvo)
 
                 # Movimenta o arquivo no sistema de arquivos
