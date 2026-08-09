@@ -209,9 +209,7 @@ class DialogPreviewSimulacao(QDialog):
             ],
         )
         node_raiz.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
-        node_raiz.setFlags(
-            node_raiz.flags() | Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsAutoTristate
-        )
+        node_raiz.setFlags(node_raiz.flags() | Qt.ItemFlag.ItemIsUserCheckable)
         node_raiz.setCheckState(0, Qt.CheckState.Checked)
         node_raiz.setData(0, Qt.ItemDataRole.UserRole, raiz_comum)
         node_raiz.setExpanded(True)
@@ -243,11 +241,7 @@ class DialogPreviewSimulacao(QDialog):
                         ],
                     )
                     novo_no.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
-                    novo_no.setFlags(
-                        novo_no.flags()
-                        | Qt.ItemFlag.ItemIsUserCheckable
-                        | Qt.ItemFlag.ItemIsAutoTristate
-                    )
+                    novo_no.setFlags(novo_no.flags() | Qt.ItemFlag.ItemIsUserCheckable)
                     novo_no.setCheckState(0, Qt.CheckState.Checked)
                     novo_no.setData(0, Qt.ItemDataRole.UserRole, abs_path_sub)
                     novo_no.setExpanded(True)
@@ -295,11 +289,7 @@ class DialogPreviewSimulacao(QDialog):
                 [lbl_pasta, formatar_tamanho(pasta_prop.tamanho_total_bytes)],
             )
             node_pasta.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
-            node_pasta.setFlags(
-                node_pasta.flags()
-                | Qt.ItemFlag.ItemIsUserCheckable
-                | Qt.ItemFlag.ItemIsAutoTristate
-            )
+            node_pasta.setFlags(node_pasta.flags() | Qt.ItemFlag.ItemIsUserCheckable)
             node_pasta.setCheckState(0, Qt.CheckState.Checked)
             node_pasta.setData(0, Qt.ItemDataRole.UserRole, pasta_prop)
             node_pasta.setExpanded(True)
@@ -412,11 +402,28 @@ class DialogPreviewSimulacao(QDialog):
                 self._marcar_no_e_filhos_recursivo(child, is_checked, origem_is_esquerda)
 
     def _atualizar_estados_pastas_pai(self) -> None:
-        """Atualiza a caixa de seleção de cada pasta pai (Checked / Unchecked / Partial)."""
-        for pasta_node in self.mapa_pastas_origem_nos.values():
+        """Atualiza a caixa de seleção de cada pasta pai (Checked / Unchecked / Partial).
+
+        Processa as pastas em ordem de profundidade (mais profundas primeiro)
+        para que os estados dos filhos já estejam corretos quando o pai for atualizado.
+        """
+
+        def profundidade(node: QTreeWidgetItem) -> int:
+            d = 0
+            p = node.parent()
+            while p is not None:
+                d += 1
+                p = p.parent()
+            return d
+
+        for pasta_node in sorted(
+            self.mapa_pastas_origem_nos.values(), key=profundidade, reverse=True
+        ):
             self._atualizar_pasta_node_state(pasta_node)
 
-        for pasta_node in self.mapa_pastas_destino_nos.values():
+        for pasta_node in sorted(
+            self.mapa_pastas_destino_nos.values(), key=profundidade, reverse=True
+        ):
             self._atualizar_pasta_node_state(pasta_node)
 
     def _atualizar_pasta_node_state(self, node: QTreeWidgetItem) -> None:
