@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QHeaderView,
     QLabel,
+    QLineEdit,
     QPushButton,
     QTreeWidget,
     QTreeWidgetItem,
@@ -24,7 +25,7 @@ from src.ui.componentes.tabela_arquivos import formatar_tamanho
 
 
 class DialogPreviewSimulacao(QDialog):
-    """Dialog comparativo (Dual Tree) da Origem e Destino com sincronização bilateral."""
+    """Dialog comparativo (Dual Tree) da Origem e Destino com busca e sincronização bilateral."""
 
     def __init__(
         self,
@@ -36,7 +37,8 @@ class DialogPreviewSimulacao(QDialog):
         self.resultado = resultado
         self.nome_pasta_matriz = nome_pasta_matriz or "Pasta_Concentradora_Matriz"
         self.setWindowTitle("🌳 Simulação Prévia da Organização (Lado a Lado)")
-        self.resize(1150, 650)
+        self.setWindowFlags(self.windowFlags() | Qt.WindowType.WindowMinMaxButtonsHint)
+        self.resize(1200, 700)
 
         # Mapeamentos para sincronização rápida bilateral em O(1)
         self.mapa_nos_origem: Dict[int, QTreeWidgetItem] = {}
@@ -80,8 +82,9 @@ class DialogPreviewSimulacao(QDialog):
         layout_resumo.addWidget(self.lbl_sobredim)
         layout_principal.addWidget(box_resumo)
 
-        # Barra de Ações Rápidas de Visualização e Seleção (Toggle Buttons)
+        # Barra de Ações Rápidas & Buscador em Tempo Real
         layout_controles = QHBoxLayout()
+
         self._pastas_expandidas = True
         self.btn_toggle_expandir = QPushButton("📁 Recolher Tudo")
         self.btn_toggle_expandir.setObjectName("btn_secundario")
@@ -92,9 +95,14 @@ class DialogPreviewSimulacao(QDialog):
         self.btn_toggle_marcar.setObjectName("btn_secundario")
         self.btn_toggle_marcar.clicked.connect(self._toggle_marcar_todos)
 
+        self.txt_busca = QLineEdit()
+        self.txt_busca.setPlaceholderText("🔍 Buscar arquivo ou pasta no preview...")
+        self.txt_busca.setClearButtonEnabled(True)
+        self.txt_busca.textChanged.connect(self._filtrar_arvores)
+
         layout_controles.addWidget(self.btn_toggle_expandir)
         layout_controles.addWidget(self.btn_toggle_marcar)
-        layout_controles.addStretch()
+        layout_controles.addWidget(self.txt_busca, stretch=1)
         layout_principal.addLayout(layout_controles)
 
         # --- PAINÉIS LADO A LADO ---
@@ -123,6 +131,7 @@ class DialogPreviewSimulacao(QDialog):
         # Popula as duas árvores
         self._popular_arvore_origem()
         self._popular_arvore_destino()
+        self._atualizar_metricas()
 
         # Conecta eventos de alteração de caixas de seleção
         self.tree_origem.itemChanged.connect(self._on_tree_origem_changed)
@@ -163,9 +172,13 @@ class DialogPreviewSimulacao(QDialog):
 
         for dir_path, arqs in grupos_origem.items():
             nome_dir = os.path.basename(dir_path) or dir_path
+            tamanho_total = sum(a.tamanho_bytes for a in arqs)
             node_pasta = QTreeWidgetItem(
                 self.tree_origem,
-                [f"📁 {nome_dir} ({len(arqs)} itens)", ""],
+                [
+                    f"📁 {nome_dir} ({len(arqs)} arquivos - {formatar_tamanho(tamanho_total)})",
+                    formatar_tamanho(tamanho_total),
+                ],
             )
             node_pasta.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
             node_pasta.setFlags(
@@ -207,12 +220,13 @@ class DialogPreviewSimulacao(QDialog):
         node_raiz.setExpanded(True)
 
         for pasta_prop in self.resultado.pastas:
+            lbl_pasta = (
+                f"📁 {pasta_prop.nome_pasta} ({pasta_prop.quantidade_arquivos} arquivos - "
+                f"{formatar_tamanho(pasta_prop.tamanho_total_bytes)})"
+            )
             node_pasta = QTreeWidgetItem(
                 node_raiz,
-                [
-                    f"📁 {pasta_prop.nome_pasta} ({pasta_prop.quantidade_arquivos} arquivos)",
-                    formatar_tamanho(pasta_prop.tamanho_total_bytes),
-                ],
+                [lbl_pasta, formatar_tamanho(pasta_prop.tamanho_total_bytes)],
             )
             node_pasta.setIcon(0, ProviderIcones.obter_icone_categoria("pasta"))
             node_pasta.setFlags(
@@ -352,8 +366,48 @@ class DialogPreviewSimulacao(QDialog):
         for p in self.resultado.pastas:
             todos_arquivos.extend(p.arquivos)
 
-        alocados_marcados = sum(1 for a in todos_arquivos if a.marcado)
-        self.lbl_arquivos.setText(f"📄 Arquivos alocados: <b>{alocados_marcados}</b>")
+        alocados_marcados = [a for a in todos_arquivos if a.marcado]
+        bytes_marcados = sum(a.tamanho_bytes for a in alocados_marcados)
+        total_alocados = len(todos_arquivos)
+
+        self.lbl_arquivos.setText(
+            f"📄 Arquivos alocados: <b>{len(alocados_marcados)}</b> de <b>{total_alocados}</b> "
+            f"({formatar_tamanho(bytes_marcados)})"
+        )
+
+    def _filtrar_arvores(self, texto: str) -> None:
+        """Filtra os nós das duas árvores em tempo real conforme a digitação."""
+        term = texto.strip().lower()
+
+        for tree in (self.tree_origem, self.tree_destino):
+            root_count = tree.topLevelItemCount()
+            for i in range(root_count):
+                parent_node = tree.topLevelItem(i)
+                if parent_node:
+                    self._filtrar_noh_recursivo(parent_node, term)
+
+    def _filtrar_noh_recursivo(self, node: QTreeWidgetItem, term: str) -> bool:
+        """Retorna True se o nó ou algum dos seus filhos correspondem à busca."""
+        if not term:
+            node.setHidden(False)
+            for i in range(node.childCount()):
+                self._filtrar_noh_recursivo(node.child(i), term)
+            return True
+
+        node_text = node.text(0).lower()
+        match_self = term in node_text
+
+        child_match = False
+        for i in range(node.childCount()):
+            if self._filtrar_noh_recursivo(node.child(i), term):
+                child_match = True
+
+        visible = match_self or child_match
+        node.setHidden(not visible)
+        if visible and child_match:
+            node.setExpanded(True)
+
+        return visible
 
     def _on_tree_item_double_clicked(self, item: QTreeWidgetItem, column: int) -> None:
         data = item.data(0, Qt.ItemDataRole.UserRole)
