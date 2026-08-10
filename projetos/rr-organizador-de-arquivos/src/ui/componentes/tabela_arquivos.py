@@ -150,3 +150,37 @@ class TabelaArquivos(QTableWidget):
                 import subprocess
 
                 subprocess.Popen(["xdg-open", caminho])
+
+    def filtrar_arquivos(self, texto: str) -> None:
+        """Filtra as linhas visíveis da tabela pelo nome do arquivo ou extensão."""
+        term = texto.strip().lower()
+        for r in range(self.rowCount()):
+            item_nome = self.item(r, 1)
+            item_ext = self.item(r, 2)
+            nome_txt = item_nome.text().lower() if item_nome else ""
+            ext_txt = item_ext.text().lower() if item_ext else ""
+
+            match = (not term) or (term in nome_txt) or (term in ext_txt)
+            self.setRowHidden(r, not match)
+
+    def marcar_desmarcar_todos(self, marcar: bool) -> None:
+        """Marca ou desmarca em lote todos os arquivos pertencentes a esta tabela."""
+        self.blockSignals(True)
+        state_enum = Qt.CheckState.Checked if marcar else Qt.CheckState.Unchecked
+
+        for arq in self.arquivos_mapeados:
+            arq.marcado = marcar
+
+        for r in range(self.rowCount()):
+            item_check = self.item(r, 0)
+            if item_check:
+                item_check.setCheckState(state_enum)
+
+        self.blockSignals(False)
+        self.marcado_alterado.emit()
+
+    def todos_marcados(self) -> bool:
+        """Retorna True se todos os arquivos mapeados nesta tabela estão marcados."""
+        if not self.arquivos_mapeados:
+            return True
+        return all(arq.marcado for arq in self.arquivos_mapeados)

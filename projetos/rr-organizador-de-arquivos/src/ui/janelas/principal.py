@@ -183,8 +183,25 @@ class JanelaPrincipal(QMainWindow):
 
         layout_principal.addWidget(box_topo)
 
+        # --- CONTROLES DE TABELA: Botão Toggle e Buscador ---
+        layout_controles_tabela = QHBoxLayout()
+
+        self.btn_toggle_marcar_principal = QPushButton("☐ Desmarcar Todos na Aba")
+        self.btn_toggle_marcar_principal.setObjectName("btn_secundario")
+        self.btn_toggle_marcar_principal.clicked.connect(self._on_toggle_marcar_principal_clicked)
+
+        self.txt_busca_principal = QLineEdit()
+        self.txt_busca_principal.setPlaceholderText("🔍 Buscar arquivo na aba ativa...")
+        self.txt_busca_principal.setClearButtonEnabled(True)
+        self.txt_busca_principal.textChanged.connect(self._on_busca_principal_changed)
+
+        layout_controles_tabela.addWidget(self.btn_toggle_marcar_principal)
+        layout_controles_tabela.addWidget(self.txt_busca_principal, stretch=1)
+        layout_principal.addLayout(layout_controles_tabela)
+
         # --- ÁREA CENTRAL: TABELAS CATEGORIZADAS ---
         self.tabs_categorias = QTabWidget()
+        self.tabs_categorias.currentChanged.connect(self._on_aba_alterada)
 
         self.tab_videos = TabelaArquivos()
         self.tab_audios = TabelaArquivos()
@@ -249,13 +266,14 @@ class JanelaPrincipal(QMainWindow):
         layout_nome_base.addWidget(self.txt_nome_base, stretch=3)
         layout_regras.addLayout(layout_nome_base)
 
-        # Linha 2: Algoritmo de Divisão
+        # Linha 2: Algoritmo de Divisão (Padrão: Opção A com 50 arquivos)
         layout_algos = QHBoxLayout()
 
         self.radio_qtd_arq = QRadioButton("A) Por Quantidade de Arquivos")
+        self.radio_qtd_arq.setChecked(True)
         self.spin_qtd_arq = QSpinBox()
         self.spin_qtd_arq.setRange(1, 10000)
-        self.spin_qtd_arq.setValue(100)
+        self.spin_qtd_arq.setValue(50)
 
         self.radio_qtd_pastas = QRadioButton("B) Por Número de Pastas")
         self.spin_qtd_pastas = QSpinBox()
@@ -263,7 +281,6 @@ class JanelaPrincipal(QMainWindow):
         self.spin_qtd_pastas.setValue(5)
 
         self.radio_tamanho = QRadioButton("C) Por Tamanho Máximo (Crescente)")
-        self.radio_tamanho.setChecked(True)
         self.spin_tamanho = QSpinBox()
         self.spin_tamanho.setRange(1, 100000)
         self.spin_tamanho.setValue(500)
@@ -402,18 +419,60 @@ class JanelaPrincipal(QMainWindow):
         self.tabs_categorias.setTabText(3, f"Documentos ({len(documentos)})")
         self.tabs_categorias.setTabText(4, f"Formatos Atípicos ({len(atipicos)})")
 
+        # Re-aplica filtro da busca se houver
+        self._on_busca_principal_changed(self.txt_busca_principal.text())
         self._recalcular_totais()
 
+    def _on_aba_alterada(self, index: int) -> None:
+        """Chamado quando o usuário alterna de aba para atualizar o filtro e o contador."""
+        texto = self.txt_busca_principal.text()
+        widget = self.tabs_categorias.currentWidget()
+        if isinstance(widget, TabelaArquivos):
+            widget.filtrar_arquivos(texto)
+        self._recalcular_totais()
+
+    def _on_busca_principal_changed(self, texto: str) -> None:
+        """Filtra os arquivos da aba ativa em tempo real conforme a digitação."""
+        widget = self.tabs_categorias.currentWidget()
+        if isinstance(widget, TabelaArquivos):
+            widget.filtrar_arquivos(texto)
+
+    def _on_toggle_marcar_principal_clicked(self) -> None:
+        """Marca ou desmarca em lote todos os arquivos da aba/categoria ativa."""
+        widget = self.tabs_categorias.currentWidget()
+        if isinstance(widget, TabelaArquivos):
+            novo_estado = not widget.todos_marcados()
+            widget.marcar_desmarcar_todos(novo_estado)
+            self._recalcular_totais()
+
     def _recalcular_totais(self) -> None:
-        marcados = [a for a in self.todos_arquivos if a.marcado]
-        total_bytes = sum(a.tamanho_bytes for a in marcados)
-        sobredim = sum(1 for a in marcados if a.status_organizacao == "sobredimensionado")
+        """Recalcula estatísticas no rodapé focando estritamente nos arquivos da aba ativa."""
+        widget = self.tabs_categorias.currentWidget()
+        if isinstance(widget, TabelaArquivos):
+            arqs_aba = widget.arquivos_mapeados
+            marcados_aba = [a for a in arqs_aba if a.marcado]
+            total_bytes = sum(a.tamanho_bytes for a in marcados_aba)
+            sobredim = sum(1 for a in marcados_aba if a.status_organizacao == "sobredimensionado")
 
-        txt = f"Total Selecionado: {len(marcados)} arquivos ({formatar_tamanho(total_bytes)})"
-        if sobredim > 0:
-            txt += f" | 🛑 {sobredim} sobredimensionado(s) que ficarão de fora"
+            nome_tab = self.tabs_categorias.tabText(self.tabs_categorias.currentIndex()).split(
+                " ("
+            )[0]
+            txt = (
+                f"Total Selecionado ({nome_tab}): {len(marcados_aba)} de {len(arqs_aba)} arquivos "
+                f"({formatar_tamanho(total_bytes)})"
+            )
+            if sobredim > 0:
+                txt += f" | 🛑 {sobredim} sobredimensionado(s) que ficarão de fora"
 
-        self.lbl_estatisticas.setText(txt)
+            self.lbl_estatisticas.setText(txt)
+
+            if hasattr(self, "btn_toggle_marcar_principal"):
+                if widget.todos_marcados():
+                    self.btn_toggle_marcar_principal.setText("☐ Desmarcar Todos na Aba")
+                else:
+                    self.btn_toggle_marcar_principal.setText("☑️ Marcar Todos na Aba")
+        else:
+            self.lbl_estatisticas.setText("Total Selecionado: 0 arquivos (0 B)")
 
     def _carregar_sessoes_recentes(self) -> None:
         self.combo_sessoes.blockSignals(True)
