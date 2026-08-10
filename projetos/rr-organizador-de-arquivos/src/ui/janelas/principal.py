@@ -201,7 +201,6 @@ class JanelaPrincipal(QMainWindow):
 
         # --- ÁREA CENTRAL: TABELAS CATEGORIZADAS ---
         self.tabs_categorias = QTabWidget()
-        self.tabs_categorias.currentChanged.connect(self._on_aba_alterada)
 
         self.tab_videos = TabelaArquivos()
         self.tab_audios = TabelaArquivos()
@@ -327,6 +326,9 @@ class JanelaPrincipal(QMainWindow):
 
         layout_principal.addLayout(layout_rodape)
 
+        # Conecta sinal de alteração de aba após a criação de todos os widgets
+        self.tabs_categorias.currentChanged.connect(self._on_aba_alterada)
+
     def _selecionar_pasta(self) -> None:
         caminho = QFileDialog.getExistingDirectory(self, "Selecionar Pasta para Escanear")
         if caminho:
@@ -447,6 +449,8 @@ class JanelaPrincipal(QMainWindow):
 
     def _recalcular_totais(self) -> None:
         """Recalcula estatísticas no rodapé focando estritamente nos arquivos da aba ativa."""
+        if not hasattr(self, "lbl_estatisticas"):
+            return
         widget = self.tabs_categorias.currentWidget()
         if isinstance(widget, TabelaArquivos):
             arqs_aba = widget.arquivos_mapeados
