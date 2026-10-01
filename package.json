@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "rr:vincular": "tsx src/scripts/vincular.ts"
+    "rr:vincular": "tsx src/scripts/vincular.ts",
+    "rr:db:migrar": "tsx src/servidor/db/migrar-e-seed.ts",
+    "rr:tecnologia": "tsx src/scripts/cadastrar-tecnologia.ts",
+    "rr:harness": "tsx src/scripts/configurar-harness.ts",
+    "test": "tsx src/scripts/validar-templates.ts",
+    "validar:templates": "tsx src/scripts/validar-templates.ts"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.2",

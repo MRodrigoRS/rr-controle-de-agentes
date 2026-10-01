@@ -12,10 +12,10 @@
 
 ## Requisitos
 
-| ID | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-01 | | Alta |
-| RF-02 | | Média |
+| ID | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-01 | | Alta | Pendente |
+| RF-02 | | Média | Pendente |
 
 ## Critérios de Aceite Globais
 
@@ -30,4 +30,5 @@
 
 ---
 
-*Template gerado por RR Software (Rodrigo Rafael). Edite e mantenha atualizado durante o desenvolvimento.*
+*Template gerado por RR Tech Studio (Rodrigo Rafael). Edite e mantenha atualizado durante o desenvolvimento.*
+

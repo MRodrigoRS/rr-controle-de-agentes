@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   projetoId: string;
 }
 
 export function BotaoRecriarGovernanca({ projetoId }: Props) {
+  const router = useRouter();
   const [recriando, setRecriando] = useState(false);
   const [mensagem, setMensagem] = useState("");
 
@@ -18,9 +20,11 @@ export function BotaoRecriarGovernanca({ projetoId }: Props) {
       const data = await res.json();
       if (res.ok) {
         setMensagem("Governança recriada com sucesso!");
+        router.refresh();
       } else {
         setMensagem(data.erro || "Erro ao recriar");
       }
+
     } catch {
       setMensagem("Erro de conexão");
     } finally {

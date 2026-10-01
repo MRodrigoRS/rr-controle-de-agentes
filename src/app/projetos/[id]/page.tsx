@@ -32,9 +32,11 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
 
   const caminhoProjeto = path.resolve(projeto.caminho);
   const caminhoGovernanca = path.join(caminhoProjeto, "governanca");
-  const sprints = listarArquivos(path.join(caminhoGovernanca, "sprints"));
+  const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
+  const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
   const arquitetura = listarArquivos(path.join(caminhoGovernanca, "livro-arquitetura"));
+  const sprints = listarArquivos(path.join(caminhoGovernanca, "sprints"));
 
   return (
     <>
@@ -69,15 +71,28 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-3">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Sprints</h2>
-          {sprints.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhuma sprint encontrada.</p>
+          <h2 className="mb-3 font-semibold text-[#e6edf3]">Padrões de Engenharia</h2>
+          {padroes.length === 0 ? (
+            <p className="text-sm text-[#8b949e]">Nenhum padrão encontrado.</p>
           ) : (
             <ul className="space-y-1">
-              {sprints.map((s) => (
-                <li key={s} className="text-sm text-[#8b949e]">{s}</li>
+              {padroes.map((p) => (
+                <li key={p} className="text-sm text-[#8b949e]">{p}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
+          <h2 className="mb-3 font-semibold text-[#e6edf3]">Workflows</h2>
+          {workflows.length === 0 ? (
+            <p className="text-sm text-[#8b949e]">Nenhum workflow encontrado.</p>
+          ) : (
+            <ul className="space-y-1">
+              {workflows.map((w) => (
+                <li key={w} className="text-sm text-[#8b949e]">{w}</li>
               ))}
             </ul>
           )}
@@ -108,7 +123,21 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             </ul>
           )}
         </div>
+
+        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
+          <h2 className="mb-3 font-semibold text-[#e6edf3]">Sprints</h2>
+          {sprints.length === 0 ? (
+            <p className="text-sm text-[#8b949e]">Nenhuma sprint encontrada.</p>
+          ) : (
+            <ul className="space-y-1">
+              {sprints.map((s) => (
+                <li key={s} className="text-sm text-[#8b949e]">{s}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
+
     </>
   );
 }

@@ -1,0 +1,365 @@
+#!/usr/bin/env node
+// MODELO VIRGEM (SQLite) — NÃO EDITE ESTE ARQUIVO.
+//
+// Este arquivo regenera junto com a governança (governanca/templates/).
+// Para usar no projeto:
+//   1. Copie para governanca/scripts/extrair-modelo-sqlite.ts
+//   2. Preencha DOMINIO_MANUAL e DOMINIO_PREFIXO com as tabelas reais
+//      deste repositório (o script avisa as tabelas que ficarem em "Outros")
+//   3. Execute via: ./governanca/scripts/extrair-modelo.ps1 ou npx tsx governanca/scripts/extrair-modelo-sqlite.ts
+//
+// Pré-requisitos:
+//   - Node.js v22+ com suporte nativo a node:sqlite (zero dependências extras)
+
+import { resolve, dirname, join, basename } from "path";
+import { fileURLToPath } from "url";
+import { mkdirSync, writeFileSync, existsSync, readdirSync, rmSync, readFileSync } from "fs";
+import { DatabaseSync } from "node:sqlite";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+function encontrarRaizProjeto(): string {
+  let atual = __dirname;
+  while (atual !== dirname(atual)) {
+    if (
+      existsSync(join(atual, "package.json")) ||
+      existsSync(join(atual, "governanca")) ||
+      existsSync(join(atual, "dados"))
+    ) {
+      return atual;
+    }
+    atual = dirname(atual);
+  }
+  return process.cwd();
+}
+
+const raizProjeto = encontrarRaizProjeto();
+
+// Mapeamento manual de domínios (customizável na cópia em governanca/scripts/)
+const DOMINIO_MANUAL: Record<string, string> = {
+  // "usuarios": "Autenticação",
+  // "pedidos": "Vendas"
+};
+
+const DOMINIO_PREFIXO: [string, string][] = [
+  // ["auth_", "Autenticação"],
+  // ["rel_", "Relatórios"]
+];
+
+function inferirDominio(tabela: string): string {
+  if (DOMINIO_MANUAL[tabela]) return DOMINIO_MANUAL[tabela];
+  for (const [prefixo, dom] of DOMINIO_PREFIXO) {
+    if (tabela.startsWith(prefixo)) return dom;
+  }
+  return "Geral";
+}
+
+function dominioLabel(d: string): string {
+  return d.replace(/[^a-zA-Z0-9_]/g, "_");
+}
+
+function localizarArquivoBanco(): string | null {
+  // 1. Variável de ambiente DATABASE_URL
+  const envPath = resolve(raizProjeto, ".env.local");
+  let dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl && existsSync(envPath)) {
+    const conteudo = readFileSync(envPath, "utf-8");
+    for (const linha of conteudo.split("\n")) {
+      const trim = linha.trim();
+      if (trim.startsWith("DATABASE_URL=")) {
+        dbUrl = trim.substring("DATABASE_URL=".length).trim().replace(/^["']|["']$/g, "");
+      }
+    }
+  }
+
+  if (dbUrl) {
+    const limpo = dbUrl.replace(/^file:/, "").replace(/^sqlite:\/\//, "");
+    const abs = resolve(raizProjeto, limpo);
+    if (existsSync(abs)) return abs;
+  }
+
+  // 2. Caminhos comuns
+  const candidatos = [
+    "dados/rr.db",
+    "dados/banco.db",
+    "prisma/dev.db",
+    "prisma/sqlite.db",
+    "dev.db",
+    "sqlite.db",
+    "database.sqlite",
+    "data.db"
+  ];
+
+  for (const c of candidatos) {
+    const abs = resolve(raizProjeto, c);
+    if (existsSync(abs)) return abs;
+  }
+
+  // 3. Varredura rasa por arquivos .db ou .sqlite na raiz ou em dados/ / prisma/
+  for (const pasta of [".", "dados", "prisma", "data", "db"]) {
+    const dirAbs = resolve(raizProjeto, pasta);
+    if (existsSync(dirAbs)) {
+      try {
+        const itens = readdirSync(dirAbs);
+        for (const it of itens) {
+          if (it.endsWith(".db") || it.endsWith(".sqlite") || it.endsWith(".sqlite3")) {
+            return join(dirAbs, it);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }
+
+  return null;
+}
+
+interface ColunaInfo {
+  cid: number;
+  nome: string;
+  tipo: string;
+  notnull: boolean;
+  dflt_value: string | null;
+  pk: boolean;
+}
+
+interface FKInfo {
+  id: number;
+  seq: number;
+  tabelaRef: string;
+  colunaOrigem: string;
+  colunaRef: string;
+  onUpdate: string;
+  onDelete: string;
+}
+
+interface IndiceInfo {
+  nome: string;
+  unique: boolean;
+}
+
+interface TabelaInfo {
+  nome: string;
+  colunas: ColunaInfo[];
+  primaryKeys: string[];
+  foreignKeys: FKInfo[];
+  indices: IndiceInfo[];
+}
+
+function extrairModeloSqlite(dbPath: string): TabelaInfo[] {
+  const db = new DatabaseSync(dbPath);
+
+  // Lista de tabelas de usuário (ignora tabelas internas do SQLite)
+  const rows = db.prepare(`
+    SELECT name FROM sqlite_master
+    WHERE type = 'table'
+      AND name NOT LIKE 'sqlite_%'
+      AND name NOT LIKE '_prisma_%'
+      AND name NOT LIKE '__drizzle_%'
+    ORDER BY name ASC
+  `).all() as { name: string }[];
+
+  const tabelas: TabelaInfo[] = [];
+
+  for (const r of rows) {
+    const nomeTabela = r.name;
+
+    // Colunas
+    const colRows = db.prepare(`PRAGMA table_info("${nomeTabela}")`).all() as {
+      cid: number;
+      name: string;
+      type: string;
+      notnull: number;
+      dflt_value: string | null;
+      pk: number;
+    }[];
+
+    const colunas: ColunaInfo[] = colRows.map((c) => ({
+      cid: c.cid,
+      nome: c.name,
+      tipo: c.type || "ANY",
+      notnull: c.notnull === 1,
+      dflt_value: c.dflt_value,
+      pk: c.pk > 0,
+    }));
+
+    const primaryKeys = colunas.filter((c) => c.pk).map((c) => c.nome);
+
+    // Foreign Keys
+    const fkRows = db.prepare(`PRAGMA foreign_key_list("${nomeTabela}")`).all() as {
+      id: number;
+      seq: number;
+      table: string;
+      from: string;
+      to: string;
+      on_update: string;
+      on_delete: string;
+    }[];
+
+    const foreignKeys: FKInfo[] = fkRows.map((f) => ({
+      id: f.id,
+      seq: f.seq,
+      tabelaRef: f.table,
+      colunaOrigem: f.from,
+      colunaRef: f.to,
+      onUpdate: f.on_update,
+      onDelete: f.on_delete,
+    }));
+
+    // Índices
+    const idxRows = db.prepare(`PRAGMA index_list("${nomeTabela}")`).all() as {
+      name: string;
+      unique: number;
+    }[];
+
+    const indices: IndiceInfo[] = idxRows.map((i) => ({
+      nome: i.name,
+      unique: i.unique === 1,
+    }));
+
+    tabelas.push({
+      nome: nomeTabela,
+      colunas,
+      primaryKeys,
+      foreignKeys,
+      indices,
+    });
+  }
+
+  return tabelas;
+}
+
+function main() {
+  console.log("🔍 Localizando banco de dados SQLite...");
+  const dbPath = localizarArquivoBanco();
+
+  if (!dbPath) {
+    console.error("❌ Nenhum banco SQLite encontrado. Verifique DATABASE_URL no .env.local ou crie um arquivo .db.");
+    process.exit(1);
+  }
+
+  console.log(`📦 Banco SQLite identificado: ${dbPath}`);
+  const tabelas = extrairModeloSqlite(dbPath);
+  console.log(`📊 ${tabelas.length} tabelas identificadas.`);
+
+  const outDir = resolve(raizProjeto, "modelo-de-dados");
+  const tabelasDir = join(outDir, "tabelas");
+
+  if (existsSync(outDir)) {
+    rmSync(outDir, { recursive: true, force: true });
+  }
+  mkdirSync(tabelasDir, { recursive: true });
+
+  const dominios = Array.from(new Set(tabelas.map((t) => inferirDominio(t.nome)))).sort();
+  const dominioMap = new Map<string, TabelaInfo[]>();
+  for (const d of dominios) {
+    dominioMap.set(d, tabelas.filter((t) => inferirDominio(t.nome) === d));
+  }
+
+  // Gera arquivos por domínio
+  for (const [dom, tabs] of dominioMap.entries()) {
+    const slug = dom.toLowerCase().replace(/[^a-z0-9_-]/g, "-");
+    const linhas: string[] = [
+      `# Domínio: ${dom}`,
+      "",
+      `Total de tabelas: **${tabs.length}**`,
+      "",
+    ];
+
+    for (const t of tabs) {
+      linhas.push(`## Tabela: \`${t.nome}\``);
+      linhas.push("");
+      linhas.push("| Coluna | Tipo | Nulo | PK | Default |");
+      linhas.push("|---|---|:---:|:---:|---|");
+      for (const c of t.colunas) {
+        linhas.push(`| \`${c.nome}\` | \`${c.tipo}\` | ${c.notnull ? "Não" : "Sim"} | ${c.pk ? "🔑 Sim" : "-"} | ${c.dflt_value !== null ? `\`${c.dflt_value}\`` : "-"} |`);
+      }
+      linhas.push("");
+
+      if (t.foreignKeys.length > 0) {
+        linhas.push("**Chaves Estrangeiras (Relacionamentos):**");
+        linhas.push("");
+        for (const fk of t.foreignKeys) {
+          linhas.push(`- \`${fk.colunaOrigem}\` → \`${fk.tabelaRef}.${fk.colunaRef}\` (ON DELETE: ${fk.onDelete})`);
+        }
+        linhas.push("");
+      }
+
+      if (t.indices.length > 0) {
+        linhas.push("**Índices:**");
+        linhas.push("");
+        for (const i of t.indices) {
+          linhas.push(`- \`${i.nome}\`${i.unique ? " (UNIQUE)" : ""}`);
+        }
+        linhas.push("");
+      }
+
+      linhas.push("---");
+      linhas.push("");
+    }
+
+    writeFileSync(join(tabelasDir, `${slug}.md`), linhas.join("\n"), "utf-8");
+  }
+
+  // Gera index.md
+  const totalColunas = tabelas.reduce((acc, t) => acc + t.colunas.length, 0);
+  const totalFKs = tabelas.reduce((acc, t) => acc + t.foreignKeys.length, 0);
+
+  const indexLinhas: string[] = [
+    "# Modelo de Dados (SQLite)",
+    "",
+    `**Arquivo de Origem:** \`${basename(dbPath)}\``,
+    `**Data de Extração:** ${new Date().toISOString().split("T")[0]}`,
+    "",
+    "## Resumo Geral",
+    "",
+    `- **Tabelas:** ${tabelas.length}`,
+    `- **Colunas:** ${totalColunas}`,
+    `- **Relacionamentos (FKs):** ${totalFKs}`,
+    `- **Domínios Identificados:** ${dominios.length}`,
+    "",
+    "## Domínios e Tabelas",
+    "",
+    "| Domínio | Tabelas | Arquivo de Detalhamento |",
+    "|---|:---:|---|",
+  ];
+
+  for (const [dom, tabs] of dominioMap.entries()) {
+    const slug = dom.toLowerCase().replace(/[^a-z0-9_-]/g, "-");
+    indexLinhas.push(`| **${dom}** | ${tabs.length} | [tabelas/${slug}.md](tabelas/${slug}.md) |`);
+  }
+
+  indexLinhas.push("");
+  indexLinhas.push("## Diagrama de Relacionamentos");
+  indexLinhas.push("");
+  indexLinhas.push("```mermaid");
+  indexLinhas.push("erDiagram");
+
+  const edges = new Set<string>();
+  for (const t of tabelas) {
+    for (const fk of t.foreignKeys) {
+      const d1 = dominioLabel(t.nome);
+      const d2 = dominioLabel(fk.tabelaRef);
+      const chave = `${d1}->${d2}:${fk.colunaOrigem}`;
+      if (!edges.has(chave)) {
+        edges.add(chave);
+        indexLinhas.push(`    ${d1} }o--|| ${d2} : "${fk.colunaOrigem}"`);
+      }
+    }
+  }
+
+  if (edges.size === 0) {
+    indexLinhas.push("    TABELAS ||--|| SEM_RELACIONAMENTOS_FK : \"dados\"");
+  }
+
+  indexLinhas.push("```");
+  indexLinhas.push("");
+
+  writeFileSync(join(outDir, "index.md"), indexLinhas.join("\n"), "utf-8");
+
+  console.log("✅ Modelo de dados extraído com sucesso!");
+  console.log(`📁 ${outDir}`);
+}
+
+main();

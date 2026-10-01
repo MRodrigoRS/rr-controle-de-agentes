@@ -1,3 +1,8 @@
+---
+name: auditar-comercializacao
+description: Audita a camada de pagamento e comercialização (Stripe, Mercado Pago) — segurança, fluxos, resiliência e testes.
+---
+
 # Skill: Auditar Comercialização
 
 > Audita minuciosamente a camada de pagamento e comercialização do sistema.

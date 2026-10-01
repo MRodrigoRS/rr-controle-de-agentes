@@ -1,16 +1,49 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import dados from "@/servidor/dados/tecnologias.json";
+import { useState, useMemo, useEffect } from "react";
+import dadosIniciais from "@/servidor/dados/tecnologias.json";
 
-const categorias = [...new Set(dados.map((t) => t.categoria))] as string[];
+interface ItemTecnologia {
+  id?: number;
+  nome: string;
+  categoria: string;
+  descricao: string;
+  aplicabilidade: string;
+}
 
 export function GuiaTecnologias() {
+  const [tecnologias, setTecnologias] = useState<ItemTecnologia[]>(dadosIniciais as ItemTecnologia[]);
   const [busca, setBusca] = useState("");
   const [categoria, setCategoria] = useState("");
 
+  // Busca as tecnologias atualizadas em runtime da API (SQLite)
+  useEffect(() => {
+    let ativo = true;
+    fetch("/api/tecnologias")
+      .then((res) => {
+        if (!res.ok) throw new Error("Falha ao buscar tecnologias");
+        return res.json();
+      })
+      .then((data) => {
+        if (ativo && Array.isArray(data) && data.length > 0) {
+          setTecnologias(data);
+        }
+      })
+      .catch(() => {
+        // Mantém os dados iniciais do snapshot se a chamada falhar
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  const categorias = useMemo(() => {
+    return [...new Set(tecnologias.map((t) => t.categoria))].sort();
+  }, [tecnologias]);
+
   const filtrados = useMemo(() => {
-    return dados.filter((t) => {
+    return tecnologias.filter((t) => {
       if (categoria && t.categoria !== categoria) return false;
       if (busca) {
         const q = busca.toLowerCase();
@@ -21,7 +54,7 @@ export function GuiaTecnologias() {
       }
       return true;
     });
-  }, [busca, categoria]);
+  }, [tecnologias, busca, categoria]);
 
   return (
     <div className="space-y-4">
@@ -51,6 +84,7 @@ export function GuiaTecnologias() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-[#0d1117] text-left text-[#8b949e]">
+                <th className="px-3 py-3 font-medium text-center w-14">ID</th>
                 <th className="px-4 py-3 font-medium">Nome</th>
                 <th className="px-4 py-3 font-medium">Categoria</th>
                 <th className="px-4 py-3 font-medium">Descrição</th>
@@ -59,7 +93,8 @@ export function GuiaTecnologias() {
             </thead>
             <tbody className="divide-y divide-[#30363d]">
               {filtrados.map((t) => (
-                <tr key={t.nome} className="bg-[#161b22] hover:bg-[#1a2332] transition">
+                <tr key={`${t.id ?? t.nome}-${t.nome}`} className="bg-[#161b22] hover:bg-[#1a2332] transition">
+                  <td className="px-3 py-3 text-center text-xs font-mono text-[#58a6ff]">{t.id ?? "-"}</td>
                   <td className="px-4 py-3 font-medium text-[#e6edf3] whitespace-nowrap">{t.nome}</td>
                   <td className="px-4 py-3 text-[#8b949e] whitespace-nowrap">{t.categoria}</td>
                   <td className="px-4 py-3 text-[#8b949e]">{t.descricao}</td>

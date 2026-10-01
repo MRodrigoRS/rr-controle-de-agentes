@@ -1,94 +1,93 @@
+---
+name: criar-extrair-modelo
+description: Cria o script que extrai o modelo de dados real (PostgreSQL ou SQLite) e alimenta o livro-arquitetura/05.
+---
+
 # Skill: Criar o Script de Extração do Modelo de Dados
 
 > Instrui o agente a materializar o script `extrair-modelo` no projeto a
 > partir do modelo virgem, customizando o mapeamento de domínios para o
-> repositório específico. O resultado fica em `governanca/scripts/` (pasta
-> que **não regenera**); o virgem fica em `governanca/templates/` (regenera).
+> repositório específico. Suporta tanto **PostgreSQL** quanto **SQLite**.
+> O resultado fica em `governanca/scripts/` (pasta que **não regenera**);
+> os virgens ficam em `governanca/templates/` (regeneram).
 
 ## Por que existe
 
 A fonte da verdade do schema é o estado **atual** do banco — não a
 reconstrução mental a partir de migrations acumuladas. Este script extrai o
-modelo real (tabelas, colunas, FKs, RLS, views, enums, funções) e gera
-`modelo-de-dados/`, dando ao agente uma visão macro fidedigna.
+modelo real (tabelas, colunas, chaves primárias e estrangeiras, índices e relacionamentos)
+e alimenta `governanca/livro-arquitetura/05-modelo-de-dados.md`, dando ao agente uma visão macro e detalhada fidedigna.
+
 
 ## Quando Executar
 
-- **No setup do ambiente** (Passo 4 do INICIO.md) de um projeto com banco
-  PostgreSQL
-- **Após vincular um repositório existente** com banco PostgreSQL
-- **Sob demanda** — quando o mapeamento de domínios precisa ser ajustado ou
-  o modelo está desatualizado
+- **No setup do ambiente** de um projeto com banco de dados relacional
+- **Imediatamente após vincular um repositório existente** que contenha banco de dados
+- **Durante a Fase 2 de migração de stack** (`migrar-stack-legada.md`), para mapear todo o schema legado no inventário De-Para
+- **Sob demanda** — após aplicar novas migrations ou alterar tabelas
 
 ## Fluxo
 
-### 1. Copie o Modelo Virgem
+### 1. Identifique o Tipo de Banco
 
-Copie o virgem para a pasta de scripts do projeto (que **não** regenera):
+Verifique a infraestrutura do projeto:
+- **PostgreSQL:** possui `DATABASE_URL` no `.env` / `.env.local` apontando para `postgresql://` ou `postgres://`.
+- **SQLite:** possui arquivo `.db`, `.sqlite`, ou `DATABASE_URL="file:..."` / `sqlite:...`.
 
+### 2. Copie o Modelo Virgem Correspondente
+
+Copie o script virgem para a pasta de scripts do projeto (que **não** regenera):
+
+**Se for SQLite:**
 ```bash
-cp governanca/templates/extrair-modelo.ts governanca/scripts/extrair-modelo.ts
+cp governanca/templates/extrair-modelo-sqlite.ts.template governanca/scripts/extrair-modelo-sqlite.ts
 ```
 
-Crie também o wrapper:
-
+**Se for PostgreSQL:**
 ```bash
-cp governanca/templates/extrair-modelo.ps1 governanca/scripts/extrair-modelo.ps1
+cp governanca/templates/extrair-modelo.ts.template governanca/scripts/extrair-modelo.ts
 ```
 
-### 2. Preencha o Mapeamento de Domínios
+Copie também o wrapper PowerShell universal:
+```bash
+cp governanca/templates/extrair-modelo.ps1.template governanca/scripts/extrair-modelo.ps1
+```
 
-No `governanca/scripts/extrair-modelo.ts` (cópia do projeto), preencha:
 
-- `DOMINIO_MANUAL` — nomes **exatos** de tabela → domínio (ex: `perfis:
-  "Autenticação"`)
-- `DOMINIO_PREFIXO` — prefixos → domínio (ex: `["pedido", "Vendas"]`)
+### 3. Garanta os Pré-requisitos
 
-Use as tabelas reais deste repositório (consulte `modelo-de-dados/` após a
-primeira execução, ou o schema). Se o projeto não usa domínios, deixe vazio —
-tudo cai em "Outros".
-
-### 3. Garanta Pré-requisitos
-
-- Instale as dependências, se ausentes: `npm i -D pg tsx`
-- Confirme que `DATABASE_URL` existe em `.env.local` (ou variável de ambiente)
+- **Para SQLite:** Suporte nativo em Node.js v22+ (`node:sqlite`). Se necessário: `npm i -D tsx`.
+- **Para PostgreSQL:** `npm i -D pg tsx` e confirme `DATABASE_URL` configurada.
 
 ### 4. Execute e Valide
 
 ```bash
 ./governanca/scripts/extrair-modelo.ps1
 ```
+*(ou execute diretamente: `npx tsx governanca/scripts/extrair-modelo-sqlite.ts`)*
 
-O script gera `modelo-de-dados/` na raiz do projeto. Verifique:
+O script gera a pasta `modelo-de-dados/` na raiz do projeto contendo:
+- `index.md`: Visão macro com totais de tabelas, colunas, relacionamentos e diagrama Mermaid ER.
+- `tabelas/<dominio>.md`: Detalhamento de cada tabela, colunas, tipos, PKs, FKs e índices.
 
-- O `index.md` lista os domínios corretos
-- Nenhuma tabela importante caiu em "Outros" (o script avisa no console)
+### 5. Preencha o Mapeamento de Domínios (Opcional)
 
-Ajuste o mapeamento e repita até o modelo refletir o domínio do projeto.
+Se houver muitas tabelas e desejar agrupá-las logicamente em arquivos separados, edite `DOMINIO_MANUAL` e `DOMINIO_PREFIXO` no script copiado em `governanca/scripts/` e rode novamente.
 
-### 5. Registre nas Notas Persistentes
+### 6. Registre nas Notas Persistentes e Comite
 
 Adicione no `AGENTS.md` (seção de notas persistentes):
-
 ```
 Scripts disponíveis:
 - extrair-modelo.ps1 — regenera modelo-de-dados/ a partir do banco real
 Modelo de dados: modelo-de-dados/index.md (macro) + tabelas/<dominio>.md
 ```
 
-### 6. Comite o Snapshot
-
-Commite `modelo-de-dados/` junto com o código. Assim o snapshot fica
-disponível em sessões futuras **sem acesso ao banco**.
+Commite `modelo-de-dados/` junto com o código para que a documentação fique disponível mesmo em sessões offline.
 
 ## Regras
 
-- **Nunca edite o virgem** em `governanca/templates/` — ele regenera e as
-  alterações seriam perdidas. Edite sempre a cópia em `governanca/scripts/`
-- `governanca/scripts/` **não regenera** — é a casa do script do projeto
-- **Sempre use o script** para conhecer o schema — não reconstrua o modelo
-  lendo migrations uma a uma (veja a regra `Modelo de Dados` no AGENTS.md)
-- Quando novas tabelas ou domínios surgirem, **atualize o mapeamento** no
-  script do projeto e **regenere** o modelo
-- O script não é gerado pela progenitora em projetos sem banco PostgreSQL —
-  a regra do AGENTS.md só existe quando o preset é PostgreSQL
+- **Nunca edite o virgem** em `governanca/templates/` — edite sempre a cópia em `governanca/scripts/`
+- `governanca/scripts/` **não regenera** — é o local definitivo dos scripts do projeto
+- **Sempre use o script** para conhecer o schema — não tente adivinhar campos lendo arquivos de migration antigos
+- Em repositórios vinculados, execute esta extração **antes** de criar as sprints funcionais

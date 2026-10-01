@@ -2,44 +2,50 @@
 
 ## Filosofia
 
-O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do projeto, gera `governanca/` com `.md` virgens, e **não acompanha** o desenvolvimento. O projeto nasce, vive sozinho.
+O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do projeto, gera `governanca/` com `.md` virgens, configura o harness nativo do agente (`.agents/`, `CLAUDE.md`) e **não acompanha** o desenvolvimento em tempo de execução. O projeto nasce, vive sozinho.
 
-- **Sem JSONs, sem banco de sprints, sem comandos de ciclo**
-- **Sem acompanhamento de progresso** — o web UI só cria e lista projetos
+- **Sem JSONs de acompanhamento, sem banco de sprints, sem comandos de ciclo no projeto**
+- **Sem acompanhamento de progresso** — a web UI cria, lista e regenera a governança dos projetos
 - **Tudo em `.md`** dentro de `governanca/`
+- **Fonte única da verdade (SSOT):** Catálogo de tecnologias gerido via SQLite nativo (`dados/rr.db`), presets vinculados por IDs inteiros auto-incrementais e snapshot em JSON para diffs legíveis no Git.
 
 ## O que o RR 1.1 faz
 
-1. Cria projeto com estrutura de pastas
-2. Gera `governanca/AGENTS.md` com CPs, stack, objetivo
-3. Gera `governanca/INICIO.md` para onboarding do agente
+1. Cria projeto com estrutura de pastas base (se preset)
+2. Gera `governanca/AGENTS.md` com diretrizes pétreas, qualidade e regra mandatória de uso da stack
+3. Gera `governanca/INICIO.md` para onboarding completo do agente (ou `VINCULAR.md` se repositório existente)
 4. Gera `governanca/sprints/_template.md` para o agente preencher
-5. Gera `governanca/livro-arquitetura/` com docs da stack
-6. Gera `governanca/skills/` com skills que nascem com o projeto:
-   - `alinhar-stack-com-presets.md` — instrui o agente a alinhar a stack do
-     plano/repositório com os presets da progenitora e a contribuir com
-     novas tecnologias ao catálogo
-   - `CATALOGO_TECNOLOGIAS.md` — lista completa de tecnologias catalogadas
-7. Web UI: cria projeto e lista projetos criados — só
+5. Gera `governanca/livro-arquitetura/` com a stack detalhada e categorizada (`02-stack.md`)
+6. Gera `governanca/workflows/` e os registra em `.agents/workflows/` como **Slash Commands nativos** (`/spec`, `/plan`, `/implement`, `/test`, `/review`, `/research`, `/release`)
+7. Gera `governanca/skills/` com habilidades práticas e catálogo oficial com IDs
+8. Configura automaticamente o **Harness do Agente** (`.agents/rules/`, `.agents/workflows/`, `.agents/skills/` e `CLAUDE.md`)
+9. Web UI: cria projetos, lista projetos criados, busca tecnologias por ID e permite recriar a governança a qualquer momento
 
 ## Estrutura que a progenitora gera
 
 ```
 meu-projeto/
+├── .agents/                     ← Harness nativo para Antigravity
+│   ├── rules/                   ← 000-governanca.md (@governanca/AGENTS.md)
+│   ├── workflows/               ← Slash commands (/spec, /plan, /review, etc.)
+│   └── skills/                  ← Ponteiros leves para governanca/skills/
+├── CLAUDE.md                    ← Ponteiro fino para Claude Code
 ├── governanca/
-│   ├── AGENTS.md                ← instruções ao agente (CPs, stack)
-│   ├── INICIO.md                ← onboarding (se sem preset ou com plano)
+│   ├── AGENTS.md                ← instruções ao agente (regras pétreas, stack oficial)
+│   ├── INICIO.md                ← onboarding com o arsenal completo do preset (ou VINCULAR.md)
+│   ├── PLANO.md                 ← visão e objetivos do projeto
 │   ├── sprints/
-│   │   └── _template.md         ← template preenchível
+│   │   └── _template.md         ← template preenchível de sprint
 │   ├── livro-arquitetura/
 │   │   ├── 01-visao-geral.md
-│   │   └── 02-stack.md
-│   ├── skills/
-│   │   ├── alinhar-stack-com-presets.md ← skill ativa
-│   │   └── CATALOGO_TECNOLOGIAS.md    ← catálogo para consulta
-│   ├── scripts/                ← scripts do projeto (não regeneram)
-│   └── templates/              ← modelos virgens (regeneram; projetos PostgreSQL)
-├── src/                         ← estrutura base (se preset)
+│   │   ├── 02-stack.md          ← catálogo categorizado de ferramentas e responsabilidades
+│   │   ├── 03-logica-do-sistema.md
+│   │   └── 04-comportamento-autonomo.md
+│   ├── skills/                  ← skills operacionais e CATALOGO_TECNOLOGIAS.md
+│   ├── scripts/                 ← scripts auxiliares do projeto
+│   ├── workflows/               ← procedimentos do ciclo de desenvolvimento
+│   └── relatorios/              ← templates de auditorias
+├── src/                         ← estrutura base de código
 └── package.json
 ```
 
@@ -49,45 +55,56 @@ meu-projeto/
 rr-controle-de-agentes-1.1/
 ├── package.json
 ├── tsconfig.json
-├── prisma/
-│   └── schema.prisma            ← só Projeto, Perfis
+├── dados/
+│   ├── rr.db                    ← SQLite local nativo (node:sqlite)
+│   ├── tecnologias-snapshot.json← Snapshot JSON das tecnologias para Git
+│   └── projetos.json            ← Registro/backup de projetos
 ├── src/
-│   ├── app/                     ← Next.js (web UI)
-│   │   ├── page.tsx             ← lista projetos
-│   │   ├── criar/page.tsx       ← formulário de criação
-│   │   ├── projetos/[id]/page.tsx ← detalhes do projeto (leitura)
-│   │   └── api/projetos/route.ts  ← API de criação
+│   ├── app/                     ← Next.js 16 (web UI)
+│   │   ├── page.tsx             ← lista projetos e busca no catálogo de tecnologias
+│   │   ├── criar/page.tsx       ← formulário de criação com presets e vinculação
+│   │   ├── projetos/[id]/page.tsx ← detalhes e botão de recriar governança
+│   │   └── api/
+│   │       ├── projetos/route.ts
+│   │       ├── tecnologias/route.ts
+│   │       └── selecionar-pasta/route.ts
+│   ├── componentes/             ← UI da progenitora
 │   ├── presets/
-│   │   └── index.ts             ← definições de stacks
+│   │   └── index.ts             ← tipagem e resolução de stacks via IDs
 │   ├── servidor/
+│   │   ├── db.ts                ← módulo central SQLite nativo (node:sqlite)
 │   │   ├── gerador.ts           ← engine que monta governanca/ no disco
-│   │   ├── templates.ts         ← processa templates .md
+│   │   ├── harness.ts           ← automação de harness (.agents, CLAUDE.md)
+│   │   ├── projetos.ts          ← camada de serviço de projetos
+│   │   ├── templates.ts         ← micro-engine de processamento .md
 │   │   └── dados/
-│   │       ├── tecnologias.json     ← catálogo de tecnologias
-│   │       └── gerar-catalogo.ts    ← gera CATALOGO_TECNOLOGIAS.md
-│   └── templates/               ← modelos .md
+│   │       ├── presets.json     ← definições de presets com tecnologiaIds
+│   │       ├── tecnologias.json ← snapshot sincronizado para imports
+│   │       └── gerar-catalogo.ts← compila CATALOGO_TECNOLOGIAS.md
+│   ├── scripts/
+│   │   ├── cadastrar-tecnologia.ts ← CLI npm run rr:tecnologia
+│   │   ├── configurar-harness.ts   ← CLI npm run rr:harness
+│   │   ├── vincular.ts             ← CLI npm run rr:vincular
+│   │   └── validar-templates.ts    ← CLI npm test (integridade referencial + sintaxe)
+│   └── templates/               ← modelos .md oficiais
 │       ├── AGENTS.md
 │       ├── INICIO.md
+│       ├── VINCULAR.md
+│       ├── PLANO.md
+│       ├── PRD.md
 │       ├── SPRINT.md
 │       ├── arquitetura/
-│   └── skills/
-│       └── alinhar-stack-com-presets.md
-├── dados/
-│   └── projetos.json            ← registro de projetos criados
+│       ├── skills/
+│       ├── workflows/
+│       └── relatorios/
 └── PLANO.md
 ```
 
-## O que NÃO existe mais
+## Comandos da Progenitora
 
-- `src/scripts/rr-*.ts` — sem comandos CLI
-- `src/servidor/governanca/` — removido (viram `src/servidor/gerador.ts`)
-- `src/componentes/painel/` — removido
-- Modelos Sprint, Etapa, Criterio, Teste, Commit, Execucao — só no lixo
-- `rr:iniciar, rr:concluir, rr:commit, rr:testar` — não existem
-
-## Sugestões de outras skills
-
-- **padroes-de-codigo.md** — padrões de código, nomenclatura, estrutura de pastas
-- **estrutura-de-commits.md** — como formatar mensagens de commit
-- **deploy.md** — instruções de build e deploy para a stack do projeto
-- **testes.md** — padrões e ferramentas de teste esperadas
+- `npm run dev`: Executa a interface web em `http://localhost:3000`.
+- `npm test`: Executa o validador de integridade referencial de presets e sintaxe de templates.
+- `npm run rr:tecnologia`: Cadastra uma tecnologia inédita com ID auto-incremental via SQLite e atualiza o catálogo.
+- `npm run rr:harness`: Configura ou re-sincroniza o harness do agente em qualquer projeto existente.
+- `npm run rr:vincular`: Injeta a governança em um repositório existente sem alterar o código original.
+- `npm run rr:db:migrar`: Executa a migração/seed do catálogo e projetos para `dados/rr.db`.

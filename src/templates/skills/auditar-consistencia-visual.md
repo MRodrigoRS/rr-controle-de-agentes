@@ -1,3 +1,8 @@
+---
+name: auditar-consistencia-visual
+description: Detecta e corrige divergências visuais da UI, propondo componentes reutilizáveis no lugar de estilos avulsos.
+---
+
 # Skill: Auditar Consistência Visual
 
 > Detecta e corrige divergências visuais entre diferentes partes da mesma

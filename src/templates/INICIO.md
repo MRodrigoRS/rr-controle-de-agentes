@@ -20,11 +20,15 @@ Apresente-se ao usuário e peça que ele descreva a visão do projeto:
 
 **Só avance após o usuário confirmar a visão.**
 
-> **Crie o PRD:** pergunte ao usuário se deseja um PRD estruturado. Se sim,
-> analise o plano e extraia: resumo executivo, requisitos (tabela ID/descrição/
-> prioridade), critérios de aceite, fora de escopo. Crie `governanca/PRD.md`
-> usando o template em `governanca/PRD.md`. Apresente para validação e registre
-> nas notas persistentes do `AGENTS.md`.
+> **Preencha o PRD:** pergunte ao usuário se deseja um PRD estruturado. Se sim,
+> analise o plano e preencha `governanca/PRD.md` (arquivo já criado na governança):
+> resumo executivo, requisitos (tabela ID/descrição/prioridade), critérios de aceite
+> e itens fora de escopo. Apresente para validação do usuário e registre o status
+> em `governanca/SESSAO.md`.
+>
+> Use o workflow `governanca/workflows/spec.md` para transformar a visão em
+> uma especificação verificável (escopo, requisitos, critérios de aceite,
+> riscos).
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `alinhar-stack-com-presets.md` em
@@ -41,6 +45,8 @@ Com base na visão, proponha uma estrutura inicial de sprints:
 - Cada sprint posterior incrementa uma funcionalidade.
 - Crie os arquivos em `governanca/sprints/` seguindo o formato `NN-titulo.md`.
 - Use o template em `governanca/sprints/_template.md` como base.
+- Use o workflow `governanca/workflows/plan.md` para montar cada sprint como
+  um plano verificável (arquivos afetados, riscos, tarefas, critérios).
 
 **Valide a ordem e o escopo com o usuário antes de criar os arquivos.**
 
@@ -52,8 +58,18 @@ Confirme a stack técnica com o usuário:
 
 {{#if temPresets}}
 **Presets selecionados:**
-- Frontend: `{{frontend}}` ({{frontendFramework}}, {{frontendEstilo}})
-- Backend: `{{backend}}` ({{backendRuntime}}, {{backendBanco}})
+- **Frontend:** `{{frontend}}` ({{frontendFramework}}, {{frontendEstilo}})
+{{#if stackCategorizadaFrontend}}
+  - *Ferramentas e bibliotecas:*
+{{stackCategorizadaFrontend}}
+{{/if}}
+- **Backend:** `{{backend}}` ({{backendRuntime}}, {{backendBanco}})
+{{#if stackCategorizadaBackend}}
+  - *Ferramentas e bibliotecas:*
+{{stackCategorizadaBackend}}
+{{/if}}
+
+> Consulte `governanca/livro-arquitetura/02-stack.md` para o detalhamento da responsabilidade de cada ferramenta.
 {{else}}
 **Projeto sem preset definido.** Identifique a stack com o usuário:
 - Frontend: framework, estilo, testes
@@ -70,18 +86,11 @@ Pergunte: "Podemos seguir com essa stack ou você quer alterar algo?"
 
 Com a stack validada, configure o ambiente:
 
- 1. Crie os arquivos de configuração do projeto:
-    {{#if temPresets}}
-    - Frontend: {{setupFrontend}}
-    - Backend: {{setupBackend}}
-    {{else}}
-    - Crie os arquivos conforme a stack definida
-    {{/if}}
- 2. Crie os scripts auxiliares seguindo a skill `criar-scripts-auxiliares.md` em `governanca/skills/`.
-    {{#if temPostgres}}Se o projeto tem banco PostgreSQL, crie o script de extração
-    do modelo de dados seguindo a skill `criar-extrair-modelo.md` em `governanca/skills/`.{{/if}}
+ 1. Crie os arquivos de configuração e dependências do projeto (ex: `package.json`, `pyproject.toml`, `go.mod`, `.csproj`, etc. conforme a stack oficial).
+ 2. Crie os scripts auxiliares seguindo a skill `criar-scripts-auxiliares.md`. Se o projeto possuir banco de dados relacional (PostgreSQL, Supabase, SQLite, etc.), configure o script de extração do modelo seguindo a skill `criar-extrair-modelo.md`.
  3. Instale as dependências e verifique se o build base funciona.
- 4. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
+ 4. O harness deste projeto (`.agents/`, `CLAUDE.md` e slash commands como `/spec`, `/plan`, `/implement`) já foi configurado automaticamente pela progenitora. Caso o projeto utilize serviços específicos que justifiquem MCPs adicionais pelo princípio do menor privilégio, consulte a skill `configurar-harness.md` e proponha ao usuário sob demanda.
+ 5. Atualize a documentação em `governanca/livro-arquitetura/` com as decisões tomadas.
 
 **Não avance sem o build passando.**
 
@@ -93,14 +102,17 @@ Com o ambiente pronto, inicie a Sprint 1:
 
 1. Marque o status da sprint como `em_andamento` no front-matter.
 2. Siga as etapas definidas no arquivo da sprint.
-3. Ao finalizar cada etapa, apresente o resultado ao usuário.
+3. Execute o ciclo dos workflows em `governanca/workflows/`:
+   `implement.md` (execução), `test.md` (verificação e evidências) e
+   `review.md` (revisão adversarial) antes de apresentar o resultado.
+4. Ao finalizar cada etapa, apresente o resultado ao usuário.
 
 ---
 
 ## Lembretes
 
 - Sempre valide com o usuário antes de decisões importantes.
-- Mantenha as notas persistentes em AGENTS.md atualizadas.
+- Mantenha as notas de progresso em governanca/SESSAO.md atualizadas.
 - Registre decisões técnicas no livro de arquitetura.
 
 *Template gerado por RR Software (Rodrigo Rafael).*

@@ -1,3 +1,8 @@
+---
+name: auditar-competitividade
+description: Analisa propósito, completude como produto, concorrência real e gap analysis de funcionalidades e precificação.
+---
+
 # Skill: Auditar Competitividade
 
 > Analisa o propósito do projeto, avalia sua completude como produto,

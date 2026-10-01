@@ -1,3 +1,8 @@
+---
+name: mapear-comportamento-autonomo
+description: Documenta triggers, jobs, webhooks, workers, middleware, CI e cascatas no livro-arquitetura/04.
+---
+
 # Skill: Mapear Comportamento Autônomo
 
 > Varre o repositório em busca de triggers, jobs, webhooks, workers,
@@ -11,6 +16,9 @@
 - **Antes de alterar o esquema do banco** (migrações que podem quebrar cascatas)
 - **Antes de desativar serviços** (jobs que ninguém lembra existir)
 - **Sempre que o usuário suspeitar de comportamento inesperado**
+- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill `sincronizar-documentacao.md`
+
+
 
 ## O que Varrer
 

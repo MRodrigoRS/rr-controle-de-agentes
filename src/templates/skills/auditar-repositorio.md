@@ -1,3 +1,8 @@
+---
+name: auditar-repositorio
+description: Audita segurança, más práticas, inconsistências e oportunidades de evolução do repositório.
+---
+
 # Skill: Auditar Repositório
 
 > Instrui o agente a examinar minuciosamente todo o repositório em busca de
@@ -76,6 +81,8 @@ morto, funções longas) já estão cobertos em Más Práticas:
   lógica/validação/cálculo repetidos em vários arquivos; estado+efeitos que
   se repetem e virariam um hook customizado; helpers espalhados que pertencem
   a `src/lib/`
+  > Para **executar** a modularização dos achados de extração (DRY, regressão
+  > zero), use a skill `modularizar-padroes-recorrentes.md`.
 - **Simplificação** — código verboso que uma library moderna resolveria em
   poucas linhas (validação manual → Zod, fetch raw → axios, datas →
   date-fns); aninhamento profundo que um early return resolveria; muitos
@@ -93,24 +100,39 @@ morto, funções longas) já estão cobertos em Más Práticas:
 - **Testabilidade** — lógica pura e efeitos colaterais misturados; dependências
   hardcoded (API/banco no meio da lógica de negócio, sem injeção/adapter)
 
+### 5. Conformidade com os Manuais de Engenharia (`governanca/padroes/`)
+
+Examine se a base de código obedece fielmente às diretrizes dos manuais técnicos:
+
+#### Padrões de Frontend (`governanca/padroes/frontend.md`)
+- **Design Tokens & Consistência Visual:** Existem cores hexadecimais arbitrárias, inline styles ou valores mágicos de espaçamento que deveriam utilizar os tokens semânticos do Design System / tema?
+- **Estados Assíncronos Completos:** Telas e componentes assíncronos cobrem obrigatoriamente os 4 estados essenciais (`Idle`, `Loading/Skeleton`, `Success/Empty State` e `Error amigável com botão de retry`)?
+- **Acessibilidade (WCAG 2.1 AA):** Elementos interativos (`<button>`, `<a>`) possuem labels acessíveis (`aria-label`), tags HTML semânticas adequadas e foco visível para navegação por teclado?
+- **Separação de Camadas (Clean Components):** Componentes de apresentação misturam requisições de rede brutas e mutações complexas em vez de delegar a custom hooks ou presenters?
+- **Layout & Responsividade:** Interfaces quebram em mobile (360px), causam scroll horizontal involuntário ou desrespeitam o grid responsivo?
+
+#### Padrões de Backend (`governanca/padroes/backend.md`)
+- **Zero-Trust Input Validation:** Todos os endpoints e eventos externos (params, query, body, webhooks, filas) possuem schemas rígidos de validação na borda (Zod, Valibot, etc.) antes de atingir a lógica de negócio?
+- **Arquitetura em Camadas:** Há controllers/rotas executando queries de banco ou SQL diretamente, furando o desacoplamento da camada de Service/Use-Case?
+- **Tratamento de Erros Tipados:** Existem blocos `catch (err: any)` genéricos, `catch` vazios ou swallowed errors? Erros de domínio usam classes tipadas e respostas estruturadas (formato RFC 7807)?
+- **Transações Atômicas & Idempotência:** Mutações críticas em múltiplas entidades ou tabelas estão envolvidas em transações de banco (ACID)? Ações de pagamento ou efeito colateral crítico suportam idempotência?
+- **Sanitização de Respostas e Logs:** Respostas da API em ambiente de desenvolvimento vazam stack traces para o cliente? Logs contêm dados pessoais (PII), senhas ou tokens?
+
 ## Saída
 
 Gere o relatório em `governanca/relatorios/auditoria-repositorio.md`
 usando o template em `governanca/relatorios/_template.md`.
 
-- Use `[BLOQ]` para vulnerabilidades de segurança críticas ou más práticas
-  com risco de dados/estabilidade
-- Use `[REC]` para más práticas, inconsistências e oportunidades de alto
-  impacto e baixo esforço
-- Use `[SUG]` para inconsistências menores, melhorias de documentação e
-  oportunidades de modernização que podem esperar
+- Use `[BLOQ]` para vulnerabilidades críticas de segurança, falhas de validação na borda (Zero-Trust) ou más práticas com risco de corrupção/perda de dados
+- Use `[REC]` para desvios dos manuais de engenharia (Design System, estados assíncronos faltantes, camadas acopladas), más práticas e inconsistências de alto impacto
+- Use `[SUG]` para inconsistências menores, micro-otimizações e melhorias de documentação que podem aguardar
 
 Ao preencher a seção `## Sprint Sugerida`, crie uma sprint pronta para
 copiar com etapas por severidade. Cada achado deve virar uma tarefa.
 
 ## Após Gerar o Relatório
 
-1. **Registre nas notas persistentes** do `AGENTS.md` que a auditoria foi
+1. **Registre no histórico da sprint ativa** (`governanca/SPRINT.md`) que a auditoria foi
    realizada e o caminho do relatório gerado
 2. **Apresente o resumo** ao usuário (principais achados, prioridades)
 3. **Pergunte** se deseja que os itens críticos/altos virem tarefas na

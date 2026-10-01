@@ -1,3 +1,8 @@
+---
+name: criar-instalador-desktop
+description: Gera executável standalone (PySide6) e, em projetos comerciais, proteção com Nuitka + PyArmor + Inno Setup.
+---
+
 # Skill: Criar o Instalador Desktop
 
 > Instrui o agente a empacotar o aplicativo desktop (PySide6) em executável

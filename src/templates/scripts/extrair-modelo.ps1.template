@@ -1,0 +1,32 @@
+#!/usr/bin/env pwsh
+# governanca/scripts/extrair-modelo.ps1
+# Extrai o schema do banco relacional (PostgreSQL ou SQLite) e gera modelo-de-dados/
+# Uso: ./governanca/scripts/extrair-modelo.ps1 [postgres|sqlite]
+
+$ErrorActionPreference = "Stop"
+Write-Host "=== Extrair Modelo de Dados ===" -ForegroundColor Cyan
+
+$tipo = $args[0]
+
+if (-not $tipo) {
+  if (Test-Path "governanca/scripts/extrair-modelo-sqlite.ts") {
+    $tipo = "sqlite"
+  } elseif (Test-Path "governanca/scripts/extrair-modelo.ts") {
+    $tipo = "postgres"
+  } else {
+    $tipo = "sqlite"
+  }
+}
+
+if ($tipo -eq "sqlite" -and (Test-Path "governanca/scripts/extrair-modelo-sqlite.ts")) {
+  Write-Host "Executando extrator SQLite..." -ForegroundColor Yellow
+  npx tsx governanca/scripts/extrair-modelo-sqlite.ts
+} elseif (Test-Path "governanca/scripts/extrair-modelo.ts") {
+  Write-Host "Executando extrator PostgreSQL..." -ForegroundColor Yellow
+  npx tsx governanca/scripts/extrair-modelo.ts
+} else {
+  Write-Host "Nenhum script de extração encontrado em governanca/scripts/." -ForegroundColor Red
+  exit 1
+}
+
+Write-Host "=== Concluído com sucesso ===" -ForegroundColor Green

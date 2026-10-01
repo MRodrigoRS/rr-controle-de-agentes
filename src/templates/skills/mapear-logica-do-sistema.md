@@ -1,3 +1,8 @@
+---
+name: mapear-logica-do-sistema
+description: Extrai e documenta regras de negócio, fórmulas, fluxos, estados e integrações (livro-arquitetura/03).
+---
+
 # Skill: Mapear Lógica do Sistema
 
 > Instrui o agente a extrair e documentar o comportamento do sistema:
@@ -14,6 +19,8 @@ Também pode ser executada:
 - **Sob demanda** — quando o usuário pedir um mapeamento completo
 - **Antes de auditorias** — para o auditor entender o comportamento
   esperado antes de procurar problemas
+- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill `sincronizar-documentacao.md`
+
 
 ## Como Executar
 

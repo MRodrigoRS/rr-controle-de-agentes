@@ -57,6 +57,7 @@
 |------|------|-------------|
 | | | |
 
----
+> Mantenha atualizado — use a skill `mapear-comportamento-autonomo.md` (ou `sincronizar-documentacao.md` para reconciliação global).
 
-*Template gerado por RR Software (Rodrigo Rafael).*
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*
+

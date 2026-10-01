@@ -3,12 +3,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
+interface TecnologiaBadge {
+  id?: number;
+  nome: string;
+  categoria?: string;
+  aplicabilidade?: string;
+  descricao?: string;
+}
+
 interface PresetOpcao {
   id: string;
   nome: string;
   descricao: string;
   destaque: string;
   stack: string[];
+  tecnologias?: TecnologiaBadge[];
 }
 
 interface FullstackOpcao {
@@ -20,63 +29,161 @@ interface FullstackOpcao {
   backend: string;
   objetivo: string;
   vantagens: string[];
+  stack?: string[];
+  tecnologias?: TecnologiaBadge[];
 }
 
-function CardPreset({ item, selecionado, aoSelecionar, nome }: { item: PresetOpcao; selecionado: boolean; aoSelecionar: () => void; nome: string }) {
+function BadgeTecnologia({ tec }: { tec: TecnologiaBadge }) {
+  const tooltip = tec.aplicabilidade || tec.descricao || tec.nome;
+
   return (
-    <label className={`block cursor-pointer rounded-xl border p-4 transition ${selecionado ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"}`}>
-      <div className="flex items-start gap-3">
-        <input type="radio" name={nome} value={item.id} checked={selecionado} onChange={aoSelecionar} className="mt-1 accent-[#58a6ff]" />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-[#e6edf3]">{item.nome}</span>
-            {item.id !== "nenhum" && (
-              <span className="rounded-full bg-[#58a6ff]/10 px-2 py-0.5 text-xs text-[#58a6ff]">{item.destaque}</span>
-            )}
-          </div>
-          <p className="mt-1 text-sm text-[#8b949e]">{item.descricao}</p>
-          {item.stack.length > 0 && (
-            <div className="mt-2 flex flex-wrap gap-1">
-              {item.stack.map((t) => (
-                <span key={t} className="rounded-md bg-[#0d1117] px-2 py-0.5 text-xs text-[#8b949e] border border-[#30363d]">{t}</span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </label>
+    <span
+      title={tooltip}
+      className="inline-flex items-center rounded-md bg-[#0d1117] px-2 py-0.5 text-xs text-[#8b949e] border border-[#30363d] hover:border-[#58a6ff] hover:text-[#e6edf3] transition cursor-help"
+    >
+      {tec.id !== undefined && <span className="text-[#58a6ff] font-mono text-[10px] mr-1">#{tec.id}</span>}
+      <span>{tec.nome}</span>
+    </span>
   );
 }
 
-function CardFullstack({ combo, fe, be, selecionado, aoSelecionar }: { combo: FullstackOpcao; fe: PresetOpcao | undefined; be: PresetOpcao | undefined; selecionado: boolean; aoSelecionar: () => void }) {
+function CardPreset({
+  item,
+  selecionado,
+  aoSelecionar,
+}: {
+  item: PresetOpcao;
+  selecionado: boolean;
+  aoSelecionar: () => void;
+  nome: string;
+}) {
+  const tecs: TecnologiaBadge[] =
+    item.tecnologias && item.tecnologias.length > 0
+      ? item.tecnologias
+      : item.stack.map((s) => ({ nome: s }));
+
   return (
-    <button type="button" onClick={aoSelecionar}
-      className={`block cursor-pointer rounded-xl border p-4 text-left transition ${selecionado ? "border-[#58a6ff] bg-[#1a2332]" : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"}`}>
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-semibold text-[#e6edf3]">{combo.nome}</span>
-        <span className="rounded-full bg-[#58a6ff]/10 px-2 py-0.5 text-xs text-[#58a6ff] whitespace-nowrap">{combo.categoria}</span>
+    <div
+      onClick={aoSelecionar}
+      className={`cursor-pointer rounded-xl border p-4 transition flex flex-col justify-between ${
+        selecionado
+          ? "border-[#58a6ff] bg-[#1a2332] shadow-sm"
+          : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"
+      }`}
+    >
+      <div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <div
+              className={`w-4 h-4 rounded-full border flex items-center justify-center transition ${
+                selecionado ? "border-[#58a6ff] bg-[#58a6ff]" : "border-[#30363d] bg-[#0d1117]"
+              }`}
+            >
+              {selecionado && <div className="w-1.5 h-1.5 rounded-full bg-[#0d1117]" />}
+            </div>
+            <span className="font-semibold text-[#e6edf3]">{item.nome}</span>
+          </div>
+          {item.id !== "nenhum" && item.destaque && (
+            <span className="rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/20 px-2.5 py-0.5 text-xs font-medium text-[#58a6ff] whitespace-nowrap">
+              {item.destaque}
+            </span>
+          )}
+        </div>
+
+        <p className="mt-2 text-sm text-[#8b949e]">{item.descricao}</p>
       </div>
-      {combo.destaque && <p className="mt-0.5 text-xs text-[#58a6ff]">{combo.destaque}</p>}
-      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-sm">
-        <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9]">{fe?.nome ?? combo.frontend}</span>
-        <span className="text-[#8b949e]">+</span>
-        <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9]">{be?.nome ?? combo.backend}</span>
-      </div>
-      <p className="mt-2 text-sm text-[#8b949e]">{combo.objetivo}</p>
-      {combo.vantagens.length > 0 && (
-        <ul className="mt-2 space-y-1">
-          {combo.vantagens.map((v, i) => (
-            <li key={i} className="flex gap-1.5 text-xs text-[#8b949e]">
-              <span className="text-[#58a6ff]">•</span>
-              <span>{v}</span>
-            </li>
+
+      {tecs.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-[#30363d]/60 flex flex-wrap gap-1.5">
+          {tecs.map((t, idx) => (
+            <BadgeTecnologia key={`${t.id ?? t.nome}-${idx}`} tec={t} />
           ))}
-        </ul>
+        </div>
       )}
-      {selecionado && (
-        <p className="mt-2 text-xs font-medium text-[#58a6ff]">✓ Selecionado</p>
+    </div>
+  );
+}
+
+function CardFullstack({
+  combo,
+  fe,
+  be,
+  selecionado,
+  aoSelecionar,
+}: {
+  combo: FullstackOpcao;
+  fe: PresetOpcao | undefined;
+  be: PresetOpcao | undefined;
+  selecionado: boolean;
+  aoSelecionar: () => void;
+}) {
+  const tecs: TecnologiaBadge[] =
+    combo.tecnologias && combo.tecnologias.length > 0
+      ? combo.tecnologias
+      : [
+          ...(fe?.tecnologias ?? fe?.stack.map((s) => ({ nome: s })) ?? []),
+          ...(be?.tecnologias ?? be?.stack.map((s) => ({ nome: s })) ?? []),
+        ];
+
+  return (
+    <div
+      onClick={aoSelecionar}
+      className={`cursor-pointer rounded-xl border p-4 transition flex flex-col justify-between text-left ${
+        selecionado
+          ? "border-[#58a6ff] bg-[#1a2332] shadow-sm"
+          : "border-[#30363d] bg-[#161b22] hover:border-[#8b949e]"
+      }`}
+    >
+      <div>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <div
+              className={`w-4 h-4 rounded-full border flex items-center justify-center transition ${
+                selecionado ? "border-[#58a6ff] bg-[#58a6ff]" : "border-[#30363d] bg-[#0d1117]"
+              }`}
+            >
+              {selecionado && <div className="w-1.5 h-1.5 rounded-full bg-[#0d1117]" />}
+            </div>
+            <span className="font-semibold text-[#e6edf3]">{combo.nome}</span>
+          </div>
+          <span className="rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/20 px-2.5 py-0.5 text-xs font-medium text-[#58a6ff] whitespace-nowrap">
+            {combo.categoria}
+          </span>
+        </div>
+
+        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9] font-medium">
+            {fe?.nome ?? combo.frontend}
+          </span>
+          <span className="text-[#8b949e] font-bold">+</span>
+          <span className="rounded-md bg-[#0d1117] border border-[#30363d] px-2 py-0.5 text-[#c9d1d9] font-medium">
+            {be?.nome ?? combo.backend}
+          </span>
+          {combo.destaque && <span className="text-[#58a6ff] ml-1 font-medium">• {combo.destaque}</span>}
+        </div>
+
+        <p className="mt-2 text-sm text-[#8b949e]">{combo.objetivo}</p>
+
+        {combo.vantagens.length > 0 && (
+          <ul className="mt-2 space-y-1">
+            {combo.vantagens.map((v, i) => (
+              <li key={i} className="flex gap-1.5 text-xs text-[#8b949e]">
+                <span className="text-[#58a6ff]">•</span>
+                <span>{v}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {tecs.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-[#30363d]/60 flex flex-wrap gap-1.5">
+          {tecs.map((t, idx) => (
+            <BadgeTecnologia key={`${t.id ?? t.nome}-${idx}`} tec={t} />
+          ))}
+        </div>
       )}
-    </button>
+    </div>
   );
 }
 
@@ -88,6 +195,7 @@ export default function CriarProjeto() {
   const [aba, setAba] = useState<"conjuntos" | "livre">("conjuntos");
   const [carregando, setCarregando] = useState(true);
   const [tipo, setTipo] = useState<"novo" | "vincular">("novo");
+  const [modoVinculacao, setModoVinculacao] = useState<"manter" | "migrar">("manter");
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [frontend, setFrontend] = useState("");
@@ -96,6 +204,7 @@ export default function CriarProjeto() {
   const [selecionando, setSelecionando] = useState(false);
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const [avisoGovernanca, setAvisoGovernanca] = useState(false);
   const [importAberto, setImportAberto] = useState(false);
   const [importTexto, setImportTexto] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -139,43 +248,73 @@ export default function CriarProjeto() {
     try {
       const res = await fetch("/api/selecionar-pasta");
       const data = await res.json();
-      if (data.caminho) setCaminho(data.caminho);
+      if (data.caminho) {
+        setCaminho(data.caminho);
+        setAvisoGovernanca(false);
+      }
     } catch {
     } finally {
       setSelecionando(false);
     }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function enviarCriacao(sobrescrever = false) {
     setErro("");
-    if (!nome.trim()) { setErro("Nome é obrigatório"); return; }
-    if (tipo === "vincular" && !caminho.trim()) { setErro("Caminho do repositório é obrigatório para vincular"); return; }
     setEnviando(true);
     try {
-      const body: Record<string, unknown> = { nome: nome.trim(), descricao, caminho: caminho.trim() || undefined };
+      const body: Record<string, unknown> = {
+        nome: nome.trim(),
+        descricao,
+        caminho: caminho.trim() || undefined,
+        sobrescrever,
+      };
+
       if (tipo === "vincular") {
         body.vinculado = true;
+        if (modoVinculacao === "migrar") {
+          body.migrarStack = true;
+          body.frontend = frontend;
+          body.backend = backend;
+        }
       } else {
         body.frontend = frontend;
         body.backend = backend;
       }
+
       const res = await fetch("/api/projetos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
+      const data = await res.json();
+
+      if (res.status === 409 && data.governancaExistente) {
+        setAvisoGovernanca(true);
+        setErro("");
+        return;
+      }
+
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.erro || "Erro ao criar projeto");
       }
-      const data = await res.json();
+
+      setAvisoGovernanca(false);
       router.push(`/projetos/${data.id}`);
     } catch (err: unknown) {
       setErro(err instanceof Error ? err.message : "Erro desconhecido");
     } finally {
       setEnviando(false);
     }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setErro("");
+    setAvisoGovernanca(false);
+    if (!nome.trim()) { setErro("Nome é obrigatório"); return; }
+    if (tipo === "vincular" && !caminho.trim()) { setErro("Caminho do repositório é obrigatório para vincular"); return; }
+    await enviarCriacao(false);
   }
 
   if (carregando) {
@@ -211,10 +350,73 @@ export default function CriarProjeto() {
           </div>
         </div>
 
+        {tipo === "vincular" && (
+          <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
+            <div>
+              <h2 className="font-semibold text-[#e6edf3]">Modo de Vinculação</h2>
+              <p className="text-xs text-[#8b949e] mt-1">
+                Escolha se deseja manter a base tecnológica atual ou realizar um replatforming seguro com IA.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <label
+                className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition ${
+                  modoVinculacao === "manter"
+                    ? "border-[#58a6ff] bg-[#1a2332]"
+                    : "border-[#30363d] bg-[#0d1117] hover:border-[#8b949e]"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="modoVinculacao"
+                  value="manter"
+                  checked={modoVinculacao === "manter"}
+                  onChange={() => setModoVinculacao("manter")}
+                  className="mt-1 accent-[#58a6ff]"
+                />
+                <div>
+                  <span className="font-semibold text-[#e6edf3]">Manter Stack Atual</span>
+                  <p className="mt-1 text-xs text-[#8b949e]">
+                    Adiciona a governança ao projeto existente. O agente documentará a stack atual e você continuará evoluindo na mesma base tecnológica.
+                  </p>
+                </div>
+              </label>
+
+              <label
+                className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition ${
+                  modoVinculacao === "migrar"
+                    ? "border-[#58a6ff] bg-[#1a2332]"
+                    : "border-[#30363d] bg-[#0d1117] hover:border-[#8b949e]"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="modoVinculacao"
+                  value="migrar"
+                  checked={modoVinculacao === "migrar"}
+                  onChange={() => setModoVinculacao("migrar")}
+                  className="mt-1 accent-[#58a6ff]"
+                />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-[#e6edf3]">Migrar para Nova Stack</span>
+                    <span className="rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/20 px-2 py-0.5 text-[10px] font-semibold text-[#58a6ff]">
+                      Replatforming
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-[#8b949e]">
+                    Transfere o projeto para uma stack moderna em branch isolada. Preserva 100% da lógica de negócio via inventário De-Para e migração side-by-side.
+                  </p>
+                </div>
+              </label>
+            </div>
+          </div>
+        )}
+
         <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
           <button type="button" onClick={() => setImportAberto(!importAberto)}
             className="flex w-full items-center justify-between text-left">
-            <h2 className="font-semibold text-[#e6edf3]">Importar Documento</h2>
+          <h2 className="font-semibold text-[#e6edf3]">Importar Documento</h2>
             <span className="text-[#8b949e] text-sm">{importAberto ? "▲" : "▼"}</span>
           </button>
           {importAberto && (
@@ -267,15 +469,34 @@ export default function CriarProjeto() {
                 {selecionando ? "Abrindo..." : "Selecionar Pasta"}
               </button>
             </div>
-            {tipo === "vincular" && (
+            {tipo === "vincular" && modoVinculacao === "manter" && (
               <p className="mt-1 text-xs text-[#8b949e]">A stack será documentada pelo agente durante a vinculação. Presets não se aplicam.</p>
+            )}
+            {tipo === "vincular" && modoVinculacao === "migrar" && (
+              <p className="mt-1 text-xs text-[#58a6ff]">O código legado será mantido intacto e a migração ocorrerá em branch separada com migração side-by-side.</p>
             )}
           </div>
         </div>
 
-        {tipo === "novo" && (
+        {(tipo === "novo" || (tipo === "vincular" && modoVinculacao === "migrar")) && (
           <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm space-y-4">
-            <h2 className="font-semibold text-[#e6edf3]">Stack Tecnológica</h2>
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-semibold text-[#e6edf3]">
+                  {tipo === "vincular" ? "Stack Tecnológica de Destino (Alvo da Refatoração)" : "Stack Tecnológica"}
+                </h2>
+                {tipo === "vincular" && (
+                  <p className="text-xs text-[#8b949e] mt-1">
+                    Selecione o preset ou combo moderno para o qual o sistema legado será migrado, preservando todas as regras de negócio.
+                  </p>
+                )}
+              </div>
+              {tipo === "vincular" && (
+                <span className="rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/20 px-2.5 py-1 text-xs font-semibold text-[#58a6ff]">
+                  Alvo da Migração
+                </span>
+              )}
+            </div>
 
             <div className="flex gap-1 rounded-lg bg-[#0d1117] p-1">
               <button type="button" onClick={() => setAba("conjuntos")}
@@ -332,12 +553,59 @@ export default function CriarProjeto() {
           </div>
         )}
 
+        {avisoGovernanca && (
+          <div className="rounded-xl border border-yellow-600/40 bg-yellow-950/20 p-5 space-y-3">
+            <div className="flex items-start gap-3">
+              <span className="text-xl">⚠️</span>
+              <div>
+                <h3 className="font-semibold text-yellow-400">
+                  {tipo === "vincular" ? "Governança Existente no Repositório" : "Governança Existente no Destino"}
+                </h3>
+                <p className="mt-1 text-sm text-[#c9d1d9]">
+                  Este diretório já possui uma pasta <code className="text-yellow-300 font-mono text-xs">governanca/</code>.
+                  Deseja sobrescrever todos os arquivos e recomeçar a governança do zero?
+                </p>
+                <p className="mt-1 text-xs text-[#8b949e]">
+                  Nota: Ao recomeçar do zero, os arquivos de governança serão recriados com os templates e presets atuais.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button
+                type="button"
+                disabled={enviando}
+                onClick={() => enviarCriacao(true)}
+                className="rounded-lg bg-yellow-600 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-500 disabled:opacity-50 transition"
+              >
+                {enviando ? "Sobrescrevendo..." : "Sim, Sobrescrever e Recomeçar do Zero"}
+              </button>
+              <button
+                type="button"
+                disabled={enviando}
+                onClick={() => setAvisoGovernanca(false)}
+                className="rounded-lg border border-[#30363d] bg-[#21262d] px-4 py-2 text-sm text-[#c9d1d9] hover:bg-[#30363d] disabled:opacity-50 transition"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        )}
+
         {erro && <p className="text-sm text-[#e94560]">{erro}</p>}
 
-        <button type="submit" disabled={enviando}
-          className="rounded-lg bg-[#238636] px-6 py-3 text-sm font-medium text-white hover:bg-[#2ea043] disabled:opacity-50 transition">
-          {enviando ? (tipo === "vincular" ? "Vinculando..." : "Criando...") : (tipo === "vincular" ? "Vincular Governança" : "Criar Projeto")}
-        </button>
+        {!avisoGovernanca && (
+          <button type="submit" disabled={enviando}
+            className="rounded-lg bg-[#238636] px-6 py-3 text-sm font-medium text-white hover:bg-[#2ea043] disabled:opacity-50 transition">
+            {enviando
+              ? (tipo === "vincular"
+                  ? (modoVinculacao === "migrar" ? "Vinculando com Migração..." : "Vinculando...")
+                  : "Criando...")
+              : (tipo === "vincular"
+                  ? (modoVinculacao === "migrar" ? "Vincular e Iniciar Migração" : "Vincular Governança")
+                  : "Criar Projeto")}
+          </button>
+        )}
       </form>
     </>
   );

@@ -2,5 +2,10 @@ node_modules/
 .next/
 *.db
 *.db-journal
+*.db-wal
+*.db-shm
 dados/projetos.json
 *.tsbuildinfo
+/projetos/
+__pycache__/
+*.pyc

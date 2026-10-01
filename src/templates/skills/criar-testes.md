@@ -1,3 +1,8 @@
+---
+name: criar-testes
+description: Padrões de testes por stack e fluxo de depuração de testes falhando.
+---
+
 # Skill: Criar Testes
 
 > Orienta o agente a criar e manter testes adequados à stack do projeto,

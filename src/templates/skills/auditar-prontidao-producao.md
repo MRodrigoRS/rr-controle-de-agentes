@@ -1,3 +1,8 @@
+---
+name: auditar-prontidao-producao
+description: Checklist pré-deploy — ambiente, build, segurança, resiliência, banco, monitoramento, performance e conformidade.
+---
+
 # Skill: Auditar Prontidão para Produção
 
 > Prepara o sistema para deploy em produção. Deve ser executada antes do

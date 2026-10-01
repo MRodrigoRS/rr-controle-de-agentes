@@ -18,8 +18,17 @@ src/
 └── lib/          ← utilitários
 ```
 
-## Decisões Arquiteturais
+## Decisões Arquiteturais (ADR)
 
-(registre aqui as decisões tomadas durante o desenvolvimento)
+Registre decisões importantes com o formato ADR, em sequência (ADR-01, ADR-02...):
 
-*Template gerado por RR Software (Rodrigo Rafael).*
+- **Problema:** o que precisava ser decidido
+- **Alternativas:** opções consideradas
+- **Decisão:** o que foi escolhido
+- **Motivo:** por quê
+- **Consequências:** impactos e trade-offs
+
+Decisões contestadas com o usuário também entram aqui (veja "Dever de Crítica"
+no `AGENTS.md`). Isso impede que a arquitetura seja "redescoberta" a cada sprint.
+
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*

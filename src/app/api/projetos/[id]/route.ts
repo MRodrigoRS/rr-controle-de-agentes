@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { obterFrontend, obterBackend } from "@/presets";
 import { criarEstruturaGovernanca } from "@/servidor/gerador";
-import { carregarProjetos, salvarProjetos, atualizarProjeto } from "@/servidor/projetos";
+import { carregarProjetos, atualizarProjeto, excluirProjeto } from "@/servidor/projetos";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -24,15 +24,11 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const projetos = carregarProjetos();
-  const index = projetos.findIndex((p) => p.id === id);
+  const ok = excluirProjeto(id);
 
-  if (index === -1) {
+  if (!ok) {
     return NextResponse.json({ erro: "Projeto não encontrado" }, { status: 404 });
   }
-
-  projetos.splice(index, 1);
-  salvarProjetos(projetos);
 
   return NextResponse.json({ sucesso: true });
 }
@@ -68,6 +64,7 @@ export async function PUT(_request: Request, { params }: { params: Promise<{ id:
       presetBackend,
       repositorioExistente: ehVinculado,
       regenerar: true,
+      modoMigracao: projeto.modoMigracao,
     });
 
     return NextResponse.json({ sucesso: true, mensagem: "Governança recriada com sucesso" });

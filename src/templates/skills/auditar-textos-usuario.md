@@ -1,3 +1,8 @@
+---
+name: auditar-textos-usuario
+description: Remove jargão técnico e contatos/valores fictícios dos textos que o cliente vê, antes de releases.
+---
+
 # Skill: Auditar Textos para o Usuário
 
 > Audita toda a comunicação que o cliente vê — toasts, mensagens de

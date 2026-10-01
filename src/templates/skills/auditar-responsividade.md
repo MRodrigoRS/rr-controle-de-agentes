@@ -1,3 +1,8 @@
+---
+name: auditar-responsividade
+description: Analisa compatibilidade mobile — viewport, layout, toque, performance, navegação e oportunidades PWA.
+---
+
 # Skill: Auditar Responsividade Mobile
 
 > Instrui o agente a analisar o projeto quanto à compatibilidade com
@@ -72,13 +77,17 @@
   - Service worker? Cache de recursos estáticos?
 - **Consumo de dados:** chamadas de API frequentes ou payloads grandes?
 
-### 6. Navegação Mobile
+### 6. Navegação Mobile e PWA (Progressive Web App)
 
 - Menu/navbar se adapta a telas pequenas? (hamburger, bottom nav, tabs)
 - Tabelas são roláveis horizontalmente ou têm versão em cards?
 - Modais e diálogos ocupam largura total em mobile ou ficam minúsculos?
 - Back button e gestos de navegação nativos funcionam?
-- **PWA:** o projeto poderia virar um PWA? (`manifest.json`, service worker)
+- **PWA (Padrão para Web):**
+  - **Manifest:** `manifest.json` ou `manifest.ts` existe com `name`, `short_name`, `theme_color`, `background_color`, `display: "standalone"`, `start_url` e ícones adequados (192x192, 512x512, maskable)?
+  - **Service Worker / Offline:** Service Worker registrado (via `vite-plugin-pwa`, `@serwist/next` ou nativo)? Há estratégia de cache para assets estáticos e página offline de fallback?
+  - **Instalabilidade:** O app atende aos critérios do Chrome/Lighthouse para o banner "Instalar Aplicativo"?
+  - **Meta Tags:** Tags de status bar iOS (`apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) configuradas?
 
 ## Saída
 

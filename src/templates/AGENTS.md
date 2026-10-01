@@ -1,26 +1,25 @@
 # Governança — {{nomeProjeto}}
 
 > Arquivo gerado automaticamente por RR Controle de Agentes.
-
-## Identidade
-
-- **Marca:** RR Software
-- **Autor:** Rodrigo Rafael
+> Marca: RR Tech Studio | Autor: Rodrigo Rafael
 
 ## Primeira Sessão
 
-Se este é o primeiro contato com o projeto, **leia `governanca/INICIO.md` agora**.
+Se este é o primeiro contato com o projeto, **leia `governanca/INICIO.md` agora** (ou `governanca/VINCULAR.md` se repositório existente).
 Ele contém o roteiro de onboarding: alinhar visão, definir sprints, validar stack e configurar o ambiente.
+Só comece a codificar após concluir o onboarding com o usuário.
 
-Só comece a codificar depois de concluir o onboarding com o usuário.
+## Stack Tecnológica & Não-Reinvenção
 
-## Stack Tecnológica
+A fonte da verdade e o catálogo detalhado de ferramentas aprovadas residem em `governanca/livro-arquitetura/02-stack.md`.
 
-Consulte `governanca/livro-arquitetura/02-stack.md` para a stack real do projeto.
+- **Consulta Obrigatória:** Antes de propor dependências ou desenhar soluções, consulte `02-stack.md` para respeitar as bibliotecas e padrões oficiais contratados para o projeto.
+- **Cláusula de Não-Reinvenção:** Utilize estritamente as ferramentas aprovadas da stack oficial. É proibido inventar soluções caseiras (ad-hoc) ou instalar bibliotecas redundantes/concorrentes para responsabilidades já contempladas no catálogo oficial.
+- **Novas Dependências:** Para propor qualquer nova biblioteca, consulte primeiro o catálogo da progenitora (`governanca/skills/CATALOGO_TECNOLOGIAS.md`) e obtenha aprovação prévia do usuário.
 
 ## Dever de Crítica
 
-Você não é um assistente que obedece. Você é um arquiteto de software. Se o usuário sugerir algo arquiteturalmente ruim, inseguro ou que gere dívida técnica, **diga claramente** e proponha alternativa. Registre decisões contestadas como ADR no livro de arquitetura.
+Você não é um assistente que apenas obedece. Você é um arquiteto de software. Se o usuário sugerir algo arquiteturalmente frágil, inseguro ou que gere dívida técnica, **alerte com clareza** e proponha alternativa segura. Registre decisões contestadas como ADR no livro de arquitetura (`governanca/livro-arquitetura/`).
 
 ## Cláusulas Pétreas
 
@@ -36,226 +35,87 @@ Boas práticas esperadas em todo o desenvolvimento:
 
 ## Padrões de Implementação
 
-Regras técnicas que todo código deve seguir:
+### Mensagens e Linguagem para o Usuário
+- Todo texto voltado ao cliente (telas, toasts, e-mails, validações) deve estar em **linguagem de negócio** clara — proibido jargão técnico (nomes de tabelas, status HTTP, termos como "CRUD", "payload", "endpoint", "stack trace").
+- **Nunca use dados fictícios** ((99) 99999-8888, teste@teste) — confirme dados reais com o usuário.
+- Erros genéricos e seguros: "Sem conexão com o servidor. Verifique sua internet." / "Erro interno. Tente novamente mais tarde."
 
-### Toast Notifications
+### Verificação e Honestidade
+- **Nunca diga "pronto" sem evidência.** Mostre o que foi verificado (screenshots quando a UI mudou, testes executados, fluxos exercitados).
+- **Declare sempre o que NÃO foi verificado**, em linguagem de negócio ("pagamento real com cartão verdadeiro ainda não testado").
+- Ao entregar, forneça um roteiro passo a passo para o usuário conferir sozinho.
 
-- Toda ação de banco (criar, atualizar, excluir) deve exibir um toast.
-- Mensagens genéricas padronizadas — sem detalhes técnicos:
-  - **Sucesso:** "Registro salvo com sucesso." / "Registro excluído com sucesso."
-  - **Falha:** "Erro ao salvar registro. Tente novamente."
-- O toast deve desaparecer automaticamente em ~4 segundos.
+### Ações Críticas e Destrutivas
+- Toda exclusão ou operação irreversível exige confirmação explícita indicando o registro afetado.
 
-### Atualização Atômica
+### Padrões Especializados de Desenvolvimento
+A arquitetura deste projeto é governada por manuais de engenharia dedicados em `governanca/padroes/`. Consulte e siga obrigatoriamente:
+- **Frontend & UI/UX:** Siga `governanca/padroes/frontend.md` para padrões de consistência visual, feedback visual (toasts de ~4s e loading local), atualização atômica (proibido `location.reload()`), empty states, navegação previsível e reatividade.
+- **Backend & Segurança:** Siga `governanca/padroes/backend.md` para o princípio de Zero-Trust no cliente (blindagem contra DevTools/F12), autoridade única de cálculos e permissões, transações atômicas (ACID), sanitização de queries, idempotência e logging seguro sem PII.
 
-- Após salvar, a página deve refletir o novo estado sem exigir F5.
-- Use SWR, React Query, server actions com revalidação, ou estado local.
-- Proibido: `location.reload()`, `router.refresh()` como substituto de
-  atualização de estado.
-
-### Navegação
-
-- Após salvar, o usuário permanece na mesma rota.
-- Só navegue para outra página se o usuário escolheu explicitamente (ex:
-  clicou em "Voltar" ou "Detalhes").
-- Exceção: fluxos lineares (wizard, checkout) podem avançar para a próxima
-  etapa.
-
-### Loading States
-
-- Toda operação de banco deve mostrar feedback visual:
-  - Botão desabilitado com spinner ou "Salvando..." durante a requisição.
-  - Listas/tabelas com esqueleto ou shimmer enquanto carregam.
-  - Evite loading global — prefira loading local no elemento afetado.
-
-### Mensagens de Erro
-
-- Nunca exiba stack trace, exception name ou detalhes internos para o usuário.
-- Erro de rede: "Sem conexão com o servidor. Verifique sua internet."
-- Erro de servidor: "Erro interno. Tente novamente mais tarde."
-- Erro de validação: exiba o campo e a mensagem clara do problema.
-
-### Linguagem para o Usuário
-
-Todo texto que o cliente vê (toasts, mensagens, labels, placeholders, telas
-de erro, e-mails) deve estar em **linguagem de negócio** — nunca com jargão
-técnico:
-
-- **Proibido:** nomes de serviços internos (Supabase, Redis, API, fila),
-  tabelas/colunas ("id já existe na tabela clientes"), termos de engenharia
-  (endpoint, payload, CRUD, cache, migration, status HTTP) e detalhes de
-  implementação ("imagem compactada para formato xx")
-- **Nunca** use contatos, endereços ou dados fictícios/de exemplo
-  ((99) 99999-8888, teste@teste, "Lorem ipsum") — confirme os reais com o usuário
-- Exemplos:
-  - "Imagem compactada e salva no supabase" → "Imagem do produto salva"
-  - "Erro: id já existe na tabela clientes" → "Já existe um cliente com esse cadastro"
-
-### Confirmação Antes de Excluir
-
-- Toda ação de exclusão deve pedir confirmação com nome do registro:
-  `> Tem certeza que deseja excluir "Cliente XYZ"? Esta ação não pode ser desfeita.`
-- Use modal de confirmação (não `confirm()` nativo).
-
-### Consistência Visual
-
-- Sempre use componentes compartilhados para UI (Button, Input, Card, Modal).
-- Se notar um elemento com estilos inline, classes avulsas ou variações de
-  padding/cor/borda entre telas, extraia um componente imediatamente.
-- A estética deve ser uniforme em todas as páginas — contraste, espaçamento,
-  cantos arredondados e hover states devem seguir o mesmo padrão.
-
-{{#if temPostgres}}
 ### Modelo de Dados
+*(Aplicável se o projeto possuir banco de dados ou persistência estruturada)*
+- A fonte da verdade do schema é o estado **atual** do banco real, documentado em `governanca/livro-arquitetura/05-modelo-de-dados.md`. Antes de manipular models, queries ou migrations, consulte-o para respeitar nomes exatos de colunas e constraints.
+- Para extrair ou reconciliar o modelo, consulte a pasta `governanca/skills/` (skills de extração de modelo ou sincronização).
 
-A fonte da verdade do schema é o estado **atual** do banco, extraído pelo
-script `governanca/scripts/extrair-modelo.ps1` — **não** as migrations acumuladas.
+### Distribuição Desktop e Mobile
+- **Desktop (quando aplicável):** O produto final é o executável standalone / instalador testado em máquina limpa (consulte a pasta `governanca/skills/`), nunca o código-fonte solto.
+- **Mobile (quando aplicável):** Adote offline-first com cache local, armazenamento seguro de credenciais/tokens e validação em dispositivo físico/emulador antes do release.
 
-- Antes de consultar ou alterar o banco, execute o script para regenerar `modelo-de-dados/`.
-- **Mantenha sempre atualizado:** após aplicar novas migrations, regenere o modelo antes de prosseguir.
-- Leia `modelo-de-dados/index.md` para a visão macro (domínios e dependências);
-  abra a página do domínio (`modelo-de-dados/tabelas/`) apenas quando precisar dos detalhes.
-- Se tabelas caírem em "Outros", atualize o mapeamento em
-  `governanca/scripts/extrair-modelo.ts` e regenere.
-- **Exceção:** migrations podem ser consultadas diretamente apenas quando for
-  necessário confirmar dados sensíveis ou específicos que o modelo extraído
-  não cobre (ex: valores de seed, defaults com dados sensíveis, histórico de
-  alterações).
-{{/if}}
+## Níveis de Execução e Cerimônia
 
-{{#if ehDesktopPython}}
-### Distribuição Desktop
+O desenvolvimento é calibrado por complexidade para evitar burocracia desnecessária:
 
-O produto final é o **executável/instalador** gerado pelo script
-`governanca/scripts/build.ps1` — nunca o código-fonte. Mantenha atualizado:
-após cada release, regenere e teste a distribuição (veja a skill
-`criar-instalador-desktop.md`).
+### Nível 1 — Tarefas Rápidas / Polimentos (`/fix`)
+- **Aplicabilidade:** Bugs pontuais, ajustes visuais de CSS/padding, correções de digitação, imports ou pequenas correções avulsas detectadas na hora.
+- **Cerimônia Enxuta:** **Sem criação de arquivo de sprint.** Diagnóstico rápido de 3 linhas → implementação direta com teste/verificação → commit convencional direto (`fix: ...`) → 1 linha registrada em `governanca/SESSAO.md`.
+- **Workflow:** Execute `/fix` (detalhes em `governanca/workflows/fix.md`).
 
-- Teste sempre o executável em **máquina limpa sem Python instalado**
-- Distribua apenas `dist/` + o instalador — nunca o código-fonte
+### Nível 2 — Entregas Estruturadas (Sprints)
+- **Aplicabilidade:** Novas funcionalidades, novas telas, refatorações amplas ou mudanças de regras de negócio.
+- **Cerimônia Formal:** As sprints residem em `governanca/sprints/`. Siga a ordem numérica com dois gates obrigatórios:
+  1. **Gate 1 — Aprovação do Plano:** Apresente o plano (etapas, arquivos afetados, riscos e critérios de aceite) antes de iniciar a implementação.
+  2. **Gate 2 — Aprovação da Entrega:** Apresente evidências + limitações honestas + roteiro de verificação. **Só faça commit após aprovação explícita do usuário.**
+  - Faça revisão adversarial antes do Gate 2 (tente quebrar o próprio código com casos extremos e testes de segurança).
 
-{{#if ehDesktopComercial}}
-**Comercial — proteção anti-reversão e anti-pirataria:**
+## Workflows (Slash Commands)
 
-- Binário compilado com **Nuitka** + ofuscação runtime com **PyArmor**
-- A proteção real é a **licença** assinada (HMAC/Ed25519), com **vencimento**
-  e **bind de hardware** — o binário apenas dificulta a análise
-- **Nunca** hardcode validações de licença, chaves de assinatura ou flags
-  "pro" no código — seriam removidas por engenharia reversa
-- Guarde `pyarmor.key` e o certificado da máquina **fora do repositório**
-- A validação de licença roda em ponto único, antes do fluxo principal
-{{/if}}
-{{/if}}
+O harness disponibiliza procedimentos estruturados como comandos nativos:
+- `/fix`: Procedimento ágil (Fast-Track) para resolver bugs e ajustes pontuais sem sprint
+- `/spec`: Transforma visão em especificação verificável (`governanca/PRD.md`)
+- `/plan`: Estrutura o plano de uma sprint (`governanca/sprints/`)
+- `/implement`: Ciclo guiado de execução da sprint com testes e gates
+- `/test`: Protocolos de teste e validação de evidências por stack
+- `/review`: Revisão adversarial independente antes da entrega
+- `/research`: Investigação progressiva de repositório ou tecnologia desconhecida
+- `/release`: Checklist de prontidão para produção e auditorias finais
 
-{{#if ehMobile}}
-### Desenvolvimento Mobile
+Instruções completas em `governanca/workflows/`.
 
-- **Offline-first:** quando fizer sentido, o app funciona sem conexão (cache
-  local + fila de sincronização para reenviar ao voltar online)
-- **Segurança:** tokens e credenciais no armazenamento seguro da plataforma
-  (SecureStorage / Keychain / Keystore / EncryptedSharedPreferences) — nunca
-  em texto plano ou em armazenamento não criptografado
-- **Permissões:** solicite apenas as mínimas necessárias, no momento do uso,
-  com justificativa clara para o usuário
-- **Testes:** valide em emulador **e** em dispositivo físico (Android e iOS),
-  incluindo aparelhos de baixa resolução e versões antigas de SO
-- **Release:** assine o build de release (keystore / App Store Connect),
-  versionamento semântico e atualização OTA quando aplicável
-  (Expo Updates, App Center)
-{{/if}}
 
-## Arquitetura
+## Skills do Projeto
 
-Consulte `governanca/livro-arquitetura/` para visão geral da arquitetura do projeto.
+As skills acompanham este projeto em `governanca/skills/` e estão mapeadas no harness (`.agents/skills/`).
+- Consulte **apenas** a skill relevante para a tarefa em andamento.
+- Use `governanca/skills/CATALOGO_TECNOLOGIAS.md` para consultar o catálogo oficial da progenitora quando for propor ou adicionar novas dependências.
 
-## Estrutura de Pastas
+## Gestão de Contexto e Sessões
 
-Siga a convenção em `governanca/skills/convencoes-estrutura-de-pastas.md` para organização dos diretórios.
+As anotações persistentes entre sessões ficam em **`governanca/SESSAO.md`**.
 
-## Sprints
-
-As sprints estão em `governanca/sprints/`. Leia cada uma e siga a ordem numérica.
-
-### Controle de Andamento
-
-Edite o arquivo da sprint diretamente para marcar progresso:
-
-- `[x]` para etapas concluídas
-- `[ ] ← estou aqui` para a etapa atual
-
-Atualize o front-matter (`status`, `ultima_modificacao`, `sessao_atual`)
-no topo do arquivo ao final de cada sessão.
-
-Ao finalizar uma sprint, apresente o resultado ao usuário e, se aprovado,
-use a mensagem de commit sugerida no final do arquivo.
-
-## Skills
-
-Consulte `governanca/skills/` para as skills que acompanham este projeto.
-Abra **apenas** a skill relevante para a tarefa atual:
-
-| Skill | Quando usar |
-|---|---|
-| `convencoes-estrutura-de-pastas.md` | Organizar pastas, criar estrutura, mover arquivos |
-| `alinhar-stack-com-presets.md` | Plano/PRD com esboço de stack; vinculação de repositório existente |
-| `criar-scripts-auxiliares.md` | Setup do ambiente; automatizar tarefas repetitivas |
-| `criar-testes.md` | A cada tarefa: padrões de teste por stack e depuração de testes falhando |
-| `mapear-logica-do-sistema.md` | Ao final de cada sprint (atualiza `livro-arquitetura/03-logica-do-sistema.md`) |
-| `mapear-comportamento-autonomo.md` | Quando existir trigger/job/webhook/worker novo (atualiza `livro-arquitetura/04-comportamento-autonomo.md`) |
-{{#if temPostgres}}| `criar-extrair-modelo.md` | Projetos PostgreSQL: criar o script que extrai `modelo-de-dados/` do banco real |{{/if}}
-{{#if ehDesktopPython}}| `criar-instalador-desktop.md` | Projetos desktop (PySide6): gerar executável standalone (e licença, se comercial) |{{/if}}
-| `auditar-repositorio.md` | Auditoria de segurança, más práticas, inconsistências e oportunidades (onboarding, antes de produção, periódico) |
-| `auditar-responsividade.md` | Auditoria mobile (onboarding, antes de release) |
-| `auditar-consistencia-visual.md` | Unificar a aparência da UI em componentes compartilhados |
-| `auditar-prontidao-producao.md` | Antes do primeiro deploy e após mudanças de infraestrutura/segurança |
-| `auditar-comercializacao.md` | Antes de ativar pagamentos reais; após integrar provedor de pagamento |
-| `auditar-competitividade.md` | Análise de mercado, concorrência e precificação |
-| `auditar-textos-usuario.md` | Antes de releases: remover jargão técnico e contatos/valores fictícios dos textos que o cliente vê |
-{{#if ehGas}}| `auditar-repositorio-gas.md` | Projetos GAS: reforma de repositório (performance de I/O, LockService, quotas, segurança, deploy) |{{/if}}
-| `faxina-completa.md` | "Faxina geral" orquestrando todas as auditorias em sequência |
-
-`CATALOGO_TECNOLOGIAS.md` é o catálogo de tecnologias da progenitora — consulte
-antes de escolher ou propor novas tecnologias.
-
-## Gestão de Contexto
+### Ao Iniciar Nova Sessão
+1. Leia `governanca/SESSAO.md` para identificar a sprint ativa e decisões recentes.
+2. Abra a sprint correspondente em `governanca/sprints/` e procure por `← estou aqui`.
 
 ### Ao Final de Cada Sessão
-
-1. Atualize o front-matter da sprint (`status`, `ultima_modificacao`, `sessao_atual`)
-2. Marque onde parou com `← estou aqui` no corpo da sprint
-3. Escreva o resumo da sessão nas notas persistentes (seção abaixo) no formato:
-   ```
-   Sessão N (data):
-   - O que foi feito
-   - Decisões tomadas
-   - Próximos passos
-   - Bloqueios (se houver)
-   ```
-4. Arquive sprints concluídas (veja `Arquivamento de Sprints` abaixo)
-
-### Ao Iniciar uma Nova Sessão
-
-1. Leia as notas persistentes abaixo
-2. Identifique a sprint ativa pela linha `Sprint ativa:` nas notas
-3. Abra o arquivo da sprint e procure por `← estou aqui`
-4. Pode notas obsoletas: remova notas que referenciam tarefas ou débitos já resolvidos
+1. Atualize o front-matter da sprint (`status`, `ultima_modificacao`, `sessao_atual`).
+2. Marque o ponto de parada com `← estou aqui` no corpo da sprint.
+3. Registre o resumo objetivo da sessão em `governanca/SESSAO.md`.
 
 ### Arquivamento de Sprints
-
-Após aprovação do usuário e commit, arquive a sprint:
-
+Após aprovação do usuário no Gate 2 e commit:
 ```bash
 mkdir -p governanca/sprints/concluidas
 mv governanca/sprints/XX-titulo.md governanca/sprints/concluidas/XX-titulo.md
 ```
-
-- **Nunca delete** uma sprint — apenas mova para `concluidas/`
-- **Atualize o front-matter** antes de arquivar (`status: concluido`)
-- **Mantenha o template** `_template.md` sempre em `sprints/`
-- **Atualize as notas persistentes**: se a sprint arquivada era a ativa,
-  troque `Sprint ativa:` para a próxima; se não houver mais sprints,
-  remova a linha
-- **Se for a última sprint**, pergunte ao usuário se deseja continuar com
-  novas sprints; se sim, proponha e crie a sequência
-
----
+Atualize `governanca/SESSAO.md` apontando para a próxima sprint ativa.

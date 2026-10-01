@@ -36,11 +36,13 @@ sessao_atual: 0
 
 ## Instruções ao Agente
 
-1. Comece sempre perguntando ao usuário se pode iniciar esta sprint.
+1. **Gate 1 — aprovação do plano.** Apresente ao usuário o plano desta
+   sprint (etapas, arquivos afetados, riscos e como saberá que terminou —
+   os critérios de aceite). Só implemente após aprovação.
 2. Execute cada tarefa em ordem.
 3. **Testes:** após implementar cada tarefa, escreva os testes
-   correspondentes seguindo `criar-testes.md` em `governanca/skills/`
-   (padrão de ferramentas, cobertura por stack e fluxo de depuração
+   correspondentes consultando a pasta `governanca/skills/` (skill de testes para
+   padrão de ferramentas, cobertura por stack e fluxo de depuração
    quando um teste falhar).
 4. **Antes de apresentar o resultado**, percorra este checklist:
    - [ ] Funcionalidade atende o requisito (sem extras)
@@ -48,25 +50,35 @@ sessao_atual: 0
    - [ ] Segurança: inputs validados, sem credenciais hardcoded
    - [ ] Código: sem código morto, duplicado, nomes claros, sem `any`
    - [ ] Manutenibilidade: lógica no lugar certo, sem constantes mágicas
+   - [ ] Padrões de engenharia: seguiu os manuais em `governanca/padroes/` (`frontend.md` e `backend.md`)
    - [ ] Testes passando
-5. **Antes de finalizar a sprint**, execute a skill `mapear-logica-do-sistema.md`
-   em `governanca/skills/` para atualizar `livro-arquitetura/03-logica-do-sistema.md`
-   com a lógica implementada.
-   5b. **(Opcional) Se houver comportamento autônomo novo** (triggers, jobs,
-   webhooks, workers, middleware, cascatas de banco), execute a skill
-   `mapear-comportamento-autonomo.md` para documentá-lo em
-   `livro-arquitetura/04-comportamento-autonomo.md`.
- 6. Apresente o resultado parcial ao usuário.
- 7. Ao finalizar, marque `status: concluida` no front-matter e atualize
-    `ultima_modificacao`.
- 8. **Documente aprendizados e decisões:** antes de finalizar, preencha a
-    seção `## Aprendizados e Decisões` abaixo com os aprendizados técnicos
-    importantes e as decisões de design tomadas ou validadas nesta sprint.
-    Isso garante rastreabilidade para sprints futuras.
- 9. **Arquive a sprint concluída** seguindo as regras de `Arquivamento de
-    Sprints` no `governanca/AGENTS.md`.
-10. Apresente o resumo ao usuário e, se aprovado, faça o commit com a
-    mensagem abaixo.
+5. **Antes de finalizar a sprint**, consulte a pasta `governanca/skills/` para atualizar
+   o livro de arquitetura (`governanca/livro-arquitetura/`) com as regras de negócio, dados
+   e comportamentos implementados (usando a skill de sincronização/mapeamento).
+6. **Revisão adversarial.** Antes de apresentar ao usuário, mude o objetivo
+   e tente quebrar o que foi feito: procure casos extremos, assuma que a
+   solução contém um bug e encontre-o, verifique quais requisitos podem
+   estar falsamente satisfeitos e faça uma passada de segurança. Corrija o
+   que encontrar e reteste. Se houver outra sessão/agente disponível, peça
+   uma revisão independente — o criador não deve ser o único juiz.
+7. **Evidências, limitações e roteiro.** Preencha `## Evidências`,
+   `## Limitações` e `## Roteiro de Verificação` abaixo:
+   - Evidências: o que foi verificado — **screenshot/print obrigatório**
+     quando a UI mudou
+   - Limitações: o que **não** foi verificado, em linguagem de negócio
+     ("pagamento real com cartão verdadeiro ainda não testado")
+   - Roteiro: passo a passo em linguagem de negócio para o usuário conferir
+     sozinho (abrir → navegar → agir → resultado esperado)
+8. **Documente aprendizados e decisões:** preencha a seção `## Aprendizados e Decisões`
+   com descobertas técnicas e decisões arquiteturais confirmadas nesta sprint.
+9. **Gate 2 — aprovação da entrega.** Apresente o resumo + evidências +
+   limitações + roteiro ao usuário e pergunte se quer conferir sozinho
+   antes de aprovar. **Só faça o commit após aprovação explícita do usuário.**
+10. **Faça o commit** com a mensagem de commit sugerida abaixo.
+11. **Finalização e Arquivamento:**
+    - Marque `status: concluida` no front-matter e atualize `ultima_modificacao`.
+    - Mova o arquivo para `governanca/sprints/concluidas/`.
+    - **Atualize `governanca/SESSAO.md`:** ajuste o campo `**Sprint Ativa:**` com a próxima sprint planejada (ou `[Aguardando planejamento]`).
 
 ---
 
@@ -79,11 +91,39 @@ sprint-{{numero}}: {{sugestaoCommit}}
 
 ---
 
-## Como Arquivar
+## Roteiro de Verificação
 
-Após aprovação do usuário e commit, arquive a sprint seguindo as regras de
-`Arquivamento de Sprints` no `governanca/AGENTS.md` (mover para
-`sprints/concluidas/`, atualizar front-matter e notas persistentes).
+*Passo a passo em linguagem de negócio para o usuário conferir sozinho.
+Cada passo: onde ir → o que fazer → resultado esperado.*
+
+1. (ex: Abra o app e entre com usuário/senha válidos → esperado: abre o painel)
+2. (ex: Vá em "Produtos" e cadastre um novo → esperado: aparece "Produto salvo" e o item na lista)
+3. (ex: Tente cadastrar um produto repetido → esperado: mensagem "Já existe um produto com esse nome")
+
+## Evidências
+
+*Preenchido pelo agente ao apresentar o resultado.*
+
+- [ ] Build sem erros
+- [ ] Testes: (N/N passando — liste os executados)
+- [ ] Fluxos verificados no ambiente real: (liste o que foi exercitado)
+- [ ] **Screenshot/print das telas** — obrigatório quando a UI mudou (o usuário vê o resultado real)
+- [ ] Regressões: nenhuma / (liste as encontradas e corrigidas)
+
+## Limitações
+
+*O que NÃO foi verificado — em linguagem de negócio. Honestidade aqui é
+obrigatória: nunca diga "pronto" se não testou.*
+
+- (ex: pagamento real com cartão verdadeiro ainda não testado; não testado em celular antigo)
+
+---
+
+## Como Arquivar
+ 
+Após aprovação do usuário e commit:
+1. Mova este arquivo para `governanca/sprints/concluidas/`
+2. Abra `governanca/SESSAO.md` e aponte `**Sprint Ativa:**` para a próxima sprint (ou `[Aguardando planejamento]`).
 
 ---
 
@@ -103,4 +143,5 @@ Após aprovação do usuário e commit, arquive a sprint seguindo as regras de
 
 ---
 
-*Template gerado por RR Software (Rodrigo Rafael).*
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*
+

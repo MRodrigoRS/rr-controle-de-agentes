@@ -1,3 +1,8 @@
+---
+name: criar-scripts-auxiliares
+description: Cria e mantém scripts utilitários que automatizam tarefas recorrentes de desenvolvimento.
+---
+
 # Skill: Criar Scripts Auxiliares
 
 > Instrui o agente a criar e manter scripts utilitários que automatizam

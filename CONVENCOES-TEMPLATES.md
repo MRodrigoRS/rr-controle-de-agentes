@@ -19,6 +19,7 @@ Use **em-dash (`—`)** como separador universal.
 | Documento | H1 |
 |---|---|
 | AGENTS.md | `# Governança — {{nomeProjeto}}` |
+| SESSAO.md | `# Sessão Atual e Notas Persistentes — {{nomeProjeto}}` |
 | INICIO.md | `# Inicialização — {{nomeProjeto}}` |
 | VINCULAR.md | `# Vinculação — {{nomeProjeto}}` |
 

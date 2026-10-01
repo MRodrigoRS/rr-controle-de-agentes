@@ -1,3 +1,8 @@
+---
+name: auditar-repositorio-gas
+description: Audita e reforma repositórios Google Apps Script — performance de I/O, LockService, quotas, segurança e deploy.
+---
+
 # Skill: Auditar Repositório Google Apps Script
 
 > Instrui o agente a auditar e reformar qualquer repositório baseado na stack

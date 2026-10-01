@@ -3,228 +3,668 @@
     {
       "id": "nextjs-app-router",
       "nome": "Next.js (App Router)",
-      "descricao": "Framework fullstack para produção com React 19, renderização híbrida (SSR + SSG + ISR) e React Server Components. Ideal para SaaS corporativos, portais e aplicações que precisam de SEO e performance.",
-      "destaque": "Fullstack com React Server Components",
-      "stack": ["Next.js 16", "React 19", "TypeScript 5", "Tailwind CSS 4", "shadcn/ui", "Radix UI", "Zod", "React Hook Form", "Zustand", "Lucide React", "Motion", "@supabase/ssr", "Biome", "Vitest", "Testing Library", "MSW", "pnpm"],
-      "pastas": ["src/app", "src/componentes", "src/lib", "src/servidor"],
+      "descricao": "Framework fullstack para produção com React 19, renderização híbrida (SSR + SSG + ISR), React Server Components e suporte completo a PWA (Progressive Web App). Ideal para SaaS corporativos, portais e aplicações que precisam de SEO, performance e instalabilidade no desktop e mobile.",
+      "destaque": "Fullstack com Server Components + PWA",
+      "stack": [
+        "Next.js 16",
+        "React 19",
+        "TypeScript 5",
+        "Tailwind CSS 4",
+        "shadcn/ui",
+        "Radix UI",
+        "Zod",
+        "React Hook Form",
+        "Zustand",
+        "Lucide React",
+        "Motion",
+        "@serwist/next",
+        "@supabase/ssr",
+        "Biome",
+        "Vitest",
+        "Testing Library",
+        "MSW",
+        "pnpm"
+      ],
+      "pastas": [
+        "src/app",
+        "src/componentes",
+        "src/lib",
+        "src/servidor"
+      ],
       "arquitetura": {
         "frontendFramework": "Next.js 16 (App Router)",
         "frontendEstilo": "Tailwind CSS 4",
         "frontendTestes": "Vitest + Testing Library + MSW",
+        "pwa": "Progressive Web App instalável com Workbox via @serwist/next e manifest.ts",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        19,
+        20,
+        23,
+        21,
+        22,
+        69,
+        11,
+        12,
+        10,
+        56,
+        55,
+        140,
+        70,
+        31,
+        33,
+        37,
+        36,
+        44
+      ]
     },
     {
       "id": "vite-react-ts",
       "nome": "Vite + React + TypeScript",
-      "descricao": "SPA moderna e ultrarrápida com Vite 6, React 19 e TypeScript 5. Hot Module Replacement instantâneo e build otimizado. Ideal para dashboards administrativos, apps single-page e ferramentas internas.",
-      "destaque": "SPA rápida com Vite e React 19",
-      "stack": ["React 19", "Vite 6", "TypeScript 5", "Tailwind CSS 4", "TanStack Query", "Zustand", "Zod", "React Hook Form", "Biome", "Vitest", "Testing Library", "MSW"],
-      "pastas": ["src/app", "src/componentes", "src/lib"],
+      "descricao": "SPA moderna e ultrarrápida com Vite 6, React 19, TypeScript 5, Tailwind CSS 4, shadcn/ui e PWA instalável via vite-plugin-pwa. Hot Module Replacement instantâneo, componentes acessíveis e cache offline. Ideal para dashboards administrativos, portais, ferramentas internas e PWAs desktop/mobile.",
+      "destaque": "SPA rápida com Vite, React 19 e PWA",
+      "stack": [
+        "React 19",
+        "Vite 6",
+        "TypeScript 5",
+        "Tailwind CSS 4",
+        "shadcn/ui",
+        "Radix UI",
+        "Lucide React",
+        "Motion",
+        "TanStack Query",
+        "Zustand",
+        "Zod",
+        "React Hook Form",
+        "vite-plugin-pwa",
+        "Biome",
+        "Vitest",
+        "Testing Library",
+        "MSW"
+      ],
+      "pastas": [
+        "src/app",
+        "src/componentes",
+        "src/lib"
+      ],
       "arquitetura": {
         "frontendFramework": "React 19 + Vite 6",
         "frontendEstilo": "Tailwind CSS 4",
         "frontendTestes": "Vitest + Testing Library + MSW",
+        "pwa": "Progressive Web App com Workbox, auto-update e manifest via vite-plugin-pwa",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        20,
+        43,
+        23,
+        21,
+        22,
+        69,
+        56,
+        55,
+        9,
+        10,
+        11,
+        12,
+        139,
+        31,
+        33,
+        37,
+        36
+      ]
     },
     {
       "id": "html-css-js",
       "nome": "HTML + CSS + JavaScript",
       "descricao": "Landing page ou site estático com Vite como build tool. HTML semântico, CSS puro e JavaScript vanilla com live reload, autoprefixing e build otimizado. Ideal para landing pages, sites institucionais e protótipos onde simplicidade é prioridade.",
       "destaque": "Estático com Vite, zero framework",
-      "stack": ["HTML5", "CSS3", "JavaScript", "Vite 6", "Biome"],
-      "pastas": ["src", "src/css", "src/js"],
+      "stack": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Vite 6",
+        "Biome"
+      ],
+      "pastas": [
+        "src",
+        "src/css",
+        "src/js"
+      ],
       "arquitetura": {
         "frontendFramework": "HTML5 + CSS3 + JavaScript + Vite 6",
         "frontendEstilo": "CSS puro",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        27,
+        28,
+        26,
+        43,
+        31
+      ]
     },
     {
       "id": "threejs-rapier-gsap",
       "nome": "Three.js + Rapier + GSAP",
-      "descricao": "Aplicação 3D interativa no navegador com Three.js para renderização WebGL, Rapier para física realista e GSAP para animações profissionais. Ideal para visualizações arquitetônicas, jogos 3D e experiências imersivas.",
-      "destaque": "3D interativo com física e animações",
-      "stack": ["Three.js", "Rapier", "GSAP", "TypeScript 5", "Vite 6", "Vitest", "Biome"],
-      "pastas": ["src", "src/cenas", "src/componentes", "src/scripts"],
+      "descricao": "Aplicação 3D interativa no navegador com Three.js para renderização WebGL, Rapier para física realista, GSAP para animações profissionais e suporte PWA offline/instalável via vite-plugin-pwa. Ideal para visualizações arquitetônicas, jogos 3D e experiências imersivas responsivas.",
+      "destaque": "3D interativo com física, animações e PWA",
+      "stack": [
+        "Three.js",
+        "Rapier",
+        "GSAP",
+        "Tailwind CSS 4",
+        "Lucide React",
+        "Tweakpane",
+        "TypeScript 5",
+        "Vite 6",
+        "vite-plugin-pwa",
+        "Vitest",
+        "Biome"
+      ],
+      "pastas": [
+        "src",
+        "src/cenas",
+        "src/componentes",
+        "src/scripts"
+      ],
       "arquitetura": {
         "frontendFramework": "Three.js + Rapier + GSAP",
         "frontendEstilo": "CSS puro",
         "frontendTestes": "Vitest",
+        "pwa": "Progressive Web App com vite-plugin-pwa e cache de assets 3D",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        15,
+        107,
+        14,
+        21,
+        56,
+        132,
+        23,
+        43,
+        139,
+        33,
+        31
+      ]
     },
     {
       "id": "pixijs-gsap-zustand",
       "nome": "PixiJS + GSAP + Zustand",
-      "descricao": "Jogo 2D ou visualização interativa pesada no navegador. PixiJS renderiza gráficos 2D ultrarrápidos via WebGL, GSAP cuida das animações e Zustand gerencia o estado global. Ideal para jogos HTML5 e dashboards de alta performance.",
-      "destaque": "Jogos 2D e visualizações pesadas",
-      "stack": ["PixiJS", "GSAP", "Zustand", "TypeScript 5", "Vite 6", "Vitest", "Biome"],
-      "pastas": ["src", "src/cenas", "src/estado", "src/scripts"],
+      "descricao": "Jogo 2D ou visualização interativa pesada no navegador. PixiJS renderiza gráficos 2D ultrarrápidos via WebGL, GSAP cuida das animações, Zustand gerencia o estado global e vite-plugin-pwa habilita modo offline e instalação no mobile/desktop. Ideal para jogos HTML5 e dashboards de alta performance.",
+      "destaque": "Jogos 2D, visualizações pesadas e PWA",
+      "stack": [
+        "PixiJS",
+        "GSAP",
+        "Zustand",
+        "Tailwind CSS 4",
+        "Lucide React",
+        "Howler.js",
+        "TypeScript 5",
+        "Vite 6",
+        "vite-plugin-pwa",
+        "Vitest",
+        "Biome"
+      ],
+      "pastas": [
+        "src",
+        "src/cenas",
+        "src/estado",
+        "src/scripts"
+      ],
       "arquitetura": {
         "frontendFramework": "PixiJS + GSAP + Zustand",
         "frontendEstilo": "CSS puro",
         "frontendTestes": "Vitest",
+        "pwa": "Progressive Web App com vite-plugin-pwa para jogo offline e instalável",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        16,
+        14,
+        10,
+        21,
+        56,
+        133,
+        23,
+        43,
+        139,
+        33,
+        31
+      ]
     },
     {
       "id": "gas-web-app",
-      "nome": "Google Apps Script (Web App)",
-      "descricao": "Web App Google com HTML/CSS/JS servido por GAS, Bootstrap 5 para UI, Chart.js para gráficos e SweetAlert2 para modais. Arquitetura SPA com hash routing, comunicação RPC via google.script.run, formulários com máscaras (CPF, CNPJ, Telefone, CEP, Data, Moeda) e validação de CPF/CNPJ. Autenticação via SHA-256 + pepper + token UUID.",
-      "destaque": "Web App Google com Bootstrap + Chart.js + Formulários inteligentes",
-      "stack": ["Google Apps Script (V8)", "HTML5/CSS3/JS", "Bootstrap 5.3", "Bootstrap Icons 1.11", "SweetAlert2 11", "Chart.js", "clasp", "Biome"],
-      "pastas": ["src", "src/scripts", "src/servidor", "src/html"],
+      "nome": "Google Apps Script (Vite + React Web App)",
+      "descricao": "Web App e Sidebars para Google Workspace com Vite, React 19, TypeScript e Tailwind CSS. O plugin vite-plugin-singlefile compila todo o bundle em HTML inline servido pelo HtmlService. Comunicação RPC tipada com google.script.run, autocomplete estrito com @types/google-apps-script e deploy via clasp.",
+      "destaque": "Web App Google moderna com Vite + React + Tailwind + vite-plugin-singlefile",
+      "stack": [
+        "Google Apps Script (V8)",
+        "React",
+        "TypeScript",
+        "Vite",
+        "vite-plugin-singlefile",
+        "Tailwind CSS",
+        "Lucide React",
+        "@types/google-apps-script",
+        "clasp",
+        "Biome"
+      ],
+      "pastas": [
+        "src/frontend",
+        "src/frontend/componentes",
+        "src/servidor",
+        "src/scripts"
+      ],
       "arquitetura": {
-        "frontendFramework": "Google Apps Script + Bootstrap 5.3",
-        "frontendEstilo": "Bootstrap 5.3 + Bootstrap Icons",
-        "frontendTestes": "Testes manuais (GAS não suporta test runner nativo)",
-        "SPA": "Hash routing client-side com google.script.run",
-        "formularios": "Máscaras de input + validação CPF/CNPJ",
-        "uuid": "Utilities.getUuid() via servidor",
+        "frontendFramework": "Vite + React 19 + TypeScript",
+        "frontendEstilo": "Tailwind CSS + Lucide React",
+        "frontendTestes": "Vitest (testes de lógica client-side)",
+        "bundle": "vite-plugin-singlefile (HTML inline para HtmlService)",
+        "comunicacao": "google.script.run tipado com Promises",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        138,
+        20,
+        23,
+        43,
+        136,
+        21,
+        56,
+        137,
+        68,
+        31
+      ]
     },
     {
       "id": "browser-extension-mv3",
       "nome": "Extensão de Navegador (MV3)",
       "descricao": "Extensão Chrome/Edge/Opera usando Manifest V3, o padrão mais moderno e seguro para extensões de navegador. Inclui popup, service worker (background), content scripts e comunicação entre contextos. Ideal para automação de navegação, produtividade e ferramentas de desenvolvimento.",
       "destaque": "Extensão Chrome/Edge MV3",
-      "stack": ["Manifest V3", "TypeScript 5", "WXT", "HTML/CSS", "Chrome APIs", "Vitest", "Biome"],
-      "pastas": ["src", "src/popup", "src/background", "src/content", "public"],
+      "stack": [
+        "Manifest V3",
+        "TypeScript 5",
+        "WXT",
+        "Tailwind CSS 4",
+        "Lucide React",
+        "HTML/CSS",
+        "Chrome APIs",
+        "Vitest",
+        "Biome"
+      ],
+      "pastas": [
+        "src",
+        "src/popup",
+        "src/background",
+        "src/content",
+        "public"
+      ],
       "arquitetura": {
         "frontendFramework": "WXT + Manifest V3 + TypeScript",
         "frontendTestes": "Vitest",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        108,
+        23,
+        109,
+        21,
+        56,
+        27,
+        110,
+        33,
+        31
+      ]
     },
     {
       "id": "wpf-desktop",
       "nome": "WPF Desktop (.NET)",
       "descricao": "Aplicação desktop Windows nativa com WPF, XAML e C#. Suporta padrão MVVM com INotifyPropertyChanged, data binding, estilos e templates. Ideal para ferramentas de produtividade, visualizadores de mídia, editores e processamento local intensivo.",
       "destaque": "Desktop Windows nativo com WPF e XAML",
-      "stack": [".NET 8.0", "C#", "WPF", "XAML", "OpenCvSharp4", "Microsoft.Data.Sqlite"],
-      "pastas": ["src", "src/Controls", "src/Models", "src/Services", "src/Utils"],
+      "stack": [
+        ".NET 8.0",
+        "C#",
+        "WPF",
+        "XAML",
+        "WPF-UI",
+        "OpenCvSharp4",
+        "Microsoft.Data.Sqlite"
+      ],
+      "pastas": [
+        "src",
+        "src/Controls",
+        "src/Models",
+        "src/Services",
+        "src/Utils"
+      ],
       "arquitetura": {
         "frontendFramework": "WPF (.NET 8.0)",
         "frontendEstilo": "WPF (XAML)",
         "frontendTestes": "xUnit (recomendado)",
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format"
-      }
+      },
+      "tecnologiaIds": [
+        64,
+        25,
+        62,
+        29,
+        135,
+        63,
+        7
+      ]
     },
     {
       "id": "blazor-web",
       "nome": "Blazor Web App (.NET)",
       "descricao": "Fullstack em C# sem trocar de linguagem: Blazor Web App com Razor Components, Interactive Server, layouts, páginas e componentes reutilizáveis. Ideal para sistemas de linha de negócio, dashboards e ferramentas internas onde o time é C#.",
       "destaque": "Fullstack C# com Razor Components",
-      "stack": [".NET 9", "C#", "Blazor", "Razor", "MudBlazor", "FluentValidation", "bUnit", "xUnit", ".NET Roslyn Analyzers", "dotnet format"],
-      "pastas": ["src/Components", "src/Components/Pages", "src/Components/Layout", "src/Servicos", "src/Dados"],
+      "stack": [
+        ".NET 9",
+        "C#",
+        "Blazor",
+        "Razor",
+        "MudBlazor",
+        "FluentValidation",
+        "bUnit",
+        "xUnit",
+        ".NET Roslyn Analyzers",
+        "dotnet format"
+      ],
+      "pastas": [
+        "src/Components",
+        "src/Components/Pages",
+        "src/Components/Layout",
+        "src/Servicos",
+        "src/Dados"
+      ],
       "arquitetura": {
         "frontendFramework": "Blazor Web App (.NET 9)",
         "frontendEstilo": "Razor + MudBlazor",
         "frontendTestes": "xUnit + bUnit",
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format"
-      }
+      },
+      "tecnologiaIds": [
+        64,
+        25,
+        74,
+        75,
+        76,
+        105,
+        79,
+        35,
+        111
+      ]
     },
     {
       "id": "pyside6-desktop",
       "nome": "PySide6 Desktop (Python)",
       "descricao": "Aplicação desktop Windows nativa em Python com PySide6 (Qt 6), visual moderno via Qt Fusion + QSS. Distribuição como executável standalone compilado com Nuitka (sem Python instalado na máquina do usuário). Livre e gratuita — sem enforcement de licença.",
       "destaque": "Desktop nativo Python, executável livre",
-      "stack": ["Python 3.12", "PySide6 (Qt 6)", "Qt Widgets + QSS", "Nuitka", "pytest-qt", "Ruff", "mypy", "pre-commit", "uv"],
-      "pastas": ["src/ui", "src/ui/janelas", "src/ui/componentes", "src/recursos"],
+      "stack": [
+        "Python 3.12",
+        "PySide6 (Qt 6)",
+        "Qt Widgets + QSS",
+        "Nuitka",
+        "pytest-qt",
+        "Ruff",
+        "mypy",
+        "pre-commit",
+        "uv"
+      ],
+      "pastas": [
+        "src/ui",
+        "src/ui/janelas",
+        "src/ui/componentes",
+        "src/recursos"
+      ],
       "arquitetura": {
         "frontendFramework": "PySide6 (Qt 6)",
         "frontendEstilo": "Qt Widgets + QSS (Fusion)",
         "frontendTestes": "pytest + pytest-qt",
         "lint": "Ruff",
         "formatacao": "Ruff"
-      }
+      },
+      "tecnologiaIds": [
+        24,
+        90,
+        112,
+        91,
+        93,
+        86,
+        87,
+        88,
+        89
+      ]
     },
     {
       "id": "pyside6-desktop-comercial",
       "nome": "PySide6 Desktop Comercial (Python)",
       "descricao": "Aplicação desktop Windows nativa em Python com PySide6 (Qt 6), visual moderno via Qt Fusion + QSS, destinada a produto comercializável. Executável compilado com Nuitka + ofuscação runtime e licenciamento via PyArmor (licença com vencimento, bind de hardware e trial), empacotado em instalador Inno Setup.",
       "destaque": "Executável protegido com licenciamento",
-      "stack": ["Python 3.12", "PySide6 (Qt 6)", "Qt Widgets + QSS", "Nuitka", "PyArmor", "Inno Setup", "pytest-qt", "Ruff", "mypy", "pre-commit", "uv"],
-      "pastas": ["src/ui", "src/ui/janelas", "src/ui/componentes", "src/recursos"],
+      "stack": [
+        "Python 3.12",
+        "PySide6 (Qt 6)",
+        "Qt Widgets + QSS",
+        "Nuitka",
+        "PyArmor",
+        "Inno Setup",
+        "pytest-qt",
+        "Ruff",
+        "mypy",
+        "pre-commit",
+        "uv"
+      ],
+      "pastas": [
+        "src/ui",
+        "src/ui/janelas",
+        "src/ui/componentes",
+        "src/recursos"
+      ],
       "arquitetura": {
         "frontendFramework": "PySide6 (Qt 6)",
         "frontendEstilo": "Qt Widgets + QSS (Fusion)",
         "frontendTestes": "pytest + pytest-qt",
         "lint": "Ruff",
         "formatacao": "Ruff"
-      }
+      },
+      "tecnologiaIds": [
+        24,
+        90,
+        112,
+        91,
+        92,
+        94,
+        93,
+        86,
+        87,
+        88,
+        89
+      ]
     },
     {
       "id": "nicegui-python",
       "nome": "NiceGUI (Python)",
       "descricao": "Interface web moderna e responsiva 100% em Python com NiceGUI, construído sobre Quasar (Vue) e Tailwind CSS embutidos — sem HTML/JS/CSS manual. Interfaces reativas via WebSocket, ideais para dashboards administrativos, ferramentas internas e produtos SaaS que preferem manter uma única linguagem.",
       "destaque": "UI moderna em Python puro (Quasar + Tailwind)",
-      "stack": ["Python 3.12", "NiceGUI", "Quasar", "Tailwind CSS", "uv", "Ruff", "pytest", "pre-commit"],
-      "pastas": ["src/ui", "src/ui/componentes", "src/ui/paginas"],
+      "stack": [
+        "Python 3.12",
+        "NiceGUI",
+        "Quasar",
+        "Tailwind CSS",
+        "uv",
+        "Ruff",
+        "pytest",
+        "pre-commit"
+      ],
+      "pastas": [
+        "src/ui",
+        "src/ui/componentes",
+        "src/ui/paginas"
+      ],
       "arquitetura": {
         "frontendFramework": "NiceGUI (Python) + FastAPI subjacente",
         "frontendEstilo": "Quasar + Tailwind (embutidos no NiceGUI)",
         "frontendTestes": "pytest + utilidades de teste do NiceGUI",
         "lint": "Ruff",
         "formatacao": "Ruff"
-      }
+      },
+      "tecnologiaIds": [
+        24,
+        84,
+        113,
+        21,
+        89,
+        86,
+        34,
+        88
+      ]
     },
     {
       "id": "maui-app",
       "nome": "MAUI (C#/.NET)",
       "descricao": "Aplicativo mobile cross-platform (Android, iOS, Windows, macOS) em C# com .NET MAUI, XAML e Shell navigation. MVVM com CommunityToolkit.Mvvm e visual nativo por plataforma. Testes de ViewModels/Services com xUnit + Moq.",
       "destaque": "Mobile cross-platform em C#/.NET",
-      "stack": [".NET 9", "C#", "MAUI", "XAML", "CommunityToolkit.Mvvm", "MAUI Community Toolkit", "MAUI Essentials", "FluentValidation", "xUnit", "Moq", ".NET Roslyn Analyzers", "dotnet format"],
-      "pastas": ["src/Views", "src/ViewModels", "src/Models", "src/Services", "src/Resources"],
+      "stack": [
+        ".NET 9",
+        "C#",
+        "MAUI",
+        "XAML",
+        "CommunityToolkit.Mvvm",
+        "MAUI Community Toolkit",
+        "MAUI Essentials",
+        "FluentValidation",
+        "xUnit",
+        "Moq",
+        ".NET Roslyn Analyzers",
+        "dotnet format"
+      ],
+      "pastas": [
+        "src/Views",
+        "src/ViewModels",
+        "src/Models",
+        "src/Services",
+        "src/Resources"
+      ],
       "arquitetura": {
         "frontendFramework": "MAUI (.NET 9)",
         "frontendEstilo": "XAML (MAUI, Shell)",
         "frontendTestes": "xUnit + Moq (ViewModels/Services)",
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format"
-      }
+      },
+      "tecnologiaIds": [
+        64,
+        25,
+        95,
+        29,
+        99,
+        100,
+        101,
+        105,
+        35,
+        106,
+        111
+      ]
     },
     {
       "id": "flutter-app",
       "nome": "Flutter (Dart)",
       "descricao": "Aplicativo mobile cross-platform (Android, iOS, web, desktop) em Dart com Flutter e Material 3. UI declarativa de alta performance com hot reload, estado com Riverpod e navegação com GoRouter.",
       "destaque": "Mobile e além, UI declarativa",
-      "stack": ["Dart", "Flutter 3", "Material Design 3", "GoRouter", "Riverpod", "Flutter Test", "integration_test", "flutter_lints", "dart format"],
-      "pastas": ["lib/ui", "lib/ui/screens", "lib/ui/widgets", "lib/modelos", "lib/servicos", "lib/dados"],
+      "stack": [
+        "Dart",
+        "Flutter 3",
+        "Material Design 3",
+        "GoRouter",
+        "Riverpod",
+        "Flutter Test",
+        "integration_test",
+        "flutter_lints",
+        "dart format"
+      ],
+      "pastas": [
+        "lib/ui",
+        "lib/ui/screens",
+        "lib/ui/widgets",
+        "lib/modelos",
+        "lib/servicos",
+        "lib/dados"
+      ],
       "arquitetura": {
         "frontendFramework": "Flutter 3 (Dart)",
         "frontendEstilo": "Material Design 3",
         "frontendTestes": "Flutter Test + integration_test",
         "lint": "flutter_lints",
         "formatacao": "dart format"
-      }
+      },
+      "tecnologiaIds": [
+        98,
+        96,
+        114,
+        102,
+        103,
+        115
+      ]
     },
     {
       "id": "react-native-expo",
       "nome": "React Native + Expo",
       "descricao": "Aplicativo mobile cross-platform (Android, iOS, web) em TypeScript com React Native e Expo SDK. Navegação com expo-router, estado com Zustand, dados com TanStack Query e OTA updates via Expo. Builds gerenciados e deploys simples.",
       "destaque": "Mobile em TypeScript com Expo",
-      "stack": ["React Native", "Expo SDK", "TypeScript 5", "expo-router", "Zustand", "TanStack Query", "React Hook Form", "Zod", "Jest", "Testing Library", "Biome"],
-      "pastas": ["src/app", "src/componentes", "src/hooks", "src/estado", "src/lib"],
+      "stack": [
+        "React Native",
+        "Expo SDK",
+        "TypeScript 5",
+        "expo-router",
+        "Lucide React Native",
+        "Zustand",
+        "TanStack Query",
+        "React Hook Form",
+        "Zod",
+        "Jest",
+        "Testing Library",
+        "Biome"
+      ],
+      "pastas": [
+        "src/app",
+        "src/componentes",
+        "src/hooks",
+        "src/estado",
+        "src/lib"
+      ],
       "arquitetura": {
         "frontendFramework": "React Native + Expo",
         "frontendEstilo": "Componentes nativos + StyleSheet",
         "frontendTestes": "Jest + Testing Library",
         "lint": "Biome",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        97,
+        116,
+        23,
+        104,
+        134,
+        10,
+        9,
+        12,
+        11,
+        117,
+        37,
+        31
+      ]
     },
     {
       "id": "nenhum",
@@ -235,7 +675,8 @@
       "pastas": [],
       "arquitetura": {
         "frontendFramework": "Nenhum"
-      }
+      },
+      "tecnologiaIds": []
     }
   ],
   "backend": [
@@ -244,8 +685,22 @@
       "nome": "SQLite + Prisma",
       "descricao": "Banco de dados embutido em Node.js via Prisma ORM. Zero configuração de servidor de banco — o banco é um único arquivo .db no projeto. Ideal para aplicações locais, MVPs, ferramentas desktop, e cenários onde a simplicidade da infraestrutura é prioridade.",
       "destaque": "Banco local embutido, zero setup",
-      "stack": ["Node.js 22", "Hono", "SQLite", "Prisma", "Biome", "Vitest", "GitHub Actions"],
-      "pastas": ["src/dados", "prisma"],
+      "stack": [
+        "Node.js 22",
+        "Hono",
+        "Zod",
+        "@hono/zod-validator",
+        "Pino",
+        "SQLite",
+        "Prisma",
+        "Biome",
+        "Vitest",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/dados",
+        "prisma"
+      ],
       "arquitetura": {
         "backendRuntime": "Node.js 22 + Hono",
         "backendBanco": "SQLite",
@@ -253,15 +708,42 @@
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        41,
+        118,
+        11,
+        129,
+        130,
+        7,
+        2,
+        31,
+        33,
+        119
+      ]
     },
     {
       "id": "postgres-drizzle",
       "nome": "PostgreSQL + Drizzle",
       "descricao": "PostgreSQL gerenciado com Drizzle ORM — um ORM extremamente leve que prioriza SQL puro com tipagem TypeScript forte. Ideal para aplicações que precisam de consultas complexas, migrações versionadas e performance de banco relacional tradicional.",
       "destaque": "ORM leve com SQL puro e tipagem forte",
-      "stack": ["Node.js 22", "Hono", "PostgreSQL", "Drizzle ORM", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
-      "pastas": ["src/dados", "src/servidor"],
+      "stack": [
+        "Node.js 22",
+        "Hono",
+        "Zod",
+        "@hono/zod-validator",
+        "Pino",
+        "PostgreSQL",
+        "Drizzle ORM",
+        "Biome",
+        "Vitest",
+        "Docker Compose",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/dados",
+        "src/servidor"
+      ],
       "arquitetura": {
         "backendRuntime": "Node.js 22 + Hono",
         "backendBanco": "PostgreSQL",
@@ -269,15 +751,39 @@
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        41,
+        118,
+        11,
+        129,
+        130,
+        6,
+        3,
+        31,
+        33,
+        40,
+        119
+      ]
     },
     {
       "id": "supabase-online",
       "nome": "Supabase (Cloud)",
       "descricao": "Plataforma backend completa na nuvem: banco PostgreSQL, autenticação, storage, Realtime e Edge Functions. Tudo gerenciado via dashboard ou SDK. Ideal para startups e MVPs que precisam de backend rico sem gerenciar servidores.",
       "destaque": "Backend cloud completo: banco + auth + realtime",
-      "stack": ["Node.js 22", "PostgreSQL (Supabase)", "Supabase Client", "Stripe", "Biome", "Vitest", "GitHub Actions"],
-      "pastas": ["src/dados", "src/servidor"],
+      "stack": [
+        "Node.js 22",
+        "PostgreSQL (Supabase)",
+        "Supabase Client",
+        "Stripe",
+        "Biome",
+        "Vitest",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/dados",
+        "src/servidor"
+      ],
       "arquitetura": {
         "backendRuntime": "Node.js 22 + Supabase SDK",
         "backendBanco": "PostgreSQL (Supabase)",
@@ -285,15 +791,37 @@
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        41,
+        6,
+        8,
+        51,
+        31,
+        33,
+        119
+      ]
     },
     {
       "id": "trpc-backend",
       "nome": "tRPC",
       "descricao": "API type-safe sem definições de rota manuais. O tRPC infere tipos automaticamente do backend para o frontend, eliminando a necessidade de SDKs, contratos REST ou GraphQL. Ideal para fullstack TypeScript onde produtividade e segurança de tipos são críticas.",
       "destaque": "API type-safe sem REST/GraphQL",
-      "stack": ["Node.js 22", "tRPC", "Prisma", "SQLite ou PostgreSQL", "Biome", "Vitest", "Docker Compose", "GitHub Actions"],
-      "pastas": ["src/servidor", "src/dados"],
+      "stack": [
+        "Node.js 22",
+        "tRPC",
+        "Zod",
+        "Prisma",
+        "SQLite ou PostgreSQL",
+        "Biome",
+        "Vitest",
+        "Docker Compose",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/servidor",
+        "src/dados"
+      ],
       "arquitetura": {
         "backendRuntime": "Node.js 22 + tRPC",
         "backendBanco": "SQLite ou PostgreSQL",
@@ -301,15 +829,40 @@
         "lint": "Biome",
         "formatacao": "Biome",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        41,
+        1,
+        11,
+        2,
+        6,
+        31,
+        33,
+        40,
+        119
+      ]
     },
     {
       "id": "go-fiber-postgres",
       "nome": "Go + Fiber + PostgreSQL",
       "descricao": "API de altíssima performance em Go usando o framework Fiber (inspirado no Express.js) com PostgreSQL. Ideal para microsserviços, APIs públicas que exigem baixa latência, processamento concorrente intenso e sistemas que precisam de eficiência máxima de hardware.",
       "destaque": "Alta performance com concorrência nativa",
-      "stack": ["Go 1.24", "Fiber", "PostgreSQL", "pgx", "testify", "golangci-lint", "gofumpt", "Docker Compose", "GitHub Actions"],
-      "pastas": ["src", "src/handlers", "src/dados", "src/models"],
+      "stack": [
+        "Go 1.24",
+        "Fiber",
+        "PostgreSQL",
+        "pgx",
+        "golang-migrate",
+        "testify",
+        "Docker Compose",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src",
+        "src/handlers",
+        "src/dados",
+        "src/models"
+      ],
       "arquitetura": {
         "backendRuntime": "Go 1.24 + Fiber",
         "backendBanco": "PostgreSQL",
@@ -317,45 +870,126 @@
         "lint": "golangci-lint",
         "formatacao": "gofumpt",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        30,
+        5,
+        6,
+        120,
+        131,
+        121,
+        40,
+        119
+      ]
     },
     {
       "id": "gas-sheets",
       "nome": "Google Apps Script (Planilha)",
       "descricao": "Backend Google Apps Script completo com SpreadsheetApp, DriveApp, GmailApp, DocumentApp, UrlFetchApp, ScriptApp, LockService, CacheService, PropertiesService, HtmlService e Utilities. E-mail via GmailApp, templates e PDF via DocumentApp, pagamentos via UrlFetchApp (Mercado Pago), processamento em lote via ScriptApp. Autenticação SHA-256 + pepper + token UUID.",
       "destaque": "GAS completo: Sheets + Drive + Docs + E-mail + Pagamentos",
-      "stack": ["Google Apps Script (V8)", "SpreadsheetApp", "DriveApp", "GmailApp", "DocumentApp", "UrlFetchApp", "ScriptApp", "LockService", "CacheService", "PropertiesService", "HtmlService", "Utilities", "Google Sheets", "Google Drive", "SHA-256 + pepper + UUID", "clasp", "Biome"],
-      "pastas": ["src/servidor", "src/scripts"],
+      "stack": [
+        "Google Apps Script (V8)",
+        "TypeScript",
+        "@types/google-apps-script",
+        "SpreadsheetApp",
+        "DriveApp",
+        "GmailApp",
+        "DocumentApp",
+        "UrlFetchApp",
+        "ScriptApp",
+        "LockService",
+        "CacheService",
+        "PropertiesService",
+        "HtmlService",
+        "Utilities",
+        "Google Sheets",
+        "Google Drive",
+        "SHA-256 + pepper + UUID",
+        "clasp",
+        "Biome"
+      ],
+      "pastas": [
+        "src/servidor",
+        "src/scripts"
+      ],
       "arquitetura": {
-        "backendRuntime": "Google Apps Script (V8)",
+        "backendRuntime": "Google Apps Script (V8) + TypeScript",
         "backendBanco": "Google Sheets + Google Drive",
-        "backendORM": "SpreadsheetApp API",
+        "backendORM": "SpreadsheetApp API tipada",
         "lint": "Biome + @google/clasp",
         "formatacao": "Biome"
-      }
+      },
+      "tecnologiaIds": [
+        138,
+        23,
+        137,
+        122,
+        123,
+        46,
+        47,
+        48,
+        49,
+        124,
+        125,
+        126,
+        27,
+        127,
+        128,
+        68,
+        31
+      ]
     },
     {
       "id": "sqlite-dotnet",
       "nome": "SQLite + .NET",
       "descricao": "Banco SQLite embutido em aplicações .NET via Microsoft.Data.Sqlite. Zero configuração de servidor — o banco é um único arquivo .db. Ideal para ferramentas desktop, MVPs, cache local e cenários onde simplicidade de infraestrutura é prioridade.",
       "destaque": "Banco local embutido em .NET, zero setup",
-      "stack": [".NET 8.0", "C#", "SQLite", "Microsoft.Data.Sqlite"],
-      "pastas": ["src/Services", "src/Models"],
+      "stack": [
+        ".NET 8.0",
+        "C#",
+        "Dapper",
+        "SQLite",
+        "Microsoft.Data.Sqlite"
+      ],
+      "pastas": [
+        "src/Services",
+        "src/Models"
+      ],
       "arquitetura": {
         "backendRuntime": ".NET 8.0 (in-process)",
         "backendBanco": "SQLite",
         "backendORM": "Microsoft.Data.Sqlite (ADO.NET)",
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format"
-      }
+      },
+      "tecnologiaIds": [
+        64,
+        25,
+        4,
+        7
+      ]
     },
     {
       "id": "aspnet-core-api",
       "nome": "ASP.NET Core + EF Core",
       "descricao": "API e servidor enterprise em C# com ASP.NET Core Web API, Entity Framework Core (Code-First com migrações) e PostgreSQL. Inclui autenticação com Identity/JWT, validação com FluentValidation e CI via GitHub Actions. Ideal para sistemas corporativos, SaaS e integrações B2B.",
       "destaque": "API enterprise em C# com EF Core",
-      "stack": [".NET 9", "C#", "ASP.NET Core", "EF Core", "PostgreSQL", "FluentValidation", "xUnit", "Docker Compose", "GitHub Actions"],
-      "pastas": ["src/Dados", "src/Servicos", "src/Modelos"],
+      "stack": [
+        ".NET 9",
+        "C#",
+        "ASP.NET Core",
+        "EF Core",
+        "PostgreSQL",
+        "FluentValidation",
+        "xUnit",
+        "Docker Compose",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/Dados",
+        "src/Servicos",
+        "src/Modelos"
+      ],
       "arquitetura": {
         "backendRuntime": ".NET 9 + ASP.NET Core",
         "backendBanco": "PostgreSQL",
@@ -363,30 +997,86 @@
         "lint": ".NET Roslyn Analyzers",
         "formatacao": "dotnet format",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        64,
+        25,
+        77,
+        78,
+        6,
+        105,
+        35,
+        40,
+        119
+      ]
     },
     {
       "id": "python-sqlite",
       "nome": "Python + SQLite (Local)",
       "descricao": "Persistência local embutida em aplicações Python (desktop ou ferramenta local) com SQLAlchemy 2 + Alembic e SQLite em arquivo único. Zero servidor de banco. Curadoria de ponta: Ruff, mypy, pytest, uv. Ideal para apps desktop e utilitários locais.",
       "destaque": "Banco local embutido em Python, zero setup",
-      "stack": ["Python 3.12", "SQLite", "SQLAlchemy 2", "Alembic", "Pydantic v2", "pytest", "Ruff", "mypy", "uv"],
-      "pastas": ["src/dados", "src/modelos", "src/servicos"],
+      "stack": [
+        "Python 3.12",
+        "SQLite",
+        "SQLAlchemy 2",
+        "Alembic",
+        "Pydantic v2",
+        "pytest",
+        "Ruff",
+        "mypy",
+        "uv"
+      ],
+      "pastas": [
+        "src/dados",
+        "src/modelos",
+        "src/servicos"
+      ],
       "arquitetura": {
         "backendRuntime": "Python 3.12 (in-process)",
         "backendBanco": "SQLite",
         "backendORM": "SQLAlchemy 2 + Alembic",
         "lint": "Ruff",
         "formatacao": "Ruff"
-      }
+      },
+      "tecnologiaIds": [
+        24,
+        7,
+        81,
+        82,
+        83,
+        34,
+        86,
+        87,
+        89
+      ]
     },
     {
       "id": "python-fastapi",
       "nome": "Python + FastAPI",
       "descricao": "Backend moderno e fortemente tipado em Python com FastAPI, SQLAlchemy 2 + Alembic (migrações), Pydantic v2 e PostgreSQL. Curadoria de código de ponta: Ruff (lint + formatação), mypy (checagem de tipos), pytest + httpx (testes), pre-commit e uv como gerenciador de dependências. Ideal para APIs REST, SaaS e integrações corporativas.",
       "destaque": "API Python moderna com curadoria de código de ponta",
-      "stack": ["Python 3.12", "FastAPI", "SQLAlchemy 2", "Alembic", "Pydantic v2", "PostgreSQL", "pytest", "httpx", "Ruff", "mypy", "pre-commit", "uv", "GitHub Actions"],
-      "pastas": ["src/api", "src/servicos", "src/dados", "src/modelos", "testes"],
+      "stack": [
+        "Python 3.12",
+        "FastAPI",
+        "SQLAlchemy 2",
+        "Alembic",
+        "Pydantic v2",
+        "PostgreSQL",
+        "pytest",
+        "httpx",
+        "Ruff",
+        "mypy",
+        "pre-commit",
+        "uv",
+        "GitHub Actions"
+      ],
+      "pastas": [
+        "src/api",
+        "src/servicos",
+        "src/dados",
+        "src/modelos",
+        "testes"
+      ],
       "arquitetura": {
         "backendRuntime": "Python 3.12 + FastAPI",
         "backendBanco": "PostgreSQL",
@@ -394,7 +1084,22 @@
         "lint": "Ruff",
         "formatacao": "Ruff",
         "cicd": "GitHub Actions"
-      }
+      },
+      "tecnologiaIds": [
+        24,
+        80,
+        81,
+        82,
+        83,
+        6,
+        34,
+        85,
+        86,
+        87,
+        88,
+        89,
+        119
+      ]
     },
     {
       "id": "nenhum",
@@ -405,7 +1110,8 @@
       "pastas": [],
       "arquitetura": {
         "backendRuntime": "Nenhum"
-      }
+      },
+      "tecnologiaIds": []
     }
   ],
   "fullstacks": [
@@ -502,15 +1208,16 @@
     },
     {
       "id": "google-script",
-      "nome": "Produto Google (GAS Web App + Sheets)",
+      "nome": "Produto Google Moderno (Vite + React + Sheets)",
       "categoria": "Google",
+      "destaque": "Vite + React 19 + Tailwind compilado para GAS",
       "frontend": "gas-web-app",
       "backend": "gas-sheets",
-      "objetivo": "Produto 100% no ecossistema Google, com planilha como banco.",
+      "objetivo": "Aplicações e Web Apps modernos no ecossistema Google Workspace com React e planilha como banco.",
       "vantagens": [
-        "Custo próximo de zero (sem servidor)",
-        "Sheets + Drive + Gmail + Docs",
-        "Pagamentos via Mercado Pago"
+        "Vite + React + Tailwind compilados em HTML único inline (vite-plugin-singlefile)",
+        "Backend e frontend 100% tipados com @types/google-apps-script",
+        "Sheets + Drive + Gmail + Docs com custo zero de servidor"
       ]
     },
     {

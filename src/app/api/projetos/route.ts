@@ -3,13 +3,15 @@ import fs from "fs";
 import path from "path";
 import { obterFrontend, obterBackend } from "@/presets";
 import { criarEstruturaGovernanca } from "@/servidor/gerador";
-import { registrarProjeto, type ProjetoRegistro } from "@/servidor/projetos";
+import { registrarProjeto, obterProjetoPorCaminho, type ProjetoRegistro } from "@/servidor/projetos";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { nome, descricao, frontend: frontendId, backend: backendId, caminho: caminhoInput, vinculado } = body;
+    const { nome, descricao, frontend: frontendId, backend: backendId, caminho: caminhoInput, vinculado, migrarStack, sobrescrever } = body;
     const ehVinculado = vinculado === true;
+    const ehMigracao = ehVinculado && migrarStack === true;
+    const deveSobrescrever = sobrescrever === true;
 
     if (!nome || !nome.trim()) {
       return NextResponse.json({ erro: "Nome é obrigatório" }, { status: 400 });
@@ -26,32 +28,51 @@ export async function POST(request: Request) {
       if (!fs.statSync(caminhoExistente).isDirectory()) {
         return NextResponse.json({ erro: "Caminho não é um diretório" }, { status: 400 });
       }
-      if (fs.existsSync(path.join(caminhoExistente, "governanca"))) {
-        return NextResponse.json({ erro: "Já existe uma pasta governanca/ neste diretório" }, { status: 409 });
+      if (fs.existsSync(path.join(caminhoExistente, "governanca")) && !deveSobrescrever) {
+        return NextResponse.json({
+          erro: "Já existe uma pasta governanca/ neste repositório.",
+          governancaExistente: true,
+        }, { status: 409 });
       }
-      const presetNenhum = obterFrontend("nenhum");
-      const presetBackendNenhum = obterBackend("nenhum");
-      if (!presetNenhum || !presetBackendNenhum) {
-        return NextResponse.json({ erro: "Preset 'nenhum' não encontrado" }, { status: 500 });
+
+      let presetFE = obterFrontend(frontendId || "nenhum");
+      let presetBE = obterBackend(backendId || "nenhum");
+
+      if (ehMigracao) {
+        if (!presetFE || presetFE.id === "nenhum" || !presetBE || presetBE.id === "nenhum") {
+          return NextResponse.json({ erro: "Presets de frontend e backend de destino são obrigatórios para modernização da stack" }, { status: 400 });
+        }
+      } else {
+        presetFE = obterFrontend("nenhum");
+        presetBE = obterBackend("nenhum");
+        if (!presetFE || !presetBE) {
+          return NextResponse.json({ erro: "Preset 'nenhum' não encontrado" }, { status: 500 });
+        }
       }
-      const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+      const projetoExistente = obterProjetoPorCaminho(caminhoExistente);
+      const id = projetoExistente ? projetoExistente.id : `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
       await criarEstruturaGovernanca({
         nome: nome.trim(),
         descricao: descricao || "",
         caminho: caminhoExistente,
-        presetFrontend: presetNenhum,
-        presetBackend: presetBackendNenhum,
+        presetFrontend: presetFE,
+        presetBackend: presetBE,
         repositorioExistente: true,
+        modoMigracao: ehMigracao,
       });
+
       const projetoRegistro: ProjetoRegistro = {
         id,
         nome: nome.trim(),
         descricao: descricao || "",
-        presetFrontend: "nenhum",
-        presetBackend: "nenhum",
+        presetFrontend: presetFE.id,
+        presetBackend: presetBE.id,
         caminho: caminhoExistente,
-        criadoEm: new Date().toISOString(),
+        criadoEm: projetoExistente ? projetoExistente.criadoEm : new Date().toISOString(),
         vinculado: true,
+        modoMigracao: ehMigracao,
       };
       registrarProjeto(projetoRegistro);
       return NextResponse.json(projetoRegistro, { status: 201 });
@@ -73,15 +94,19 @@ export async function POST(request: Request) {
       ? path.resolve(caminhoInput.trim())
       : path.join(projetosDir, nome.trim().toLowerCase().replace(/\s+/g, "-"));
 
-    if (fs.existsSync(path.join(caminhoProjeto, "governanca"))) {
-      return NextResponse.json({ erro: "Já existe uma pasta governanca/ neste diretório" }, { status: 409 });
+    if (fs.existsSync(path.join(caminhoProjeto, "governanca")) && !deveSobrescrever) {
+      return NextResponse.json({
+        erro: "Já existe uma pasta governanca/ neste diretório.",
+        governancaExistente: true,
+      }, { status: 409 });
     }
 
     if (!fs.existsSync(caminhoProjeto)) {
       fs.mkdirSync(caminhoProjeto, { recursive: true });
     }
 
-    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const projetoExistente = obterProjetoPorCaminho(caminhoProjeto);
+    const id = projetoExistente ? projetoExistente.id : `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
     await criarEstruturaGovernanca({
       nome: nome.trim(),
@@ -98,7 +123,7 @@ export async function POST(request: Request) {
       presetFrontend: frontendId,
       presetBackend: backendId,
       caminho: caminhoProjeto,
-      criadoEm: new Date().toISOString(),
+      criadoEm: projetoExistente ? projetoExistente.criadoEm : new Date().toISOString(),
     };
 
     registrarProjeto(projetoRegistro);

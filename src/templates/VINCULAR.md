@@ -6,17 +6,46 @@
 
 **Gerado em:** {{data}}
 
+{{#if ehMigracaoStack}}
+> [!WARNING]
+> ### 🚀 MODO DE VINCULAÇÃO COM MIGRAÇÃO DE STACK (REPLATFORMING)
+> Este repositório foi vinculado com o objetivo explícito de **migrar integralmente para a nova stack tecnológica contratada**:
+> - **Frontend Destino:** `{{frontend}}`
+> - **Backend Destino:** `{{backend}}`
+> - **Branch de Trabalho Obrigatória:** `{{branchSugerida}}`
+>
+> ⚠️ **NÃO modifique o código legado diretamente na branch principal!**
+> Consulte e execute imediatamente o protocolo da skill:
+> 👉 `governanca/skills/migrar-stack-legada.md`
+>
+> O protocolo de migração garantirá:
+> 1. Criação e isolamento na branch `{{branchSugerida}}`
+> 2. Inventário De-Para completo em `governanca/relatorios/inventario-migracao.md`
+> 3. Coexistência side-by-side (`src-legado/` vs `src/`)
+> 4. Fatias verticais progressivas com 100% de paridade de regras de negócio
+> 5. Testes de equivalência antes do descomissionamento do código antigo
+{{/if}}
+
+> ⚡ **Harness Pré-Configurado:** A progenitora já configurou automaticamente o harness deste projeto:
+> - Regra ativa em `.agents/rules/000-governanca.md` apontando para `@governanca/AGENTS.md`.
+> - Ponteiro fino `CLAUDE.md` na raiz do repositório.
+> - Workflows registrados como **Slash Commands nativos** em `.agents/workflows/` (`/spec`, `/plan`, `/implement`, `/test`, `/review`, `/research`, `/release`).
+> - Se precisar re-sincronizar o harness futuramente, execute: `npx tsx {{caminhoRR}}src/scripts/configurar-harness.ts .`
+
 ## 1. Leia o Plano do Usuário
 
 O plano/descrição do projeto está em `governanca/PLANO.md`. Leia-o agora.
 Ele contém as melhorias, correções ou funcionalidades que o usuário deseja
 implementar **a partir do repositório existente**.
 
-> **Crie o PRD:** pergunte ao usuário se deseja um PRD estruturado. Se sim,
-> analise o plano e extraia: resumo executivo, requisitos (tabela ID/descrição/
-> prioridade), critérios de aceite, fora de escopo. Crie `governanca/PRD.md`
-> usando o template em `governanca/PRD.md`. Apresente para validação e registre
-> nas notas persistentes do `AGENTS.md`.
+> **Preencha o PRD:** pergunte ao usuário se deseja um PRD estruturado. Se sim,
+> analise o plano e preencha `governanca/PRD.md` (arquivo já criado na governança):
+> resumo executivo, requisitos (tabela ID/descrição/prioridade), critérios de aceite
+> e itens fora de escopo. Apresente para validação do usuário e registre o status
+> em `governanca/SESSAO.md`.
+>
+> Use o workflow `governanca/workflows/spec.md` para transformar a visão em
+> uma especificação verificável.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill `alinhar-stack-com-presets.md` em
@@ -25,12 +54,20 @@ implementar **a partir do repositório existente**.
 
 ## 2. Examine o Repositório
 
+- Siga o workflow `governanca/workflows/research.md` — investigação
+  progressiva (estrutura → configurações → modelos/serviços → fluxos
+  críticos → deep dive) e registre o artefato de contexto em
+  `governanca/relatorios/`
 - Leia `package.json`, `tsconfig.json`, `composer.json`, `.clasp.json`,
   `Dockerfile`, `Cargo.toml` ou equivalente para identificar linguagens,
   frameworks e dependências
 - Examine a estrutura de pastas para entender a organização
 - Verifique se há ferramentas de teste, lint, build configuradas
 - Identifique serviços externos (bancos, APIs, gateways de pagamento)
+- **Extração do Modelo de Dados:** Se o repositório possuir banco de dados relacional
+  (PostgreSQL ou SQLite), execute a skill `criar-extrair-modelo.md` em `governanca/skills/`
+  para gerar a documentação viva em `modelo-de-dados/` (tabelas, colunas, chaves estrangeiras
+  e diagrama ER). Esse snapshot é essencial antes de planejar as sprints ou refatorações.
 - Execute a skill `alinhar-stack-com-presets.md` em `governanca/skills/`
   para comparar a stack detectada com os presets da progenitora
 
@@ -68,8 +105,7 @@ dev.sh            seed.js           deploy.sh
 *.ps1             *.sh              Makefile
 ```
 
-Após mover, registre os scripts disponíveis em `AGENTS.md` nas notas
-persistentes, no formato:
+Após mover, registre os scripts disponíveis em `governanca/SESSAO.md`, no formato:
 ```
 Scripts disponíveis: governanca/scripts/dev.ps1, governanca/scripts/deploy.sh
 ```
@@ -91,7 +127,7 @@ wiki/             *.md na raiz      (pergunta ao usuário um por um)
    - **Mova scripts** para `governanca/scripts/`
    - **Exclua** documentação legada com `git rm` (ou delete se não versionado)
    - **Preserve** código e configurações
-   - **Registre** os scripts movidos nas notas persistentes do `AGENTS.md`
+   - **Registre** os scripts movidos em `governanca/SESSAO.md`
 5. Se o usuário quiser manter algum arquivo específico, respeite
 
 ## 5 — Crie as Sprints
@@ -102,6 +138,8 @@ As sprints devem **combinar o código existente com o plano do usuário**:
   repositório e preparar o terreno para as primeiras melhorias
 - Cada sprint posterior incrementa uma funcionalidade do plano
 - Use o template em `governanca/sprints/_template.md` como base
+- Use o workflow `governanca/workflows/plan.md` para montar cada sprint como
+  um plano verificável
 
 ## 6 — Habilite a Governança
 

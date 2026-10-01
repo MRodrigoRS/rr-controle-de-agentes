@@ -1,3 +1,8 @@
+---
+name: faxina-completa
+description: Orquestra todas as auditorias do projeto em uma única varredura sequencial.
+---
+
 # Skill: Faxina Completa
 
 > Meta-skill que orquestra todas as auditorias do projeto em uma única

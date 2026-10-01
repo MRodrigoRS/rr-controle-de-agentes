@@ -12,4 +12,5 @@
 
 *Este arquivo contém a descrição fornecida pelo usuário no momento da criação do projeto.*
 
-*Template gerado por RR Software (Rodrigo Rafael).*
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*
+

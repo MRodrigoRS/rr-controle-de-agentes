@@ -1,3 +1,8 @@
+---
+name: alinhar-stack-com-presets
+description: Alinha a stack do plano/repositório com os presets da progenitora e atualiza presets e catálogo quando há ganho real.
+---
+
 # Skill: Alinhar Stack com Presets
 
 > Instrui o agente a alinhar a stack do projeto com os presets da
@@ -88,32 +93,27 @@ e evoluída?"*
 
 ### 4. Atualizar Presets e Catálogo na Progenitora
 
-1. Edite `src/servidor/dados/presets.json` na progenitora (caminho: `{{caminhoRR}}`)
-2. Para cada preset afetado:
-   - Adicione tecnologias faltantes no array `stack`
-   - Se aplicável, adicione pastas novas em `pastas`
-   - Atualize os campos em `arquitetura` se necessário
-   - Ajuste a `descricao` e `destaque` para refletir o escopo ampliado
-3. Registre tecnologias inéditas no catálogo `src/servidor/dados/tecnologias.json`:
-   ```json
-   {
-     "nome": "NomeDaTecnologia",
-     "categoria": "categoria_existente",
-     "ranking": 1,
-     "aplicabilidade": "Breve descrição do caso de uso",
-     "descricao": "Descrição completa explicando o que é e para que serve"
-   }
-   ```
-4. Faça **dois commits separados** na progenitora para manter o histórico limpo:
+1. Para cadastrar uma tecnologia inédita no catálogo da progenitora, execute o comando atômico:
    ```bash
    cd {{caminhoRR}}
-   git add src/servidor/dados/presets.json
-   git commit -m "preset(s) <id1>, <id2> melhorado(s): <sumário>"
-   git add src/servidor/dados/tecnologias.json
-   git commit -m "tecnologias novas incluídas: <lista>"
+   npm run rr:tecnologia -- --nome "NomeDaTecnologia" --categoria "Categoria" --aplicabilidade "Breve descrição do caso de uso" --descricao "Descrição completa explicando o que é e para que serve"
    ```
-5. Informe o usuário que os presets foram atualizados e ofereça regenerar
-   a governança ou seguir com a atualizada.
+   *O SQLite da progenitora atribuirá um ID inteiro auto-incremental imediatamente, atualizará o snapshot do Git e regerará o catálogo de tecnologias.*
+
+2. Para vincular a tecnologia ao preset em `src/servidor/dados/presets.json`:
+   - Adicione o ID numérico gerado no array `tecnologiaIds` do preset afetado.
+   - Adicione o nome no array `stack`.
+   - Se aplicável, adicione pastas novas em `pastas` e ajuste `descricao` e `destaque`.
+   - **Validação obrigatória:** Execute `npm test` na progenitora para confirmar que todos os presets mantêm 100% de integridade referencial com o banco SQLite.
+
+3. Faça um commit na progenitora para registrar a evolução:
+   ```bash
+   cd {{caminhoRR}}
+   git add dados/ src/servidor/dados/
+   git commit -m "feat(catalogo): adiciona <NomeDaTecnologia> e atualiza preset <id>"
+   ```
+
+4. Informe o usuário que o catálogo e os presets foram enriquecidos e ofereça regenerar a governança com os novos dados.
 
 ### 5. Registre no Projeto
 
