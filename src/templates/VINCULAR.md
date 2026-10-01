@@ -62,6 +62,7 @@ implementar **a partir do repositório existente**.
   `Dockerfile`, `Cargo.toml` ou equivalente para identificar linguagens,
   frameworks e dependências
 - Examine a estrutura de pastas para entender a organização
+- **Mapeamento de Grafo (Projetos com 30+ arquivos):** Se o repositório for volumoso ou tiver arquitetura complexa, execute a skill `mapear-grafo-de-conhecimento` em `governanca/skills/`. Ela indexa o código via Tree-sitter (offline, zero tokens) e revela clusters funcionais e pontos de alto acoplamento (*god nodes*) em minutos.
 - Verifique se há ferramentas de teste, lint, build configuradas
 - Identifique serviços externos (bancos, APIs, gateways de pagamento)
 - **Extração do Modelo de Dados:** Se o repositório possuir banco de dados relacional

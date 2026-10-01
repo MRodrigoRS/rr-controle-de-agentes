@@ -177,6 +177,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "templates", "extrair-modelo-sqlite.ts.template"), template: "scripts/extrair-modelo-sqlite.ts.template", ctx },
     { destino: path.join(governancaDir, "templates", "extrair-modelo.ps1.template"), template: "scripts/extrair-modelo.ps1.template", ctx },
     { destino: path.join(governancaDir, "skills", "criar-instalador-desktop.md"), template: "skills/criar-instalador-desktop.md", ctx },
+    { destino: path.join(governancaDir, "skills", "mapear-grafo-de-conhecimento.md"), template: "skills/mapear-grafo-de-conhecimento.md", ctx },
     { destino: path.join(governancaDir, "padroes", "frontend.md"), template: "padroes/frontend.md", ctx },
     { destino: path.join(governancaDir, "padroes", "backend.md"), template: "padroes/backend.md", ctx },
     { destino: path.join(governancaDir, "workflows", "release.md"), template: "workflows/release.md", ctx },

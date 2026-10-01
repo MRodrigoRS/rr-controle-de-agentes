@@ -576,6 +576,14 @@
     "criado_em": "2026-09-03 16:20:59"
   },
   {
+    "id": 141,
+    "nome": "Graphify",
+    "categoria": "Ferramentas",
+    "aplicabilidade": "Grafo de conhecimento via AST (Tree-sitter) para análise de dependências e blast radius",
+    "descricao": "Transforma o repositório em um grafo de conhecimento consultável (graph.json, graph.html, GRAPH_REPORT.md) para análise de impacto e aceleração de onboarding sem gastar tokens.",
+    "criado_em": "2026-10-01 07:00:15"
+  },
+  {
     "id": 111,
     "nome": "dotnet format",
     "categoria": "Ferramentas",

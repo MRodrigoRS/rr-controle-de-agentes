@@ -1,7 +1,7 @@
 # Catálogo de Tecnologias
 
 > Catálogo oficial gerado a partir do RR Controle de Agentes.
-> Total: 140 tecnologias em 13 categorias.
+> Total: 141 tecnologias em 13 categorias.
 
 ## Backend
 
@@ -100,6 +100,7 @@
 | ID | Tecnologia | Aplicabilidade |
 |:--:|------------|----------------|
 | 111 | **dotnet format** | Formatador e linter oficial de código .NET C# |
+| 141 | **Graphify** | Grafo de conhecimento via AST (Tree-sitter) para análise de dependências e blast radius |
 
 ## Frontend
 

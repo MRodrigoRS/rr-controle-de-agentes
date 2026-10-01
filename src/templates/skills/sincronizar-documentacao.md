@@ -38,6 +38,8 @@ Quando o harness suportar subagentes (conforme orientações em `governanca/skil
 
 *Nota:* Se o harness não suportar subagentes, o agente orquestrador executa as 6 etapas sequencialmente em sua própria sessão.
 
+> **Acelerador Opcional (Graphify):** Em repositórios médios/grandes (30+ arquivos), antes de iniciar as Etapas 1 e 3, o agente (ou Subagente 1) pode consultar a skill `mapear-grafo-de-conhecimento` para indexar o projeto via AST local e gerar o `GRAPH_REPORT.md`. O relatório revela os clusters (domínios funcionais) e god nodes em segundos, acelerando o mapeamento de `01-visao-geral.md` e `03-logica-do-sistema.md` com zero custo de tokens.
+
 ---
 
 ## Fluxo de Execução (6 Etapas)
