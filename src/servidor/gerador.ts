@@ -178,14 +178,14 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "templates", "extrair-modelo.ps1.template"), template: "scripts/extrair-modelo.ps1.template", ctx },
     { destino: path.join(governancaDir, "skills", "criar-instalador-desktop.md"), template: "skills/criar-instalador-desktop.md", ctx },
     { destino: path.join(governancaDir, "skills", "mapear-grafo-de-conhecimento.md"), template: "skills/mapear-grafo-de-conhecimento.md", ctx },
+    { destino: path.join(governancaDir, "skills", "migrar-stack-legada.md"), template: "skills/migrar-stack-legada.md", ctx },
+    { destino: path.join(governancaDir, "skills", "desenvolver-e-auditar-gas.md"), template: "skills/desenvolver-e-auditar-gas.md", ctx },
     { destino: path.join(governancaDir, "padroes", "frontend.md"), template: "padroes/frontend.md", ctx },
     { destino: path.join(governancaDir, "padroes", "backend.md"), template: "padroes/backend.md", ctx },
     { destino: path.join(governancaDir, "workflows", "release.md"), template: "workflows/release.md", ctx },
   ];
 
   const arquivosCondicionais: { condicao: boolean; destino: string; template: string }[] = [
-    { condicao: ctx.ehMigracaoStack, destino: path.join(governancaDir, "skills", "migrar-stack-legada.md"), template: "skills/migrar-stack-legada.md" },
-    { condicao: ctx.ehGas, destino: path.join(governancaDir, "skills", "auditar-repositorio-gas.md"), template: "skills/auditar-repositorio-gas.md" },
     { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md" },
     { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md" },
     { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md" },

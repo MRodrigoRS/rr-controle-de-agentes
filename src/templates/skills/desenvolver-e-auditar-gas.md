@@ -1,17 +1,18 @@
 ---
-name: auditar-repositorio-gas
-description: Audita e reforma repositórios Google Apps Script — performance de I/O, LockService, quotas, segurança e deploy.
+name: desenvolver-e-auditar-gas
+description: Manual completo de boas práticas, desenvolvimento e auditoria para Google Apps Script (GAS) — mitigação de latência RPC (200-500ms), batch insert, LockService, quotas, segurança e deploy clasp.
 ---
 
-# Skill: Auditar Repositório Google Apps Script
+# Skill: Boas Práticas, Desenvolvimento e Auditoria Google Apps Script (GAS)
 
-> Instrui o agente a auditar e reformar qualquer repositório baseado na stack
-> Google Apps Script (GAS), aplicando as práticas de performance, segurança
-> e manutenibilidade documentadas pela própria Google e consolidadas pela
-> comunidade GAS.
+> Guia oficial e manual de engenharia da RR Tech Studio para qualquer projeto baseado
+> no ecossistema Google Apps Script (GAS). Abrange práticas essenciais de desenvolvimento
+> seguro, performance (I/O em lote), concorrência (LockService), quotas oficiais da Google,
+> integridade e deploy profissional via clasp.
 
 ## Quando Executar
 
+- **Durante todo o desenvolvimento e escrita de código GAS** — para seguir os padrões de batch insert, locks e cache
 - **No onboarding de um repositório GAS** — antes de qualquer sprint de feature
 - **Após migração ou clone** — quando o repositório veio de outra pessoa ou time
 - **Antes de colocar em produção** — como checklist de segurança final

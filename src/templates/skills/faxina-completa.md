@@ -23,7 +23,7 @@ em `governanca/relatorios/_template.md`.
 | 4 | `auditar-textos-usuario.md` | `auditoria-textos.md` |
 | 5 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
 | 6 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
-{{#if ehGas}}| 7 | `auditar-repositorio-gas.md` | `auditoria-gas.md` |{{/if}}
+| 7 | *(Se aplicável)* `desenvolver-e-auditar-gas.md` | `auditoria-gas.md` |
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas e oportunidades de evolução) →
@@ -66,7 +66,7 @@ Após a última fase, gere o sumário unificado em
 | 4. Textos | X | Y | Z | Concluída |
 | 5. Produção | X | Y | Z | Concluída |
 | 6. Competitividade | X | Y | Z | Concluída |
-{{#if ehGas}}| 7. Reforma GAS | X | Y | Z | Concluída |{{/if}}
+| 7. Boas Práticas GAS *(se aplicável)* | X | Y | Z | Concluída / N/A |
 | **Total** | **X** | **Y** | **Z** | |
 
 ---
