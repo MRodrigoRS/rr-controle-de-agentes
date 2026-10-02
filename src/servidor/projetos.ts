@@ -228,3 +228,156 @@ export function excluirProjeto(id: string): boolean {
   return res;
 }
 
+export interface PontoHistoricoCommit {
+  hash: string;
+  mensagem: string;
+  data: string; // YYYY-MM-DD
+  timestamp: number;
+  linhasTotais: number;
+  insercoes: number;
+  delecoes: number;
+}
+
+export interface RespostaHistoricoLinhas {
+  pontos: PontoHistoricoCommit[];
+  totalCommits: number;
+  temMais: boolean;
+  offset: number;
+  limit: number;
+}
+
+export function obterHistoricoLinhasCommits(
+  caminhoProjeto: string,
+  limit: number = 10,
+  offset: number = 0
+): RespostaHistoricoLinhas {
+  const respostaVazia: RespostaHistoricoLinhas = {
+    pontos: [],
+    totalCommits: 0,
+    temMais: false,
+    offset,
+    limit,
+  };
+
+  try {
+    if (!ehRaizGit(caminhoProjeto)) return respostaVazia;
+
+    // 1. Contagem total de commits
+    const countOut = execFileSync("git", ["-C", caminhoProjeto, "rev-list", "--count", "HEAD"], {
+      encoding: "utf-8",
+      timeout: 3000,
+      stdio: ["ignore", "pipe", "ignore"],
+      windowsHide: true,
+    }).trim();
+
+    const totalCommits = parseInt(countOut, 10);
+    if (isNaN(totalCommits) || totalCommits === 0) return respostaVazia;
+
+    // 2. Linhas atuais no HEAD
+    const commitHead = obterMetadadosGit(caminhoProjeto);
+    const metricasHead = commitHead ? obterMetricasCodigo(caminhoProjeto, commitHead.hash) : null;
+    const totalLinhasHead = metricasHead ? metricasHead.totalLinhas : 0;
+
+    // 3. Buscar commits até a janela requisitada (offset + limit)
+    const quantidadeBuscar = Math.min(totalCommits, offset + limit);
+    if (quantidadeBuscar <= 0) return respostaVazia;
+
+    const logOut = execFileSync(
+      "git",
+      [
+        "-C",
+        caminhoProjeto,
+        "log",
+        `-n`,
+        String(quantidadeBuscar),
+        "--shortstat",
+        "--format=COMMIT|%h|%s|%cd|%ct",
+        "--date=short",
+      ],
+      {
+        encoding: "utf-8",
+        timeout: 5000,
+        stdio: ["ignore", "pipe", "ignore"],
+        windowsHide: true,
+      }
+    );
+
+    // 4. Parser dos commits e shortstat
+    const linhas = logOut.split(/\r?\n/);
+    interface CommitBruto {
+      hash: string;
+      mensagem: string;
+      data: string;
+      timestamp: number;
+      insercoes: number;
+      delecoes: number;
+    }
+
+    const commitsBrutos: CommitBruto[] = [];
+    let commitAtual: CommitBruto | null = null;
+
+    for (const linha of linhas) {
+      if (linha.startsWith("COMMIT|")) {
+        if (commitAtual) {
+          commitsBrutos.push(commitAtual);
+        }
+        const [, hash, mensagem, data, unixTs] = linha.split("|");
+        commitAtual = {
+          hash: hash || "",
+          mensagem: mensagem || "",
+          data: data || "",
+          timestamp: (parseInt(unixTs, 10) || 0) * 1000,
+          insercoes: 0,
+          delecoes: 0,
+        };
+      } else if (commitAtual && linha.includes("changed")) {
+        const insMatch = linha.match(/(\d+)\s+insertion/);
+        const delMatch = linha.match(/(\d+)\s+deletion/);
+        if (insMatch) commitAtual.insercoes = parseInt(insMatch[1], 10);
+        if (delMatch) commitAtual.delecoes = parseInt(delMatch[1], 10);
+      }
+    }
+    if (commitAtual) {
+      commitsBrutos.push(commitAtual);
+    }
+
+    // 5. Cálculo cumulativo reverso de linhas totais
+    let linhasAcumuladas = totalLinhasHead;
+    const todosCalculados: PontoHistoricoCommit[] = [];
+
+    for (let i = 0; i < commitsBrutos.length; i++) {
+      const c = commitsBrutos[i];
+      todosCalculados.push({
+        hash: c.hash,
+        mensagem: c.mensagem,
+        data: c.data,
+        timestamp: c.timestamp,
+        linhasTotais: Math.max(0, linhasAcumuladas),
+        insercoes: c.insercoes,
+        delecoes: c.delecoes,
+      });
+
+      // O total anterior ao commit era o total atual menos a variação (inserções - deleções)
+      const deltaLiquido = c.insercoes - c.delecoes;
+      linhasAcumuladas -= deltaLiquido;
+    }
+
+    // A janela requisitada vai de offset até offset + limit
+    // Como os commits vêm do mais novo (HEAD) para o mais antigo,
+    // revertemos para ordem cronológica (mais antigo -> mais novo) para exibição em linha do tempo.
+    const fatia = todosCalculados.slice(offset, offset + limit).reverse();
+
+    return {
+      pontos: fatia,
+      totalCommits,
+      temMais: offset + limit < totalCommits,
+      offset,
+      limit,
+    };
+  } catch (error) {
+    console.error("Erro ao obter histórico de linhas de commits:", error);
+    return respostaVazia;
+  }
+}
+
+

@@ -6,6 +6,7 @@ import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
 import { BotaoVerStack } from "@/componentes/botao-ver-stack";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
+import { GraficoEvolucaoLinhas } from "@/componentes/grafico-evolucao-linhas";
 import { carregarProjetos, obterMetadadosGit, obterMetricasCodigo, temArquivoStack } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -95,6 +96,8 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
           <p><span className="font-medium text-[#e6edf3]">ID:</span> {projeto.id}</p>
         </div>
       </div>
+
+      <GraficoEvolucaoLinhas projetoId={projeto.id} />
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <CardListaArquivos
