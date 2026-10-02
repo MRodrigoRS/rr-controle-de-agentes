@@ -9,3 +9,6 @@ dados/projetos.json
 /projetos/
 __pycache__/
 *.pyc
+
+# Harness local dos agentes (fonte oficial: governanca/)
+.agents/

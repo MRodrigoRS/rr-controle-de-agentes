@@ -119,7 +119,7 @@ e evoluída?"*
 
 - **Repositório vinculado:** documente a stack real em
   `governanca/livro-arquitetura/02-stack.md` e registre nas notas
-  persistentes do `AGENTS.md`.
+  persistentes de `governanca/SESSAO.md`.
 - Atualize o registro do projeto na progenitora para que o card exiba os
   presets corretos:
   ```bash
@@ -129,7 +129,7 @@ e evoluída?"*
     -d '{"presetFrontend": "<id>", "presetBackend": "<id>"}'
   ```
   > Substitua `<ID_DO_PROJETO>` pelo id real (consulte as notas
-  > persistentes do AGENTS.md ou `dados/projetos.json` na progenitora).
+  > persistentes de `governanca/SESSAO.md` ou `dados/projetos.json` na progenitora).
 
 ### 6. Exemplo Prático
 

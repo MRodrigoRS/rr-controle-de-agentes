@@ -54,7 +54,7 @@ if (!DATABASE_URL) {
 
 const pool = new pg.Pool({ connectionString: DATABASE_URL });
 
-const OUT_DIR = resolve(__dirname, "../../modelo-de-dados");
+const OUT_DIR = resolve(__dirname, "../livro-arquitetura/modelo-de-dados");
 const TABELAS_DIR = join(OUT_DIR, "tabelas");
 
 interface TabelaInfo {

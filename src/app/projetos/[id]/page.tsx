@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
-import { carregarProjetos } from "@/servidor/projetos";
+import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
+import { carregarProjetos, obterMetadadosGit } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
 
   const caminhoProjeto = path.resolve(projeto.caminho);
   const caminhoGovernanca = path.join(caminhoProjeto, "governanca");
+  const commit = obterMetadadosGit(caminhoProjeto);
   const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
   const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
@@ -66,78 +68,51 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
 
         <div className="mt-4 grid gap-2 text-sm text-[#8b949e]">
           <p><span className="font-medium text-[#e6edf3]">Caminho:</span> {projeto.caminho}</p>
+          {commit ? (
+            <p>
+              <span className="font-medium text-[#e6edf3]">Último commit:</span>{" "}
+              <span className="text-[#3fb950] font-medium">{commit.relativo}</span>{" "}
+              <span className="text-[#7d8590]">({new Date(commit.iso).toLocaleString("pt-BR")})</span>{" "}
+              <span className="font-mono text-[#58a6ff]">[{commit.hash}]</span>{" "}
+              <span className="text-[#e6edf3]">— {commit.mensagem}</span>
+            </p>
+          ) : (
+            <p><span className="font-medium text-[#e6edf3]">Git:</span> Sem commits ou repositório não inicializado</p>
+          )}
           <p><span className="font-medium text-[#e6edf3]">Criado em:</span> {new Date(projeto.criadoEm).toLocaleString("pt-BR")}</p>
           <p><span className="font-medium text-[#e6edf3]">ID:</span> {projeto.id}</p>
         </div>
       </div>
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Padrões de Engenharia</h2>
-          {padroes.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhum padrão encontrado.</p>
-          ) : (
-            <ul className="space-y-1">
-              {padroes.map((p) => (
-                <li key={p} className="text-sm text-[#8b949e]">{p}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Workflows</h2>
-          {workflows.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhum workflow encontrado.</p>
-          ) : (
-            <ul className="space-y-1">
-              {workflows.map((w) => (
-                <li key={w} className="text-sm text-[#8b949e]">{w}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Skills</h2>
-          {skills.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhuma skill encontrada.</p>
-          ) : (
-            <ul className="space-y-1">
-              {skills.map((s) => (
-                <li key={s} className="text-sm text-[#8b949e]">{s}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Arquitetura</h2>
-          {arquitetura.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhum registro de arquitetura.</p>
-          ) : (
-            <ul className="space-y-1">
-              {arquitetura.map((a) => (
-                <li key={a} className="text-sm text-[#8b949e]">{a}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5 shadow-sm">
-          <h2 className="mb-3 font-semibold text-[#e6edf3]">Sprints</h2>
-          {sprints.length === 0 ? (
-            <p className="text-sm text-[#8b949e]">Nenhuma sprint encontrada.</p>
-          ) : (
-            <ul className="space-y-1">
-              {sprints.map((s) => (
-                <li key={s} className="text-sm text-[#8b949e]">{s}</li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <CardListaArquivos
+          titulo="Padrões de Engenharia"
+          arquivos={padroes}
+          mensagemVazio="Nenhum padrão encontrado."
+        />
+        <CardListaArquivos
+          titulo="Workflows"
+          arquivos={workflows}
+          mensagemVazio="Nenhum workflow encontrado."
+        />
+        <CardListaArquivos
+          titulo="Skills"
+          arquivos={skills}
+          mensagemVazio="Nenhuma skill encontrada."
+        />
+        <CardListaArquivos
+          titulo="Arquitetura"
+          arquivos={arquitetura}
+          mensagemVazio="Nenhum registro de arquitetura."
+        />
+        <CardListaArquivos
+          titulo="Sprints"
+          arquivos={sprints}
+          mensagemVazio="Nenhuma sprint encontrada."
+        />
       </div>
 
     </>
   );
 }
+

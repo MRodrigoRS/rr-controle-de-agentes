@@ -115,4 +115,4 @@ Com o ambiente pronto, inicie a Sprint 1:
 - Mantenha as notas de progresso em governanca/SESSAO.md atualizadas.
 - Registre decisões técnicas no livro de arquitetura.
 
-*Template gerado por RR Software (Rodrigo Rafael).*
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*

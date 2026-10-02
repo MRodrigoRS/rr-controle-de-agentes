@@ -1,0 +1,54 @@
+# Workflow: Fix (Correção Rápida / Polimento)
+
+> Procedimento ágil (Fast-Track) para resolver bugs pontuais, ajustes visuais,
+> erros de digitação e pequenos polimentos avulsos sem a cerimônia de uma sprint formal.
+
+## Quando Usar
+
+- Correção de bug pontual ou erro reportado
+- Ajustes finos de CSS, layout, espaçamento ou responsividade
+- Correção de tipagem TypeScript, lint ou imports
+- Pequenas refatorações cirúrgicas em 1 ou 2 arquivos
+- Tarefas pequenas e avulsas detectadas em cima da hora
+
+## Quando NÃO Usar (Use `/plan` e Sprint Formal)
+
+- Novas funcionalidades ou telas completas
+- Alterações em regras de negócio ou fluxo de múltiplos módulos
+- Mudanças no esquema do banco de dados (migrations)
+- Refatorações amplas que tocam muitos arquivos
+
+---
+
+## Passos
+
+1. **Diagnóstico Rápido (3 linhas):**
+   Apresente brevemente ao usuário:
+   - **Problema:** o que está quebrado ou precisa de ajuste
+   - **Causa raiz:** por que está ocorrendo
+   - **Solução proposta:** o que será alterado
+
+2. **Implementação Direta:**
+   Aplique a correção respeitando os padrões de engenharia em `governanca/padroes/` (`frontend.md` ou `backend.md`).
+
+3. **Verificação & Não-Regressão:**
+   - Execute os testes automatizados existentes (`npm test` ou comando da stack).
+   - Se for bug lógico, adicione um teste unitário que comprove que o bug não voltará a ocorrer.
+   - Verifique que o linter e o build passam sem erros.
+
+4. **Commit & Registro:**
+   - Faça commit convencional direto:
+     ```bash
+     git commit -m "fix(escopo): descrição concisa da correção"
+     ```
+   - Registre uma linha objetiva em `governanca/SESSAO.md` sob a sessão atual:
+     `- [Fix] Corrigido bug no componente X (commit: hash).`
+
+---
+
+## Critérios de Conclusão
+
+- Bug corrigido ou ajuste aplicado com sucesso
+- Build e testes passando com regressão zero
+- Padrões de engenharia seguidos (`governanca/padroes/`)
+- Commit realizado e registrado em `governanca/SESSAO.md`

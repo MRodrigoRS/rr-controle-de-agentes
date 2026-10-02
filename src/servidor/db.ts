@@ -70,6 +70,54 @@ export function obterDb(): DatabaseSync {
     // Coluna já existe no banco
   }
 
+  try {
+    const row = dbInstance.prepare("SELECT COUNT(*) as total FROM tecnologias").get() as { total: number } | undefined;
+    if (!row || Number(row.total) === 0) {
+      const caminhoSnapshot = path.resolve(process.cwd(), "dados/tecnologias-snapshot.json");
+      const caminhoTecnologiasJson = path.resolve(process.cwd(), "src/servidor/dados/tecnologias.json");
+      const caminhoFonte = fs.existsSync(caminhoSnapshot)
+        ? caminhoSnapshot
+        : fs.existsSync(caminhoTecnologiasJson)
+        ? caminhoTecnologiasJson
+        : null;
+
+      if (caminhoFonte) {
+        const raw = fs.readFileSync(caminhoFonte, "utf-8");
+        const tecs: Array<{ id?: number; nome: string; categoria: string; aplicabilidade: string; descricao: string; criado_em?: string }> = JSON.parse(raw);
+        const stmtInsertComId = dbInstance.prepare(`
+          INSERT INTO tecnologias (id, nome, categoria, aplicabilidade, descricao, criado_em)
+          VALUES (?, ?, ?, ?, ?, COALESCE(?, CURRENT_TIMESTAMP))
+        `);
+        const stmtInsertSemId = dbInstance.prepare(`
+          INSERT INTO tecnologias (nome, categoria, aplicabilidade, descricao)
+          VALUES (?, ?, ?, ?)
+        `);
+
+        for (const t of tecs) {
+          if (t.id !== undefined && t.id > 0) {
+            stmtInsertComId.run(
+              t.id,
+              t.nome.trim(),
+              t.categoria.trim(),
+              t.aplicabilidade.trim(),
+              t.descricao.trim(),
+              t.criado_em || null
+            );
+          } else {
+            stmtInsertSemId.run(
+              t.nome.trim(),
+              t.categoria.trim(),
+              t.aplicabilidade.trim(),
+              t.descricao.trim()
+            );
+          }
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+
   return dbInstance;
 }
 

@@ -1,16 +1,19 @@
 import { GuiaTecnologias } from "@/componentes/guia-tecnologias";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
-import { carregarProjetos } from "@/servidor/projetos";
+import { carregarProjetosOrdenadosPorCommit } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
-  const projetos = carregarProjetos();
+  const projetos = carregarProjetosOrdenadosPorCommit();
 
   return (
     <>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#e6edf3]">Projetos</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-[#e6edf3]">Projetos</h1>
+          <p className="mt-1 text-xs text-[#8b949e]">Ordenados automaticamente pela atividade e commits mais recentes.</p>
+        </div>
         <a href="/criar" className="rounded-lg bg-[#238636] px-4 py-2 text-sm text-white hover:bg-[#2ea043] transition">Novo Projeto</a>
       </div>
 
@@ -24,12 +27,37 @@ export default function Home() {
           {projetos.map((p) => (
             <div key={p.id}
               className="rounded-xl border border-[#30363d] bg-[#161b22] p-4 shadow-sm transition hover:border-[#58a6ff] hover:bg-[#1a2332]">
-              <div className="flex items-center justify-between">
+              <div className="flex items-start justify-between">
                 <a href={`/projetos/${p.id}`} className="min-w-0 flex-1">
-                  <h2 className="font-semibold text-[#e6edf3]">{p.nome}</h2>
-                  <p className="mt-1 text-sm text-[#8b949e]">{p.caminho}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="font-semibold text-[#e6edf3] hover:text-[#58a6ff] transition">{p.nome}</h2>
+                    {p.commit ? (
+                      <span
+                        className="rounded-full bg-[#238636]/15 border border-[#238636]/40 px-2.5 py-0.5 text-[11px] font-medium text-[#3fb950]"
+                        title={`Último commit: ${new Date(p.commit.iso).toLocaleString("pt-BR")}`}
+                      >
+                        {p.commit.relativo}
+                      </span>
+                    ) : (
+                      <span className="rounded-full bg-[#30363d]/50 px-2 py-0.5 text-[11px] text-[#8b949e]">
+                        sem git
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-xs text-[#8b949e] truncate" title={p.caminho}>{p.caminho}</p>
+                  {p.commit ? (
+                    <p className="mt-2 text-xs text-[#7d8590] truncate flex items-center gap-1.5" title={`${p.commit.hash} - ${p.commit.mensagem}`}>
+                      <span className="font-mono text-[#58a6ff]">{p.commit.hash}</span>
+                      <span>—</span>
+                      <span className="truncate text-[#8b949e]">{p.commit.mensagem}</span>
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-xs text-[#7d8590]">
+                      Criado em {new Date(p.criadoEm).toLocaleDateString("pt-BR")}
+                    </p>
+                  )}
                 </a>
-                <div className="flex items-center gap-2 ml-4">
+                <div className="flex items-center gap-2 ml-4 shrink-0">
                   <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetFrontend}</span>
                   <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetBackend}</span>
                   <BotaoDeletarProjeto projetoId={p.id} projetoNome={p.nome} />

@@ -46,7 +46,8 @@ export function gerarCatalogoMarkdown(): string {
   md += "```bash\n";
   md += 'npm run rr:tecnologia -- --nome "Nome" --categoria "Categoria" --aplicabilidade "..." --descricao "..."\n';
   md += "```\n\n";
-  md += "O banco SQLite atribuirá um ID numérico auto-incremental imediatamente e sincronizará o catálogo.\n";
+  md += "O banco SQLite atribuirá um ID numérico auto-incremental imediatamente e sincronizará o catálogo.\n\n";
+  md += "*Template gerado por RR Tech Studio (Rodrigo Rafael).*\n";
 
   return md;
 }

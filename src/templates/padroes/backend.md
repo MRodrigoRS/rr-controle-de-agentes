@@ -33,7 +33,10 @@
 
 - **Operações Multi-Tabela:** Sempre que uma operação de negócio envolver alteração em mais de uma tabela ou registro dependente (ex: criar pedido + reservar estoque + debitar créditos):
   - É **obrigatório** encapsular todo o bloco dentro de uma transação atômica do banco de dados (`BEGIN / COMMIT / ROLLBACK`).
-  - Em caso de falha em qualquer etapa, a transação deve sofrer rollback imediato, evitando estados inconsistentes ou dados órfãos.
+- **Persistência em Google Sheets / Google Apps Script (Single-Row Update):**
+  - Em bancos de dados baseados em planilhas, é terminantemente proibido o uso de `clearContents()` seguido de reescrita da aba inteira para atualizar um ou poucos registros pontuais.
+  - Toda mutação de registro existente deve ser pontual (**Single-Row Range Update**): localiza-se o índice da linha física lendo apenas o vetor de identificadores em memória e aplica-se `range.setValues([linhaAtualizada])` estritamente nas células daquele registro.
+  - Toda gravação na planilha deve ser protegida por `LockService` com liberação obrigatória em bloco `finally`.
 - **Idempotência em Ações Críticas:**
   - Webhooks de pagamento (Stripe, Mercado Pago, etc.) e endpoints de transações financeiras devem validar chaves de idempotência ou registrar o ID do evento para impedir processamentos repetidos em caso de retry de rede.
 

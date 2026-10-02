@@ -95,4 +95,4 @@ no próprio relatório da fase (seção `## Sprint Sugerida`). Copie de lá.*
 2. Pergunte se deseja criar as sprints sugeridas
 3. Se autorizado, copie a `Sprint Sugerida` de cada relatório para
    `governanca/sprints/`
-4. Registre nas notas persistentes do `AGENTS.md` que a faxina foi concluída
+4. Registre nas notas persistentes de `governanca/SESSAO.md` que a faxina foi concluída

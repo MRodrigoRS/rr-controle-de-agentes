@@ -17,11 +17,19 @@ interface CriarProjetoParams {
   modoMigracao?: boolean;
 }
 
+const templatesBaseDir = path.resolve(process.cwd(), "src/templates");
+
+function escanearTemplatesPasta(subpasta: string): string[] {
+  const dir = path.join(templatesBaseDir, subpasta);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter(f => fs.statSync(path.join(dir, f)).isFile());
+}
+
 function limparArquivosObsoletos(owned: Set<string>, dir: string) {
   if (!fs.existsSync(dir)) return;
   for (const arquivo of fs.readdirSync(dir)) {
     const caminho = path.join(dir, arquivo);
-    if (!owned.has(caminho) && arquivo.endsWith(".md") && fs.statSync(caminho).isFile()) {
+    if (!owned.has(caminho) && fs.statSync(caminho).isFile()) {
       fs.unlinkSync(caminho);
     }
   }
@@ -57,7 +65,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   const raizRR = path.resolve(process.cwd());
   const rel = path.relative(caminhoAbs, raizRR);
-  const caminhoRelativoRR = (path.isAbsolute(rel) ? raizRR : rel).replace(/\\/g, "/") + "/";
+  const caminhoRelativoRR = (rel === "" || rel === "." ? "." : path.isAbsolute(rel) ? raizRR : rel).replace(/\\/g, "/") + "/";
 
   const pastas = [
     governancaDir,
@@ -93,8 +101,6 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     .toLowerCase()
     .replace(/[^a-z0-9_-]/g, "-");
 
-  const ehGas = (be.backendRuntime || "").toLowerCase().includes("google apps script") || presetFrontend.id === "gas-web-app";
-
   const ctx = {
     nomeProjeto: nome,
     descricao,
@@ -124,7 +130,6 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     tabelaStackBackend: montarTabelaTecnologias(tecsBackend),
     stackCategorizadaFrontend: montarStackCategorizada(tecsFrontend),
     stackCategorizadaBackend: montarStackCategorizada(tecsBackend),
-    ehGas,
   };
 
   const ctxSprint = {
@@ -140,93 +145,128 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   };
 
   const arquivos: { destino: string; template: string; ctx: Record<string, unknown> }[] = [
+    // Arquivo mestre de regras (sempre atualizado)
     { destino: path.join(governancaDir, "AGENTS.md"), template: "AGENTS.md", ctx },
-    { destino: path.join(governancaDir, "PLANO.md"), template: "PLANO.md", ctx },
+    // Template de sprints (sempre atualizado)
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
-    { destino: path.join(governancaDir, "skills", "convencoes-estrutura-de-pastas.md"), template: "skills/convencoes-estrutura-de-pastas.md", ctx },
-    { destino: path.join(governancaDir, "skills", "alinhar-stack-com-presets.md"), template: "skills/alinhar-stack-com-presets.md", ctx },
-    { destino: path.join(governancaDir, "skills", "criar-scripts-auxiliares.md"), template: "skills/criar-scripts-auxiliares.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-repositorio.md"), template: "skills/auditar-repositorio.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-responsividade.md"), template: "skills/auditar-responsividade.md", ctx },
-    { destino: path.join(governancaDir, "skills", "criar-testes.md"), template: "skills/criar-testes.md", ctx },
-    { destino: path.join(governancaDir, "skills", "mapear-logica-do-sistema.md"), template: "skills/mapear-logica-do-sistema.md", ctx },
-    { destino: path.join(governancaDir, "skills", "mapear-comportamento-autonomo.md"), template: "skills/mapear-comportamento-autonomo.md", ctx },
-    { destino: path.join(governancaDir, "skills", "sincronizar-documentacao.md"), template: "skills/sincronizar-documentacao.md", ctx },
-
-    { destino: path.join(governancaDir, "skills", "auditar-consistencia-visual.md"), template: "skills/auditar-consistencia-visual.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-prontidao-producao.md"), template: "skills/auditar-prontidao-producao.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-comercializacao.md"), template: "skills/auditar-comercializacao.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-competitividade.md"), template: "skills/auditar-competitividade.md", ctx },
-    { destino: path.join(governancaDir, "skills", "auditar-textos-usuario.md"), template: "skills/auditar-textos-usuario.md", ctx },
-    { destino: path.join(governancaDir, "skills", "usar-harness-do-agente.md"), template: "skills/usar-harness-do-agente.md", ctx },
-    { destino: path.join(governancaDir, "skills", "usar-subagentes.md"), template: "skills/usar-subagentes.md", ctx },
-    { destino: path.join(governancaDir, "skills", "modularizar-padroes-recorrentes.md"), template: "skills/modularizar-padroes-recorrentes.md", ctx },
-    { destino: path.join(governancaDir, "skills", "configurar-harness.md"), template: "skills/configurar-harness.md", ctx },
-    { destino: path.join(governancaDir, "skills", "evoluir-governanca.md"), template: "skills/evoluir-governanca.md", ctx },
-    { destino: path.join(governancaDir, "skills", "faxina-completa.md"), template: "skills/faxina-completa.md", ctx },
-    { destino: path.join(governancaDir, "relatorios", "_template.md"), template: "relatorios/_template.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "research.md"), template: "workflows/research.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "spec.md"), template: "workflows/spec.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "plan.md"), template: "workflows/plan.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "implement.md"), template: "workflows/implement.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "fix.md"), template: "workflows/fix.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "test.md"), template: "workflows/test.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "review.md"), template: "workflows/review.md", ctx },
-    { destino: path.join(governancaDir, "skills", "criar-extrair-modelo.md"), template: "skills/criar-extrair-modelo.md", ctx },
-    { destino: path.join(governancaDir, "templates", "extrair-modelo.ts.template"), template: "scripts/extrair-modelo.ts.template", ctx },
-    { destino: path.join(governancaDir, "templates", "extrair-modelo-sqlite.ts.template"), template: "scripts/extrair-modelo-sqlite.ts.template", ctx },
-    { destino: path.join(governancaDir, "templates", "extrair-modelo.ps1.template"), template: "scripts/extrair-modelo.ps1.template", ctx },
-    { destino: path.join(governancaDir, "skills", "criar-instalador-desktop.md"), template: "skills/criar-instalador-desktop.md", ctx },
-    { destino: path.join(governancaDir, "skills", "mapear-grafo-de-conhecimento.md"), template: "skills/mapear-grafo-de-conhecimento.md", ctx },
-    { destino: path.join(governancaDir, "skills", "migrar-stack-legada.md"), template: "skills/migrar-stack-legada.md", ctx },
-    { destino: path.join(governancaDir, "skills", "desenvolver-e-auditar-gas.md"), template: "skills/desenvolver-e-auditar-gas.md", ctx },
-    { destino: path.join(governancaDir, "padroes", "frontend.md"), template: "padroes/frontend.md", ctx },
-    { destino: path.join(governancaDir, "padroes", "backend.md"), template: "padroes/backend.md", ctx },
-    { destino: path.join(governancaDir, "workflows", "release.md"), template: "workflows/release.md", ctx },
+    // Stack oficial do projeto (sempre atualizada para refletir presets atuais)
+    { destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md", ctx },
   ];
 
-  const arquivosCondicionais: { condicao: boolean; destino: string; template: string }[] = [
-    { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md" },
-    { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md" },
-    { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md" },
-    { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "04-comportamento-autonomo.md"), template: "arquitetura/04-comportamento-autonomo.md" },
-    { condicao: !params.regenerar, destino: path.join(governancaDir, "livro-arquitetura", "05-modelo-de-dados.md"), template: "arquitetura/05-modelo-de-dados.md" },
+  // 1. Descoberta dinâmica de Skills
+  for (const arquivo of escanearTemplatesPasta("skills")) {
+    if (arquivo.endsWith(".md") && arquivo !== "CATALOGO_TECNOLOGIAS.md") {
+      arquivos.push({
+        destino: path.join(governancaDir, "skills", arquivo),
+        template: `skills/${arquivo}`,
+        ctx,
+      });
+    }
+  }
+
+  // 2. Descoberta dinâmica de Workflows
+  for (const arquivo of escanearTemplatesPasta("workflows")) {
+    if (arquivo.endsWith(".md")) {
+      arquivos.push({
+        destino: path.join(governancaDir, "workflows", arquivo),
+        template: `workflows/${arquivo}`,
+        ctx,
+      });
+    }
+  }
+
+  // 3. Descoberta dinâmica de Padrões
+  for (const arquivo of escanearTemplatesPasta("padroes")) {
+    if (arquivo.endsWith(".md")) {
+      arquivos.push({
+        destino: path.join(governancaDir, "padroes", arquivo),
+        template: `padroes/${arquivo}`,
+        ctx,
+      });
+    }
+  }
+
+  // 4. Descoberta dinâmica de Relatórios
+  for (const arquivo of escanearTemplatesPasta("relatorios")) {
+    if (arquivo.endsWith(".md")) {
+      arquivos.push({
+        destino: path.join(governancaDir, "relatorios", arquivo),
+        template: `relatorios/${arquivo}`,
+        ctx,
+      });
+    }
+  }
+
+  // 5. Descoberta dinâmica de Scripts/Templates auxiliares
+  for (const arquivo of escanearTemplatesPasta("scripts")) {
+    arquivos.push({
+      destino: path.join(governancaDir, "templates", arquivo),
+      template: `scripts/${arquivo}`,
+      ctx,
+    });
+  }
+
+  // 6. Livros de arquitetura protegidos (não sobrescreve se já existirem ou se for regeneração)
+  const outrosLivros = [
+    { destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md" },
+    { destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md" },
+    { destino: path.join(governancaDir, "livro-arquitetura", "04-comportamento-autonomo.md"), template: "arquitetura/04-comportamento-autonomo.md" },
+    { destino: path.join(governancaDir, "livro-arquitetura", "05-modelo-de-dados.md"), template: "arquitetura/05-modelo-de-dados.md" },
   ];
 
-  for (const item of arquivosCondicionais) {
-    if (item.condicao) {
+  for (const item of outrosLivros) {
+    if (!params.regenerar && !fs.existsSync(item.destino)) {
       arquivos.push({ destino: item.destino, template: item.template, ctx });
     }
   }
 
-  if (!fs.existsSync(path.join(governancaDir, "PRD.md"))) {
-    arquivos.push({ destino: path.join(governancaDir, "PRD.md"), template: "PRD.md", ctx });
+  // 7. PLANO.md sagrado — NUNCA sobrescreve se o arquivo já existir (proteção contra perda de dados)
+  const caminhoPlano = path.join(governancaDir, "PLANO.md");
+  if (!fs.existsSync(caminhoPlano)) {
+    arquivos.push({ destino: caminhoPlano, template: "PLANO.md", ctx });
   }
 
+  // 8. PRD.md — NUNCA sobrescreve se já existir
+  const caminhoPrd = path.join(governancaDir, "PRD.md");
+  if (!fs.existsSync(caminhoPrd)) {
+    arquivos.push({ destino: caminhoPrd, template: "PRD.md", ctx });
+  }
+
+  // 9. SESSAO.md — NUNCA sobrescreve se já existir
   const caminhoSessao = path.join(governancaDir, "SESSAO.md");
   if (!fs.existsSync(caminhoSessao)) {
     arquivos.push({ destino: caminhoSessao, template: "SESSAO.md", ctx });
   }
 
+  // 10. INICIO.md ou VINCULAR.md
   const ehVinculado = Boolean(repositorioExistente || fs.existsSync(path.join(governancaDir, "VINCULAR.md")));
+  const arquivoInicial = ehVinculado ? "VINCULAR.md" : "INICIO.md";
   arquivos.push({
-    destino: path.join(governancaDir, ehVinculado ? "VINCULAR.md" : "INICIO.md"),
-    template: ehVinculado ? "VINCULAR.md" : "INICIO.md",
+    destino: path.join(governancaDir, arquivoInicial),
+    template: arquivoInicial,
     ctx,
   });
 
+  // Renderiza e grava todos os arquivos gerenciados
   for (const { destino, template, ctx: templateCtx } of arquivos) {
     const conteudo = processarTemplate(template, templateCtx);
     fs.writeFileSync(destino, conteudo, "utf-8");
   }
 
+  // Gera o catálogo dinâmico de tecnologias
   const catalogoMd = gerarCatalogoMarkdown();
   const catalogoPath = path.join(governancaDir, "skills", "CATALOGO_TECNOLOGIAS.md");
   fs.writeFileSync(catalogoPath, catalogoMd, "utf-8");
 
-  const ownedFiles = new Set(arquivos.map(a => a.destino));
+  // Limpeza de arquivos obsoletos em todas as pastas gerenciadas
+  const ownedFiles = new Set(arquivos.map((a) => a.destino));
   ownedFiles.add(catalogoPath);
+
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "skills"));
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "workflows"));
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "padroes"));
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "relatorios"));
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "templates"));
 
   // Sincroniza o harness (.agents/, CLAUDE.md, workflows e skills)
   configurarHarnessNoProjeto(caminhoAbs);
