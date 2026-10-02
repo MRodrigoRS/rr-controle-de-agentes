@@ -8,6 +8,7 @@ interface Props {
   projetoNome: string;
   caminhoAtual: string;
   estaNaPastaProjetos?: boolean;
+  ehProgenitora?: boolean;
 }
 
 export function BotaoCopiarProjeto({
@@ -15,6 +16,7 @@ export function BotaoCopiarProjeto({
   projetoNome,
   caminhoAtual,
   estaNaPastaProjetos = false,
+  ehProgenitora = false,
 }: Props) {
   const router = useRouter();
   const [modalAberto, setModalAberto] = useState(false);
@@ -22,8 +24,8 @@ export function BotaoCopiarProjeto({
   const [copiando, setCopiando] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
 
-  // Não exibe o botão se o projeto já estiver dentro da pasta projetos/
-  if (estaNaPastaProjetos) {
+  // Não exibe o botão se o projeto já estiver dentro da pasta projetos/ ou se for a progenitora
+  if (estaNaPastaProjetos || ehProgenitora) {
     return null;
   }
 

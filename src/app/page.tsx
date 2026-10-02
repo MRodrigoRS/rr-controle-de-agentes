@@ -33,7 +33,14 @@ export default function Home() {
                 <a href={`/projetos/${p.id}`} className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-semibold text-[#e6edf3] hover:text-[#58a6ff] transition">{p.nome}</h2>
-                    {p.estaNaPastaProjetos ? (
+                    {p.ehProgenitora ? (
+                      <span
+                        className="rounded-full bg-[#8957e5]/15 border border-[#8957e5]/40 px-2 py-0.5 text-[11px] font-medium text-[#d2a8ff]"
+                        title="Ferramenta principal da governança (Progenitora)"
+                      >
+                        Progenitora
+                      </span>
+                    ) : p.estaNaPastaProjetos ? (
                       <span
                         className="rounded-full bg-[#238636]/10 border border-[#238636]/30 px-2 py-0.5 text-[11px] font-medium text-[#3fb950]"
                         title="Projeto localizado na pasta projetos/ da governança"
@@ -80,6 +87,7 @@ export default function Home() {
                     projetoNome={p.nome}
                     caminhoAtual={p.caminho}
                     estaNaPastaProjetos={p.estaNaPastaProjetos}
+                    ehProgenitora={p.ehProgenitora}
                   />
                   {p.metricas && p.metricas.totalLinhas > 0 && (
                     <span

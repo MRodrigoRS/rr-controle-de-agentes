@@ -29,6 +29,15 @@ export interface ProjetoComGit extends ProjetoRegistro {
   temStack: boolean;
   ultimoTimestamp: number;
   estaNaPastaProjetos: boolean;
+  ehProgenitora: boolean;
+}
+
+export function ehProgenitora(caminho: string): boolean {
+  try {
+    return path.resolve(caminho).toLowerCase() === path.resolve(process.cwd()).toLowerCase();
+  } catch {
+    return false;
+  }
 }
 
 export function estaNaPastaProjetos(caminho: string): boolean {
@@ -191,9 +200,28 @@ function sincronizarJson(projetos: ProjetoRegistro[]) {
 }
 
 export function carregarProjetos(): ProjetoRegistro[] {
-  const projetos = obterTodosProjetos();
-  sincronizarJson(projetos);
-  return projetos;
+  const todos = obterTodosProjetos();
+  const existentes: ProjetoRegistro[] = [];
+  const orfaos: ProjetoRegistro[] = [];
+
+  for (const p of todos) {
+    if (fs.existsSync(p.caminho)) {
+      existentes.push(p);
+    } else {
+      orfaos.push(p);
+    }
+  }
+
+  // Se houver projetos que foram deletados fisicamente do disco,
+  // remove-os automaticamente do banco de dados SQLite e sincroniza o JSON
+  if (orfaos.length > 0) {
+    for (const o of orfaos) {
+      excluirProjetoDb(o.id);
+    }
+  }
+
+  sincronizarJson(existentes);
+  return existentes;
 }
 
 export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
@@ -205,6 +233,7 @@ export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
     const tsCriacao = new Date(p.criadoEm).getTime() || 0;
     const ultimoTimestamp = commit ? commit.timestamp : tsCriacao;
     const estaEmProjetos = estaNaPastaProjetos(p.caminho);
+    const ehBaseProgenitora = ehProgenitora(p.caminho);
     return {
       ...p,
       commit,
@@ -212,6 +241,7 @@ export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
       temStack,
       ultimoTimestamp,
       estaNaPastaProjetos: estaEmProjetos,
+      ehProgenitora: ehBaseProgenitora,
     };
   });
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { execFileSync } from "child_process";
-import { carregarProjetos, registrarProjeto, type ProjetoRegistro } from "@/servidor/projetos";
+import { carregarProjetos, registrarProjeto, ehProgenitora, type ProjetoRegistro } from "@/servidor/projetos";
 import { configurarHarnessNoProjeto } from "@/servidor/harness";
 
 export async function POST(
@@ -19,6 +19,13 @@ export async function POST(
   const caminhoOrigem = path.resolve(projetoOrigem.caminho);
   if (!fs.existsSync(caminhoOrigem)) {
     return NextResponse.json({ erro: "Diretório de origem não encontrado no disco" }, { status: 404 });
+  }
+
+  if (ehProgenitora(caminhoOrigem)) {
+    return NextResponse.json(
+      { erro: "A ferramenta principal (progenitora) não pode ser copiada para dentro de si mesma." },
+      { status: 400 }
+    );
   }
 
   const body = await request.json().catch(() => ({}));

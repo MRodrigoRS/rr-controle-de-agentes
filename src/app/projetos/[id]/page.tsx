@@ -15,6 +15,7 @@ import {
   temArquivoStack,
   formatarTokensEstimados,
   estaNaPastaProjetos,
+  ehProgenitora,
 } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -47,6 +48,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
   const metricas = commit ? obterMetricasCodigo(caminhoProjeto, commit.hash) : null;
   const temStack = temArquivoStack(caminhoProjeto);
   const estaEmProjetos = estaNaPastaProjetos(caminhoProjeto);
+  const ehBaseProgenitora = ehProgenitora(caminhoProjeto);
   const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
   const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
@@ -62,7 +64,14 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-[#e6edf3]">{projeto.nome}</h1>
-              {estaEmProjetos ? (
+              {ehBaseProgenitora ? (
+                <span
+                  className="rounded-full bg-[#8957e5]/15 border border-[#8957e5]/40 px-2.5 py-0.5 text-xs font-medium text-[#d2a8ff]"
+                  title="Ferramenta principal da governança (Progenitora)"
+                >
+                  Progenitora
+                </span>
+              ) : estaEmProjetos ? (
                 <span
                   className="rounded-full bg-[#238636]/10 border border-[#238636]/30 px-2.5 py-0.5 text-xs font-medium text-[#3fb950]"
                   title="Projeto localizado na pasta projetos/ da governança"
@@ -94,6 +103,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
               projetoNome={projeto.nome}
               caminhoAtual={projeto.caminho}
               estaNaPastaProjetos={estaEmProjetos}
+              ehProgenitora={ehBaseProgenitora}
             />
             {temStack && (
               <BotaoVerStack projetoId={projeto.id} nomeProjeto={projeto.nome} />
