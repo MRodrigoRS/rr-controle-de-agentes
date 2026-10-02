@@ -7,7 +7,13 @@ import { BotaoVerStack } from "@/componentes/botao-ver-stack";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
 import { GraficoEvolucaoLinhas } from "@/componentes/grafico-evolucao-linhas";
-import { carregarProjetos, obterMetadadosGit, obterMetricasCodigo, temArquivoStack } from "@/servidor/projetos";
+import {
+  carregarProjetos,
+  obterMetadadosGit,
+  obterMetricasCodigo,
+  temArquivoStack,
+  formatarTokensEstimados,
+} from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
@@ -58,7 +64,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             {metricas && metricas.totalLinhas > 0 && (
               <span
                 className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-mono text-[#58a6ff]"
-                title={`${metricas.totalLinhas.toLocaleString("pt-BR")} linhas e ${metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres`}
+                title={`${metricas.totalLinhas.toLocaleString("pt-BR")} linhas, ${metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres e ${formatarTokensEstimados(metricas.totalCaracteres)} estimados`}
               >
                 {metricas.totalLinhas.toLocaleString("pt-BR")} linhas
               </span>
@@ -88,7 +94,16 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             <p>
               <span className="font-medium text-[#e6edf3]">Volume de Código:</span>{" "}
               <span className="font-medium text-[#58a6ff]">{metricas.totalLinhas.toLocaleString("pt-BR")} linhas</span>{" "}
-              <span className="text-[#8b949e]">({metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres)</span>{" "}
+              <span className="text-[#8b949e]">
+                ({metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres •{" "}
+                <span
+                  className="text-[#a5d6ff] font-medium"
+                  title="Estimativa média para código-fonte: ~3,8 caracteres por token"
+                >
+                  {formatarTokensEstimados(metricas.totalCaracteres)} est.
+                </span>
+                )
+              </span>{" "}
               <span className="text-[#7d8590]">em {metricas.totalArquivos.toLocaleString("pt-BR")} arquivos rastreados</span>
             </p>
           )}

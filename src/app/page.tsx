@@ -1,7 +1,7 @@
 import { GuiaTecnologias } from "@/componentes/guia-tecnologias";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoVerStack } from "@/componentes/botao-ver-stack";
-import { carregarProjetosOrdenadosPorCommit } from "@/servidor/projetos";
+import { carregarProjetosOrdenadosPorCommit, formatarTokensEstimados } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
@@ -62,7 +62,7 @@ export default function Home() {
                   {p.metricas && p.metricas.totalLinhas > 0 && (
                     <span
                       className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-mono text-[#58a6ff]"
-                      title={`${p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas e ${p.metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres em ${p.metricas.totalArquivos.toLocaleString("pt-BR")} arquivos rastreados`}
+                      title={`${p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas, ${p.metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres e ${formatarTokensEstimados(p.metricas.totalCaracteres)} estimados em ${p.metricas.totalArquivos.toLocaleString("pt-BR")} arquivos rastreados`}
                     >
                       {p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas
                     </span>

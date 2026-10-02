@@ -64,6 +64,18 @@ export function formatarTempoRelativo(dataMs: number): string {
   return `há ${anos} ano${anos > 1 ? "s" : ""}`;
 }
 
+export function formatarTokensEstimados(caracteres: number): string {
+  if (!caracteres || caracteres <= 0) return "0 tokens";
+  const tokens = Math.round(caracteres / 3.8);
+  if (tokens >= 1_000_000) {
+    return `~${(tokens / 1_000_000).toFixed(1).replace(".", ",")}M tokens`;
+  }
+  if (tokens >= 1_000) {
+    return `~${Math.round(tokens / 1_000)}k tokens`;
+  }
+  return `~${tokens} tokens`;
+}
+
 export function ehRaizGit(caminho: string): boolean {
   try {
     if (!fs.existsSync(caminho)) return false;
