@@ -28,6 +28,17 @@ export interface ProjetoComGit extends ProjetoRegistro {
   metricas?: MetricasCodigo | null;
   temStack: boolean;
   ultimoTimestamp: number;
+  estaNaPastaProjetos: boolean;
+}
+
+export function estaNaPastaProjetos(caminho: string): boolean {
+  try {
+    const pastaProjetos = path.resolve("projetos").toLowerCase();
+    const caminhoNormalizado = path.resolve(caminho).toLowerCase();
+    return caminhoNormalizado.startsWith(pastaProjetos + path.sep) || caminhoNormalizado === pastaProjetos;
+  } catch {
+    return false;
+  }
 }
 
 export function temArquivoStack(caminho: string): boolean {
@@ -193,12 +204,14 @@ export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
     const temStack = temArquivoStack(p.caminho);
     const tsCriacao = new Date(p.criadoEm).getTime() || 0;
     const ultimoTimestamp = commit ? commit.timestamp : tsCriacao;
+    const estaEmProjetos = estaNaPastaProjetos(p.caminho);
     return {
       ...p,
       commit,
       metricas,
       temStack,
       ultimoTimestamp,
+      estaNaPastaProjetos: estaEmProjetos,
     };
   });
 

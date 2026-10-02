@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
 import { BotaoVerStack } from "@/componentes/botao-ver-stack";
+import { BotaoCopiarProjeto } from "@/componentes/botao-copiar-projeto";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
 import { GraficoEvolucaoLinhas } from "@/componentes/grafico-evolucao-linhas";
@@ -13,6 +14,7 @@ import {
   obterMetricasCodigo,
   temArquivoStack,
   formatarTokensEstimados,
+  estaNaPastaProjetos,
 } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -44,6 +46,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
   const commit = obterMetadadosGit(caminhoProjeto);
   const metricas = commit ? obterMetricasCodigo(caminhoProjeto, commit.hash) : null;
   const temStack = temArquivoStack(caminhoProjeto);
+  const estaEmProjetos = estaNaPastaProjetos(caminhoProjeto);
   const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
   const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
@@ -57,7 +60,24 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
       <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6 shadow-sm">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[#e6edf3]">{projeto.nome}</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-[#e6edf3]">{projeto.nome}</h1>
+              {estaEmProjetos ? (
+                <span
+                  className="rounded-full bg-[#238636]/10 border border-[#238636]/30 px-2.5 py-0.5 text-xs font-medium text-[#3fb950]"
+                  title="Projeto localizado na pasta projetos/ da governança"
+                >
+                  Local (projetos/)
+                </span>
+              ) : (
+                <span
+                  className="rounded-full bg-[#f0883e]/10 border border-[#f0883e]/30 px-2.5 py-0.5 text-xs font-medium text-[#f0883e]"
+                  title={`Projeto localizado em pasta externa: ${projeto.caminho}`}
+                >
+                  Externo
+                </span>
+              )}
+            </div>
             {projeto.descricao && <DescricaoColapsavel texto={projeto.descricao} />}
           </div>
           <div className="flex items-center gap-3">
@@ -69,6 +89,12 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
                 {metricas.totalLinhas.toLocaleString("pt-BR")} linhas
               </span>
             )}
+            <BotaoCopiarProjeto
+              projetoId={projeto.id}
+              projetoNome={projeto.nome}
+              caminhoAtual={projeto.caminho}
+              estaNaPastaProjetos={estaEmProjetos}
+            />
             {temStack && (
               <BotaoVerStack projetoId={projeto.id} nomeProjeto={projeto.nome} />
             )}

@@ -1,6 +1,7 @@
 import { GuiaTecnologias } from "@/componentes/guia-tecnologias";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoVerStack } from "@/componentes/botao-ver-stack";
+import { BotaoCopiarProjeto } from "@/componentes/botao-copiar-projeto";
 import { carregarProjetosOrdenadosPorCommit, formatarTokensEstimados } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -32,6 +33,21 @@ export default function Home() {
                 <a href={`/projetos/${p.id}`} className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-semibold text-[#e6edf3] hover:text-[#58a6ff] transition">{p.nome}</h2>
+                    {p.estaNaPastaProjetos ? (
+                      <span
+                        className="rounded-full bg-[#238636]/10 border border-[#238636]/30 px-2 py-0.5 text-[11px] font-medium text-[#3fb950]"
+                        title="Projeto localizado na pasta projetos/ da governança"
+                      >
+                        Local (projetos/)
+                      </span>
+                    ) : (
+                      <span
+                        className="rounded-full bg-[#f0883e]/10 border border-[#f0883e]/30 px-2 py-0.5 text-[11px] font-medium text-[#f0883e]"
+                        title={`Projeto localizado em pasta externa: ${p.caminho}`}
+                      >
+                        Externo
+                      </span>
+                    )}
                     {p.commit ? (
                       <span
                         className="rounded-full bg-[#238636]/15 border border-[#238636]/40 px-2.5 py-0.5 text-[11px] font-medium text-[#3fb950]"
@@ -59,6 +75,12 @@ export default function Home() {
                   )}
                 </a>
                 <div className="flex items-center gap-2 ml-4 shrink-0">
+                  <BotaoCopiarProjeto
+                    projetoId={p.id}
+                    projetoNome={p.nome}
+                    caminhoAtual={p.caminho}
+                    estaNaPastaProjetos={p.estaNaPastaProjetos}
+                  />
                   {p.metricas && p.metricas.totalLinhas > 0 && (
                     <span
                       className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-mono text-[#58a6ff]"
