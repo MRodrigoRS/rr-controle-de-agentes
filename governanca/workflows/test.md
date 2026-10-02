@@ -1,6 +1,6 @@
 # Workflow: Test
 
-> Verificação e produção de evidências. Consulte a skill `governanca/skills/criar-testes.md`
+> Verificação e produção de evidências. Consulte a skill [criar-testes.md](governanca/skills/criar-testes.md)
 > para os padrões por stack.
 
 ## Quando Usar
@@ -10,7 +10,7 @@
 
 ## Passos
 
-1. Escreva testes seguindo a skill `governanca/skills/criar-testes.md`
+1. Escreva testes seguindo a skill [criar-testes.md](governanca/skills/criar-testes.md)
 2. Execute build e testes
 3. Verifique o comportamento no ambiente real (browser/execução/banco)
 4. Registre as evidências em `## Evidências` e as limitações em `## Limitações`

@@ -34,7 +34,11 @@ export function configurarHarnessNoProjeto(caminhoProjeto: string): { sucesso: b
 
   // 2. Ponteiro ativo CLAUDE.md na raiz (Claude Code)
   const claudeMdPath = path.join(caminhoAbs, "CLAUDE.md");
-  const claudeMdConteudo = `# Governança do Projeto — RR Tech Studio\n\nEste projeto é governado por regras estritas da RR Tech Studio.\n- **Regras e Padrões Oficiais:** Consulte [governanca/AGENTS.md](governanca/AGENTS.md)\n- **Sessão Atual e Sprint Ativa:** Consulte [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Primeira Sessão:** Siga o roteiro em [governanca/INICIO.md](governanca/INICIO.md) (ou VINCULAR.md)\n- **Workflows:** Procedimentos disponíveis em [governanca/workflows/](governanca/workflows/)\n`;
+  const temInicio = fs.existsSync(path.join(governancaDir, "INICIO.md"));
+  const roteiroInicial = temInicio
+    ? "[governanca/INICIO.md](governanca/INICIO.md)"
+    : "[governanca/VINCULAR.md](governanca/VINCULAR.md)";
+  const claudeMdConteudo = `# Governança do Projeto — RR Tech Studio\n\nEste projeto é governado por regras estritas da RR Tech Studio.\n- **Regras e Padrões Oficiais:** Consulte [governanca/AGENTS.md](governanca/AGENTS.md)\n- **Sessão Atual e Sprint Ativa:** Consulte [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Primeira Sessão:** Siga o roteiro em ${roteiroInicial}\n- **Workflows:** Procedimentos disponíveis em [governanca/workflows/](governanca/workflows/)\n`;
   escreverPonteiroSeguro(claudeMdPath, claudeMdConteudo, "governanca/AGENTS.md");
 
   // 3. Regra ativa .agents/rules/000-governanca.md (Antigravity e IDEs compatíveis)
@@ -113,7 +117,7 @@ description: ${description}
 ## Instruções de Execução
 
 Consulte e execute as instruções atualizadas em:
-👉 [governanca/skills/${arquivo}](../../governanca/skills/${arquivo})
+👉 [governanca/skills/${arquivo}](../../../governanca/skills/${arquivo})
 `;
         fs.writeFileSync(path.join(skillFolder, "SKILL.md"), skillMdConteudo, "utf-8");
       }

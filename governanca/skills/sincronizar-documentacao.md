@@ -25,20 +25,20 @@ Quando o harness suportar subagentes (conforme orientações em `governanca/skil
 
 1. **Subagente 1 — Arquitetura & Stack (Etapas 1 e 2):**
    - Varre pastas, módulos, ADRs e manifests (`package.json`, `go.mod`, etc.).
-   - **Handoff:** Atualiza diretamente `governanca/livro-arquitetura/01-visao-geral.md` e `02-stack.md`.
+   - **Handoff:** Atualiza diretamente [01-visao-geral.md](governanca/livro-arquitetura/01-visao-geral.md) e [02-stack.md](governanca/livro-arquitetura/02-stack.md).
 2. **Subagente 2 — Lógica & Autonomia (Etapas 3 e 4):**
    - Varre regras de negócio, fluxos de dados, serviços e rotinas assíncronas/background/crons.
-   - **Handoff:** Atualiza diretamente `governanca/livro-arquitetura/03-logica-do-sistema.md` e `04-comportamento-autonomo.md`.
+   - **Handoff:** Atualiza diretamente [03-logica-do-sistema.md](governanca/livro-arquitetura/03-logica-do-sistema.md) e [04-comportamento-autonomo.md](governanca/livro-arquitetura/04-comportamento-autonomo.md).
 3. **Subagente 3 — Modelo de Dados (Etapa 5):**
    - Varre schemas de banco, migrações SQL ou executa scripts de extração.
-   - **Handoff:** Atualiza diretamente `governanca/livro-arquitetura/05-modelo-de-dados.md`.
+   - **Handoff:** Atualiza diretamente [05-modelo-de-dados.md](governanca/livro-arquitetura/05-modelo-de-dados.md).
 4. **Agente Orquestrador — Produto & Reconciliação (Etapa 6):**
    - Com a arquitetura atualizada diretamente nos arquivos pelos subagentes técnicos, o orquestrador compara as funcionalidades ativas com `governanca/PRD.md` e `governanca/PLANO.md`.
    - Gera um diagnóstico no chat (ou opcionalmente em `governanca/relatorios/reconciliacao-prd.md`) e **solicita validação e aprovação do usuário antes de alterar PRD e PLANO**.
 
 *Nota:* Se o harness não suportar subagentes, o agente orquestrador executa as 6 etapas sequencialmente em sua própria sessão.
 
-> **Acelerador Opcional (Graphify):** Em repositórios médios/grandes (30+ arquivos), antes de iniciar as Etapas 1 e 3, o agente (ou Subagente 1) pode consultar a skill `mapear-grafo-de-conhecimento` para indexar o projeto via AST local e gerar o `GRAPH_REPORT.md`. O relatório revela os clusters (domínios funcionais) e god nodes em segundos, acelerando o mapeamento de `01-visao-geral.md` e `03-logica-do-sistema.md` com zero custo de tokens.
+> **Acelerador Opcional (Graphify):** Em repositórios médios/grandes (30+ arquivos), antes de iniciar as Etapas 1 e 3, o agente (ou Subagente 1) pode consultar a skill [mapear-grafo-de-conhecimento.md](governanca/skills/mapear-grafo-de-conhecimento.md) para indexar o projeto via AST local e gerar o `GRAPH_REPORT.md`. O relatório revela os clusters (domínios funcionais) e god nodes em segundos, acelerando o mapeamento de [01-visao-geral.md](governanca/livro-arquitetura/01-visao-geral.md) e [03-logica-do-sistema.md](governanca/livro-arquitetura/03-logica-do-sistema.md) com zero custo de tokens.
 
 ---
 
@@ -46,7 +46,7 @@ Quando o harness suportar subagentes (conforme orientações em `governanca/skil
 
 Execute a reconciliação cobrindo os 5 volumes do livro de arquitetura e a reconciliação de produto:
 
-### Etapa 1. Sincronizar Visão Geral (`livro-arquitetura/01-visao-geral.md`)
+### Etapa 1. Sincronizar Visão Geral ([01-visao-geral.md](governanca/livro-arquitetura/01-visao-geral.md))
 
 1. **Estrutura de Diretórios Real:**
    - Varra as pastas de primeiro e segundo nível do projeto (ex: `src/app/`, `src/componentes/`, `src/servidor/`, `prisma/`, etc.).
@@ -60,7 +60,7 @@ Execute a reconciliação cobrindo os 5 volumes do livro de arquitetura e a reco
 
 ---
 
-### Etapa 2. Sincronizar Detalhamento da Stack (`livro-arquitetura/02-stack.md`)
+### Etapa 2. Sincronizar Detalhamento da Stack ([02-stack.md](governanca/livro-arquitetura/02-stack.md))
 
 1. **Inspeção de Manifests:**
    - Leia os arquivos de dependência reais do projeto (`package.json`, `go.mod`, `Cargo.toml`, `requirements.txt`, `composer.json`, etc.).
@@ -74,7 +74,7 @@ Execute a reconciliação cobrindo os 5 volumes do livro de arquitetura e a reco
 
 ---
 
-### Etapa 3. Sincronizar Lógica do Sistema (`livro-arquitetura/03-logica-do-sistema.md`)
+### Etapa 3. Sincronizar Lógica do Sistema ([03-logica-do-sistema.md](governanca/livro-arquitetura/03-logica-do-sistema.md))
 
 Varra o código fonte buscando regras, cálculos e fluxos de dados:
 
@@ -92,7 +92,7 @@ Varra o código fonte buscando regras, cálculos e fluxos de dados:
 
 ---
 
-### Etapa 4. Sincronizar Comportamento Autônomo (`livro-arquitetura/04-comportamento-autonomo.md`)
+### Etapa 4. Sincronizar Comportamento Autônomo ([04-comportamento-autonomo.md](governanca/livro-arquitetura/04-comportamento-autonomo.md))
 
 Varra o projeto em busca de rotinas que executam sem interação manual direta do usuário:
 
@@ -109,7 +109,7 @@ Varra o projeto em busca de rotinas que executam sem interação manual direta d
 
 ---
 
-### Etapa 5. Sincronizar Modelo de Dados & Entidades (`livro-arquitetura/05-modelo-de-dados.md`)
+### Etapa 5. Sincronizar Modelo de Dados & Entidades ([05-modelo-de-dados.md](governanca/livro-arquitetura/05-modelo-de-dados.md))
 
 Varra as definições de dados reais do projeto para mapear tabelas, colunas, tipos e relacionamentos:
 

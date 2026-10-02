@@ -16,14 +16,14 @@ em `governanca/relatorios/_template.md`.
 
 | Fase | Skill | Relatório gerado |
 |------|-------|-----------------|
-| 0 | `auditar-comercializacao.md` | `auditoria-comercializacao.md` |
-| 1 | `auditar-repositorio.md` | `auditoria-repositorio.md` |
-| 2 | `auditar-consistencia-visual.md` | `auditoria-consistencia.md` |
-| 3 | `auditar-responsividade.md` | `auditoria-responsividade.md` |
-| 4 | `auditar-textos-usuario.md` | `auditoria-textos.md` |
-| 5 | `auditar-prontidao-producao.md` | `auditoria-producao.md` |
-| 6 | `auditar-competitividade.md` | `auditoria-competitividade.md` |
-| 7 | *(Se aplicável)* `desenvolver-e-auditar-gas.md` | `auditoria-gas.md` |
+| 0 | [auditar-comercializacao.md](governanca/skills/auditar-comercializacao.md) | `auditoria-comercializacao.md` |
+| 1 | [auditar-repositorio.md](governanca/skills/auditar-repositorio.md) | `auditoria-repositorio.md` |
+| 2 | [auditar-consistencia-visual.md](governanca/skills/auditar-consistencia-visual.md) | `auditoria-consistencia.md` |
+| 3 | [auditar-responsividade.md](governanca/skills/auditar-responsividade.md) | `auditoria-responsividade.md` |
+| 4 | [auditar-textos-usuario.md](governanca/skills/auditar-textos-usuario.md) | `auditoria-textos.md` |
+| 5 | [auditar-prontidao-producao.md](governanca/skills/auditar-prontidao-producao.md) | `auditoria-producao.md` |
+| 6 | [auditar-competitividade.md](governanca/skills/auditar-competitividade.md) | `auditoria-competitividade.md` |
+| 7 | *(Se aplicável)* [desenvolver-e-auditar-gas.md](governanca/skills/desenvolver-e-auditar-gas.md) | `auditoria-gas.md` |
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas e oportunidades de evolução) →

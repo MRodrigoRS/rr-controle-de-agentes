@@ -51,7 +51,7 @@ description: Usa o harness do agente (MCP, permissões, git, browser, hooks) com
   documentação, revisão) e trabalhe em paralelo — paralelização do trabalho
   intelectual
 - Se o harness suportar subagentes, delegue a subagentes especializados (veja
-  `usar-subagentes.md`) — contexto isolado, sem poluir o agente principal
+  [usar-subagentes.md](governanca/skills/usar-subagentes.md)) — contexto isolado, sem poluir o agente principal
 
 ## Observabilidade e Custo
 

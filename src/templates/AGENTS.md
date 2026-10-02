@@ -11,11 +11,11 @@ Só comece a codificar após concluir o onboarding com o usuário.
 
 ## Stack Tecnológica & Não-Reinvenção
 
-A fonte da verdade e o catálogo detalhado de ferramentas aprovadas residem em `governanca/livro-arquitetura/02-stack.md`.
+A fonte da verdade e o catálogo detalhado de ferramentas aprovadas residem em [02-stack.md](governanca/livro-arquitetura/02-stack.md).
 
-- **Consulta Obrigatória:** Antes de propor dependências ou desenhar soluções, consulte `02-stack.md` para respeitar as bibliotecas e padrões oficiais contratados para o projeto.
+- **Consulta Obrigatória:** Antes de propor dependências ou desenhar soluções, consulte [02-stack.md](governanca/livro-arquitetura/02-stack.md) para respeitar as bibliotecas e padrões oficiais contratados para o projeto.
 - **Cláusula de Não-Reinvenção:** Utilize estritamente as ferramentas aprovadas da stack oficial. É proibido inventar soluções caseiras (ad-hoc) ou instalar bibliotecas redundantes/concorrentes para responsabilidades já contempladas no catálogo oficial.
-- **Novas Dependências:** Para propor qualquer nova biblioteca, consulte primeiro o catálogo da progenitora (`governanca/skills/CATALOGO_TECNOLOGIAS.md`) e obtenha aprovação prévia do usuário.
+- **Novas Dependências:** Para propor qualquer nova biblioteca, consulte primeiro o catálogo da progenitora ([CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md)) e obtenha aprovação prévia do usuário.
 
 ## Dever de Crítica
 
@@ -50,12 +50,12 @@ Boas práticas esperadas em todo o desenvolvimento:
 
 ### Padrões Especializados de Desenvolvimento
 A arquitetura deste projeto é governada por manuais de engenharia dedicados em `governanca/padroes/`. Consulte e siga obrigatoriamente:
-- **Frontend & UI/UX:** Siga `governanca/padroes/frontend.md` para padrões de consistência visual, feedback visual (toasts de ~4s e loading local), atualização atômica (proibido `location.reload()`), empty states, navegação previsível e reatividade.
-- **Backend & Segurança:** Siga `governanca/padroes/backend.md` para o princípio de Zero-Trust no cliente (blindagem contra DevTools/F12), autoridade única de cálculos e permissões, transações atômicas (ACID), sanitização de queries, idempotência e logging seguro sem PII.
+- **Frontend & UI/UX:** Siga [frontend.md](governanca/padroes/frontend.md) para padrões de consistência visual, feedback visual (toasts de ~4s e loading local), atualização atômica (proibido `location.reload()`), empty states, navegação previsível e reatividade.
+- **Backend & Segurança:** Siga [backend.md](governanca/padroes/backend.md) para o princípio de Zero-Trust no cliente (blindagem contra DevTools/F12), autoridade única de cálculos e permissões, transações atômicas (ACID), sanitização de queries, idempotência e logging seguro sem PII.
 
 ### Modelo de Dados
 *(Aplicável se o projeto possuir banco de dados ou persistência estruturada)*
-- A fonte da verdade do schema é o estado **atual** do banco real, documentado em `governanca/livro-arquitetura/05-modelo-de-dados.md`. Antes de manipular models, queries ou migrations, consulte-o para respeitar nomes exatos de colunas e constraints.
+- A fonte da verdade do schema é o estado **atual** do banco real, documentado em [05-modelo-de-dados.md](governanca/livro-arquitetura/05-modelo-de-dados.md). Antes de manipular models, queries ou migrations, consulte-o para respeitar nomes exatos de colunas e constraints.
 - Para extrair ou reconciliar o modelo, consulte a pasta `governanca/skills/` (skills de extração de modelo ou sincronização).
 
 ### Distribuição Desktop e Mobile
@@ -69,7 +69,7 @@ O desenvolvimento é calibrado por complexidade para evitar burocracia desnecess
 ### Nível 1 — Tarefas Rápidas / Polimentos (`/fix`)
 - **Aplicabilidade:** Bugs pontuais, ajustes visuais de CSS/padding, correções de digitação, imports ou pequenas correções avulsas detectadas na hora.
 - **Cerimônia Enxuta:** **Sem criação de arquivo de sprint.** Diagnóstico rápido de 3 linhas → implementação direta com teste/verificação → commit convencional direto (`fix: ...`) → 1 linha registrada em `governanca/SESSAO.md`.
-- **Workflow:** Execute `/fix` (detalhes em `governanca/workflows/fix.md`).
+- **Workflow:** Execute `/fix` (detalhes em [fix.md](governanca/workflows/fix.md)).
 
 ### Nível 2 — Entregas Estruturadas (Sprints)
 - **Aplicabilidade:** Novas funcionalidades, novas telas, refatorações amplas ou mudanças de regras de negócio.
@@ -97,7 +97,7 @@ Instruções completas em `governanca/workflows/`.
 
 As skills acompanham este projeto em `governanca/skills/` e estão mapeadas no harness (`.agents/skills/`).
 - Consulte **apenas** a skill relevante para a tarefa em andamento.
-- Use `governanca/skills/CATALOGO_TECNOLOGIAS.md` para consultar o catálogo oficial da progenitora quando for propor ou adicionar novas dependências.
+- Use [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md) para consultar o catálogo oficial da progenitora quando for propor ou adicionar novas dependências.
 
 ## Gestão de Contexto e Sessões
 

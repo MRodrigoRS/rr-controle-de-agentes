@@ -17,7 +17,7 @@ O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do 
 2. Gera `governanca/AGENTS.md` com diretrizes pétreas, qualidade e regra mandatória de uso da stack
 3. Gera `governanca/INICIO.md` para onboarding completo do agente (ou `VINCULAR.md` se repositório existente)
 4. Gera `governanca/sprints/_template.md` para o agente preencher
-5. Gera `governanca/livro-arquitetura/` com a stack detalhada e categorizada (`02-stack.md`)
+5. Gera `governanca/livro-arquitetura/` com a stack detalhada e categorizada ([02-stack.md](governanca/livro-arquitetura/02-stack.md))
 6. Gera `governanca/workflows/` e os registra em `.agents/workflows/` como **Slash Commands nativos** (`/fix`, `/spec`, `/plan`, `/implement`, `/test`, `/review`, `/research`, `/release`)
 7. Gera `governanca/skills/` com habilidades práticas e catálogo oficial com IDs
 8. Configura automaticamente o **Harness do Agente** (`.agents/rules/`, `.agents/workflows/`, `.agents/skills/`, `CLAUDE.md` e `AGENTS.md`)

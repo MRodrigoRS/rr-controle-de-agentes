@@ -8,9 +8,9 @@
 
 ## Passos
 
-1. Execute a skill `governanca/skills/auditar-prontidao-producao.md` (infra, segurança, resiliência)
-2. Execute a skill `governanca/skills/auditar-textos-usuario.md` (jargão técnico, contatos fictícios)
-3. Se houver pagamentos: execute a skill `governanca/skills/auditar-comercializacao.md`
+1. Execute a skill [auditar-prontidao-producao.md](governanca/skills/auditar-prontidao-producao.md) (infra, segurança, resiliência)
+2. Execute a skill [auditar-textos-usuario.md](governanca/skills/auditar-textos-usuario.md) (jargão técnico, contatos fictícios)
+3. Se houver pagamentos: execute a skill [auditar-comercializacao.md](governanca/skills/auditar-comercializacao.md)
 4. Corrija os bloqueantes antes de liberar
 5. Documente URLs de produção e contato de emergência
 6. Deploy + verificação pós-release (smoke test, logs, monitoramento)

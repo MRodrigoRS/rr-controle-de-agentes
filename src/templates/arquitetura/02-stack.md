@@ -5,7 +5,7 @@
 
 {{#if ehMigracaoStack}}
 > [!IMPORTANT]
-> **Stack Alvo da Refatoração / Migração:** Este projeto foi vinculado no modo de **Modernização de Stack (Replatforming)**. A tabela abaixo representa a stack tecnológica moderna contratada como **destino** da migração. Consulte a skill `governanca/skills/migrar-stack-legada.md` para o protocolo de migração side-by-side.
+> **Stack Alvo da Refatoração / Migração:** Este projeto foi vinculado no modo de **Modernização de Stack (Replatforming)**. A tabela abaixo representa a stack tecnológica moderna contratada como **destino** da migração. Consulte a skill [migrar-stack-legada.md](governanca/skills/migrar-stack-legada.md) para o protocolo de migração side-by-side.
 {{/if}}
 
 ## Frontend

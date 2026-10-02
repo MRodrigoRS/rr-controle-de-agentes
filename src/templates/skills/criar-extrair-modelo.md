@@ -16,14 +16,14 @@ description: Cria o script que extrai o modelo de dados real (PostgreSQL ou SQLi
 A fonte da verdade do schema é o estado **atual** do banco — não a
 reconstrução mental a partir de migrations acumuladas. Este script extrai o
 modelo real (tabelas, colunas, chaves primárias e estrangeiras, índices e relacionamentos)
-e alimenta `governanca/livro-arquitetura/05-modelo-de-dados.md`, dando ao agente uma visão macro e detalhada fidedigna.
+e alimenta [05-modelo-de-dados.md](governanca/livro-arquitetura/05-modelo-de-dados.md), dando ao agente uma visão macro e detalhada fidedigna.
 
 
 ## Quando Executar
 
 - **No setup do ambiente** de um projeto com banco de dados relacional
 - **Imediatamente após vincular um repositório existente** que contenha banco de dados
-- **Durante a Fase 2 de migração de stack** (`migrar-stack-legada.md`), para mapear todo o schema legado no inventário De-Para
+- **Durante a Fase 2 de migração de stack** ([migrar-stack-legada.md](governanca/skills/migrar-stack-legada.md)), para mapear todo o schema legado no inventário De-Para
 - **Sob demanda** — após aplicar novas migrations ou alterar tabelas
 
 ## Fluxo

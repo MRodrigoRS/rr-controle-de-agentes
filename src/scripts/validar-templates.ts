@@ -90,46 +90,125 @@ export function validarIntegridadeReferencialPresets(): boolean {
   return false;
 }
 
-export function validarIntegridadeReferenciasSkills(): boolean {
-  console.log("🛡️ Verificando integridade de referências a skills em todos os templates...");
-  const skillsDir = path.resolve(templatesDir, "skills");
-  if (!fs.existsSync(skillsDir)) return true;
+export function validarIntegridadeLinksMarkdown(): boolean {
+  console.log("🔗 Verificando integridade estrita de todos os links Markdown locais...");
+  const rootDir = process.cwd();
+  const governancaDir = path.join(rootDir, "governanca");
+  const agentsDir = path.join(rootDir, ".agents");
 
-  const skillsExistentes = new Set(
-    fs
-      .readdirSync(skillsDir)
-      .filter((f) => f.endsWith(".md"))
-      .map((f) => f.replace(/\.md$/, ""))
-  );
-
-  const arquivos = listarTemplatesRecursivo(templatesDir).filter((f) => f.endsWith(".md"));
-  let erros = 0;
-
-  // Regex para identificar caminhos explícitos a skills:
-  // ex: governanca/skills/nome.md, skills/nome.md, ou links markdown
-  const regexCaminhoSkill = /(?:governanca\/skills\/|skills\/)([\w-]+)(?:\.md)?/g;
-
-  for (const caminhoAbs of arquivos) {
-    const nomeRelativo = path.relative(templatesDir, caminhoAbs).replace(/\\/g, "/");
-    const conteudo = fs.readFileSync(caminhoAbs, "utf-8");
-
-    let match;
-    while ((match = regexCaminhoSkill.exec(conteudo)) !== null) {
-      const nomeSkill = match[1];
-      // Ignora parâmetros ou o próprio nome de diretório
-      if (nomeSkill.startsWith("{{") || nomeSkill === "skills") continue;
-
-      if (!skillsExistentes.has(nomeSkill)) {
-        console.error(`❌ [${nomeRelativo}] Referência quebrada para skill inexistente ou renomeada: "${match[0]}"`);
-        erros++;
+  function listarArquivosMd(dir: string): string[] {
+    if (!fs.existsSync(dir)) return [];
+    let list: string[] = [];
+    for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, item.name);
+      if (item.isDirectory()) {
+        if (["node_modules", ".git", ".next", "dist", "projetos"].includes(item.name)) continue;
+        list = list.concat(listarArquivosMd(full));
+      } else if (item.name.endsWith(".md")) {
+        list.push(full);
       }
     }
+    return list;
+  }
+
+  const todosArquivos = [
+    ...listarArquivosMd(templatesDir),
+    ...listarArquivosMd(governancaDir),
+    ...listarArquivosMd(agentsDir),
+    path.join(rootDir, "AGENTS.md"),
+    path.join(rootDir, "CLAUDE.md"),
+    path.join(rootDir, "CONVENCOES-TEMPLATES.md"),
+    path.join(rootDir, "PLANO.md"),
+  ].filter((f) => fs.existsSync(f));
+
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  let totalLinks = 0;
+  let erros = 0;
+
+  for (const arqAbs of todosArquivos) {
+    const relFile = path.relative(rootDir, arqAbs).replace(/\\/g, "/");
+    const conteudo = fs.readFileSync(arqAbs, "utf-8");
+    const linhas = conteudo.split("\n");
+
+    linhas.forEach((linhaTexto, idx) => {
+      let match;
+      while ((match = linkRegex.exec(linhaTexto)) !== null) {
+        const [_, textoLink, rawDest] = match;
+
+        // Ignora links web ou âncoras locais puras (#secao)
+        if (
+          rawDest.startsWith("http://") ||
+          rawDest.startsWith("https://") ||
+          rawDest.startsWith("mailto:") ||
+          rawDest.startsWith("#")
+        ) {
+          continue;
+        }
+
+        totalLinks++;
+        // Remove âncora do caminho se houver (ex: arquivo.md#secao -> arquivo.md)
+        let destLimpo = rawDest.split("#")[0].trim();
+        if (!destLimpo) continue;
+
+        // Trata placeholders dinâmicos de template como {{caminhoRR}}
+        destLimpo = destLimpo.replace(/\{\{[^}]+\}\}/g, "");
+
+        let existe = false;
+
+        // Caso 1: Arquivo de origem é um template (src/templates/)
+        if (relFile.startsWith("src/templates/")) {
+          let mapped = destLimpo;
+          if (mapped.startsWith("governanca/")) {
+            const sub = mapped.replace(/^governanca\//, "");
+            if (sub.startsWith("livro-arquitetura/")) {
+              mapped = "src/templates/arquitetura/" + sub.replace(/^livro-arquitetura\//, "");
+            } else if (sub === "sprints/_template.md") {
+              mapped = "src/templates/SPRINT.md";
+            } else if (sub.startsWith("skills/")) {
+              mapped = "src/templates/skills/" + sub.replace(/^skills\//, "");
+            } else if (sub.startsWith("workflows/")) {
+              mapped = "src/templates/workflows/" + sub.replace(/^workflows\//, "");
+            } else if (sub.startsWith("padroes/")) {
+              mapped = "src/templates/padroes/" + sub.replace(/^padroes\//, "");
+            } else if (sub.startsWith("relatorios/")) {
+              mapped = "src/templates/relatorios/" + sub.replace(/^relatorios\//, "");
+            } else {
+              mapped = "src/templates/" + sub;
+            }
+          } else if (mapped.startsWith("./") || mapped.startsWith("../")) {
+            mapped = path.relative(rootDir, path.resolve(path.dirname(arqAbs), mapped)).replace(/\\/g, "/");
+          }
+
+          const resolvidoLocal = path.resolve(rootDir, mapped);
+          const resolvidoProg = path.resolve(rootDir, destLimpo);
+
+          if (fs.existsSync(resolvidoLocal) || fs.existsSync(resolvidoProg)) {
+            existe = true;
+          }
+        } else {
+          // Caso 2: Arquivo real (governanca/, .agents/, raiz)
+          const resolvidoDir = path.resolve(path.dirname(arqAbs), destLimpo);
+          const resolvidoRaiz = path.resolve(rootDir, destLimpo);
+
+          if (fs.existsSync(resolvidoDir) || fs.existsSync(resolvidoRaiz)) {
+            existe = true;
+          }
+        }
+
+        if (!existe) {
+          console.error(`❌ [${relFile}:${idx + 1}] Link Markdown quebrado: "${textoLink}" -> "${rawDest}"`);
+          erros++;
+        }
+      }
+    });
   }
 
   if (erros === 0) {
-    console.log(`✅ Todas as referências a skills (${skillsExistentes.size} skills existentes) estão 100% íntegras.\n`);
+    console.log(`✅ Todos os ${totalLinks} links Markdown locais analisados estão 100% íntegros e verificados.\n`);
     return true;
   }
+
+  console.error(`\n❌ Total de links quebrados encontrados: ${erros}\n`);
   return false;
 }
 
@@ -139,8 +218,8 @@ export function validarTemplates(): boolean {
   const okIntegridade = validarIntegridadeReferencialPresets();
   if (!okIntegridade) return false;
 
-  const okSkills = validarIntegridadeReferenciasSkills();
-  if (!okSkills) return false;
+  const okLinks = validarIntegridadeLinksMarkdown();
+  if (!okLinks) return false;
 
   if (!fs.existsSync(templatesDir)) {
     console.error(`❌ Diretório de templates não encontrado: ${templatesDir}`);

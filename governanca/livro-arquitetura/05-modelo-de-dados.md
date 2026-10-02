@@ -46,10 +46,10 @@ erDiagram
 
 - **Arquivo de Schema / Model:** `prisma/schema.prisma` / `migrations/` / `src/servidor/db/schema.ts`
 - **Comando de Migração:** `npx prisma migrate dev` / `npm run db:migrate`
-- **Extração Automática:** Execute a skill `governanca/skills/criar-extrair-modelo.md` para extrair o schema atualizado do banco de dados relacional.
+- **Extração Automática:** Execute a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md) para extrair o schema atualizado do banco de dados relacional.
 
 ---
 
-> Mantenha atualizado — use a skill `sincronizar-documentacao.md` para reconciliar o modelo de dados com o banco/schema real.
+> Mantenha atualizado — use a skill [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md) para reconciliar o modelo de dados com o banco/schema real.
 
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*

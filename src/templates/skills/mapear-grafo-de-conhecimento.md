@@ -16,7 +16,7 @@ description: Indexa o repositório com o Graphify (Tree-sitter, offline, zero to
 - **Análise de Impacto (Blast Radius):** Antes de alterar um módulo crítico
   compartilhado (autenticação, pagamento, ORM principal, serviço central).
 - **Aceleração da Sincronização:** No início das Etapas 1 e 3 da skill
-  `sincronizar-documentacao` em projetos de médio/grande porte para acelerar
+  [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md) em projetos de médio/grande porte para acelerar
   o mapeamento de domínios e fluxos de chamada.
 
 ## Quando NÃO Usar
@@ -102,7 +102,7 @@ Após gerar o `GRAPH_REPORT.md`, leia-o para identificar:
 
 1. **Clusters (Domínios Funcionais):** Grupos de arquivos que o algoritmo
    detectou como unidades coesas. Eles correspondem aos módulos a serem
-   documentados em `governanca/livro-arquitetura/01-visao-geral.md`.
+   documentados em [01-visao-geral.md](governanca/livro-arquitetura/01-visao-geral.md).
 
 2. **God Nodes:** Arquivos ou funções chamados por quase todo o sistema. São
    pontos de alto acoplamento e alto risco — qualquer refatoração ali exige

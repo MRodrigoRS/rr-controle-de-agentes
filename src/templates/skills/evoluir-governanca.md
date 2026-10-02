@@ -25,8 +25,8 @@ description: Registra o que deu errado e transforma em nova regra, skill, workfl
    - Qual etapa deveria ser automatizada?
    - Qual MCP era desnecessário?
 3. Transforme a resposta em ação:
-   - diretriz de UI/UX, componentes, acessibilidade ou estado frontend → `governanca/padroes/frontend.md`
-   - diretriz de APIs, segurança, validação, persistência ou backend → `governanca/padroes/backend.md`
+   - diretriz de UI/UX, componentes, acessibilidade ou estado frontend → [frontend.md](governanca/padroes/frontend.md)
+   - diretriz de APIs, segurança, validação, persistência ou backend → [backend.md](governanca/padroes/backend.md)
    - regra constitucional ou disciplina fundamental do agente → `AGENTS.md` (Cláusulas Fundamentais)
    - skill faltante → criar skill em `governanca/skills/`
    - procedimento recorrente → workflow em `governanca/workflows/`

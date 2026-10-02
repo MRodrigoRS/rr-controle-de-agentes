@@ -118,9 +118,9 @@ e evoluída?"*
 ### 5. Registre no Projeto
 
 - **Documentação viva:** A stack oficial, completa e viva do projeto reside estritamente em:
-  `governanca/livro-arquitetura/02-stack.md`
+  [02-stack.md](governanca/livro-arquitetura/02-stack.md)
 - Registre qualquer evolução ou ajuste relevante da stack nas notas de sprint em `governanca/SESSAO.md`.
-- **Interface e Painel:** O painel web da progenitora lê e exibe diretamente o arquivo `02-stack.md` de cada projeto via botão **Stack**. Não é necessário disparar chamadas de API ou atualizar campos engessados de presets no banco da progenitora.
+- **Interface e Painel:** O painel web da progenitora lê e exibe diretamente o arquivo [02-stack.md](governanca/livro-arquitetura/02-stack.md) de cada projeto via botão **Stack**. Não é necessário disparar chamadas de API ou atualizar campos engessados de presets no banco da progenitora.
 
 ### 6. Exemplo Prático
 

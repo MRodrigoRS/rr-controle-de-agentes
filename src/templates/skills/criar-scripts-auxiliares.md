@@ -78,7 +78,7 @@ Para cada stack, crie os scripts aplicáveis:
 | `scripts/lint.ps1` | `uv run ruff check .` | Verificar lint |
 | `scripts/format.ps1` | `uv run ruff format .` | Formatar código |
 | `scripts/typecheck.ps1` | `uv run mypy src` | Verificar tipos |
-| `scripts/build.ps1` | `uv run python -m nuitka --standalone ...` | Compilar o executável (veja a skill `criar-instalador-desktop.md`) |
+| `scripts/build.ps1` | `uv run python -m nuitka --standalone ...` | Compilar o executável (veja a skill [criar-instalador-desktop.md](governanca/skills/criar-instalador-desktop.md)) |
 | `scripts/migrate.ps1` | `uv run alembic upgrade head` | Aplicar migrações do banco SQLite |
 
 ### Mobile (MAUI / Flutter / React Native)
@@ -99,7 +99,7 @@ um script. Exemplos comuns:
 
 | Situação | Script sugerido |
 |----------|-----------------|
-| Extrair o modelo de dados do banco PostgreSQL e gerar documentação | **Padrão:** siga a skill `criar-extrair-modelo.md` (gera `scripts/extrair-modelo.ps1`) |
+| Extrair o modelo de dados do banco PostgreSQL e gerar documentação | **Padrão:** siga a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md) (gera `scripts/extrair-modelo.ps1`) |
 | Precisa importar dados de um CSV para o banco regularmente | `scripts/importar-csv.ps1` |
 | Precisa limpar dados de teste antes de cada sessão | `scripts/limpar-dados.ps1` |
 | Precisa criar um backup manual do banco | `scripts/backup.ps1` |
