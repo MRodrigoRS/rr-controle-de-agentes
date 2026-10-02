@@ -81,6 +81,7 @@ O desenvolvimento é calibrado por complexidade para evitar burocracia desnecess
 ## Workflows (Slash Commands)
 
 O harness disponibiliza procedimentos estruturados como comandos nativos:
+- `/status`: Orientação de sessão — sprint ativa, estado do git, calibração com o código
 - `/fix`: Procedimento ágil (Fast-Track) para resolver bugs e ajustes pontuais sem sprint
 - `/spec`: Transforma visão em especificação verificável (`governanca/PRD.md`)
 - `/plan`: Estrutura o plano de uma sprint (`governanca/sprints/`)
@@ -101,16 +102,21 @@ As skills acompanham este projeto em `governanca/skills/` e estão mapeadas no h
 
 ## Gestão de Contexto e Sessões
 
-As anotações persistentes entre sessões ficam em **`governanca/SESSAO.md`**.
+As anotações persistentes entre sessões ficam em **[`governanca/SESSAO.md`](governanca/SESSAO.md)**.
 
-### Ao Iniciar Nova Sessão
-1. Leia `governanca/SESSAO.md` para identificar a sprint ativa e decisões recentes.
-2. Abra a sprint correspondente em `governanca/sprints/` e procure por `← estou aqui`.
+### Protocolo de Início de Sessão
+
+> Obrigatório ao abrir qualquer sessão nova, antes de qualquer tarefa.
+
+1. **Localizar a sprint ativa:** Leia `governanca/sprints/` em ordem numérica; identifique o primeiro arquivo que **não** esteja em `sprints/concluidas/`. Essa é a sprint ativa — abra-a.
+2. **Verificar o estado real do código:** Compare o que a sprint diz que falta fazer com o que já existe no repositório. Pode ser que etapas estejam implicitamente concluídas ou que o código já tenha avançado além do que o arquivo registra. Calibre o diagnóstico antes de continuar.
+3. **Auditar os registros de [`governanca/SESSAO.md`](governanca/SESSAO.md):** Identifique notas que já não fazem sentido (bug resolvido, fluxo refatorado, contexto obsoleto). **Proponha a remoção ao usuário** com justificativa — não delete sem aprovação explícita.
+4. **Reportar o estado:** Declare onde o projeto está de fato: sprint, etapa, estado dos testes, próxima ação recomendada.
 
 ### Ao Final de Cada Sessão
 1. Atualize o front-matter da sprint (`status`, `ultima_modificacao`, `sessao_atual`).
 2. Marque o ponto de parada com `← estou aqui` no corpo da sprint.
-3. Registre o resumo objetivo da sessão em `governanca/SESSAO.md`.
+3. Registre o resumo objetivo da sessão em [`governanca/SESSAO.md`](governanca/SESSAO.md).
 
 ### Arquivamento de Sprints
 Após aprovação do usuário no Gate 2 e commit:
@@ -118,4 +124,10 @@ Após aprovação do usuário no Gate 2 e commit:
 mkdir -p governanca/sprints/concluidas
 mv governanca/sprints/XX-titulo.md governanca/sprints/concluidas/XX-titulo.md
 ```
-Atualize `governanca/SESSAO.md` apontando para a próxima sprint ativa.
+Atualize [`governanca/SESSAO.md`](governanca/SESSAO.md) apontando para a próxima sprint ativa.
+
+### ADRs — Registro de Decisões Arquiteturais
+
+Quando uma decisão de design for contestável por outro desenvolvedor ou agente futuro, registre um ADR em [`governanca/livro-arquitetura/decisoes/`](governanca/livro-arquitetura/decisoes/) usando o [`_template.md`](governanca/livro-arquitetura/decisoes/_template.md).
+Use o status `superada` ou `depreciada` quando uma decisão for revisitada — nunca delete ADRs existentes.
+

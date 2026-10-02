@@ -72,6 +72,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     path.join(governancaDir, "sprints"),
     path.join(governancaDir, "sprints", "concluidas"),
     path.join(governancaDir, "livro-arquitetura"),
+    path.join(governancaDir, "livro-arquitetura", "decisoes"),
     path.join(governancaDir, "skills"),
     path.join(governancaDir, "scripts"),
     path.join(governancaDir, "workflows"),
@@ -212,6 +213,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md" },
     { destino: path.join(governancaDir, "livro-arquitetura", "04-comportamento-autonomo.md"), template: "arquitetura/04-comportamento-autonomo.md" },
     { destino: path.join(governancaDir, "livro-arquitetura", "05-modelo-de-dados.md"), template: "arquitetura/05-modelo-de-dados.md" },
+    { destino: path.join(governancaDir, "livro-arquitetura", "decisoes", "_template.md"), template: "arquitetura/decisoes/_template.md" },
   ];
 
   for (const item of outrosLivros) {
