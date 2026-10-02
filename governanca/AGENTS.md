@@ -40,7 +40,7 @@ Boas práticas esperadas em todo o desenvolvimento:
 - **Commits descritivos:** Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê.
 - **Testes incrementais:** Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades.
 - **Responsividade e PWA:** Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão.
-- **Estrutura de pastas:** Siga a estrutura de pastas definida em `convencoes-estrutura-de-pastas.md`. Não crie pastas soltas na raiz do projeto.
+- **Estrutura de pastas:** Siga a estrutura de pastas definida em `governanca/skills/convencoes-estrutura-de-pastas.md`. Não crie pastas soltas na raiz do projeto.
 - **Documentação de decisões:** Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`.
 
 ## Padrões de Implementação

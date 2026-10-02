@@ -32,7 +32,7 @@ description: Registra o que deu errado e transforma em nova regra, skill, workfl
    - procedimento recorrente → workflow em `governanca/workflows/`
    - teste que falta → tarefa em sprint
    - automação → script/hook em `governanca/scripts/`
-4. Registre no `SPRINT.md` ou changelog o que mudou e por quê.
+4. Registre em `governanca/SESSAO.md` ou changelog o que mudou e por quê.
 5. Se criou uma nova skill ou workflow, re-sincronize o harness:
    ```bash
    npx tsx ./src/scripts/configurar-harness.ts .

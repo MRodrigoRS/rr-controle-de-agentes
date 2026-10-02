@@ -79,7 +79,7 @@ export function obterCriteriosQualidade(): { titulo: string; descricao: string }
     { titulo: "Commits descritivos", descricao: "Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê." },
     { titulo: "Testes incrementais", descricao: "Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades." },
     { titulo: "Responsividade e PWA", descricao: "Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão." },
-    { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em `convencoes-estrutura-de-pastas.md`. Não crie pastas soltas na raiz do projeto." },
+    { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em `governanca/skills/convencoes-estrutura-de-pastas.md`. Não crie pastas soltas na raiz do projeto." },
     { titulo: "Documentação de decisões", descricao: "Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`." },
   ];
 }

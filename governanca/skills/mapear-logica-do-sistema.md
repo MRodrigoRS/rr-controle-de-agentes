@@ -12,7 +12,7 @@ description: Extrai e documenta regras de negócio, fórmulas, fluxos, estados e
 ## Quando Executar
 
 Esta skill é acionada **automaticamente** ao final de cada sprint
-(pelas instruções de `SPRINT.md`), após executar `criar-testes.md`
+(pelas instruções do workflow `/implement`), após executar `criar-testes.md`
 e antes de apresentar o resultado ao usuário.
 
 Também pode ser executada:

@@ -150,7 +150,7 @@ Diferente do livro de arquitetura (que é estritamente técnico e espelha os fat
      > Gostaria de debater algum ponto ou aprova esta atualização no PRD.md e PLANO.md?"
 3. **Aplicação Pós-Aprovação:**
    - **Somente após o usuário debater, validar e aprovar**, o agente realiza a edição de `governanca/PRD.md` e `governanca/PLANO.md`.
-   - Registre na sprint ativa (`SPRINT.md`) que o escopo e o PRD foram reconciliados e aprovados pelo usuário.
+   - Registre na sessão ativa (`governanca/SESSAO.md`) que o escopo e o PRD foram reconciliados e aprovados pelo usuário.
 
 ---
 

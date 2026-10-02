@@ -132,7 +132,7 @@ copiar com etapas por severidade. Cada achado deve virar uma tarefa.
 
 ## Após Gerar o Relatório
 
-1. **Registre no histórico da sprint ativa** (`governanca/SPRINT.md`) que a auditoria foi
+1. **Registre no histórico da sessão ativa** (`governanca/SESSAO.md`) que a auditoria foi
    realizada e o caminho do relatório gerado
 2. **Apresente o resumo** ao usuário (principais achados, prioridades)
 3. **Pergunte** se deseja que os itens críticos/altos virem tarefas na

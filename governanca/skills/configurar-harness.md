@@ -13,7 +13,7 @@ description: Registra ou re-sincroniza o harness do agente (.agents/, CLAUDE.md,
 
 - Primeira sessão para verificar MCPs necessários da stack
 - Quando o usuário pedir para atualizar ou re-sincronizar o harness
-- Quando adicionar novas skills/workflows e desejar espelhar imediatamente no harness
+- Quando adicionar novas skills ou workflows e desejar espelhar imediatamente no harness
 
 ## Princípios
 

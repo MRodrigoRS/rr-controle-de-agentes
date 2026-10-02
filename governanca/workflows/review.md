@@ -17,7 +17,7 @@
 5. Faça uma passada de segurança
 6. Se houver outra sessão/agente disponível, peça revisão independente — ou
    delegue a um **subagente revisor** quando o harness suportar (veja a skill
-   `usar-subagentes.md`)
+   `governanca/skills/usar-subagentes.md`)
 7. Corrija os achados e reteste
 
 ## Saída

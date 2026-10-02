@@ -90,11 +90,57 @@ export function validarIntegridadeReferencialPresets(): boolean {
   return false;
 }
 
+export function validarIntegridadeReferenciasSkills(): boolean {
+  console.log("🛡️ Verificando integridade de referências a skills em todos os templates...");
+  const skillsDir = path.resolve(templatesDir, "skills");
+  if (!fs.existsSync(skillsDir)) return true;
+
+  const skillsExistentes = new Set(
+    fs
+      .readdirSync(skillsDir)
+      .filter((f) => f.endsWith(".md"))
+      .map((f) => f.replace(/\.md$/, ""))
+  );
+
+  const arquivos = listarTemplatesRecursivo(templatesDir).filter((f) => f.endsWith(".md"));
+  let erros = 0;
+
+  // Regex para identificar caminhos explícitos a skills:
+  // ex: governanca/skills/nome.md, skills/nome.md, ou links markdown
+  const regexCaminhoSkill = /(?:governanca\/skills\/|skills\/)([\w-]+)(?:\.md)?/g;
+
+  for (const caminhoAbs of arquivos) {
+    const nomeRelativo = path.relative(templatesDir, caminhoAbs).replace(/\\/g, "/");
+    const conteudo = fs.readFileSync(caminhoAbs, "utf-8");
+
+    let match;
+    while ((match = regexCaminhoSkill.exec(conteudo)) !== null) {
+      const nomeSkill = match[1];
+      // Ignora parâmetros ou o próprio nome de diretório
+      if (nomeSkill.startsWith("{{") || nomeSkill === "skills") continue;
+
+      if (!skillsExistentes.has(nomeSkill)) {
+        console.error(`❌ [${nomeRelativo}] Referência quebrada para skill inexistente ou renomeada: "${match[0]}"`);
+        erros++;
+      }
+    }
+  }
+
+  if (erros === 0) {
+    console.log(`✅ Todas as referências a skills (${skillsExistentes.size} skills existentes) estão 100% íntegras.\n`);
+    return true;
+  }
+  return false;
+}
+
 export function validarTemplates(): boolean {
   console.log("\n🔍 Iniciando validação de templates em src/templates...\n");
 
   const okIntegridade = validarIntegridadeReferencialPresets();
   if (!okIntegridade) return false;
+
+  const okSkills = validarIntegridadeReferenciasSkills();
+  if (!okSkills) return false;
 
   if (!fs.existsSync(templatesDir)) {
     console.error(`❌ Diretório de templates não encontrado: ${templatesDir}`);
