@@ -26,7 +26,16 @@ export interface MetadadosGit {
 export interface ProjetoComGit extends ProjetoRegistro {
   commit?: MetadadosGit | null;
   metricas?: MetricasCodigo | null;
+  temStack: boolean;
   ultimoTimestamp: number;
+}
+
+export function temArquivoStack(caminho: string): boolean {
+  try {
+    return fs.existsSync(path.join(path.resolve(caminho), "governanca", "livro-arquitetura", "02-stack.md"));
+  } catch {
+    return false;
+  }
 }
 
 const EXTENSOES_BINARIAS = new Set([
@@ -169,12 +178,14 @@ export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
   const comGit: ProjetoComGit[] = projetos.map((p) => {
     const commit = obterMetadadosGit(p.caminho);
     const metricas = commit ? obterMetricasCodigo(p.caminho, commit.hash) : null;
+    const temStack = temArquivoStack(p.caminho);
     const tsCriacao = new Date(p.criadoEm).getTime() || 0;
     const ultimoTimestamp = commit ? commit.timestamp : tsCriacao;
     return {
       ...p,
       commit,
       metricas,
+      temStack,
       ultimoTimestamp,
     };
   });

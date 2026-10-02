@@ -117,19 +117,10 @@ e evoluída?"*
 
 ### 5. Registre no Projeto
 
-- **Repositório vinculado:** documente a stack real em
-  `governanca/livro-arquitetura/02-stack.md` e registre nas notas
-  persistentes de `governanca/SESSAO.md`.
-- Atualize o registro do projeto na progenitora para que o card exiba os
-  presets corretos:
-  ```bash
-  cd ./
-  curl -s -X PATCH http://localhost:3000/api/projetos/<ID_DO_PROJETO> \
-    -H "Content-Type: application/json" \
-    -d '{"presetFrontend": "<id>", "presetBackend": "<id>"}'
-  ```
-  > Substitua `<ID_DO_PROJETO>` pelo id real (consulte as notas
-  > persistentes de `governanca/SESSAO.md` ou `dados/projetos.json` na progenitora).
+- **Documentação viva:** A stack oficial, completa e viva do projeto reside estritamente em:
+  `governanca/livro-arquitetura/02-stack.md`
+- Registre qualquer evolução ou ajuste relevante da stack nas notas de sprint em `governanca/SESSAO.md`.
+- **Interface e Painel:** O painel web da progenitora lê e exibe diretamente o arquivo `02-stack.md` de cada projeto via botão **Stack**. Não é necessário disparar chamadas de API ou atualizar campos engessados de presets no banco da progenitora.
 
 ### 6. Exemplo Prático
 

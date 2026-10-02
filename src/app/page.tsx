@@ -1,5 +1,6 @@
 import { GuiaTecnologias } from "@/componentes/guia-tecnologias";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
+import { BotaoVerStack } from "@/componentes/botao-ver-stack";
 import { carregarProjetosOrdenadosPorCommit } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
@@ -66,8 +67,9 @@ export default function Home() {
                       {p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas
                     </span>
                   )}
-                  <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetFrontend}</span>
-                  <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetBackend}</span>
+                  {p.temStack && (
+                    <BotaoVerStack projetoId={p.id} nomeProjeto={p.nome} />
+                  )}
                   <BotaoDeletarProjeto projetoId={p.id} projetoNome={p.nome} />
                 </div>
               </div>

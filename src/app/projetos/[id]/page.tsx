@@ -3,9 +3,10 @@ import path from "path";
 import { notFound } from "next/navigation";
 import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
+import { BotaoVerStack } from "@/componentes/botao-ver-stack";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
-import { carregarProjetos, obterMetadadosGit, obterMetricasCodigo } from "@/servidor/projetos";
+import { carregarProjetos, obterMetadadosGit, obterMetricasCodigo, temArquivoStack } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
@@ -35,6 +36,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
   const caminhoGovernanca = path.join(caminhoProjeto, "governanca");
   const commit = obterMetadadosGit(caminhoProjeto);
   const metricas = commit ? obterMetricasCodigo(caminhoProjeto, commit.hash) : null;
+  const temStack = temArquivoStack(caminhoProjeto);
   const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
   const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
@@ -60,15 +62,8 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
                 {metricas.totalLinhas.toLocaleString("pt-BR")} linhas
               </span>
             )}
-            {projeto.presetFrontend === "nenhum" && projeto.vinculado ? (
-              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill alinhar-stack-com-presets.md">frontend: aguardando detecção</span>
-            ) : (
-              <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetFrontend}</span>
-            )}
-            {projeto.presetBackend === "nenhum" && projeto.vinculado ? (
-              <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill alinhar-stack-com-presets.md">backend: aguardando detecção</span>
-            ) : (
-              <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{projeto.presetBackend}</span>
+            {temStack && (
+              <BotaoVerStack projetoId={projeto.id} nomeProjeto={projeto.nome} />
             )}
             <BotaoRecriarGovernanca projetoId={projeto.id} />
             <BotaoDeletarProjeto projetoId={projeto.id} projetoNome={projeto.nome} />
