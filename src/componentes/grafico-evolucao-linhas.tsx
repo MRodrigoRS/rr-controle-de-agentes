@@ -178,7 +178,7 @@ export function GraficoEvolucaoLinhas({ projetoId }: Props) {
       </div>
 
       {/* Área do Gráfico SVG */}
-      <div className="relative mt-4 w-full overflow-hidden rounded-lg border border-[#30363d]/60 bg-[#0d1117] p-2">
+      <div className="relative mt-4 w-full rounded-lg border border-[#30363d]/60 bg-[#0d1117] p-2">
         <svg
           viewBox={`0 0 ${dimensoes.largura} ${dimensoes.altura}`}
           className="w-full h-auto select-none"
@@ -304,25 +304,27 @@ export function GraficoEvolucaoLinhas({ projetoId }: Props) {
           })}
         </svg>
 
-        {/* Tooltip Flutuante */}
-        {pontoHover && (
-          <div
-            className="pointer-events-none absolute z-20 rounded-lg border border-[#30363d] bg-[#161b22]/95 px-3 py-2 text-xs shadow-xl backdrop-blur-sm transition-all"
-            style={{
-              left: `${Math.min(
-                Math.max(15, (pontoHover.x / dimensoes.largura) * 100),
-                80
-              )}%`,
-              top: `${Math.max(12, (pontoHover.y / dimensoes.altura) * 100 - 35)}%`,
-              transform: "translate(-50%, -100%)",
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <span className="font-mono font-bold text-[#58a6ff]">
-                [{pontoHover.ponto.hash}]
-              </span>
-              <span className="text-[#8b949e]">{pontoHover.ponto.data}</span>
-            </div>
+        {/* Tooltip Flutuante com Smart Flip e z-index elevado */}
+        {pontoHover && (() => {
+          const isPertoDoTopo = (pontoHover.y / dimensoes.altura) < 0.45;
+          const leftPercent = Math.min(Math.max(20, (pontoHover.x / dimensoes.largura) * 100), 80);
+          const topPercent = (pontoHover.y / dimensoes.altura) * 100;
+
+          return (
+            <div
+              className="pointer-events-none absolute z-30 rounded-lg border border-[#30363d] bg-[#161b22] px-3.5 py-2.5 text-xs shadow-2xl backdrop-blur-md transition-all duration-75"
+              style={{
+                left: `${leftPercent}%`,
+                top: `${topPercent}%`,
+                transform: isPertoDoTopo ? "translate(-50%, 14px)" : "translate(-50%, calc(-100% - 14px))",
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-bold text-[#58a6ff]">
+                  [{pontoHover.ponto.hash}]
+                </span>
+                <span className="text-[#8b949e]">{pontoHover.ponto.data}</span>
+              </div>
 
             <div className="mt-1 font-medium text-[#e6edf3] line-clamp-2 max-w-xs">
               {pontoHover.ponto.mensagem}
@@ -353,8 +355,9 @@ export function GraficoEvolucaoLinhas({ projetoId }: Props) {
               </span>
             </div>
           </div>
-        )}
-      </div>
+        );
+      })()}
+    </div>
 
       {/* Rodapé / Ação de Paginação sob Demanda */}
       <div className="mt-4 flex items-center justify-between text-xs">
