@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { execFileSync } from "child_process";
 import { carregarProjetos, registrarProjeto, type ProjetoRegistro } from "@/servidor/projetos";
 import { configurarHarnessNoProjeto } from "@/servidor/harness";
 
@@ -56,8 +57,18 @@ export async function POST(
   }
 
   try {
-    // Cópia recursiva completa de todos os arquivos físicos
-    fs.cpSync(caminhoOrigem, caminhoDestino, { recursive: true, force: true });
+    // Se for Windows, invoca a janela oficial de transferência do Windows Explorer
+    if (process.platform === "win32") {
+      const scriptPs = `Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::CopyDirectory('${caminhoOrigem.replace(/'/g, "''")}', '${caminhoDestino.replace(/'/g, "''")}', [Microsoft.VisualBasic.FileIO.UIOption]::AllDialogs, [Microsoft.VisualBasic.FileIO.UICancelOption]::ThrowException)`;
+
+      execFileSync("powershell.exe", ["-NoProfile", "-Command", scriptPs], {
+        windowsHide: false,
+        stdio: "inherit",
+      });
+    } else {
+      // Fallback para outros sistemas operacionais
+      fs.cpSync(caminhoOrigem, caminhoDestino, { recursive: true, force: true });
+    }
 
     // Novo ID para o projeto copiado
     const novoId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -90,10 +101,27 @@ export async function POST(
     );
   } catch (error) {
     console.error("Erro ao copiar projeto:", error);
-    const msg = error instanceof Error ? error.message : "Erro desconhecido ao copiar arquivos";
+
+    // Se a cópia foi interrompida ou cancelada, remove resíduos parciais
+    if (fs.existsSync(caminhoDestino) && !fs.existsSync(path.join(caminhoDestino, "governanca"))) {
+      try {
+        fs.rmSync(caminhoDestino, { recursive: true, force: true });
+      } catch {
+        // Ignora erro de limpeza
+      }
+    }
+
+    const msg = error instanceof Error ? error.message : "Operação cancelada ou com erro";
+    if (msg.includes("OperationCanceledException") || msg.includes("cancelad")) {
+      return NextResponse.json(
+        { erro: "Cópia cancelada pelo usuário na janela do Windows." },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       {
-        erro: `Não foi possível copiar o projeto. Verifique se há arquivos bloqueados por processos ativos na pasta de origem: ${msg}`,
+        erro: `Não foi possível copiar o projeto: ${msg}`,
       },
       { status: 500 }
     );
