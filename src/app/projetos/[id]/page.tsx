@@ -5,7 +5,7 @@ import { BotaoDeletarProjeto } from "@/componentes/botao-deletar-projeto";
 import { BotaoRecriarGovernanca } from "@/componentes/botao-recriar-governanca";
 import { DescricaoColapsavel } from "@/componentes/descricao-colapsavel";
 import { CardListaArquivos } from "@/componentes/card-lista-arquivos";
-import { carregarProjetos, obterMetadadosGit } from "@/servidor/projetos";
+import { carregarProjetos, obterMetadadosGit, obterMetricasCodigo } from "@/servidor/projetos";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +34,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
   const caminhoProjeto = path.resolve(projeto.caminho);
   const caminhoGovernanca = path.join(caminhoProjeto, "governanca");
   const commit = obterMetadadosGit(caminhoProjeto);
+  const metricas = commit ? obterMetricasCodigo(caminhoProjeto, commit.hash) : null;
   const padroes = listarArquivos(path.join(caminhoGovernanca, "padroes"));
   const workflows = listarArquivos(path.join(caminhoGovernanca, "workflows"));
   const skills = listarArquivos(path.join(caminhoGovernanca, "skills"));
@@ -51,6 +52,14 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             {projeto.descricao && <DescricaoColapsavel texto={projeto.descricao} />}
           </div>
           <div className="flex items-center gap-3">
+            {metricas && metricas.totalLinhas > 0 && (
+              <span
+                className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-mono text-[#58a6ff]"
+                title={`${metricas.totalLinhas.toLocaleString("pt-BR")} linhas e ${metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres`}
+              >
+                {metricas.totalLinhas.toLocaleString("pt-BR")} linhas
+              </span>
+            )}
             {projeto.presetFrontend === "nenhum" && projeto.vinculado ? (
               <span className="rounded-full border border-yellow-700 bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-500" title="Aguardando detecção pela skill alinhar-stack-com-presets.md">frontend: aguardando detecção</span>
             ) : (
@@ -78,6 +87,14 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             </p>
           ) : (
             <p><span className="font-medium text-[#e6edf3]">Git:</span> Sem commits ou repositório não inicializado</p>
+          )}
+          {metricas && metricas.totalLinhas > 0 && (
+            <p>
+              <span className="font-medium text-[#e6edf3]">Volume de Código:</span>{" "}
+              <span className="font-medium text-[#58a6ff]">{metricas.totalLinhas.toLocaleString("pt-BR")} linhas</span>{" "}
+              <span className="text-[#8b949e]">({metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres)</span>{" "}
+              <span className="text-[#7d8590]">em {metricas.totalArquivos.toLocaleString("pt-BR")} arquivos rastreados</span>
+            </p>
           )}
           <p><span className="font-medium text-[#e6edf3]">Criado em:</span> {new Date(projeto.criadoEm).toLocaleString("pt-BR")}</p>
           <p><span className="font-medium text-[#e6edf3]">ID:</span> {projeto.id}</p>

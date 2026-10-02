@@ -58,6 +58,14 @@ export default function Home() {
                   )}
                 </a>
                 <div className="flex items-center gap-2 ml-4 shrink-0">
+                  {p.metricas && p.metricas.totalLinhas > 0 && (
+                    <span
+                      className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-mono text-[#58a6ff]"
+                      title={`${p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas e ${p.metricas.totalCaracteres.toLocaleString("pt-BR")} caracteres em ${p.metricas.totalArquivos.toLocaleString("pt-BR")} arquivos rastreados`}
+                    >
+                      {p.metricas.totalLinhas.toLocaleString("pt-BR")} linhas
+                    </span>
+                  )}
                   <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetFrontend}</span>
                   <span className="rounded-full border border-[#30363d] bg-[#0d1117] px-3 py-1 text-xs font-medium text-[#8b949e]">{p.presetBackend}</span>
                   <BotaoDeletarProjeto projetoId={p.id} projetoNome={p.nome} />

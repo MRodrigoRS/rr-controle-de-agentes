@@ -7,10 +7,13 @@ import {
   inserirProjeto,
   atualizarProjetoDb,
   excluirProjetoDb,
+  obterMetricasDb,
+  salvarMetricasDb,
+  type MetricasCodigo,
   type ProjetoRegistro,
 } from "./db";
 
-export type { ProjetoRegistro };
+export type { ProjetoRegistro, MetricasCodigo };
 
 export interface MetadadosGit {
   timestamp: number;
@@ -22,8 +25,15 @@ export interface MetadadosGit {
 
 export interface ProjetoComGit extends ProjetoRegistro {
   commit?: MetadadosGit | null;
+  metricas?: MetricasCodigo | null;
   ultimoTimestamp: number;
 }
+
+const EXTENSOES_BINARIAS = new Set([
+  ".png", ".jpg", ".jpeg", ".gif", ".ico", ".webp", ".svg", ".pdf",
+  ".zip", ".tar", ".gz", ".7z", ".rar", ".exe", ".dll", ".so", ".bin",
+  ".woff", ".woff2", ".ttf", ".eot", ".mp3", ".mp4", ".wav", ".db", ".sqlite", ".sqlite3"
+]);
 
 const caminhoArquivo = path.resolve("dados/projetos.json");
 
@@ -71,6 +81,58 @@ export function obterMetadadosGit(caminho: string): MetadadosGit | null {
   }
 }
 
+export function obterMetricasCodigo(caminho: string, commitHash?: string): MetricasCodigo | null {
+  try {
+    if (!fs.existsSync(caminho)) return null;
+
+    if (commitHash) {
+      const cache = obterMetricasDb(caminho, commitHash);
+      if (cache) return cache;
+    }
+
+    const out = execFileSync("git", ["-C", caminho, "ls-files"], {
+      encoding: "utf-8",
+      timeout: 5000,
+      stdio: ["ignore", "pipe", "ignore"],
+      windowsHide: true,
+    });
+
+    const arquivos = out.split(/\r?\n/).filter(Boolean);
+    let totalLinhas = 0;
+    let totalCaracteres = 0;
+    let arquivosTexto = 0;
+
+    for (const f of arquivos) {
+      const ext = path.extname(f).toLowerCase();
+      if (EXTENSOES_BINARIAS.has(ext)) continue;
+      try {
+        const fullPath = path.join(caminho, f);
+        const conteudo = fs.readFileSync(fullPath, "utf-8");
+        if (conteudo.includes("\0")) continue;
+        totalLinhas += conteudo.split("\n").length;
+        totalCaracteres += conteudo.length;
+        arquivosTexto++;
+      } catch {
+        // Ignora arquivos que falharem na leitura
+      }
+    }
+
+    const metricas: MetricasCodigo = {
+      totalLinhas,
+      totalCaracteres,
+      totalArquivos: arquivosTexto,
+    };
+
+    if (commitHash) {
+      salvarMetricasDb(caminho, commitHash, metricas);
+    }
+
+    return metricas;
+  } catch {
+    return null;
+  }
+}
+
 function sincronizarJson(projetos: ProjetoRegistro[]) {
   try {
     const dir = path.dirname(caminhoArquivo);
@@ -91,11 +153,13 @@ export function carregarProjetosOrdenadosPorCommit(): ProjetoComGit[] {
   const projetos = carregarProjetos();
   const comGit: ProjetoComGit[] = projetos.map((p) => {
     const commit = obterMetadadosGit(p.caminho);
+    const metricas = commit ? obterMetricasCodigo(p.caminho, commit.hash) : null;
     const tsCriacao = new Date(p.criadoEm).getTime() || 0;
     const ultimoTimestamp = commit ? commit.timestamp : tsCriacao;
     return {
       ...p,
       commit,
+      metricas,
       ultimoTimestamp,
     };
   });

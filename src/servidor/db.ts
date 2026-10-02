@@ -62,6 +62,15 @@ export function obterDb(): DatabaseSync {
       vinculado INTEGER DEFAULT 0,
       modo_migracao INTEGER DEFAULT 0
     );
+
+    CREATE TABLE IF NOT EXISTS metricas_git (
+      caminho TEXT PRIMARY KEY,
+      commit_hash TEXT NOT NULL,
+      total_linhas INTEGER NOT NULL,
+      total_caracteres INTEGER NOT NULL,
+      total_arquivos INTEGER NOT NULL,
+      atualizado_em TEXT DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   try {
@@ -350,3 +359,38 @@ export function excluirProjetoDb(id: string): boolean {
   const resultado = db.prepare("DELETE FROM projetos WHERE id = ?").run(id);
   return Number(resultado.changes) > 0;
 }
+
+export interface MetricasCodigo {
+  totalLinhas: number;
+  totalCaracteres: number;
+  totalArquivos: number;
+}
+
+export function obterMetricasDb(caminho: string, commitHash: string): MetricasCodigo | null {
+  const db = obterDb();
+  const row = db.prepare(
+    "SELECT total_linhas, total_caracteres, total_arquivos FROM metricas_git WHERE caminho = ? AND commit_hash = ?"
+  ).get(caminho, commitHash) as { total_linhas: number; total_caracteres: number; total_arquivos: number } | undefined;
+
+  if (!row) return null;
+  return {
+    totalLinhas: Number(row.total_linhas),
+    totalCaracteres: Number(row.total_caracteres),
+    totalArquivos: Number(row.total_arquivos),
+  };
+}
+
+export function salvarMetricasDb(caminho: string, commitHash: string, metricas: MetricasCodigo): void {
+  const db = obterDb();
+  db.prepare(`
+    INSERT INTO metricas_git (caminho, commit_hash, total_linhas, total_caracteres, total_arquivos, atualizado_em)
+    VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    ON CONFLICT(caminho) DO UPDATE SET
+      commit_hash = excluded.commit_hash,
+      total_linhas = excluded.total_linhas,
+      total_caracteres = excluded.total_caracteres,
+      total_arquivos = excluded.total_arquivos,
+      atualizado_em = CURRENT_TIMESTAMP
+  `).run(caminho, commitHash, metricas.totalLinhas, metricas.totalCaracteres, metricas.totalArquivos);
+}
+
