@@ -55,9 +55,24 @@ export function formatarTempoRelativo(dataMs: number): string {
   return `há ${anos} ano${anos > 1 ? "s" : ""}`;
 }
 
+export function ehRaizGit(caminho: string): boolean {
+  try {
+    if (!fs.existsSync(caminho)) return false;
+    const toplevel = execFileSync("git", ["-C", caminho, "rev-parse", "--show-toplevel"], {
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"],
+      timeout: 1500,
+      windowsHide: true,
+    }).trim();
+    return path.resolve(toplevel).toLowerCase() === path.resolve(caminho).toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
 export function obterMetadadosGit(caminho: string): MetadadosGit | null {
   try {
-    if (!fs.existsSync(caminho)) return null;
+    if (!ehRaizGit(caminho)) return null;
     const out = execFileSync(
       "git",
       ["-C", caminho, "log", "-1", "--format=%ct|%cI|%h|%s"],
@@ -83,7 +98,7 @@ export function obterMetadadosGit(caminho: string): MetadadosGit | null {
 
 export function obterMetricasCodigo(caminho: string, commitHash?: string): MetricasCodigo | null {
   try {
-    if (!fs.existsSync(caminho)) return null;
+    if (!ehRaizGit(caminho)) return null;
 
     if (commitHash) {
       const cache = obterMetricasDb(caminho, commitHash);
