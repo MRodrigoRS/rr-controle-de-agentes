@@ -60,7 +60,7 @@ Examine arquivo por arquivo em busca de:
 
 ### 3. Inconsistências
 
-- **Doc vs código** — o livro de arquitetura, `PLANO.md`, [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md)
+- **Doc vs código** — o [livro de arquitetura](governanca/livro-arquitetura/), [PLANO.md](governanca/PLANO.md), [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md)
   descrevem algo diferente do que o código implementa
 - **Configurações conflitantes** — variáveis de ambiente definidas em
   múltiplos lugares com valores diferentes

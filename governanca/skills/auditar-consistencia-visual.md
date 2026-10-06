@@ -67,7 +67,7 @@ componente como tarefa + a substituição em todos os locais afetados.
 
 ## Prevenção
 
-Após a auditoria, edite `AGENTS.md` (seção Padrões de Implementação) para
+Após a auditoria, edite [AGENTS.md](governanca/AGENTS.md) (seção Padrões de Implementação) para
 relacionar os componentes oficiais com suas props. Exemplo:
 
 ```

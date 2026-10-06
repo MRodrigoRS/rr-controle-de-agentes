@@ -29,6 +29,6 @@ Registre decisões importantes com o formato ADR, em sequência (ADR-01, ADR-02.
 - **Consequências:** impactos e trade-offs
 
 Decisões contestadas com o usuário também entram aqui (veja "Dever de Crítica"
-no `AGENTS.md`). Isso impede que a arquitetura seja "redescoberta" a cada sprint.
+no [AGENTS.md](governanca/AGENTS.md)). Isso impede que a arquitetura seja "redescoberta" a cada sprint.
 
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*

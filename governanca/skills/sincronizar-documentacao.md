@@ -6,8 +6,8 @@ description: Reconcilia e realinha todo o livro-arquitetura (5 volumes) e docume
 # Skill: Sincronizar Documentação Arquitetural e de Produto
 
 > Reconciliação completa da governança técnica e de produto: varre minuciosamente a base
-> de código atual e realinha os 5 volumes de `governanca/livro-arquitetura/` e os
-> documentos de produto (`PRD.md` e `PLANO.md`), garantindo fidelidade total à realidade do sistema.
+> de código atual e realinha os 5 volumes do [livro de arquitetura](governanca/livro-arquitetura/) e os
+> documentos de produto ([PRD.md](governanca/PRD.md) e [PLANO.md](governanca/PLANO.md)), garantindo fidelidade total à realidade do sistema.
 
 ## Quando Executar
 
@@ -21,7 +21,7 @@ description: Reconcilia e realinha todo o livro-arquitetura (5 volumes) e docume
 ## Estratégia de Execução (Contexto Limpo via Subagentes)
 
 Em repositórios médios ou grandes, varrer todos os arquivos do projeto em uma única sessão polui a janela de contexto do agente e degrada a precisão das análises.
-Quando o harness suportar subagentes (conforme orientações em `governanca/skills/` — skill de uso de subagentes), **o agente orquestrador deve preferir delegar as frentes de análise a subagentes com contexto limpo e handoff direto por arquivo**:
+Quando o harness suportar subagentes (conforme orientações na skill [usar-subagentes.md](governanca/skills/usar-subagentes.md)), **o agente orquestrador deve preferir delegar as frentes de análise a subagentes com contexto limpo e handoff direto por arquivo**:
 
 1. **Subagente 1 — Arquitetura & Stack (Etapas 1 e 2):**
    - Varre pastas, módulos, ADRs e manifests (`package.json`, `go.mod`, etc.).
@@ -33,8 +33,8 @@ Quando o harness suportar subagentes (conforme orientações em `governanca/skil
    - Varre schemas de banco, migrações SQL ou executa scripts de extração.
    - **Handoff:** Atualiza diretamente [05-modelo-de-dados.md](governanca/livro-arquitetura/05-modelo-de-dados.md).
 4. **Agente Orquestrador — Produto & Reconciliação (Etapa 6):**
-   - Com a arquitetura atualizada diretamente nos arquivos pelos subagentes técnicos, o orquestrador compara as funcionalidades ativas com `governanca/PRD.md` e `governanca/PLANO.md`.
-   - Gera um diagnóstico no chat (ou opcionalmente em `governanca/relatorios/reconciliacao-prd.md`) e **solicita validação e aprovação do usuário antes de alterar PRD e PLANO**.
+   - Com a arquitetura atualizada diretamente nos arquivos pelos subagentes técnicos, o orquestrador compara as funcionalidades ativas com [PRD.md](governanca/PRD.md) e [PLANO.md](governanca/PLANO.md).
+   - Gera um diagnóstico no chat (ou opcionalmente em [relatorios/](governanca/relatorios/)) e **solicita validação e aprovação do usuário antes de alterar PRD e PLANO**.
 
 *Nota:* Se o harness não suportar subagentes, o agente orquestrador executa as 6 etapas sequencialmente em sua própria sessão.
 
@@ -124,33 +124,33 @@ Varra as definições de dados reais do projeto para mapear tabelas, colunas, ti
 
 ---
 
-### Etapa 6. Reconciliar Documentos de Produto (`PRD.md` e `PLANO.md`) — Discussão e Aprovação Obrigatórias
+### Etapa 6. Reconciliar Documentos de Produto ([PRD.md](governanca/PRD.md) e [PLANO.md](governanca/PLANO.md)) — Discussão e Aprovação Obrigatórias
 
-Diferente do livro de arquitetura (que é estritamente técnico e espelha os fatos do código), o `PRD.md` e o `PLANO.md` são o **contrato de produto, valor e escopo do negócio**. O agente **NUNCA** deve alterá-los de forma unilateral.
+Diferente do livro de arquitetura (que é estritamente técnico e espelha os fatos do código), o [PRD.md](governanca/PRD.md) e o [PLANO.md](governanca/PLANO.md) são o **contrato de produto, valor e escopo do negócio**. O agente **NUNCA** deve alterá-los de forma unilateral.
 
 1. **Varredura Funcional vs Requisitos:**
-   - Compare telas, rotas de API e regras de negócio ativas no código com os requisitos funcionais (`RF-xx`) de `governanca/PRD.md`.
+   - Compare telas, rotas de API e regras de negócio ativas no código com os requisitos funcionais (`RF-xx`) de [PRD.md](governanca/PRD.md).
    - Identifique:
      - **Gaps de Requisitos:** Módulos, telas ou rotas implementadas no código que não possuem `RF-xx` registrado no PRD.
      - **Status de Entrega:** Quais `RF-xx` já foram 100% implementados vs quais ainda constam como pendentes ou parciais.
      - **Invasões de Escopo:** Itens marcados como "Fora de Escopo" no PRD que acabaram sendo desenvolvidos no código.
-     - **Alinhamento do Plano:** Se a descrição e objetivos macro em `governanca/PLANO.md` continuam fiéis à direção atual do produto.
+     - **Alinhamento do Plano:** Se a descrição e objetivos macro em [PLANO.md](governanca/PLANO.md) continuam fiéis à direção atual do produto.
 2. **Protocolo Mandatório de Discussão:**
    - O agente formula e apresenta um diagnóstico estruturado ao usuário com a proposta de conciliação:
-     > "Durante a varredura funcional, identifiquei divergências entre o código vivo e o PRD.md:
+     > "Durante a varredura funcional, identifiquei divergências entre o código vivo e o [PRD.md](governanca/PRD.md):
      > - **Novas Funcionalidades no Código:** Módulos ativos sem requisito correspondente (ex: Autenticação OAuth, Exportação CSV, Webhook Pix).
      > - **Requisitos Entregues:** Requisitos do PRD que já possuem código e testes validados.
      > - **Requisitos Pendentes:** Requisitos previstos que ainda não foram iniciados.
      > 
      > **Proposta de Atualização:**
      > - Cadastrar novos `RF-xx` para as funcionalidades já existentes.
-     > - Atualizar o status dos requisitos no PRD.md para `Implementado` ou `Pendente`.
-     > - Atualizar os critérios de aceite globais e objetivos no PLANO.md.
+     > - Atualizar o status dos requisitos no [PRD.md](governanca/PRD.md) para `Implementado` ou `Pendente`.
+     > - Atualizar os critérios de aceite globais e objetivos no [PLANO.md](governanca/PLANO.md).
      > 
-     > Gostaria de debater algum ponto ou aprova esta atualização no PRD.md e PLANO.md?"
+     > Gostaria de debater algum ponto ou aprova esta atualização no [PRD.md](governanca/PRD.md) e [PLANO.md](governanca/PLANO.md)?"
 3. **Aplicação Pós-Aprovação:**
-   - **Somente após o usuário debater, validar e aprovar**, o agente realiza a edição de `governanca/PRD.md` e `governanca/PLANO.md`.
-   - Registre na sessão ativa (`governanca/SESSAO.md`) que o escopo e o PRD foram reconciliados e aprovados pelo usuário.
+   - **Somente após o usuário debater, validar e aprovar**, o agente realiza a edição de [PRD.md](governanca/PRD.md) e [PLANO.md](governanca/PLANO.md).
+   - Registre na sessão ativa ([SESSAO.md](governanca/SESSAO.md)) que o escopo e o PRD foram reconciliados e aprovados pelo usuário.
 
 ---
 

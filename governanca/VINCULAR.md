@@ -31,7 +31,7 @@ implementar **a partir do repositório existente**.
 
 > Se o plano/PRD do usuário contiver um esboço de stack técnica, **não avance**
 > antes de executar a skill [alinhar-stack-com-presets.md](governanca/skills/alinhar-stack-com-presets.md) em
-> `governanca/skills/`. Ela orienta a comparação bidirecional entre a stack
+> [skills/](governanca/skills/). Ela orienta a comparação bidirecional entre a stack
 > identificada no repositório e a stack do plano.
 
 ## 2. Examine o Repositório
@@ -39,24 +39,24 @@ implementar **a partir do repositório existente**.
 - Siga o workflow [research.md](governanca/workflows/research.md) — investigação
   progressiva (estrutura → configurações → modelos/serviços → fluxos
   críticos → deep dive) e registre o artefato de contexto em
-  `governanca/relatorios/`
+  [relatorios/](governanca/relatorios/)
 - Leia `package.json`, `tsconfig.json`, `composer.json`, `.clasp.json`,
   `Dockerfile`, `Cargo.toml` ou equivalente para identificar linguagens,
   frameworks e dependências
 - Examine a estrutura de pastas para entender a organização
-- **Mapeamento de Grafo (Projetos com 30+ arquivos):** Se o repositório for volumoso ou tiver arquitetura complexa, execute a skill [mapear-grafo-de-conhecimento.md](governanca/skills/mapear-grafo-de-conhecimento.md) em `governanca/skills/`. Ela indexa o código via Tree-sitter (offline, zero tokens) e revela clusters funcionais e pontos de alto acoplamento (*god nodes*) em minutos.
+- **Mapeamento de Grafo (Projetos com 30+ arquivos):** Se o repositório for volumoso ou tiver arquitetura complexa, execute a skill [mapear-grafo-de-conhecimento.md](governanca/skills/mapear-grafo-de-conhecimento.md) em [skills/](governanca/skills/). Ela indexa o código via Tree-sitter (offline, zero tokens) e revela clusters funcionais e pontos de alto acoplamento (*god nodes*) em minutos.
 - Verifique se há ferramentas de teste, lint, build configuradas
 - Identifique serviços externos (bancos, APIs, gateways de pagamento)
 - **Extração do Modelo de Dados:** Se o repositório possuir banco de dados relacional
-  (PostgreSQL ou SQLite), execute a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md) em `governanca/skills/`
-  para gerar a documentação viva em `modelo-de-dados/` (tabelas, colunas, chaves estrangeiras
+  (PostgreSQL ou SQLite), execute a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md) em [skills/](governanca/skills/)
+  para gerar a documentação viva em [modelo-de-dados/](governanca/livro-arquitetura/05-modelo-de-dados.md) (tabelas, colunas, chaves estrangeiras
   e diagrama ER). Esse snapshot é essencial antes de planejar as sprints ou refatorações.
-- Execute a skill [alinhar-stack-com-presets.md](governanca/skills/alinhar-stack-com-presets.md) em `governanca/skills/`
+- Execute a skill [alinhar-stack-com-presets.md](governanca/skills/alinhar-stack-com-presets.md) em [skills/](governanca/skills/)
   para comparar a stack detectada com os presets da progenitora
 
 ## 3. Preencha o Livro de Arquitetura
 
-Edite os arquivos em `governanca/livro-arquitetura/` com base no que
+Edite os arquivos em [livro-arquitetura/](governanca/livro-arquitetura/) com base no que
 encontrou. Documente:
 
 - Stack real do projeto (frontend, backend, banco)
@@ -80,7 +80,7 @@ appsscript.json   go.mod
 *.csproj          Cargo.toml        requirements.txt
 ```
 
-### O que adaptar (mova para `governanca/scripts/`)
+### O que adaptar (mova para [scripts/](governanca/scripts/))
 
 ```
 scripts/          (todo o conteúdo da pasta)
@@ -88,7 +88,7 @@ dev.sh            seed.js           deploy.sh
 *.ps1             *.sh              Makefile
 ```
 
-Após mover, registre os scripts disponíveis em `governanca/SESSAO.md`, no formato:
+Após mover, registre os scripts disponíveis em [SESSAO.md](governanca/SESSAO.md), no formato:
 ```
 Scripts disponíveis: governanca/scripts/dev.ps1, governanca/scripts/deploy.sh
 ```
@@ -107,7 +107,7 @@ wiki/             *.md na raiz      (pergunta ao usuário um por um)
 2. **Apresente as listas** ao usuário (o que mantém, o que move, o que exclui)
 3. Pergunte: *"Posso prosseguir com a limpeza?"*
 4. Se autorizar:
-   - **Mova scripts** para `governanca/scripts/`
+   - **Mova scripts** para [scripts/](governanca/scripts/)
    - **Exclua** documentação legada com `git rm` (ou delete se não versionado)
    - **Preserve** código e configurações
    - **Registre** os scripts movidos em [governanca/SESSAO.md](governanca/SESSAO.md)

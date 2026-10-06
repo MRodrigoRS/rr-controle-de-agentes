@@ -2,7 +2,7 @@
 
 ## Filosofia
 
-O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do projeto, gera `governanca/` com `.md` virgens, configura o harness nativo do agente (`.agents/`, `CLAUDE.md`) e **não acompanha** o desenvolvimento em tempo de execução. O projeto nasce, vive sozinho.
+O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do projeto, gera `governanca/` com `.md` virgens, configura o harness nativo do agente ([.agents/](.agents/), [CLAUDE.md](CLAUDE.md), [AGENTS.md](AGENTS.md)) e **não acompanha** o desenvolvimento em tempo de execução. O projeto nasce, vive sozinho.
 
 - **Sem JSONs de acompanhamento, sem banco de sprints, sem comandos de ciclo no projeto**
 - **Sem acompanhamento de progresso** — a web UI cria, lista e regenera a governança dos projetos
@@ -12,14 +12,14 @@ O RR 1.1 é uma **progenitora de projetos governados**. Ela cria a estrutura do 
 ## O que o RR 1.1 faz
 
 1. Cria projeto com estrutura de pastas base (se preset)
-2. Gera `governanca/AGENTS.md` com diretrizes pétreas, qualidade e regra mandatória de uso da stack
-3. Gera `governanca/INICIO.md` para onboarding completo do agente (ou `VINCULAR.md` se repositório existente)
-4. Gera `governanca/sprints/_template.md` para o agente preencher
-5. Gera `governanca/livro-arquitetura/` com a stack detalhada e categorizada (`02-stack.md`)
-6. Gera `governanca/workflows/` e os registra em `.agents/workflows/` como **Slash Commands nativos** (`/spec`, `/plan`, `/implement`, `/test`, `/review`, `/research`, `/release`)
-7. Gera `governanca/skills/` com habilidades práticas e catálogo oficial com IDs
-8. Configura automaticamente o **Harness do Agente** (`.agents/rules/`, `.agents/workflows/`, `.agents/skills/` e `CLAUDE.md`)
-9. Web UI: cria projetos, lista projetos criados, busca tecnologias por ID e permite recriar a governança a qualquer momento
+2. Gera [AGENTS.md](governanca/AGENTS.md) com diretrizes pétreas, qualidade e regra mandatória de uso da stack
+3. Gera [INICIO.md](governanca/INICIO.md) para onboarding completo do agente (ou [VINCULAR.md](governanca/VINCULAR.md) se repositório existente)
+4. Gera [sprints/_template.md](governanca/sprints/_template.md) para o agente preencher
+5. Gera [livro-arquitetura/](governanca/livro-arquitetura/) com a stack detalhada e categorizada ([02-stack.md](governanca/livro-arquitetura/02-stack.md))
+6. Gera [workflows/](governanca/workflows/) e os registra em `.agents/workflows/` como **Slash Commands nativos** (`/spec`, `/plan`, `/implement`, `/test`, `/review`, `/research`, `/release`)
+7. Gera [skills/](governanca/skills/) com habilidades práticas e catálogo oficial com IDs
+8. Configura automaticamente o **Harness do Agente** (`.agents/rules/`, `.agents/workflows/`, `.agents/skills/`, [CLAUDE.md](CLAUDE.md) e [AGENTS.md](AGENTS.md))
+9. Web UI: cria projetos, lista projetos criados, busca tecnologias por ID e permite recriar a governança a qualquer momento sem perder o [PLANO.md](governanca/PLANO.md) do usuário.
 
 ## Estrutura que a progenitora gera
 

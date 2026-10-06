@@ -44,7 +44,7 @@ Percorra os arquivos de código relevantes (`src/`, `prisma/`, `appsscript.json`
 Para cada categoria, preencha ou atualize a tabela correspondente:
 
 - **Regras de Negócio:** extraia cada regra com ID (`RN-01`), descrição,
-  localização no código e referência ao requisito no PRD.md
+  localização no código e referência ao requisito no [PRD.md](governanca/PRD.md)
 - **Fórmulas e Cálculos:** documente a fórmula em linguagem natural e a
   localização. Inclua exemplos numéricos se possível
 - **Fluxos de Dados:** descreva o percurso dos dados com diagrama textual

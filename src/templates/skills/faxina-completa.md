@@ -12,7 +12,7 @@ description: Orquestra todas as auditorias do projeto em uma única varredura se
 ## Fases
 
 Execute em ordem. Cada fase gera seu próprio relatório usando o template
-em `governanca/relatorios/_template.md`.
+em [_template.md](governanca/relatorios/_template.md).
 
 | Fase | Skill | Relatório gerado |
 |------|-------|-----------------|
@@ -94,5 +94,5 @@ no próprio relatório da fase (seção `## Sprint Sugerida`). Copie de lá.*
 1. Apresente o sumário ao usuário
 2. Pergunte se deseja criar as sprints sugeridas
 3. Se autorizado, copie a `Sprint Sugerida` de cada relatório para
-   `governanca/sprints/`
-4. Registre nas notas persistentes de `governanca/SESSAO.md` que a faxina foi concluída
+   [sprints/](governanca/sprints/)
+4. Registre nas notas persistentes de [SESSAO.md](governanca/SESSAO.md) que a faxina foi concluída

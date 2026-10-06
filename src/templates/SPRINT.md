@@ -50,11 +50,11 @@ sessao_atual: 0
    - [ ] Segurança: inputs validados, sem credenciais hardcoded
    - [ ] Código: sem código morto, duplicado, nomes claros, sem `any`
    - [ ] Manutenibilidade: lógica no lugar certo, sem constantes mágicas
-   - [ ] Padrões de engenharia: seguiu os manuais em `governanca/padroes/` (`frontend.md` e `backend.md`)
+   - [ ] Padrões de engenharia: seguiu os manuais em [padroes/](governanca/padroes/) ([frontend.md](governanca/padroes/frontend.md) e [backend.md](governanca/padroes/backend.md))
    - [ ] Testes passando
-5. **Antes de finalizar a sprint**, consulte a pasta `governanca/skills/` para atualizar
-   o livro de arquitetura (`governanca/livro-arquitetura/`) com as regras de negócio, dados
-   e comportamentos implementados (usando a skill de sincronização/mapeamento).
+5. **Antes de finalizar a sprint**, consulte a pasta [skills/](governanca/skills/) para atualizar
+   o [livro de arquitetura](governanca/livro-arquitetura/) com as regras de negócio, dados
+   e comportamentos implementados (usando a skill [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md)).
 6. **Revisão adversarial.** Antes de apresentar ao usuário, mude o objetivo
    e tente quebrar o que foi feito: procure casos extremos, assuma que a
    solução contém um bug e encontre-o, verifique quais requisitos podem

@@ -9,22 +9,26 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 ## [1.1.0] — 2026-10-06
 
 ### Adicionado
-- **Sincronização Remota Universal:** Implementado o script portátil `governanca/scripts/sincronizar.mjs` (Node.js 18+ nativo, zero dependências externas) permitindo que projetos associados sincronizem a matriz de qualquer computador via GitHub ou fonte local.
+- **Sincronização Remota Universal:** Implementado o script portátil [sincronizar.mjs](governanca/scripts/sincronizar.mjs) (Node.js 18+ nativo, zero dependências externas) permitindo que projetos associados sincronizem a matriz de qualquer computador via GitHub ou fonte local.
 - **Dois Modos de Sincronização:**
-  - **Modo Essencial (Seguro / Padrão):** Atualiza padrões (`padroes/`), workflows (`workflows/`), skills (`skills/`) e catálogo sem tocar no contexto vivo do projeto (`SESSAO.md`, `PRD.md`, `sprints/`, `livro-arquitetura/`).
+  - **Modo Essencial (Seguro / Padrão):** Atualiza padrões em [padroes/](governanca/padroes/), workflows em [workflows/](governanca/workflows/), skills em [skills/](governanca/skills/) e catálogo sem tocar no contexto vivo do projeto ([SESSAO.md](governanca/SESSAO.md), [PRD.md](governanca/PRD.md), [sprints/](governanca/sprints/) e [livro-arquitetura/](governanca/livro-arquitetura/)).
   - **Modo Total (Hard Reset):** Regenera 100% dos arquivos a partir dos presets da matriz, com confirmação explícita no terminal (`REGENERAR TUDO`) e criação garantida de backup prévio em `.backup-governanca-<timestamp>/`.
 - **Evolução da Interface Web:**
   - Menu no botão **Recriar Governança** com opções "Sincronizar Essencial" e "Regeneração Total...".
-  - Componente `ModalConfirmarRegeneracaoTotal` com alerta visual de impacto e aviso de backup automático.
+  - Componente modal de confirmação com alerta visual de impacto e aviso de backup automático.
   - Endpoint `PUT /api/projetos/[id]` adaptado para `{ modo: "essencial" | "total" }` com backup prévio automático no modo total.
-- **Metadados da Matriz:** Criação automática de `governanca/.matriz.json` registrando repositório, branch, presets vinculados e timestamp da última sincronização.
+- **Metadados da Matriz:** Criação automática de [.matriz.json](governanca/.matriz.json) registrando repositório, branch, presets vinculados e timestamp da última sincronização.
+- **Manual de Sincronização Remota:** Documento oficial [sincronizacao-remota.md](governanca/padroes/sincronizacao-remota.md) detalhando tokens do GitHub (PAT clássico), variáveis de ambiente e fluxos de uso.
 - **Comando CLI da Progenitora:** Adicionado script `npm run rr:sync -- [caminho] [--total]`.
-- **Changelog Integrado:** Documento `governanca/CHANGELOG.md` que viaja junto com a governança e se regenera em qualquer sincronização.
+- **Changelog Integrado:** Documento [CHANGELOG.md](governanca/CHANGELOG.md) que viaja junto com a governança e se regenera em qualquer sincronização.
+- **Canonização Estrita de Links:** Regra em [CONVENCOES-TEMPLATES.md](CONVENCOES-TEMPLATES.md) exigindo links Markdown reais para qualquer referência a documentos ou skills.
 
 ### Modificado
-- `AGENTS.md` e `src/templates/AGENTS.md`: Documentação dos comandos de sincronização e manutenção.
-- Skill `evoluir-governanca`: Seção dedicada ao consumo de melhorias da matriz em qualquer máquina.
-- `harness.mjs`: Ajuste de caminhos relativos em ponteiros do harness e suporte a rotas de início dinâmicas.
+- [AGENTS.md](governanca/AGENTS.md): Documentação dos comandos de sincronização, manutenção e hábito obrigatório de registro no changelog.
+- Skill [evoluir-governanca.md](governanca/skills/evoluir-governanca.md): Seção dedicada ao consumo de melhorias da matriz e registro obrigatório de diff.
+- Script [harness.mjs](governanca/scripts/harness.mjs): Ajuste de caminhos relativos em ponteiros do harness e suporte a rotas de início dinâmicas.
+- **Canonização Universal de Links (Pente Fino):** Varredura completa em 145 arquivos eliminando todas as menções em texto puro solto a documentos, skills e workflows. Cobertura da suíte ampliada para **655 links Markdown locais auditados e 100% íntegros**.
+- **Paridade Absoluta:** Sincronização espelhada de 100% dos arquivos entre os templates da progenitora (`src/templates/`) e os arquivos vivos da governança (`governanca/`).
 
 ---
 
@@ -32,8 +36,8 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### Adicionado
 - **Auto-Governança da Progenitora:** A própria base `rr-controle-de-agentes-1.1` agora é governada por suas próprias regras.
-- **Harness Autônomo:** Script `governanca/scripts/harness.mjs` com zero dependências externas para sincronizar `.agents/` e ponteiros raiz (`CLAUDE.md`, `AGENTS.md`).
+- **Harness Autônomo:** Script [harness.mjs](governanca/scripts/harness.mjs) com zero dependências externas para sincronizar `.agents/` e ponteiros raiz.
 - **Descoberta Dinâmica de Templates:** Eliminação de hardcoding estático de arquivos no gerador por varredura automática de pastas de templates.
 - **Auto-Seed Transparente:** Seed do banco SQLite com preservação estrita de identificadores e integridade referencial dos 27 presets.
-- **Padrões Especializados:** Manuais dedicados de engenharia de software em `governanca/padroes/` (`frontend.md` e `backend.md`).
-- **Blindagem de Contexto:** Proteção estrita contra perda de dados em `PLANO.md`, `PRD.md` e `SESSAO.md`.
+- **Padrões Especializados:** Manuais dedicados de engenharia de software em [padroes/](governanca/padroes/) ([frontend.md](governanca/padroes/frontend.md) e [backend.md](governanca/padroes/backend.md)).
+- **Blindagem de Contexto:** Proteção estrita contra perda de dados em [PLANO.md](governanca/PLANO.md), [PRD.md](governanca/PRD.md) e [SESSAO.md](governanca/SESSAO.md).

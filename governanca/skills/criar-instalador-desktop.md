@@ -109,4 +109,4 @@ Scripts disponíveis:
   ser descobertas e removidas do binário
 - Distribua somente o conteúdo de `dist/` + o instalador — nunca o código-fonte
 - A skill só existe em projetos desktop (presets `pyside6-desktop`). Para
-  detalhes de licenciamento veja a regra `Distribuição Desktop` no `AGENTS.md`
+  detalhes de licenciamento veja a regra "Distribuição Desktop" no [AGENTS.md](governanca/AGENTS.md)

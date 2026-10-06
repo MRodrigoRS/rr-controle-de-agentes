@@ -1,9 +1,9 @@
-# Inicialização — {{nomeProjeto}}
+# Inicialização — rr-controle-de-agentes-1.1
 
 > Instruções para o agente: siga os passos abaixo **em ordem**. Não pule etapas.
 > Cada passo só deve ser concluído após validação com o usuário.
 
-**Gerado em:** {{data}}
+**Gerado em:** 2026-10-06
 
 ---
 
@@ -56,25 +56,11 @@ Com base na visão, proponha uma estrutura inicial de sprints:
 
 Confirme a stack técnica com o usuário:
 
-{{#if temPresets}}
 **Presets selecionados:**
-- **Frontend:** `{{frontend}}` ({{frontendFramework}}, {{frontendEstilo}})
-{{#if stackCategorizadaFrontend}}
-  - *Ferramentas e bibliotecas:*
-{{stackCategorizadaFrontend}}
-{{/if}}
-- **Backend:** `{{backend}}` ({{backendRuntime}}, {{backendBanco}})
-{{#if stackCategorizadaBackend}}
-  - *Ferramentas e bibliotecas:*
-{{stackCategorizadaBackend}}
-{{/if}}
+- **Frontend:** Next.js 16 (App Router, Tailwind CSS 4)
+- **Backend:** Node.js 24 (SQLite Nativo node:sqlite)
 
 > Consulte [02-stack.md](governanca/livro-arquitetura/02-stack.md) para o detalhamento da responsabilidade de cada ferramenta.
-{{else}}
-**Projeto sem preset definido.** Identifique a stack com o usuário:
-- Frontend: framework, estilo, testes
-- Backend: runtime, banco, ORM
-{{/if}}
 
 Pergunte: "Podemos seguir com essa stack ou você quer alterar algo?"
 
@@ -86,7 +72,7 @@ Pergunte: "Podemos seguir com essa stack ou você quer alterar algo?"
 
 Com a stack validada, configure o ambiente:
 
- 1. Crie os arquivos de configuração e dependências do projeto (ex: `package.json`, `pyproject.toml`, `go.mod`, `.csproj`, etc. conforme a stack oficial).
+ 1. Crie os arquivos de configuração e dependências do projeto (ex: `package.json`, `tsconfig.json`).
  2. Crie os scripts auxiliares seguindo a skill [criar-scripts-auxiliares.md](governanca/skills/criar-scripts-auxiliares.md). Se o projeto possuir banco de dados relacional (PostgreSQL, Supabase, SQLite, etc.), configure o script de extração do modelo seguindo a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md).
  3. Instale as dependências e verifique se o build base funciona.
  4. O harness deste projeto (`.agents/`, `CLAUDE.md` e slash commands como `/spec`, `/plan`, `/implement`) já foi configurado automaticamente pela progenitora. Caso o projeto utilize serviços específicos que justifiquem MCPs adicionais pelo princípio do menor privilégio, consulte a skill [configurar-harness.md](governanca/skills/configurar-harness.md) e proponha ao usuário sob demanda.

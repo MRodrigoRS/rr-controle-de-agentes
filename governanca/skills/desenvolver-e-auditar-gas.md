@@ -26,8 +26,8 @@ description: Manual completo de boas práticas, desenvolvimento e auditoria para
 Antes de iniciar qualquer análise, leia os arquivos de contexto que o repositório
 oferece. Adapte-se ao que encontrar — não presuma estrutura de pastas:
 
-- Arquivos de governança ou documentação na raiz (`README.md`, `AGENTS.md`,
-  `PLANO.md`, `CONVENTIONS.md` ou equivalentes)
+- Arquivos de governança ou documentação na raiz ([AGENTS.md](governanca/AGENTS.md),
+  [PLANO.md](governanca/PLANO.md), README ou equivalentes)
 - Arquivos de configuração GAS: `appsscript.json`, `.clasp.json`
 - Arquivos de build: `package.json`, `tsconfig.json`
 - Todo o código-fonte (`.ts`, `.js`, `.html` com `<script>`)

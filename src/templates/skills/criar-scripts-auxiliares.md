@@ -11,11 +11,11 @@ description: Cria e mantém scripts utilitários que automatizam tarefas recorre
 
 ## Local
 
-Todos os scripts devem ficar em `governanca/scripts/`.
+Todos os scripts devem ficar em [scripts/](governanca/scripts/).
 
 ## Quando Criar
 
-- **Setup do ambiente** (Passo 4 do INICIO.md) — crie os scripts padrão
+- **Setup do ambiente** (Passo 4 do [INICIO.md](governanca/INICIO.md)) — crie os scripts padrão
   conhecidos para a stack do projeto
 - **Sob demanda** — quando você ou o usuário identificar uma tarefa manual
   repetitiva, crie um script para automatizá-la
@@ -127,10 +127,10 @@ Write-Host "=== Concluído ===" -ForegroundColor Green
 Para sistemas Unix, crie também uma versão `.sh` equivalente se o time
 usar múltiplos ambientes.
 
-## Registro em SESSAO.md
+## Registro em [SESSAO.md](governanca/SESSAO.md)
 
 Toda vez que criar um script **ou** descobrir a necessidade de um novo,
-adicione uma entrada nas notas persistentes de `governanca/SESSAO.md`:
+adicione uma entrada nas notas persistentes de [SESSAO.md](governanca/SESSAO.md):
 
 ```
 Scripts disponíveis em governanca/scripts/:

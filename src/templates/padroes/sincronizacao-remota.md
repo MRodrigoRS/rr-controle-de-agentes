@@ -115,11 +115,11 @@ No computador onde a aplicação Web da progenitora estiver em execução (`npm 
 
 ---
 
-## 6. Hábito Obrigatório: Manutenção do CHANGELOG.md
+## 6. Hábito Obrigatório: Manutenção do [CHANGELOG.md](governanca/CHANGELOG.md)
 
 Toda vez que a governança matriz for alterada e for realizado um commit na matriz:
 1. **Auditoria de Mudanças:** Execute `git diff` e `git status` para inspecionar todas as modificações.
-2. **Atualização do Changelog:** Registre uma nova entrada em [CHANGELOG.md](governanca/CHANGELOG.md) e em `src/templates/CHANGELOG.md`, agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
+2. **Atualização do Changelog:** Registre uma nova entrada em [CHANGELOG.md](governanca/CHANGELOG.md), agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
 3. **Links Markdown Obrigatórios:** Toda referência a arquivos, documentos, skills ou workflows deve ser escrita como link Markdown verificável (exemplo: [CHANGELOG.md](governanca/CHANGELOG.md)), nunca como texto puro solto.
 4. **Commit:** Só conclua o commit após o changelog estar devidamente sincronizado e verificado com `npm test`.
 
