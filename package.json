@@ -11,6 +11,7 @@
     "rr:tecnologia": "tsx src/scripts/cadastrar-tecnologia.ts",
     "rr:harness": "tsx src/scripts/configurar-harness.ts",
     "rr:sync": "tsx src/scripts/sincronizar.ts",
+    "rr:ui": "node governanca/scripts/ui.mjs",
     "test": "tsx src/scripts/validar-templates.ts",
     "validar:templates": "tsx src/scripts/validar-templates.ts"
   },

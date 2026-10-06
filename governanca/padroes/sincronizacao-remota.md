@@ -174,7 +174,27 @@ No computador onde a aplicação Web da progenitora estiver em execução (`npm 
 
 ---
 
-## 6. Hábito Obrigatório: Manutenção do [CHANGELOG.md](governanca/CHANGELOG.md)
+## 6. Pela Interface Web Dedicada do Projeto Satélite ([ui.mjs](governanca/scripts/ui.mjs))
+
+Em qualquer máquina (mesmo sem a progenitora clonada), você pode subir a interface web local do projeto satélite com zero dependências externas:
+
+```bash
+# Execução direta com Node.js nativo (18+)
+node governanca/scripts/ui.mjs
+
+# Ou pelo atalho npm:
+npm run rr:ui
+```
+
+O comando inicia um servidor HTTP local nativo na porta `3333` (ou porta livre subsequente) e abre automaticamente a tela dedicada do projeto no navegador:
+- **Painel Visual Completo:** Exibe identidade, status do Git, métricas vivas de código, estimativa de tokens (`~3,8 carac/token`), histórico de commits e visualizador da stack tecnológica.
+- **Explorador Interativo de Governança:** Navegação com leitor Markdown embutido para todos os padrões, workflows, skills e sprints.
+- **Ações Locais Integradas:** Botões para disparar a sincronização essencial, regeneração total com confirmação, re-sincronização do harness e abertura do projeto no editor de código.
+- **Auto-Atualização:** O próprio script [ui.mjs](governanca/scripts/ui.mjs) viaja junto com a governança e é atualizado automaticamente sempre que você sincronizar a partir da matriz.
+
+---
+
+## 7. Hábito Obrigatório: Manutenção do [CHANGELOG.md](governanca/CHANGELOG.md)
 
 Toda vez que a governança matriz for alterada e for realizado um commit na matriz:
 1. **Auditoria de Mudanças:** Execute `git diff` e `git status` para inspecionar todas as modificações.
