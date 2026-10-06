@@ -228,8 +228,20 @@ async function sincronizarDeGitHubRemoto() {
 
     console.log(`📦 Encontrados ${arquivosTemplates.length} arquivos gerenciados na matriz.`);
 
+    const exclusivosMatriz = new Set([
+      "skills/auditar-maturidade-governanca.md",
+      "workflows/auditar-governanca.md",
+      "relatorios/_template_evolucao_governanca.md",
+    ]);
+
     for (const item of arquivosTemplates) {
       const relPath = item.path.replace(/^src\/templates\//, "");
+
+      // Se for satélite (não matriz), não baixa ferramentas exclusivas de P&D da matriz
+      const ehMatriz = fs.existsSync(path.join(raiz, "src", "templates"));
+      if (!ehMatriz && exclusivosMatriz.has(relPath)) {
+        continue;
+      }
 
       // Verifica se é arquivo protegido no modo essencial
       if (!ehModoTotal) {
@@ -293,6 +305,12 @@ async function sincronizarDeGitHubRemoto() {
 
 function copiarPastasMatriz(templatesDir, raizOrigem) {
   const subpastas = ["padroes", "workflows", "skills", "relatorios"];
+  const ehMatriz = fs.existsSync(path.join(raiz, "src", "templates"));
+  const exclusivosMatriz = new Set([
+    "auditar-maturidade-governanca.md",
+    "auditar-governanca.md",
+    "_template_evolucao_governanca.md",
+  ]);
 
   for (const sub of subpastas) {
     const srcDir = path.join(templatesDir, sub);
@@ -301,6 +319,9 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
       fs.mkdirSync(destDir, { recursive: true });
       for (const f of fs.readdirSync(srcDir)) {
         if (f.endsWith(".md")) {
+          if (!ehMatriz && exclusivosMatriz.has(f)) {
+            continue; // Satélites não recebem ferramentas exclusivas da matriz
+          }
           fs.copyFileSync(path.join(srcDir, f), path.join(destDir, f));
         }
       }
