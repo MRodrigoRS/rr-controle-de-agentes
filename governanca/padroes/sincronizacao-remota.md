@@ -112,22 +112,22 @@ Quando você inicia um novo projeto ou abre um repositório legado que **nunca p
 
 **No Windows (PowerShell):**
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+$headers = if ($env:GITHUB_TOKEN) { @{ Authorization = "token $env:GITHUB_TOKEN" } } else { @{} }; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -Headers $headers -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
 ```
 
 **No Linux / macOS (Bash / zsh):**
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+curl -fsSL ${GITHUB_TOKEN:+-H "Authorization: token $GITHUB_TOKEN"} "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
 ```
 
-*(Se o repositório matriz for privado, configure `$env:GITHUB_TOKEN="ghp_xxx"` ou `export GITHUB_TOKEN="ghp_xxx"` antes da execução).*
+*(Se o repositório matriz for privado, configure `$env:GITHUB_TOKEN="ghp_xxx"` ou `export GITHUB_TOKEN="ghp_xxx"` antes da execução para injetar a autenticação automaticamente).*
 
 O que esse comando faz de ponta a ponta:
-1. Baixa o script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) e detecta a raiz do projeto.
+1. Baixa o script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) e detecta a raiz do projeto (ou progenitora local nos diretórios superiores se presente).
 2. Cria a pasta `governanca/` com padrões, workflows, skills e relatórios.
 3. Cria os arquivos raiz [AGENTS.md](governanca/AGENTS.md) e [CLAUDE.md](CLAUDE.md).
 4. Inicializa o diário de bordo [SESSAO.md](governanca/SESSAO.md) e [.matriz.json](governanca/.matriz.json).
-5. Move o script para `governanca/scripts/` e baixa o script [harness.mjs](governanca/scripts/harness.mjs).
+5. Move o script para `governanca/scripts/` e baixa o script [harness.mjs](governanca/scripts/harness.mjs) e [ui.mjs](governanca/scripts/ui.mjs).
 6. Executa o [harness.mjs](governanca/scripts/harness.mjs) para popular o diretório `.agents/` com regras, workflows e skills do agente.
 
 ---
@@ -151,14 +151,16 @@ Por favor, execute o procedimento de bootstrap:
 1. Certifique-se de que o Node.js (18+) está instalado.
 2. Execute o comando de inicialização correspondente ao seu sistema operacional:
    - PowerShell:
-     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+     $headers = if ($env:GITHUB_TOKEN) { @{ Authorization = "token $env:GITHUB_TOKEN" } } else { @{} }; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -Headers $headers -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
    - Bash/Linux/macOS:
-     curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+     curl -fsSL ${GITHUB_TOKEN:+-H "Authorization: token $GITHUB_TOKEN"} "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
 3. Após a sincronização, leia obrigatoriamente:
    - [AGENTS.md](governanca/AGENTS.md)
    - [SESSAO.md](governanca/SESSAO.md)
    - [.matriz.json](governanca/.matriz.json)
-4. Confirme a conclusão, liste o que foi configurado e apresente o plano de trabalho para a primeira sprint.
+4. Valide a integridade do painel web executando:
+   node governanca/scripts/ui.mjs --check
+5. Confirme a conclusão, liste o que foi configurado e apresente o plano de trabalho para a primeira sprint.
 ```
 
 ---
@@ -184,10 +186,16 @@ node governanca/scripts/ui.mjs
 
 # Ou pelo atalho npm:
 npm run rr:ui
+
+# Apenas checagem rápida de integridade para agentes/CI (sem subir servidor bloqueante):
+node governanca/scripts/ui.mjs --check
 ```
 
+> [!NOTE]
+> O script [ui.mjs](governanca/scripts/ui.mjs) inicia um servidor HTTP contínuo. Agentes de IA autônomos devem executá-lo em segundo plano (background daemon) caso desejem manter a sessão ativa, ou utilizar a flag `--check` para validar a interface de forma síncrona sem travar o terminal.
+
 O comando inicia um servidor HTTP local nativo na porta `3333` (ou porta livre subsequente) e abre automaticamente a tela dedicada do projeto no navegador:
-- **Painel Visual Completo:** Exibe identidade, status do Git, métricas vivas de código, estimativa de tokens (`~3,8 carac/token`), histórico de commits e visualizador da stack tecnológica.
+- **Painel Visual Completo:** Exibe identidade, status do Git, métricas vivas de código, estimativa de tokens (`~3,8 carac/token`), gráfico SVG interativo de evolução de linhas e visualizador da stack tecnológica.
 - **Explorador Interativo de Governança:** Navegação com leitor Markdown embutido para todos os padrões, workflows, skills e sprints.
 - **Ações Locais Integradas:** Botões para disparar a sincronização essencial, regeneração total com confirmação, re-sincronização do harness e abertura do projeto no editor de código.
 - **Auto-Atualização:** O próprio script [ui.mjs](governanca/scripts/ui.mjs) viaja junto com a governança e é atualizado automaticamente sempre que você sincronizar a partir da matriz.

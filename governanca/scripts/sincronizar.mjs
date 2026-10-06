@@ -102,11 +102,20 @@ async function main() {
 
   // Tentativa A: Progenitora presente localmente
   const caminhosLocaisPossiveis = [
-    path.resolve(raiz, "..", "rr-controle-de-agentes-1.1"),
-    path.resolve(raiz, "..", "rr-controle-de-agentes"),
-    path.resolve(raiz, "..", repoName),
     path.resolve(process.cwd()),
   ];
+
+  // Busca subindo os diretórios pais recursivamente (até 5 níveis) para achar a progenitora
+  let dirCursor = path.resolve(raiz, "..");
+  for (let i = 0; i < 5; i++) {
+    caminhosLocaisPossiveis.push(dirCursor);
+    caminhosLocaisPossiveis.push(path.join(dirCursor, "rr-controle-de-agentes-1.1"));
+    caminhosLocaisPossiveis.push(path.join(dirCursor, "rr-controle-de-agentes"));
+    caminhosLocaisPossiveis.push(path.join(dirCursor, repoName));
+    const pai = path.dirname(dirCursor);
+    if (pai === dirCursor) break;
+    dirCursor = pai;
+  }
 
   let progenitoraLocal = null;
   for (const c of caminhosLocaisPossiveis) {

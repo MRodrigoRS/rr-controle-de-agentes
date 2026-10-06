@@ -1413,4 +1413,21 @@ function iniciarServidor() {
   });
 }
 
+// Se for modo checagem (--check / -c), valida integridade dos dados e encerra
+const modoChecagem = args.includes("--check") || args.includes("-c");
+if (modoChecagem) {
+  try {
+    const dados = obterDadosProjeto();
+    console.log("\n✅ Checagem de Prontidão da Interface (UI): OK");
+    console.log(`   Projeto: ${dados.nome}`);
+    console.log(`   Arquivos: ${dados.metricas?.totalArquivos || 0} arquivos (${dados.metricas?.totalLinhas?.toLocaleString("pt-BR") || 0} linhas)`);
+    console.log(`   Governança: ${dados.arquivos.padroes.length} padrões, ${dados.arquivos.workflows.length} workflows, ${dados.arquivos.skills.length} skills`);
+    console.log(`   Histórico Git: ${dados.historicoLinhas?.totalCommits || 0} commits rastreados\n`);
+    process.exit(0);
+  } catch (err) {
+    console.error("❌ Falha na checagem da governança:", err.message);
+    process.exit(1);
+  }
+}
+
 iniciarServidor();
