@@ -47,7 +47,7 @@ export function configurarHarnessNoProjeto(caminhoProjeto: string): { sucesso: b
   fs.mkdirSync(rulesDir, { recursive: true });
 
   const rulePath = path.join(rulesDir, "000-governanca.md");
-  const ruleConteudo = `# Governança — RR Tech Studio\n\nAs diretrizes oficiais deste projeto estão em [governanca/AGENTS.md](governanca/AGENTS.md).\nConsulte [governanca/SESSAO.md](governanca/SESSAO.md) para a sprint ativa e histórico de sessões.\n`;
+  const ruleConteudo = `# Governança — RR Tech Studio\n\nAs diretrizes oficiais deste projeto estão em [governanca/AGENTS.md](../../governanca/AGENTS.md).\nConsulte [governanca/SESSAO.md](../../governanca/SESSAO.md) para a sprint ativa e histórico de sessões.\n`;
   fs.writeFileSync(rulePath, ruleConteudo, "utf-8");
 
   // 3. Registrar Workflows em .agents/workflows/ (viram Slash Commands nativos)
@@ -62,7 +62,9 @@ export function configurarHarnessNoProjeto(caminhoProjeto: string): { sucesso: b
         activeWorkflows.add(arquivo);
         const srcFile = path.join(workflowsSrcDir, arquivo);
         const destFile = path.join(workflowsHarnessDir, arquivo);
-        fs.copyFileSync(srcFile, destFile);
+        let wfConteudo = fs.readFileSync(srcFile, "utf-8");
+        wfConteudo = wfConteudo.replace(/\(\.\.\//g, "(../../governanca/");
+        fs.writeFileSync(destFile, wfConteudo, "utf-8");
       }
     }
   }

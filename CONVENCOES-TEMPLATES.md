@@ -112,14 +112,23 @@ Evite construções passivas (`"deve ser lido"` → `"leia"`).
 
 ---
 
-## Links Obrigatórios (Zero Texto Puro para Documentos e Skills)
+## Links Obrigatórios (Zero Texto Puro e Navegação Relativa em Subpastas)
 
 Toda menção a qualquer arquivo, documento, manual, skill ou workflow da governança **DEVE** ser um link Markdown real, e **NUNCA** texto puro solto.
 
 - ❌ Incorreto: `Consulte SESSAO.md e use a skill evoluir-governanca.`
-- ✅ Correto: `Consulte [SESSAO.md](governanca/SESSAO.md) e use a skill [evoluir-governanca.md](governanca/skills/evoluir-governanca.md).`
+- ✅ Correto (a partir da raiz do repositório): `Consulte [SESSAO.md](governanca/SESSAO.md) e use a skill [evoluir-governanca.md](governanca/skills/evoluir-governanca.md).`
 
-O validador de integridade (`npm test` / `src/scripts/validar-templates.ts`) audita automaticamente cada link gerado para assegurar que não existam links quebrados nem menções não navegáveis.
+### Regra Mandatória de Resolução Relativa em Subpastas
+No GitHub, VS Code e qualquer leitor CommonMark/GFM padrão, links Markdown sem barra inicial são resolvidos **em relação ao diretório do arquivo atual**:
+- **Arquivos na raiz do repositório** (ex: `AGENTS.md`, `CLAUDE.md`): usam o prefixo `governanca/...` (ex: `[SESSAO.md](governanca/SESSAO.md)`).
+- **Arquivos dentro de subpastas** (ex: `governanca/padroes/`, `governanca/livro-arquitetura/`, `governanca/workflows/`, `governanca/skills/`, `governanca/sprints/`): **DEVEM** usar caminhos relativos navegáveis (`../`, `./`):
+  - Exemplo em `governanca/padroes/backend.md`: `[desenvolver-e-auditar-gas.md](../skills/desenvolver-e-auditar-gas.md)` (nunca com prefixo `governanca/`).
+  - Exemplo em `governanca/livro-arquitetura/01-visao-geral.md`: `[AGENTS.md](../AGENTS.md)` ou `[skills/](../skills/)`.
+  - Exemplo em `governanca/workflows/fix.md`: `[padroes/](../padroes/)` e `[SESSAO.md](../SESSAO.md)`.
+- É proibido usar caminhos que dependem de fallback na raiz quando o arquivo está em uma subpasta, pois causam erro 404 ao serem clicados diretamente na interface web do repositório ou no editor.
+
+O validador de integridade (`npm test` / `src/scripts/validar-templates.ts`) audita automaticamente cada link gerado com resolução estrita para assegurar que não existam links quebrados nem menções não navegáveis.
 
 ---
 

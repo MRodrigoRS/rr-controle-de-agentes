@@ -157,9 +157,17 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     { destino: path.join(governancaDir, "livro-arquitetura", "02-stack.md"), template: "arquitetura/02-stack.md", ctx },
   ];
 
+  // Ferramentas exclusivas de P&D da Matriz (nunca geradas em projetos satélites)
+  const exclusivosMatriz = new Set([
+    "skills/auditar-maturidade-governanca.md",
+    "skills/CATALOGO_TECNOLOGIAS.md",
+    "workflows/auditar-governanca.md",
+    "relatorios/_template_evolucao_governanca.md",
+  ]);
+
   // 1. Descoberta dinâmica de Skills
   for (const arquivo of escanearTemplatesPasta("skills")) {
-    if (arquivo.endsWith(".md") && arquivo !== "CATALOGO_TECNOLOGIAS.md") {
+    if (arquivo.endsWith(".md") && !exclusivosMatriz.has(`skills/${arquivo}`)) {
       arquivos.push({
         destino: path.join(governancaDir, "skills", arquivo),
         template: `skills/${arquivo}`,
@@ -170,7 +178,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   // 2. Descoberta dinâmica de Workflows
   for (const arquivo of escanearTemplatesPasta("workflows")) {
-    if (arquivo.endsWith(".md")) {
+    if (arquivo.endsWith(".md") && !exclusivosMatriz.has(`workflows/${arquivo}`)) {
       arquivos.push({
         destino: path.join(governancaDir, "workflows", arquivo),
         template: `workflows/${arquivo}`,
@@ -181,7 +189,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   // 3. Descoberta dinâmica de Padrões
   for (const arquivo of escanearTemplatesPasta("padroes")) {
-    if (arquivo.endsWith(".md")) {
+    if (arquivo.endsWith(".md") && !exclusivosMatriz.has(`padroes/${arquivo}`)) {
       arquivos.push({
         destino: path.join(governancaDir, "padroes", arquivo),
         template: `padroes/${arquivo}`,
@@ -192,7 +200,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
 
   // 4. Descoberta dinâmica de Relatórios
   for (const arquivo of escanearTemplatesPasta("relatorios")) {
-    if (arquivo.endsWith(".md")) {
+    if (arquivo.endsWith(".md") && !exclusivosMatriz.has(`relatorios/${arquivo}`)) {
       arquivos.push({
         destino: path.join(governancaDir, "relatorios", arquivo),
         template: `relatorios/${arquivo}`,
@@ -201,10 +209,11 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     }
   }
 
-  // 5. Descoberta dinâmica de Scripts/Templates auxiliares
+  // 5. Descoberta dinâmica de Scripts e Templates auxiliares
   for (const arquivo of escanearTemplatesPasta("scripts")) {
+    const subpastaDestino = arquivo.endsWith(".template") ? "templates" : "scripts";
     arquivos.push({
-      destino: path.join(governancaDir, "templates", arquivo),
+      destino: path.join(governancaDir, subpastaDestino, arquivo),
       template: `scripts/${arquivo}`,
       ctx,
     });
@@ -288,6 +297,7 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "padroes"));
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "relatorios"));
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "templates"));
+  limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "scripts"));
 
   // Sincroniza o harness (.agents/, CLAUDE.md, workflows e skills)
   configurarHarnessNoProjeto(caminhoAbs);

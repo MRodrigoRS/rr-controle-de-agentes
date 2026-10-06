@@ -8,7 +8,7 @@ description: Documenta triggers, jobs, webhooks, workers, middleware, CI e casca
 > Varre o repositório em busca de triggers, jobs, webhooks, workers,
 > middlewares, cascatas de banco, CI e hooks — tudo que executa sozinho
 > sem ação direta do usuário. Documenta cada achado em
-> [04-comportamento-autonomo.md](governanca/livro-arquitetura/04-comportamento-autonomo.md).
+> [04-comportamento-autonomo.md](../livro-arquitetura/04-comportamento-autonomo.md).
 
 ## Quando Executar
 
@@ -16,7 +16,7 @@ description: Documenta triggers, jobs, webhooks, workers, middleware, CI e casca
 - **Antes de alterar o esquema do banco** (migrações que podem quebrar cascatas)
 - **Antes de desativar serviços** (jobs que ninguém lembra existir)
 - **Sempre que o usuário suspeitar de comportamento inesperado**
-- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md)
+- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill [sincronizar-documentacao.md](sincronizar-documentacao.md)
 
 
 
@@ -89,7 +89,7 @@ em busca de:
 ## Como Documentar
 
 Para cada achado, **adicione uma linha na tabela correspondente** em
-[04-comportamento-autonomo.md](governanca/livro-arquitetura/04-comportamento-autonomo.md):
+[04-comportamento-autonomo.md](../livro-arquitetura/04-comportamento-autonomo.md):
 
 ```markdown
 | *ex: log_audit* | *pedidos* | *AFTER INSERT* | *insere em logs_auditoria* | *prisma/migrations/* |

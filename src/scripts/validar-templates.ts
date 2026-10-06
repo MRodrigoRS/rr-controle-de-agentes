@@ -131,8 +131,10 @@ export function validarIntegridadeLinksMarkdown(): boolean {
     const linhas = conteudo.split("\n");
 
     linhas.forEach((linhaTexto, idx) => {
+      // Ignora exemplos dentro de code spans em linha (`[texto](link)`)
+      const linhaSemCode = linhaTexto.replace(/`[^`]+`/g, "");
       let match;
-      while ((match = linkRegex.exec(linhaTexto)) !== null) {
+      while ((match = linkRegex.exec(linhaSemCode)) !== null) {
         const [_, textoLink, rawDest] = match;
 
         // Ignora links web ou âncoras locais puras (#secao)
@@ -157,32 +159,28 @@ export function validarIntegridadeLinksMarkdown(): boolean {
 
         // Caso 1: Arquivo de origem é um template (src/templates/)
         if (relFile.startsWith("src/templates/")) {
-          let mapped = destLimpo;
-          if (mapped.startsWith("governanca/")) {
-            const sub = mapped.replace(/^governanca\//, "");
-            if (sub.startsWith("livro-arquitetura/")) {
-              mapped = "src/templates/arquitetura/" + sub.replace(/^livro-arquitetura\//, "");
-            } else if (sub === "sprints/_template.md") {
-              mapped = "src/templates/SPRINT.md";
-            } else if (sub.startsWith("skills/")) {
-              mapped = "src/templates/skills/" + sub.replace(/^skills\//, "");
-            } else if (sub.startsWith("workflows/")) {
-              mapped = "src/templates/workflows/" + sub.replace(/^workflows\//, "");
-            } else if (sub.startsWith("padroes/")) {
-              mapped = "src/templates/padroes/" + sub.replace(/^padroes\//, "");
-            } else if (sub.startsWith("relatorios/")) {
-              mapped = "src/templates/relatorios/" + sub.replace(/^relatorios\//, "");
-            } else {
-              mapped = "src/templates/" + sub;
-            }
-          } else if (mapped.startsWith("./") || mapped.startsWith("../")) {
-            mapped = path.relative(rootDir, path.resolve(path.dirname(arqAbs), mapped)).replace(/\\/g, "/");
+          // Determina o diretório de destino real do template dentro de governanca/
+          const relTpl = path.relative(path.join(rootDir, "src/templates"), arqAbs).replace(/\\/g, "/");
+          let dirDestino = path.join(rootDir, "governanca");
+          if (relTpl.startsWith("arquitetura/")) {
+            dirDestino = path.join(rootDir, "governanca/livro-arquitetura");
+          } else if (relTpl.startsWith("padroes/")) {
+            dirDestino = path.join(rootDir, "governanca/padroes");
+          } else if (relTpl.startsWith("skills/")) {
+            dirDestino = path.join(rootDir, "governanca/skills");
+          } else if (relTpl.startsWith("workflows/")) {
+            dirDestino = path.join(rootDir, "governanca/workflows");
+          } else if (relTpl.startsWith("relatorios/")) {
+            dirDestino = path.join(rootDir, "governanca/relatorios");
+          } else if (relTpl === "SPRINT.md") {
+            dirDestino = path.join(rootDir, "governanca/sprints");
           }
 
-          const resolvidoLocal = path.resolve(rootDir, mapped);
-          const resolvidoProg = path.resolve(rootDir, destLimpo);
+          const resolvidoNoDestino = path.resolve(dirDestino, destLimpo);
+          const resolvidoLocal = path.resolve(path.dirname(arqAbs), destLimpo);
+          const resolvidoTemplatesRaiz = path.resolve(path.join(rootDir, "src/templates"), destLimpo);
 
-          if (fs.existsSync(resolvidoLocal) || fs.existsSync(resolvidoProg)) {
+          if (fs.existsSync(resolvidoNoDestino) || fs.existsSync(resolvidoLocal) || fs.existsSync(resolvidoTemplatesRaiz)) {
             existe = true;
           }
         } else {
@@ -190,7 +188,9 @@ export function validarIntegridadeLinksMarkdown(): boolean {
           const resolvidoDir = path.resolve(path.dirname(arqAbs), destLimpo);
           const resolvidoRaiz = path.resolve(rootDir, destLimpo);
 
-          if (fs.existsSync(resolvidoDir) || fs.existsSync(resolvidoRaiz)) {
+          // Resolução estrita: arquivos em subpastas DEVEM resolver a partir de seu diretório (resolvidoDir)
+          const ehNaRaiz = path.dirname(arqAbs) === rootDir;
+          if (ehNaRaiz ? fs.existsSync(resolvidoRaiz) : fs.existsSync(resolvidoDir)) {
             existe = true;
           }
         }
@@ -212,11 +212,60 @@ export function validarIntegridadeLinksMarkdown(): boolean {
   return false;
 }
 
+export function validarParidadeWrappersHarness(): boolean {
+  console.log("🔗 Verificando paridade de wrappers do harness (.agents/skills/ x governanca/skills/)...");
+  const rootDir = process.cwd();
+  const govSkillsDir = path.join(rootDir, "governanca", "skills");
+  const harnessSkillsDir = path.join(rootDir, ".agents", "skills");
+
+  if (!fs.existsSync(govSkillsDir) || !fs.existsSync(harnessSkillsDir)) return true;
+
+  const govSkills = fs.readdirSync(govSkillsDir)
+    .filter((f) => f.endsWith(".md") && f !== "CATALOGO_TECNOLOGIAS.md")
+    .map((f) => path.basename(f, ".md"));
+
+  const harnessSkills = fs.readdirSync(harnessSkillsDir)
+    .filter((d) => fs.statSync(path.join(harnessSkillsDir, d)).isDirectory());
+
+  const setGov = new Set(govSkills);
+  const setHarness = new Set(harnessSkills);
+
+  let erros = 0;
+  for (const skill of govSkills) {
+    if (!setHarness.has(skill)) {
+      console.error(`❌ Skill "${skill}" existe em governanca/skills/ mas não possui wrapper em .agents/skills/${skill}/SKILL.md`);
+      erros++;
+    } else {
+      const wrapperPath = path.join(harnessSkillsDir, skill, "SKILL.md");
+      if (!fs.existsSync(wrapperPath)) {
+        console.error(`❌ Wrapper ausente em .agents/skills/${skill}/SKILL.md`);
+        erros++;
+      }
+    }
+  }
+
+  for (const h of harnessSkills) {
+    if (!setGov.has(h)) {
+      console.error(`❌ Wrapper órfão em .agents/skills/${h}/ não possui skill correspondente em governanca/skills/`);
+      erros++;
+    }
+  }
+
+  if (erros === 0) {
+    console.log(`✅ Todos os ${govSkills.length} wrappers do harness estão em perfeita paridade com governanca/skills/.\n`);
+    return true;
+  }
+  return false;
+}
+
 export function validarTemplates(): boolean {
   console.log("\n🔍 Iniciando validação de templates em src/templates...\n");
 
   const okIntegridade = validarIntegridadeReferencialPresets();
   if (!okIntegridade) return false;
+
+  const okHarness = validarParidadeWrappersHarness();
+  if (!okHarness) return false;
 
   const okLinks = validarIntegridadeLinksMarkdown();
   if (!okLinks) return false;

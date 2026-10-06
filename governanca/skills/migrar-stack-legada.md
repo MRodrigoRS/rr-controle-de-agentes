@@ -5,7 +5,7 @@ description: Guia a migração e modernização completa de uma base legada para
 
 # Skill: Migrar Stack Legada (Replatforming Side-by-Side)
 
-> **Objetivo:** Orientar o agente na modernização integral de uma aplicação existente para a nova stack contratada na governança ([02-stack.md](governanca/livro-arquitetura/02-stack.md)), garantindo **zero perda de regras de negócio**, isolamento seguro em branch de refatoração, e migração estruturada passo a passo lado a lado.
+> **Objetivo:** Orientar o agente na modernização integral de uma aplicação existente para a nova stack contratada na governança ([02-stack.md](../livro-arquitetura/02-stack.md)), garantindo **zero perda de regras de negócio**, isolamento seguro em branch de refatoração, e migração estruturada passo a passo lado a lado.
 
 ---
 
@@ -61,7 +61,7 @@ Antes de escrever qualquer linha de código novo, o agente **DEVE** mapear todas
 `governanca/relatorios/inventario-migracao.md`.
 
 > [!TIP]
-> **Engenharia Reversa Automática do Banco Legado:** Se o repositório legado utilizar banco relacional (PostgreSQL ou SQLite), execute a skill [criar-extrair-modelo.md](governanca/skills/criar-extrair-modelo.md) antes de preencher a tabela de Entidades. O snapshot gerado em `modelo-de-dados/` mapeará automaticamente todas as tabelas, colunas, tipos reais, chaves estrangeiras e índices do legado.
+> **Engenharia Reversa Automática do Banco Legado:** Se o repositório legado utilizar banco relacional (PostgreSQL ou SQLite), execute a skill [criar-extrair-modelo.md](criar-extrair-modelo.md) antes de preencher a tabela de Entidades. O snapshot gerado em `modelo-de-dados/` mapeará automaticamente todas as tabelas, colunas, tipos reais, chaves estrangeiras e índices do legado.
 
 O inventário deve conter 4 seções detalhadas:
 
@@ -96,7 +96,7 @@ O inventário deve conter 4 seções detalhadas:
 
 Para cada fatia vertical:
 1. **Inspeção Linha a Linha:** Abra o arquivo legado correspondente e verifique cada condição `if`, cada validação e cada exceção lançada.
-2. **Implementação com Tecnologias Oficiais:** Use estritamente as bibliotecas contratadas no [02-stack.md](governanca/livro-arquitetura/02-stack.md) (ex: validação com Zod, tipagem TypeScript estrita, ORM contratado).
+2. **Implementação com Tecnologias Oficiais:** Use estritamente as bibliotecas contratadas no [02-stack.md](../livro-arquitetura/02-stack.md) (ex: validação com Zod, tipagem TypeScript estrita, ORM contratado).
 3. **Tratamento de Exceções e Erros:** Garanta que mensagens de erro ou formatos de resposta consumidos por integrações existentes continuem compatíveis ou explicitamente adaptados.
 4. **Atualização do Inventário:** Marque o item como `✅ Migrado` no `governanca/relatorios/inventario-migracao.md`.
 
@@ -125,7 +125,7 @@ Quando todas as fatias verticais do inventário estiverem com status `✅ Migrad
 2. **Descomissionamento Seguro (Após Aprovação):**
    - Remova o diretório de código legado (`src-legado/` ou `legado/`).
    - Remova arquivos de configuração obsoletos da stack antiga.
-   - Atualize [01-visao-geral.md](governanca/livro-arquitetura/01-visao-geral.md) e [02-stack.md](governanca/livro-arquitetura/02-stack.md) refletindo a nova realidade consolidada.
+   - Atualize [01-visao-geral.md](../livro-arquitetura/01-visao-geral.md) e [02-stack.md](../livro-arquitetura/02-stack.md) refletindo a nova realidade consolidada.
    - Crie o commit de consolidação da migração:
      ```bash
      git add .

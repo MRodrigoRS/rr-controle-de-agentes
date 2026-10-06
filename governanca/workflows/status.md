@@ -10,10 +10,10 @@
 
 ## Passos
 
-1. **Sprint ativa:** Liste [sprints/](governanca/sprints/) em ordem numérica. Identifique o primeiro arquivo **não** presente em `sprints/concluidas/`. Abra-o e informe: número da sprint, título, etapa atual (procure `← estou aqui`).
+1. **Sprint ativa:** Liste [sprints/](../sprints/) em ordem numérica. Identifique o primeiro arquivo **não** presente em `sprints/concluidas/`. Abra-o e informe: número da sprint, título, etapa atual (procure `← estou aqui`).
 2. **Estado do repositório:** Execute `git status` e `git log --oneline -5`. Informe: branch atual, arquivos modificados não comitados, últimos commits.
 3. **Calibrar contra o código:** Verifique rapidamente se as etapas já marcadas como pendentes na sprint foram implementadas no código desde o último registro. Corrija o diagnóstico se necessário.
-4. **Notas obsoletas:** Revise [SESSAO.md](governanca/SESSAO.md) — há registros que já não fazem sentido? Liste-os e proponha remoção ao usuário.
+4. **Notas obsoletas:** Revise [SESSAO.md](../SESSAO.md) — há registros que já não fazem sentido? Liste-os e proponha remoção ao usuário.
 5. **Reportar:** Entregue um resumo em 4 linhas:
    - Sprint e etapa atual
    - Estado do repositório (branch, pendências de commit)

@@ -78,7 +78,7 @@
 > **Regra Obrigatória da Governança:**  
 > As propostas de evolução **NUNCA devem permanecer como resumos inline ou listas soltas no relatório**.  
 > O auditor DEVE gerar arquivos Markdown individuais para cada sprint proposta no diretório oficial:  
-> `governanca/sprints/XX-nome-da-sprint.md`, seguindo rigorosamente [sprints/_template.md](governanca/sprints/_template.md).
+> `governanca/sprints/XX-nome-da-sprint.md`, seguindo rigorosamente [sprints/_template.md](../sprints/_template.md).
 
 | Sprint | Arquivo Físico Dedicado | Foco Estratégico & Escopo Expandido | Status |
 |:---:|---|---|:---:|
@@ -87,4 +87,4 @@
 
 ---
 
-*Para iniciar a execução, aguarde a aprovação formal do usuário no Gate 1 da respectiva sprint para inseri-la como ativa em [SESSAO.md](governanca/SESSAO.md).*
+*Para iniciar a execução, aguarde a aprovação formal do usuário no Gate 1 da respectiva sprint para inseri-la como ativa em [SESSAO.md](../SESSAO.md).*

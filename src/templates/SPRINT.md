@@ -50,11 +50,11 @@ sessao_atual: 0
    - [ ] Segurança: inputs validados, sem credenciais hardcoded
    - [ ] Código: sem código morto, duplicado, nomes claros, sem `any`
    - [ ] Manutenibilidade: lógica no lugar certo, sem constantes mágicas
-   - [ ] Padrões de engenharia: seguiu os manuais em [padroes/](governanca/padroes/) ([frontend.md](governanca/padroes/frontend.md) e [backend.md](governanca/padroes/backend.md))
+   - [ ] Padrões de engenharia: seguiu os manuais em [padroes/](../padroes/) ([frontend.md](../padroes/frontend.md) e [backend.md](../padroes/backend.md))
    - [ ] Testes passando
-5. **Antes de finalizar a sprint**, consulte a pasta [skills/](governanca/skills/) para atualizar
-   o [livro de arquitetura](governanca/livro-arquitetura/) com as regras de negócio, dados
-   e comportamentos implementados (usando a skill [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md)).
+5. **Antes de finalizar a sprint**, consulte a pasta [skills/](../skills/) para atualizar
+   o [livro de arquitetura](../livro-arquitetura/) com as regras de negócio, dados
+   e comportamentos implementados (usando a skill [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md)).
 6. **Revisão adversarial.** Antes de apresentar ao usuário, mude o objetivo
    e tente quebrar o que foi feito: procure casos extremos, assuma que a
    solução contém um bug e encontre-o, verifique quais requisitos podem
@@ -116,14 +116,6 @@ Cada passo: onde ir → o que fazer → resultado esperado.*
 obrigatória: nunca diga "pronto" se não testou.*
 
 - (ex: pagamento real com cartão verdadeiro ainda não testado; não testado em celular antigo)
-
----
-
-## Como Arquivar
- 
-Após aprovação do usuário e commit:
-1. Mova este arquivo para `governanca/sprints/concluidas/`
-2. Abra `governanca/SESSAO.md` e aponte `**Sprint Ativa:**` para a próxima sprint (ou `[Aguardando planejamento]`).
 
 ---
 

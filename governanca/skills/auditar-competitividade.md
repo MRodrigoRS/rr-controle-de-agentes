@@ -22,8 +22,8 @@ description: Analisa propósito, completude como produto, concorrência real e g
 
 Examine estes artefatos para entender **o que o projeto faz**:
 
-1. [PRD.md](governanca/PRD.md) — qual problema o produto resolve?
-2. [PLANO.md](governanca/PLANO.md) — qual o escopo planejado?
+1. [PRD.md](../PRD.md) — qual problema o produto resolve?
+2. [PLANO.md](../PLANO.md) — qual o escopo planejado?
 3. README do projeto (se houver na raiz) — como o projeto se descreve?
 4. **Rotas e páginas** — examine `src/app/`, `src/pages/`, endpoints de API
    para listar as funcionalidades implementadas

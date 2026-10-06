@@ -12,18 +12,18 @@ description: Orquestra todas as auditorias do projeto em uma única varredura se
 ## Fases
 
 Execute em ordem. Cada fase gera seu próprio relatório usando o template
-em [_template.md](governanca/relatorios/_template.md).
+em [_template.md](../relatorios/_template.md).
 
 | Fase | Skill | Relatório gerado |
 |------|-------|-----------------|
-| 0 | [auditar-comercializacao.md](governanca/skills/auditar-comercializacao.md) | `auditoria-comercializacao.md` |
-| 1 | [auditar-repositorio.md](governanca/skills/auditar-repositorio.md) | `auditoria-repositorio.md` |
-| 2 | [auditar-consistencia-visual.md](governanca/skills/auditar-consistencia-visual.md) | `auditoria-consistencia.md` |
-| 3 | [auditar-responsividade.md](governanca/skills/auditar-responsividade.md) | `auditoria-responsividade.md` |
-| 4 | [auditar-textos-usuario.md](governanca/skills/auditar-textos-usuario.md) | `auditoria-textos.md` |
-| 5 | [auditar-prontidao-producao.md](governanca/skills/auditar-prontidao-producao.md) | `auditoria-producao.md` |
-| 6 | [auditar-competitividade.md](governanca/skills/auditar-competitividade.md) | `auditoria-competitividade.md` |
-| 7 | *(Se aplicável)* [desenvolver-e-auditar-gas.md](governanca/skills/desenvolver-e-auditar-gas.md) | `auditoria-gas.md` |
+| 0 | [auditar-comercializacao.md](auditar-comercializacao.md) | `auditoria-comercializacao.md` |
+| 1 | [auditar-repositorio.md](auditar-repositorio.md) | `auditoria-repositorio.md` |
+| 2 | [auditar-consistencia-visual.md](auditar-consistencia-visual.md) | `auditoria-consistencia.md` |
+| 3 | [auditar-responsividade.md](auditar-responsividade.md) | `auditoria-responsividade.md` |
+| 4 | [auditar-textos-usuario.md](auditar-textos-usuario.md) | `auditoria-textos.md` |
+| 5 | [auditar-prontidao-producao.md](auditar-prontidao-producao.md) | `auditoria-producao.md` |
+| 6 | [auditar-competitividade.md](auditar-competitividade.md) | `auditoria-competitividade.md` |
+| 7 | *(Se aplicável)* [desenvolver-e-auditar-gas.md](desenvolver-e-auditar-gas.md) | `auditoria-gas.md` |
 
 **Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
 → corrige fundamentos (segurança, práticas e oportunidades de evolução) →
@@ -94,5 +94,5 @@ no próprio relatório da fase (seção `## Sprint Sugerida`). Copie de lá.*
 1. Apresente o sumário ao usuário
 2. Pergunte se deseja criar as sprints sugeridas
 3. Se autorizado, copie a `Sprint Sugerida` de cada relatório para
-   [sprints/](governanca/sprints/)
-4. Registre nas notas persistentes de [SESSAO.md](governanca/SESSAO.md) que a faxina foi concluída
+   [sprints/](../sprints/)
+4. Registre nas notas persistentes de [SESSAO.md](../SESSAO.md) que a faxina foi concluída

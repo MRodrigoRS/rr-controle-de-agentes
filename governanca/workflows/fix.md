@@ -29,7 +29,7 @@
    - **Solução proposta:** o que será alterado
 
 2. **Implementação Direta:**
-   Aplique a correção respeitando os padrões de engenharia em [padroes/](governanca/padroes/) ([frontend.md](governanca/padroes/frontend.md) ou [backend.md](governanca/padroes/backend.md)).
+   Aplique a correção respeitando os padrões de engenharia em [padroes/](../padroes/) ([frontend.md](../padroes/frontend.md) ou [backend.md](../padroes/backend.md)).
 
 3. **Verificação & Não-Regressão:**
    - Execute os testes automatizados existentes (`npm test` ou comando da stack).
@@ -41,7 +41,7 @@
      ```bash
      git commit -m "fix(escopo): descrição concisa da correção"
      ```
-   - Registre uma linha objetiva em [SESSAO.md](governanca/SESSAO.md) sob a sessão atual:
+   - Registre uma linha objetiva em [SESSAO.md](../SESSAO.md) sob a sessão atual:
      `- [Fix] Corrigido bug no componente X (commit: hash).`
 
 ---
@@ -50,5 +50,5 @@
 
 - Bug corrigido ou ajuste aplicado com sucesso
 - Build e testes passando com regressão zero
-- Padrões de engenharia seguidos ([padroes/](governanca/padroes/))
-- Commit realizado e registrado em [SESSAO.md](governanca/SESSAO.md)
+- Padrões de engenharia seguidos ([padroes/](../padroes/))
+- Commit realizado e registrado em [SESSAO.md](../SESSAO.md)

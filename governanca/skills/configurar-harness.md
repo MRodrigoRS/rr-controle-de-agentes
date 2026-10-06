@@ -44,7 +44,7 @@ Este comando atômico:
 
 ### 2. Proponha Integrações e MCPs (Dirigido pela Stack)
 
-Não instale MCPs genéricos "por garantia". Derive estritamente do [02-stack.md](governanca/livro-arquitetura/02-stack.md):
+Não instale MCPs genéricos "por garantia". Derive estritamente do [02-stack.md](../livro-arquitetura/02-stack.md):
 
 1. **Examine a stack real do projeto:**
    - **PostgreSQL:** propor MCP oficial do PostgreSQL (se houver necessidade de inspeção direta de schemas).

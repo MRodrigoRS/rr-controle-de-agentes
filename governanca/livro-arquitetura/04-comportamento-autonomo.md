@@ -57,7 +57,7 @@
 |------|------|-------------|
 | | | |
 
-> Mantenha atualizado — use a skill [mapear-comportamento-autonomo.md](governanca/skills/mapear-comportamento-autonomo.md) (ou [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md) para reconciliação global).
+> Mantenha atualizado — use a skill [mapear-comportamento-autonomo.md](../skills/mapear-comportamento-autonomo.md) (ou [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md) para reconciliação global).
 
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*
 

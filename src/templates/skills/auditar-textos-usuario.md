@@ -107,4 +107,4 @@ Cada mensagem corrigida vira uma tarefa com o antes → depois.
   ("Cliente salvo com sucesso"), não do que o sistema fez por baixo
 - **Mensagens de erro** dizem o problema e a ação possível, sem termos técnicos
 - Siga também a regra "Linguagem para o Usuário" nos Padrões de Implementação
-  do [AGENTS.md](governanca/AGENTS.md)
+  do [AGENTS.md](../AGENTS.md)

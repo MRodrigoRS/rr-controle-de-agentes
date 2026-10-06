@@ -1,7 +1,7 @@
 # Workflow: Plan
 
 > Produz um plano verificável antes de implementar. Cada sprint carrega o seu
-> plano (veja o template em [sprints/_template.md](governanca/sprints/_template.md)).
+> plano (veja o template em [sprints/_template.md](../sprints/_template.md)).
 
 ## Quando Usar
 
@@ -18,7 +18,7 @@
 
 ## Saída
 
-Sprint em [sprints/](governanca/sprints/) com etapas, tarefas e critérios.
+Sprint em [sprints/](../sprints/) com etapas, tarefas e critérios.
 
 ## Critérios de Conclusão
 

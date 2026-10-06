@@ -31,7 +31,7 @@ fs.writeFileSync(path.join(raiz, "CLAUDE.md"), "# Governança do Projeto — RR 
 const agentsDir = path.join(raiz, ".agents");
 const rulesDir = path.join(agentsDir, "rules");
 fs.mkdirSync(rulesDir, { recursive: true });
-fs.writeFileSync(path.join(rulesDir, "000-governanca.md"), "# Governança — RR Tech Studio\n\nAs diretrizes oficiais deste projeto estão em [governanca/AGENTS.md](governanca/AGENTS.md).\nConsulte [governanca/SESSAO.md](governanca/SESSAO.md) para a sprint ativa e histórico de sessões.\n", "utf-8");
+fs.writeFileSync(path.join(rulesDir, "000-governanca.md"), "# Governança — RR Tech Studio\n\nAs diretrizes oficiais deste projeto estão em [governanca/AGENTS.md](../../governanca/AGENTS.md).\nConsulte [governanca/SESSAO.md](../../governanca/SESSAO.md) para a sprint ativa e histórico de sessões.\n", "utf-8");
 
 // 3. Workflows como slash commands
 const wfSrc = path.join(govDir, "workflows");
@@ -42,7 +42,9 @@ if (fs.existsSync(wfSrc)) {
   for (const f of fs.readdirSync(wfSrc)) {
     if (f.endsWith(".md")) {
       activeWf.add(f);
-      fs.copyFileSync(path.join(wfSrc, f), path.join(wfDest, f));
+      let wfConteudo = fs.readFileSync(path.join(wfSrc, f), "utf-8");
+      wfConteudo = wfConteudo.replace(/\(\.\.\//g, "(../../governanca/");
+      fs.writeFileSync(path.join(wfDest, f), wfConteudo, "utf-8");
     }
   }
 }

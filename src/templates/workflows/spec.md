@@ -1,7 +1,7 @@
 # Workflow: Spec
 
 > Transforma uma ideia/visão em especificação orientada a requisitos antes de
-> planejar. Alimenta o [PRD.md](governanca/PRD.md).
+> planejar. Alimenta o [PRD.md](../PRD.md).
 
 ## Quando Usar
 
@@ -18,7 +18,7 @@
 
 ## Saída
 
-Atualização de [PRD.md](governanca/PRD.md) com os critérios de aceite e o escopo.
+Atualização de [PRD.md](../PRD.md) com os critérios de aceite e o escopo.
 
 ## Critérios de Conclusão
 

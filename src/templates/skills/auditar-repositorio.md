@@ -60,7 +60,7 @@ Examine arquivo por arquivo em busca de:
 
 ### 3. Inconsistências
 
-- **Doc vs código** — o [livro de arquitetura](governanca/livro-arquitetura/), [PLANO.md](governanca/PLANO.md), [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md)
+- **Doc vs código** — o [livro de arquitetura](../livro-arquitetura/), [PLANO.md](../PLANO.md), [convencoes-estrutura-de-pastas.md](convencoes-estrutura-de-pastas.md)
   descrevem algo diferente do que o código implementa
 - **Configurações conflitantes** — variáveis de ambiente definidas em
   múltiplos lugares com valores diferentes
@@ -82,7 +82,7 @@ morto, funções longas) já estão cobertos em Más Práticas:
   se repetem e virariam um hook customizado; helpers espalhados que pertencem
   a `src/lib/`
   > Para **executar** a modularização dos achados de extração (DRY, regressão
-  > zero), use a skill [modularizar-padroes-recorrentes.md](governanca/skills/modularizar-padroes-recorrentes.md).
+  > zero), use a skill [modularizar-padroes-recorrentes.md](modularizar-padroes-recorrentes.md).
 - **Simplificação** — código verboso que uma library moderna resolveria em
   poucas linhas (validação manual → Zod, fetch raw → axios, datas →
   date-fns); aninhamento profundo que um early return resolveria; muitos
@@ -104,14 +104,14 @@ morto, funções longas) já estão cobertos em Más Práticas:
 
 Examine se a base de código obedece fielmente às diretrizes dos manuais técnicos:
 
-#### Padrões de Frontend ([frontend.md](governanca/padroes/frontend.md))
+#### Padrões de Frontend ([frontend.md](../padroes/frontend.md))
 - **Design Tokens & Consistência Visual:** Existem cores hexadecimais arbitrárias, inline styles ou valores mágicos de espaçamento que deveriam utilizar os tokens semânticos do Design System / tema?
 - **Estados Assíncronos Completos:** Telas e componentes assíncronos cobrem obrigatoriamente os 4 estados essenciais (`Idle`, `Loading/Skeleton`, `Success/Empty State` e `Error amigável com botão de retry`)?
 - **Acessibilidade (WCAG 2.1 AA):** Elementos interativos (`<button>`, `<a>`) possuem labels acessíveis (`aria-label`), tags HTML semânticas adequadas e foco visível para navegação por teclado?
 - **Separação de Camadas (Clean Components):** Componentes de apresentação misturam requisições de rede brutas e mutações complexas em vez de delegar a custom hooks ou presenters?
 - **Layout & Responsividade:** Interfaces quebram em mobile (360px), causam scroll horizontal involuntário ou desrespeitam o grid responsivo?
 
-#### Padrões de Backend ([backend.md](governanca/padroes/backend.md))
+#### Padrões de Backend ([backend.md](../padroes/backend.md))
 - **Zero-Trust Input Validation:** Todos os endpoints e eventos externos (params, query, body, webhooks, filas) possuem schemas rígidos de validação na borda (Zod, Valibot, etc.) antes de atingir a lógica de negócio?
 - **Arquitetura em Camadas:** Há controllers/rotas executando queries de banco ou SQL diretamente, furando o desacoplamento da camada de Service/Use-Case?
 - **Tratamento de Erros Tipados:** Existem blocos `catch (err: any)` genéricos, `catch` vazios ou swallowed errors? Erros de domínio usam classes tipadas e respostas estruturadas (formato RFC 7807)?

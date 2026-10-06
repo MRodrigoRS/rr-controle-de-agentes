@@ -12,14 +12,14 @@ description: Extrai e documenta regras de negócio, fórmulas, fluxos, estados e
 ## Quando Executar
 
 Esta skill é acionada **automaticamente** ao final de cada sprint
-(pelas instruções do workflow `/implement`), após executar [criar-testes.md](governanca/skills/criar-testes.md)
+(pelas instruções do workflow `/implement`), após executar [criar-testes.md](criar-testes.md)
 e antes de apresentar o resultado ao usuário.
 
 Também pode ser executada:
 - **Sob demanda** — quando o usuário pedir um mapeamento completo
 - **Antes de auditorias** — para o auditor entender o comportamento
   esperado antes de procurar problemas
-- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md)
+- **Reconciliação global** — para realinhar simultaneamente todos os volumes do livro de arquitetura (01 a 04), utilize a skill [sincronizar-documentacao.md](sincronizar-documentacao.md)
 
 
 ## Como Executar
@@ -39,12 +39,12 @@ Percorra os arquivos de código relevantes (`src/`, `prisma/`, `appsscript.json`
 | Integrações | Chamadas HTTP, webhooks, bibliotecas externas (GmailApp, Mercado Pago, Stripe) |
 | Efeitos colaterais | Envio de e-mail, notificações, cache, log, jobs agendados |
 
-### 2. Atualize [03-logica-do-sistema.md](governanca/livro-arquitetura/03-logica-do-sistema.md)
+### 2. Atualize [03-logica-do-sistema.md](../livro-arquitetura/03-logica-do-sistema.md)
 
 Para cada categoria, preencha ou atualize a tabela correspondente:
 
 - **Regras de Negócio:** extraia cada regra com ID (`RN-01`), descrição,
-  localização no código e referência ao requisito no [PRD.md](governanca/PRD.md)
+  localização no código e referência ao requisito no [PRD.md](../PRD.md)
 - **Fórmulas e Cálculos:** documente a fórmula em linguagem natural e a
   localização. Inclua exemplos numéricos se possível
 - **Fluxos de Dados:** descreva o percurso dos dados com diagrama textual

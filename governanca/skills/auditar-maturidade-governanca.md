@@ -83,7 +83,7 @@ O auditor DEVE obrigatoriamente consultar a internet (via ferramentas de busca n
 ---
 
 ### Fase 3: Geração do Relatório Formal e Rubrica de Notas
-Crie ou atualize o relatório oficial em `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` utilizando a estrutura de [_template_evolucao_governanca.md](governanca/relatorios/_template_evolucao_governanca.md):
+Crie ou atualize o relatório oficial em `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` utilizando a estrutura de [_template_evolucao_governanca.md](../relatorios/_template_evolucao_governanca.md):
 1. Transcreva o **Manifesto de Cobertura Integral** consolidando todas as frentes auditadas.
 2. Atribua notas honestas e fundamentadas (0 a 10) para cada um dos 6 pilares de maturidade, seguindo a **Régua Métrica Objetiva**:
    - **0 a 4 (Emergente / Frágil):** Presença de links quebrados (404), templates com dados sintéticos/placeholders não preenchidos, ou ferramentas de P&D vazando para clientes.
@@ -105,13 +105,13 @@ As propostas de evolução **NUNCA devem permanecer como resumos genéricos ou l
 1. **Geração de Arquivos Físicos Dedicados:**
    - O auditor DEVE gerar arquivos Markdown individuais para cada sprint proposta dentro do diretório oficial:
      `governanca/sprints/XX-nome-da-sprint.md`
-   - Cada arquivo de sprint deve seguir rigorosamente a estrutura completa de [sprints/_template.md](governanca/sprints/_template.md): frontmatter (`status: pendente`, `sessao_atual: 0`), objetivo mensurável, etapas detalhadas com tarefas concretas em checkboxes `[ ]`, critérios de aceite, instruções de Gate 1 e Gate 2, roteiro de verificação passo a passo e limitações honestas.
+   - Cada arquivo de sprint deve seguir rigorosamente a estrutura completa de [sprints/_template.md](../sprints/_template.md): frontmatter (`status: pendente`, `sessao_atual: 0`), objetivo mensurável, etapas detalhadas com tarefas concretas em checkboxes `[ ]`, critérios de aceite, instruções de Gate 1 e Gate 2, roteiro de verificação passo a passo e limitações honestas.
 2. **Desdobramento Completo do Escopo (Roadmap Não-Econômico):**
    - Não economize na quantidade de sprints. Divida o trabalho em sprints temáticas especializadas e encadeadas (ex: Sprint 01 para correções mecânicas imediatas; Sprint 02 para segurança e blindagem agêntica; Sprint 03 para ferramentas analíticas zero-token; Sprint 04 para contexto e ergonomia).
 3. **Vinculação no Relatório:**
    - A Seção 5 do relatório de auditoria deve conter a tabela com o resumo de cada sprint e links Markdown navegáveis para seus arquivos físicos correspondentes em `governanca/sprints/`.
 4. **Aguarde a Validação do Usuário:**
-   - Somente após a aprovação formal do usuário no Gate 1 da respectiva sprint, insira as tarefas em [SESSAO.md](governanca/SESSAO.md) e inicie a implementação.
+   - Somente após a aprovação formal do usuário no Gate 1 da respectiva sprint, insira as tarefas em [SESSAO.md](../SESSAO.md) e inicie a implementação.
 
 ---
 
@@ -122,7 +122,7 @@ As propostas de evolução **NUNCA devem permanecer como resumos genéricos ou l
   2. É proibido supor ou "executar mentalmente" testes e comandos de validação.
   3. É proibido emitir diagnósticos sem citar o par `arquivo:linha` onde a evidência foi comprovada.
   4. É proibido agrupar sprints em resumos inline no relatório em vez de gerar os arquivos físicos dedicados em `governanca/sprints/`.
-- **Coerência Sistêmica:** As recomendações da auditoria e o formato das sprints devem respeitar a escala de complexidade consagrada em [evoluir-governanca.md](governanca/skills/evoluir-governanca.md) e [usar-subagentes.md](governanca/skills/usar-subagentes.md):
+- **Coerência Sistêmica:** As recomendações da auditoria e o formato das sprints devem respeitar a escala de complexidade consagrada em [evoluir-governanca.md](evoluir-governanca.md) e [usar-subagentes.md](usar-subagentes.md):
   $$\text{Regra em Manual (.md)} \longrightarrow \text{Script Nativo} \longrightarrow \text{Skill sob Demanda} \longrightarrow \text{Subagente Isolado}$$
 - **Não Inventar Dependências:** Nunca sugira ferramentas externas pesadas se um script nativo Node.js ou padrão simples resolver com estabilidade e zero dependências.
 - **Portabilidade Total:** Tudo o que for adotado na governança deve funcionar de forma transparente no Windows, macOS e Linux.

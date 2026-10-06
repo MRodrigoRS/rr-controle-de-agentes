@@ -18,7 +18,7 @@ description: Analisa compatibilidade mobile — viewport, layout, toque, perform
 
 ## Pré-requisitos
 
-- A skill [auditar-repositorio.md](governanca/skills/auditar-repositorio.md) deve ter sido executada antes, para
+- A skill [auditar-repositorio.md](auditar-repositorio.md) deve ter sido executada antes, para
   garantir que não há vulnerabilidades ou más práticas críticas
 - O agente deve ter navegado pelo projeto (UI atual, se existir) para
   entender o estado real da interface

@@ -84,7 +84,7 @@ envio de e-mail, atualização de relatórios.*
 
 ---
 
-> Mantenha atualizado — use a skill [mapear-logica-do-sistema.md](governanca/skills/mapear-logica-do-sistema.md) ao final
-> de cada sprint (ou [sincronizar-documentacao.md](governanca/skills/sincronizar-documentacao.md) para reconciliação global).
+> Mantenha atualizado — use a skill [mapear-logica-do-sistema.md](../skills/mapear-logica-do-sistema.md) ao final
+> de cada sprint (ou [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md) para reconciliação global).
 
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*

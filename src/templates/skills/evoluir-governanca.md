@@ -25,14 +25,14 @@ description: Registra o que deu errado e transforma em nova regra, skill, workfl
    - Qual etapa deveria ser automatizada?
    - Qual MCP era desnecessário?
 3. Transforme a resposta em ação:
-   - diretriz de UI/UX, componentes, acessibilidade ou estado frontend → [frontend.md](governanca/padroes/frontend.md)
-   - diretriz de APIs, segurança, validação, persistência ou backend → [backend.md](governanca/padroes/backend.md)
-   - regra constitucional ou disciplina fundamental do agente → [AGENTS.md](governanca/AGENTS.md) (Cláusulas Fundamentais)
-   - skill faltante → criar skill em [skills/](governanca/skills/)
-   - procedimento recorrente → workflow em [workflows/](governanca/workflows/)
-   - teste que falta → tarefa em [sprints/](governanca/sprints/)
-   - automação → script/hook em [scripts/](governanca/scripts/)
-4. Registre em [SESSAO.md](governanca/SESSAO.md) e no [CHANGELOG.md](governanca/CHANGELOG.md) o que mudou e por quê.
+   - diretriz de UI/UX, componentes, acessibilidade ou estado frontend → [frontend.md](../padroes/frontend.md)
+   - diretriz de APIs, segurança, validação, persistência ou backend → [backend.md](../padroes/backend.md)
+   - regra constitucional ou disciplina fundamental do agente → [AGENTS.md](../AGENTS.md) (Cláusulas Fundamentais)
+   - skill faltante → criar skill em [skills/](../skills/)
+   - procedimento recorrente → workflow em [workflows/](../workflows/)
+   - teste que falta → tarefa em [sprints/](../sprints/)
+   - automação → script/hook em [scripts/](../scripts/)
+4. Registre em [SESSAO.md](../SESSAO.md) e no [CHANGELOG.md](../CHANGELOG.md) o que mudou e por quê.
 5. Se criou uma nova skill ou workflow, re-sincronize o harness:
    ```bash
    npx tsx {{caminhoRR}}src/scripts/configurar-harness.ts .
@@ -63,13 +63,13 @@ Quando uma melhoria for validada no projeto e fizer sentido para todo o ecossist
 
 4. **Registrar no CHANGELOG Oficial da Governança:**
    - Antes de commitar as alterações na progenitora, execute `git diff` e analise minuciosamente todas as mudanças realizadas.
-   - Adicione uma entrada descritiva em [CHANGELOG.md](governanca/CHANGELOG.md), agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
+   - Adicione uma entrada descritiva em [CHANGELOG.md](../CHANGELOG.md), agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
    - Isso garante que qualquer projeto associado que sincronizar a matriz receba o histórico transparente do que mudou.
 
 ## Como Consumir Atualizações da Matriz nos Projetos Associados
 
 Em qualquer projeto associado (em qualquer computador), para puxar as evoluções mais recentes da matriz:
-- **Modo Essencial (Seguro / Padrão):** Atualiza padrões em [padroes/](governanca/padroes/), workflows em [workflows/](governanca/workflows/), skills em [skills/](governanca/skills/) e catálogo sem mexer em [SESSAO.md](governanca/SESSAO.md) ou no [livro de arquitetura](governanca/livro-arquitetura/):
+- **Modo Essencial (Seguro / Padrão):** Atualiza padrões em [padroes/](../padroes/), workflows em [workflows/](../workflows/), skills em [skills/](../skills/) e catálogo sem mexer em [SESSAO.md](../SESSAO.md) ou no [livro de arquitetura](../livro-arquitetura/):
   ```bash
   node governanca/scripts/sincronizar.mjs
   ```
@@ -82,6 +82,6 @@ Em qualquer projeto associado (em qualquer computador), para puxar as evoluçõe
 
 - Não transforme um caso isolado em regra — procure padrão (repetiu 2+ vezes).
 - Propostas e alterações na progenitora passam obrigatoriamente por aprovação prévia do usuário.
-- Toda alteração na governança exige atualização do [CHANGELOG.md](governanca/CHANGELOG.md) antes do commit.
+- Toda alteração na governança exige atualização do [CHANGELOG.md](../CHANGELOG.md) antes do commit.
 - Priorize a ferramenta mais simples: regra em manual → script → skill → workflow → agente.
 

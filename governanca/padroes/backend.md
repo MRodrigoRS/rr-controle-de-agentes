@@ -75,7 +75,7 @@
 ## 7. Peculiaridades de Plataforma (Google Apps Script / Serverless)
 
 - **Backend em Google Apps Script (GAS):** Quando a aplicação utilizar Google Apps Script (com Google Sheets, HtmlService, DriveApp, etc.), a camada de servidor possui restrições estritas de latência RPC (200–500ms por chamada), cotas de execução e concorrência:
-  - É **obrigatório** consultar e seguir o manual em [desenvolver-e-auditar-gas.md](governanca/skills/desenvolver-e-auditar-gas.md).
+  - É **obrigatório** consultar e seguir o manual em [desenvolver-e-auditar-gas.md](../skills/desenvolver-e-auditar-gas.md).
   - Proibido ler/escrever na planilha dentro de laços (`getValue`/`appendRow` em loops); utilize sempre Batch Insert e Request Scope Cache.
   - Toda escrita concorrente deve utilizar `LockService` com timeout e liberação obrigatória no `finally`.
   - Segredos devem residir exclusivamente em `PropertiesService.getScriptProperties()`.

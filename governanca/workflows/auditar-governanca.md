@@ -12,20 +12,20 @@
 ## Passos
 
 1. **Ativar a Skill de Referência:**
-   - Siga o guia passo a passo em [auditar-maturidade-governanca.md](governanca/skills/auditar-maturidade-governanca.md).
+   - Siga o guia passo a passo em [auditar-maturidade-governanca.md](../skills/auditar-maturidade-governanca.md).
 2. **Raio-X Interno (Evidências Mandatórias):**
-   - Inspecione regras, manuais em [padroes/](governanca/padroes/), catálogo em [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md), scripts portáteis e teste a integridade com `npm test` real no terminal.
+   - Inspecione regras, manuais em [padroes/](../padroes/), catálogo em [CATALOGO_TECNOLOGIAS.md](../skills/CATALOGO_TECNOLOGIAS.md), scripts portáteis e teste a integridade com `npm test` real no terminal.
    - Avalie a **coerência geral dos arquivos Markdown (.md)**: divisão de responsabilidades, ausência de redundâncias/repetições desnecessárias e garantia de que todos os arquivos se integram em um fluxo fluido sem arquivos órfãos.
    - Monte obrigatoriamente a tabela de **Manifesto de Cobertura** (arquivos lidos na íntegra x linhas).
 3. **Pesquisa Externa & Benchmark Web:**
    - Investigue inovações recentes em agent harness engineering, ferramentas de análise estática sem consumo de tokens (Knip, Biome) e segurança agêntica (OWASP 2026).
 4. **Gerar Relatório de Auditoria:**
-   - Crie o artefato `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` com base em [_template_evolucao_governanca.md](governanca/relatorios/_template_evolucao_governanca.md).
+   - Crie o artefato `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` com base em [_template_evolucao_governanca.md](../relatorios/_template_evolucao_governanca.md).
 5. **Materializar Sprints Físicas Dedicadas (Roadmap Executável):**
    - **É OBRIGATÓRIO gerar arquivos físicos dedicados e expandidos para cada sprint identificada no diretório oficial:**
      `governanca/sprints/XX-nome-da-sprint.md`
    - É expressamente proibido deixar propostas de sprint como resumos compactados ou listas inline soltas dentro do relatório.
-   - Cada sprint física deve seguir o padrão integral de [sprints/_template.md](governanca/sprints/_template.md), contendo objetivo mensurável, etapas detalhadas, tarefas, critérios de aceite, instruções de Gate 1/2 e roteiro passo a passo de verificação.
+   - Cada sprint física deve seguir o padrão integral de [sprints/_template.md](../sprints/_template.md), contendo objetivo mensurável, etapas detalhadas, tarefas, critérios de aceite, instruções de Gate 1/2 e roteiro passo a passo de verificação.
    - O relatório de auditoria deve conter a tabela com o resumo de cada sprint e links diretos para seus arquivos físicos correspondentes em `governanca/sprints/`.
 
 ## Saída

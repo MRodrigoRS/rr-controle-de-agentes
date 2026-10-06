@@ -17,13 +17,13 @@
 5. Faça uma passada de segurança
 6. Se houver outra sessão/agente disponível, peça revisão independente — ou
    delegue a um **subagente revisor** quando o harness suportar (veja a skill
-   [usar-subagentes.md](governanca/skills/usar-subagentes.md))
+   [usar-subagentes.md](../skills/usar-subagentes.md))
 7. Corrija os achados e reteste
 
 ## Gate de ADR
 
 Antes de encerrar: **"Esta entrega envolveu alguma decisão de design contestável que ainda não tem ADR?"**
-Se sim, crie o registro em [`governanca/livro-arquitetura/decisoes/`](governanca/livro-arquitetura/decisoes/) usando o [`_template.md`](governanca/livro-arquitetura/decisoes/_template.md) antes de apresentar ao Gate 2.
+Se sim, crie o registro em [`governanca/livro-arquitetura/decisoes/`](../livro-arquitetura/decisoes/) usando o [`_template.md`](../livro-arquitetura/decisoes/_template.md) antes de apresentar ao Gate 2.
 
 ## Saída
 

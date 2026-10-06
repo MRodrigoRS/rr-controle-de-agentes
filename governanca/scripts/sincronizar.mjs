@@ -234,6 +234,7 @@ async function sincronizarDeGitHubRemoto() {
       "relatorios/_template_evolucao_governanca.md",
     ]);
 
+    let falhasDownload = 0;
     for (const item of arquivosTemplates) {
       const relPath = item.path.replace(/^src\/templates\//, "");
 
@@ -293,7 +294,15 @@ async function sincronizarDeGitHubRemoto() {
       if (rawRes.ok) {
         const conteudo = await rawRes.text();
         fs.writeFileSync(destAbs, conteudo, "utf-8");
+      } else {
+        console.error(`❌ Falha ao baixar ${item.path} (HTTP ${rawRes.status}: ${rawRes.statusText})`);
+        falhasDownload++;
       }
+    }
+
+    if (falhasDownload > 0) {
+      console.error(`\n❌ Sincronização incompleta: ${falhasDownload} arquivo(s) falharam no download.`);
+      return false;
     }
 
     return true;

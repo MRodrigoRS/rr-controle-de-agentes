@@ -4,7 +4,7 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** [Sprint 01 — Blindagem Estrutural, Links Nativos e Rigor Operacional](governanca/sprints/01-blindagem-estrutural-e-links-nativos.md) (Aguardando Gate 1)
+**Sprint Ativa:** [Sprint 02 — Blindagem Agêntica e Segurança Moderna](sprints/02-blindagem-agentica-e-seguranca-moderna.md) (Aguardando Gate 1)
 
 ---
 
@@ -12,7 +12,7 @@
 
 > Siga estes passos ao abrir uma nova sessão, antes de qualquer tarefa.
 
-1. **Localizar a sprint ativa:** Leia [sprints/](governanca/sprints/) em ordem numérica; identifique o primeiro arquivo que **não** esteja em `sprints/concluidas/`. Essa é a sprint ativa — abra-a.
+1. **Localizar a sprint ativa:** Leia [sprints/](sprints/) em ordem numérica; identifique o primeiro arquivo que **não** esteja em `sprints/concluidas/`. Essa é a sprint ativa — abra-a.
 2. **Verificar o estado real do código:** Compare o que a sprint diz que falta fazer com o que já existe no repositório. Pode ser que etapas estejam implicitamente concluídas ou que o código já tenha avançado além do que o arquivo registra. Corrija o diagnóstico antes de continuar.
 3. **Auditar os registros deste arquivo:** Leia as notas em `## Registro de Sessões` abaixo. Identifique notas que já não fazem sentido (bug resolvido, fluxo refatorado, contexto obsoleto). **Proponha a remoção ao usuário** com justificativa — não delete sem aprovação explícita.
 4. **Reportar o estado:** Declare onde o projeto está de fato: sprint, etapa, estado dos testes, próxima ação recomendada.
@@ -23,7 +23,7 @@
 
 - **Ao Final de Cada Sessão:** Registre um resumo conciso da sessão atual em `## Registro de Sessões`.
 - **Ao Concluir uma Sprint:** Atualize a linha `**Sprint Ativa:**` acima com a próxima sprint planejada.
-- **Ao Arquivar Sprints:** Mova o arquivo para [sprints/](governanca/sprints/) após aprovação no Gate 2.
+- **Ao Arquivar Sprints:** Mova o arquivo para [sprints/](sprints/) após aprovação no Gate 2.
 
 ---
 
@@ -39,12 +39,24 @@
 
 ## Registro de Sessões
 
+### Sessão — 2026-10-06: Conclusão da Sprint 01 — Blindagem Estrutural, Links Nativos e Rigor Operacional
+- **Objetivo:** Implementar as 7 etapas da Sprint 01 para endurecer a validação de templates, eliminar links quebrados, isolar ferramentas de P&D da matriz, auditar wrappers do harness e garantir resiliência de rede.
+- **Entregas Realizadas:**
+  - **Etapa 1:** Saneamento e commit consciente do estado pré-sprint (`6327a61`).
+  - **Etapa 2:** Segregação rigorosa de P&D Matriz vs. Satélites (4 arquivos de P&D isolados da distribuição e bloqueados via `exclusivosMatriz` em `gerador.ts` e `sincronizar.mjs`). Teste automatizado de scaffold comprovou vazamento zero em novos satélites.
+  - **Etapa 3:** Padronização universal de links relativos nativos (`../`, `./`) em subpastas (`governanca/padroes/`, `governanca/livro-arquitetura/`, `governanca/workflows/`, etc.), corrigindo 404 em visualizadores nativos.
+  - **Etapa 4:** Endurecimento do validador `validar-templates.ts` com remoção de fallback permissivo e adição da função `validarParidadeWrappersHarness()` (27 wrappers em paridade 1:1 com skills). `npm test` verde (823 links estritos verificados).
+  - **Etapa 5:** Blindagem da skill `auditar-maturidade-governanca.md` contra alucinações (Manifesto de Cobertura obrigatório e proibição de suposições).
+  - **Etapa 6:** Deduplicação de contexto e SSOT de sessão no `AGENTS.md` (economia de ~180 tokens) e unificação de instruções de arquivamento no template de sprint.
+  - **Etapa 7:** Resiliência de rede e higiene em `sincronizar.mjs` (detecção de falhas em downloads de blobs) e limpeza de scripts obsoletos em `governanca/templates/`.
+- **Status Atual:** Todas as 7 etapas implementadas e verificadas. Sprint 01 arquivada em `sprints/concluidas/`. Repositório pronto para iniciar a Sprint 02 (Aguardando Gate 1).
+
 ### Sessão — 2026-10-06: Auditoria Completa de Maturidade, Blindagem de P&D e Roadmap Multi-Sprint
 - **Objetivo:** Executar auditoria profunda de maturidade da governança matriz com 4 subagentes especializados, blindar a skill de auditoria contra atalhos/preguiça e materializar um roadmap multi-sprint em arquivos físicos dedicados.
 - **Entregas Realizadas:**
   - Inspeção integral (100% das linhas) em mais de 65 arquivos centrais da governança via 4 subagentes especializados (Manuais, Workflows, Scripts e Catálogo/Skills).
-  - Relatório oficial consolidado em [evolucao-governanca-2026-10-06.md](governanca/relatorios/evolucao-governanca-2026-10-06.md), com nota calibrada em 7.8/10 (Maduro).
-  - Blindagem da skill [auditar-maturidade-governanca.md](governanca/skills/auditar-maturidade-governanca.md), do workflow [auditar-governanca.md](governanca/workflows/auditar-governanca.md) e do template [_template_evolucao_governanca.md](governanca/relatorios/_template_evolucao_governanca.md) com: Manifesto de Cobertura obrigatório, proibição absoluta de simulação mental, pesquisa externa na web obrigatória e materialização mandatória de sprints físicas.
+  - Relatório oficial consolidado em [evolucao-governanca-2026-10-06.md](relatorios/evolucao-governanca-2026-10-06.md), com nota calibrada em 7.8/10 (Maduro).
+  - Blindagem da skill [auditar-maturidade-governanca.md](skills/auditar-maturidade-governanca.md), do workflow [auditar-governanca.md](workflows/auditar-governanca.md) e do template [_template_evolucao_governanca.md](relatorios/_template_evolucao_governanca.md) com: Manifesto de Cobertura obrigatório, proibição absoluta de simulação mental, pesquisa externa na web obrigatória e materialização mandatória de sprints físicas.
   - Materialização de 4 sprints físicas dedicadas em `governanca/sprints/` (Sprint 01: Correções mecânicas; Sprint 02: Blindagem agêntica OWASP 2026 e Gitleaks; Sprint 03: Knip zero-token, Biome e saneamento de catálogo; Sprint 04: Context engineering 32 KiB, workflows fluidos e WCAG a11y).
   - Validação de integridade mecânica com `npm test` verde (851 links locais e 27 presets 100% íntegros).
 - **Próximos Passos:** Iniciar nova sessão executando a Sprint 01 (Gate 1 e Etapa 1).
@@ -54,7 +66,7 @@
 - **Entregas Realizadas:**
   - Varredura em 145 arquivos de governança, templates e raiz com eliminação de texto solto.
   - Canonização estrita de referências nos workflows (`fix.md`, `spec.md`, `plan.md`, `implement.md`, `status.md`), manuais (`sincronizacao-remota.md`), livro de arquitetura e skills.
-  - Criação de [INICIO.md](governanca/INICIO.md) na governança da progenitora para resolver referências cruzadas com integridade física garantida.
+  - Criação de [INICIO.md](INICIO.md) na governança da progenitora para resolver referências cruzadas com integridade física garantida.
   - Ampliação da cobertura de testes em `npm test`: **655 links Markdown locais auditados e 100% íntegros**.
   - Paridade total e espelhamento entre `src/templates/` e `governanca/`.
   - Validação completa: `npm test` verde (57/57 templates) e `npm run build` do Next.js aprovado.
@@ -74,9 +86,9 @@
 - **Objetivo:** Sanear todas as fragilidades, condições mortas/órfãs, inconsistências semânticas e aplicar auto-governança na progenitora.
 - **Entregas Realizadas:**
   - `src/servidor/db/migrar-e-seed.ts` e `db.ts`: Implementado auto-seed transparente em bancos vazios com preservação estrita de `id` e `criado_em` do snapshot, eliminando o risco de corrupção dos 27 presets ao recriar o banco.
-  - `src/servidor/gerador.ts`: Eliminado hardcoding estático de 40+ caminhos por descoberta dinâmica de `skills/`, `workflows/`, `padroes/`, `relatorios/` e `scripts/`. Blindado [PLANO.md](governanca/PLANO.md) contra perda de dados. Removida a variável morta `ehGas`.
-  - `src/servidor/harness.ts`: Implementada escrita segura com backup para ponteiros raiz preexistentes ([CLAUDE.md](CLAUDE.md), [AGENTS.md](governanca/AGENTS.md)) e gerador do script portátil autônomo [harness.mjs](governanca/scripts/harness.mjs) (zero dependências).
-  - 10 Skills de governança saneadas: Eliminada a referência confusa a "notas persistentes do [AGENTS.md](governanca/AGENTS.md)", padronizando 100% dos registros em [SESSAO.md](governanca/SESSAO.md).
+  - `src/servidor/gerador.ts`: Eliminado hardcoding estático de 40+ caminhos por descoberta dinâmica de `skills/`, `workflows/`, `padroes/`, `relatorios/` e `scripts/`. Blindado [PLANO.md](PLANO.md) contra perda de dados. Removida a variável morta `ehGas`.
+  - `src/servidor/harness.ts`: Implementada escrita segura com backup para ponteiros raiz preexistentes ([CLAUDE.md](../CLAUDE.md), [AGENTS.md](AGENTS.md)) e gerador do script portátil autônomo [harness.mjs](scripts/harness.mjs) (zero dependências).
+  - 10 Skills de governança saneadas: Eliminada a referência confusa a "notas persistentes do [AGENTS.md](AGENTS.md)", padronizando 100% dos registros em [SESSAO.md](SESSAO.md).
   - Unificação de marca: Substituída a menção legada a "RR Software" por "RR Tech Studio" em todos os templates e convenções.
   - Alinhamento de pastas do modelo de dados: Extratores direcionados para `governanca/livro-arquitetura/modelo-de-dados/`, respeitando a regra pétrea de zero pastas soltas na raiz.
   - Web UI: Busca do catálogo expandida para buscar por ID (ex: `#129`) e termos de `aplicabilidade`.

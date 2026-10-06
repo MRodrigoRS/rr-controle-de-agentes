@@ -19,9 +19,9 @@ description: Sincroniza a governança local com a matriz pública da RR Tech Stu
 
 ## Princípios de Execução
 
-1. **Segurança por Padrão (Modo Essencial):** A sincronização de rotina atualiza apenas padrões, workflows, skills e ferramentas operacionais. **Nunca** toca em [SESSAO.md](governanca/SESSAO.md), [PRD.md](governanca/PRD.md), [PLANO.md](governanca/PLANO.md), [sprints/](governanca/sprints/) ou [livro-arquitetura/](governanca/livro-arquitetura/), preservando 100% do trabalho em andamento.
+1. **Segurança por Padrão (Modo Essencial):** A sincronização de rotina atualiza apenas padrões, workflows, skills e ferramentas operacionais. **Nunca** toca em [SESSAO.md](../SESSAO.md), [PRD.md](../PRD.md), [PLANO.md](../PLANO.md), [sprints/](../sprints/) ou [livro-arquitetura/](../livro-arquitetura/), preservando 100% do trabalho em andamento.
 2. **Zero Dependências:** Todos os comandos rodam com Node.js nativo (18+) via scripts locais em `governanca/scripts/`.
-3. **Comunicação Transparente:** O agente deve sempre ler o [CHANGELOG.md](governanca/CHANGELOG.md) pós-sincronização e apresentar ao usuário exatamente o que mudou.
+3. **Comunicação Transparente:** O agente deve sempre ler o [CHANGELOG.md](../CHANGELOG.md) pós-sincronização e apresentar ao usuário exatamente o que mudou.
 
 ---
 
@@ -48,10 +48,10 @@ node governanca/scripts/sincronizar.mjs
 node governanca/scripts/sincronizar.mjs --total -y
 ```
 
-O script [sincronizar.mjs](governanca/scripts/sincronizar.mjs):
+O script [sincronizar.mjs](../scripts/sincronizar.mjs):
 1. Conecta ao repositório matriz no GitHub.
-2. Baixa as versões mais recentes dos manuais, workflows, skills, scripts operacionais e o [CHANGELOG.md](governanca/CHANGELOG.md).
-3. Invoca automaticamente o [harness.mjs](governanca/scripts/harness.mjs) para espelhar as alterações em `.agents/`.
+2. Baixa as versões mais recentes dos manuais, workflows, skills, scripts operacionais e o [CHANGELOG.md](../CHANGELOG.md).
+3. Invoca automaticamente o [harness.mjs](../scripts/harness.mjs) para espelhar as alterações em `.agents/`.
 
 ---
 
@@ -69,21 +69,21 @@ Confirme que o script reporta a integridade de métricas, arquivos e histórico 
 
 ### Passo 4: Auditar o Changelog e Reportar ao Usuário
 
-1. Abra e leia as últimas entradas de [CHANGELOG.md](governanca/CHANGELOG.md).
+1. Abra e leia as últimas entradas de [CHANGELOG.md](../CHANGELOG.md).
 2. Apresente ao usuário um resumo executivo estruturado:
    - **Novidades Adicionadas:** Quais novas skills, workflows ou funcionalidades chegaram.
    - **Padrões Atualizados:** O que foi aprimorado ou corrigido na governança.
-   - **Status do Painel Web:** Confirmação de que [ui.mjs](governanca/scripts/ui.mjs) está operacional.
+   - **Status do Painel Web:** Confirmação de que [ui.mjs](../scripts/ui.mjs) está operacional.
 
 ---
 
 ### Passo 5: Registrar no Diário de Bordo
 
-Adicione uma linha de registro na seção de notas recentes em [SESSAO.md](governanca/SESSAO.md):
+Adicione uma linha de registro na seção de notas recentes em [SESSAO.md](../SESSAO.md):
 ```markdown
 - **[YYYY-MM-DD]:** Governança sincronizada com a matriz no modo <essencial|total> (versão <X.X.X>).
 ```
 
 ---
 
-*Manual de referência oficial: [sincronizacao-remota.md](governanca/padroes/sincronizacao-remota.md).*
+*Manual de referência oficial: [sincronizacao-remota.md](../padroes/sincronizacao-remota.md).*

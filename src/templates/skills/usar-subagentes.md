@@ -26,11 +26,11 @@ description: Orquestra subagentes (pesquisador, arquiteto, implementador, testad
 
 | Papel | Workflow | Função |
 |---|---|---|
-| `pesquisador` | [research.md](governanca/workflows/research.md) | investiga, fontes, riscos — **não implementa** |
-| `arquiteto` | [spec.md](governanca/workflows/spec.md) / [plan.md](governanca/workflows/plan.md) | estrutura, interfaces, decisões — **não implementa** |
-| `implementador` | [implement.md](governanca/workflows/implement.md) | transforma a spec aprovada em código |
-| `testador` | [test.md](governanca/workflows/test.md) | tenta **quebrar** (QA) |
-| `revisor` | [review.md](governanca/workflows/review.md) | crítico independente (**criador ≠ juiz**) |
+| `pesquisador` | [research.md](../workflows/research.md) | investiga, fontes, riscos — **não implementa** |
+| `arquiteto` | [spec.md](../workflows/spec.md) / [plan.md](../workflows/plan.md) | estrutura, interfaces, decisões — **não implementa** |
+| `implementador` | [implement.md](../workflows/implement.md) | transforma a spec aprovada em código |
+| `testador` | [test.md](../workflows/test.md) | tenta **quebrar** (QA) |
+| `revisor` | [review.md](../workflows/review.md) | crítico independente (**criador ≠ juiz**) |
 
 ## Como Funciona
 
