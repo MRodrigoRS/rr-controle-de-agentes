@@ -55,6 +55,7 @@ Regras inegociáveis da governança:
 - **Português brasileiro no código:** Nomes de entidades, regras de negócio, tabelas de banco, variáveis e funções devem ser escritos em português brasileiro (ex: obterUsuario, salvarPedido, cliente). Termos técnicos universais e padrões de bibliotecas/frameworks (id, payload, props, handler, middleware, token, status, req/res) permanecem em inglês sem tradução forçada.
 - **Backend como autoridade única (Zero-Trust no cliente):** O frontend é uma camada de apresentação descartável e potencialmente manipulável pelo usuário (DevTools/F12). Toda regra de negócio, cálculo de valores/preços, checagem de permissões/papéis e validação de transição de estado deve obrigatoriamente ser recalculada e validada no backend, nunca aceitando dados calculados ou permissões vindas cegamente do payload do cliente.
 - **Dependências com justificativa:** Não instalar dependências sem justificativa prévia registrada. Prefira bibliotecas consolidadas e de manutenção ativa.
+- **Changelog de produto atualizado a cada commit:** Antes de fechar qualquer commit com código, regras de negócio, telas ou APIs do produto, o agente deve obrigatoriamente registrar o delta consolidado (Adicionado, Modificado, Corrigido) no `CHANGELOG.md` da raiz do projeto (`../CHANGELOG.md`). É proibido comitar sem atualizar o changelog do produto, e é proibido narrar processo/histórico de edição (apenas o delta final entregue). Alterações exclusivas nas regras da governança são registradas em [CHANGELOG.md](CHANGELOG.md).
 
 ## Critérios de Qualidade
 
@@ -62,6 +63,7 @@ Boas práticas esperadas em todo o desenvolvimento:
 
 - **Build sem erros:** Código deve passar em `npm run build` (ou equivalente) sem erros.
 - **Commits descritivos:** Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê.
+- **Changelog do produto na raiz:** Todo commit de desenvolvimento de software deve refletir seu delta no `CHANGELOG.md` da raiz do projeto, mantendo as versões e entregas do produto transparentes para humanos e agentes.
 - **Testes incrementais:** Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades.
 - **Responsividade e PWA:** Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão.
 - **Estrutura de pastas:** Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](skills/convencoes-estrutura-de-pastas.md). Não crie pastas soltas na raiz do projeto.

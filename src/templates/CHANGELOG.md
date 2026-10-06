@@ -6,6 +6,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [Sprint 01.1] — 2026-10-06
+
+### Adicionado
+- **Segregação de Changelogs:** Template `PRODUTO_CHANGELOG.md` provisionado automaticamente na raiz de novos projetos satélites (`CHANGELOG.md`), separando o ciclo do software do cliente do histórico da governança matriz.
+- **Hábito Operacional de Commit:** Cláusula pétrea e critério de qualidade exigindo que o agente registre o delta consolidado no `CHANGELOG.md` da raiz antes de fechar qualquer commit.
+- **Integração em Workflows:** Passos mandatórios de atualização de changelog incluídos nos workflows `/implement`, `/fix`, `/release` e templates de sprint.
+
+---
+
 ## [Sprint 01] — 2026-10-06
 
 ### Adicionado

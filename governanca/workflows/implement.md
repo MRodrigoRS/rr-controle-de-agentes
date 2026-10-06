@@ -15,7 +15,8 @@
 3. Ao final, passe o checklist de qualidade e a revisão adversarial
 4. Preencha `## Evidências`, `## Limitações` e `## Roteiro de Verificação`
 5. Apresente ao usuário (Gate 2)
-6. Após aprovação, commite e arquive a sprint atualizando [SESSAO.md](../SESSAO.md)
+6. **Atualize o Changelog:** Registre o delta consolidado (Adicionado/Modificado/Corrigido) desta entrega no `CHANGELOG.md` da raiz do projeto (e em `governanca/CHANGELOG.md` se houver mudanças de governança) antes de comitar.
+7. Após aprovação, commite e arquive a sprint atualizando [SESSAO.md](../SESSAO.md)
 
 ## Saída
 
@@ -27,4 +28,5 @@ Código implementado + testes + evidências no arquivo da sprint.
 - Padrões de desenvolvimento seguidos ([padroes/](../padroes/))
 - Testes passando (N/N)
 - Evidências registradas e limitações honestas
+- Changelog do produto atualizado na raiz (`CHANGELOG.md`) com o delta da entrega
 - Entrega aprovada pelo usuário (Gate 2)

@@ -174,6 +174,8 @@ export function validarIntegridadeLinksMarkdown(): boolean {
             dirDestino = path.join(rootDir, "governanca/relatorios");
           } else if (relTpl === "SPRINT.md") {
             dirDestino = path.join(rootDir, "governanca/sprints");
+          } else if (relTpl === "PRODUTO_CHANGELOG.md") {
+            dirDestino = rootDir;
           }
 
           const resolvidoNoDestino = path.resolve(dirDestino, destLimpo);

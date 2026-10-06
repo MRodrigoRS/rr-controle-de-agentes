@@ -269,6 +269,14 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     fs.writeFileSync(destino, conteudo, "utf-8");
   }
 
+  // 11. CHANGELOG.md na raiz do projeto (Changelog do produto/aplicação do cliente)
+  // NUNCA sobrescreve se já existir, preservando o histórico de releases do produto mesmo em regeneração total
+  const caminhoChangelogProduto = path.join(caminhoAbs, "CHANGELOG.md");
+  if (!fs.existsSync(caminhoChangelogProduto)) {
+    const conteudoChangelogProduto = processarTemplate("PRODUTO_CHANGELOG.md", ctx);
+    fs.writeFileSync(caminhoChangelogProduto, conteudoChangelogProduto, "utf-8");
+  }
+
   // Gera o catálogo dinâmico de tecnologias
   const catalogoMd = gerarCatalogoMarkdown();
   const catalogoPath = path.join(governancaDir, "skills", "CATALOGO_TECNOLOGIAS.md");

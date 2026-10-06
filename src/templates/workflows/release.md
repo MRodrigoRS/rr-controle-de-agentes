@@ -12,14 +12,16 @@
 2. Execute a skill [auditar-textos-usuario.md](../skills/auditar-textos-usuario.md) (jargão técnico, contatos fictícios)
 3. Se houver pagamentos: execute a skill [auditar-comercializacao.md](../skills/auditar-comercializacao.md)
 4. Corrija os bloqueantes antes de liberar
-5. Documente URLs de produção e contato de emergência
-6. Deploy + verificação pós-release (smoke test, logs, monitoramento)
+5. **Consolidação do Changelog:** No `CHANGELOG.md` da raiz do projeto, transforme a seção `## [Não lançado]` no cabeçalho formal da release (ex: `## [1.0.0] — AAAA-MM-DD`), conferindo se todos os deltas do software estão refletidos.
+6. Documente URLs de produção e contato de emergência
+7. Deploy + verificação pós-release (smoke test, logs, monitoramento)
 
 ## Saída
 
-Release feita com bloqueantes zerados e pós-release verificado.
+Release feita com bloqueantes zerados, changelog do produto oficializado e pós-release verificado.
 
 ## Critérios de Conclusão
 
 - Nenhum `[BLOQ]` em aberto
+- Versão consolidada e documentada em `CHANGELOG.md` da raiz do projeto
 - Aplicação verificada em produção após o deploy

@@ -36,7 +36,8 @@
    - Se for bug lógico, adicione um teste unitário que comprove que o bug não voltará a ocorrer.
    - Verifique que o linter e o build passam sem erros.
 
-4. **Commit & Registro:**
+4. **Changelog & Commit:**
+   - Atualize o `CHANGELOG.md` na raiz do projeto sob `### Corrigido` (e `governanca/CHANGELOG.md` se for ajuste de governança) registrando o delta conciso da correção antes de comitar.
    - Faça commit convencional direto:
      ```bash
      git commit -m "fix(escopo): descrição concisa da correção"
@@ -51,4 +52,5 @@
 - Bug corrigido ou ajuste aplicado com sucesso
 - Build e testes passando com regressão zero
 - Padrões de engenharia seguidos ([padroes/](../padroes/))
+- Delta registrado em `CHANGELOG.md` da raiz do projeto
 - Commit realizado e registrado em [SESSAO.md](../SESSAO.md)

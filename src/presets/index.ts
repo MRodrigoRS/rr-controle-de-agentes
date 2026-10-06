@@ -70,6 +70,7 @@ export function obterClausulasPadrao(): { titulo: string; descricao: string }[] 
     { titulo: "Português brasileiro no código", descricao: "Nomes de entidades, regras de negócio, tabelas de banco, variáveis e funções devem ser escritos em português brasileiro (ex: obterUsuario, salvarPedido, cliente). Termos técnicos universais e padrões de bibliotecas/frameworks (id, payload, props, handler, middleware, token, status, req/res) permanecem em inglês sem tradução forçada." },
     { titulo: "Backend como autoridade única (Zero-Trust no cliente)", descricao: "O frontend é uma camada de apresentação descartável e potencialmente manipulável pelo usuário (DevTools/F12). Toda regra de negócio, cálculo de valores/preços, checagem de permissões/papéis e validação de transição de estado deve obrigatoriamente ser recalculada e validada no backend, nunca aceitando dados calculados ou permissões vindas cegamente do payload do cliente." },
     { titulo: "Dependências com justificativa", descricao: "Não instalar dependências sem justificativa prévia registrada. Prefira bibliotecas consolidadas e de manutenção ativa." },
+    { titulo: "Changelog de produto atualizado a cada commit", descricao: "Antes de fechar qualquer commit com código, regras de negócio, telas ou APIs do produto, o agente deve obrigatoriamente registrar o delta consolidado (Adicionado, Modificado, Corrigido) no `CHANGELOG.md` da raiz do projeto. É proibido comitar sem atualizar o changelog do produto, e é proibido narrar processo/histórico de edição (apenas o delta final entregue). Alterações exclusivas nas regras da governança são registradas em `governanca/CHANGELOG.md`." },
   ];
 }
 
@@ -77,6 +78,7 @@ export function obterCriteriosQualidade(): { titulo: string; descricao: string }
   return [
     { titulo: "Build sem erros", descricao: "Código deve passar em `npm run build` (ou equivalente) sem erros." },
     { titulo: "Commits descritivos", descricao: "Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê." },
+    { titulo: "Changelog do produto na raiz", descricao: "Todo commit de desenvolvimento de software deve refletir seu delta no `CHANGELOG.md` da raiz do projeto, mantendo as versões e entregas do produto transparentes para humanos e agentes." },
     { titulo: "Testes incrementais", descricao: "Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades." },
     { titulo: "Responsividade e PWA", descricao: "Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão." },
     { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md). Não crie pastas soltas na raiz do projeto." },

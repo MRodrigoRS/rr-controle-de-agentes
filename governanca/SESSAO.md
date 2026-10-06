@@ -39,6 +39,14 @@
 
 ## Registro de Sessões
 
+### Sessão — 2026-10-06: Conclusão da Sprint 01.1 — Changelog de Produto e Hábito de Commit
+- **Objetivo:** Estabelecer a segregação física e conceitual entre o Changelog do Produto (`./CHANGELOG.md` na raiz) e o Changelog da Governança (`governanca/CHANGELOG.md`), implementando scaffold não-destrutivo no gerador e ensinando aos agentes o hábito mandatório de registrar o delta consolidado antes de fechar qualquer commit.
+- **Entregas Realizadas:**
+  - **Etapa 1:** Template `src/templates/PRODUTO_CHANGELOG.md` criado seguindo padrão Keep a Changelog. Atualizado `src/servidor/gerador.ts` para criar `./CHANGELOG.md` na raiz apenas se não existir. Teste automatizado comprovou preservação de dados existentes na raiz mesmo em regeneração total.
+  - **Etapa 2:** Cláusula pétrea e critério de qualidade adicionados a `AGENTS.md` e `src/presets/index.ts`. Workflows operacionais (`implement.md`, `fix.md`, `release.md`, `SPRINT.md`) atualizados com o passo pré-commit obrigatório de registro do delta consolidado.
+  - **Etapa 3:** Validação com teste de scaffold em pasta temporária (criação e preservação aprovadas). Inicializado `CHANGELOG.md` na raiz da própria progenitora (`rr-controle-de-agentes-1.1`). Suíte `npm test` verde (836 links locais e 60 templates).
+- **Status Atual:** Todas as 3 etapas implementadas e verificadas. Sprint 01.1 arquivada em `sprints/concluidas/`. Repositório pronto para iniciar a Sprint 02 (Aguardando Gate 1).
+
 ### Sessão — 2026-10-06: Conclusão da Sprint 01 — Blindagem Estrutural, Links Nativos e Rigor Operacional
 - **Objetivo:** Implementar as 7 etapas da Sprint 01 para endurecer a validação de templates, eliminar links quebrados, isolar ferramentas de P&D da matriz, auditar wrappers do harness e garantir resiliência de rede.
 - **Entregas Realizadas:**

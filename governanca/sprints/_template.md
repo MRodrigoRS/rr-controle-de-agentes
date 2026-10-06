@@ -52,6 +52,7 @@ sessao_atual: 0
    - [ ] Manutenibilidade: lógica no lugar certo, sem constantes mágicas
    - [ ] Padrões de engenharia: seguiu os manuais em [padroes/](../padroes/) ([frontend.md](../padroes/frontend.md) e [backend.md](../padroes/backend.md))
    - [ ] Testes passando
+   - [ ] Changelog do produto atualizado com o delta no `CHANGELOG.md` da raiz (`../CHANGELOG.md`)
 5. **Antes de finalizar a sprint**, consulte a pasta [skills/](../skills/) para atualizar
    o [livro de arquitetura](../livro-arquitetura/) com as regras de negócio, dados
    e comportamentos implementados (usando a skill [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md)).
@@ -74,7 +75,10 @@ sessao_atual: 0
 9. **Gate 2 — aprovação da entrega.** Apresente o resumo + evidências +
    limitações + roteiro ao usuário e pergunte se quer conferir sozinho
    antes de aprovar. **Só faça o commit após aprovação explícita do usuário.**
-10. **Faça o commit** com a mensagem de commit sugerida abaixo.
+10. **Atualize o Changelog e faça o commit:**
+    - Antes de comitar, atualize o `CHANGELOG.md` na raiz do projeto (`../CHANGELOG.md`) com o delta consolidado (Adicionado, Modificado, Corrigido) das entregas desta sprint, sem narrar processos de edição.
+    - Se houver melhorias de governança, registre também em [CHANGELOG.md](../CHANGELOG.md).
+    - Faça o commit com a mensagem de commit sugerida abaixo.
 11. **Finalização e Arquivamento:**
     - Marque `status: concluida` no front-matter e atualize `ultima_modificacao`.
     - Mova o arquivo para `governanca/sprints/concluidas/`.
