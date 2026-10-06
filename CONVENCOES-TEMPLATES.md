@@ -112,6 +112,17 @@ Evite construções passivas (`"deve ser lido"` → `"leia"`).
 
 ---
 
+## Links Obrigatórios (Zero Texto Puro para Documentos e Skills)
+
+Toda menção a qualquer arquivo, documento, manual, skill ou workflow da governança **DEVE** ser um link Markdown real, e **NUNCA** texto puro solto.
+
+- ❌ Incorreto: `Consulte SESSAO.md e use a skill evoluir-governanca.`
+- ✅ Correto: `Consulte [SESSAO.md](governanca/SESSAO.md) e use a skill [evoluir-governanca.md](governanca/skills/evoluir-governanca.md).`
+
+O validador de integridade (`npm test` / `src/scripts/validar-templates.ts`) audita automaticamente cada link gerado para assegurar que não existam links quebrados nem menções não navegáveis.
+
+---
+
 ## Rodapé
 
 Todo template, sem exceção, termina com o rodapé de autoria. A única variação

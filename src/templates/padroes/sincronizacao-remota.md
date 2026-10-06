@@ -8,7 +8,7 @@
 ## 1. Visão Geral
 
 A governança da **RR Tech Studio** opera em modelo matriz-satélite:
-- **Matriz (Progenitora):** O repositório central (`MRodrigoRS/rr-controle-de-agentes`) mantém a fonte da verdade de padrões de engenharia, workflows, skills, presets e o catálogo de tecnologias.
+- **Matriz (Progenitora):** O repositório central (`MRodrigoRS/rr-controle-de-agentes`) mantém a fonte da verdade de padrões de engenharia, workflows, skills, presets e o catálogo de tecnologias em [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md).
 - **Satélites (Projetos Associados):** Qualquer repositório de produto que herda a pasta `governanca/` e o harness `.agents/`.
 
 Este manual estabelece como configurar, disponibilizar e consumir a governança da matriz em repositórios privados do GitHub a partir de qualquer computador.
@@ -21,7 +21,7 @@ A governança possui dois modos formais de atualização:
 
 | Modo | Comando | Comportamento | Impacto no Projeto |
 | :--- | :--- | :--- | :--- |
-| **🟢 Essencial** *(Padrão)* | `node governanca/scripts/sincronizar.mjs`<br>`npm run rr:sync` | Atualiza padrões (`padroes/`), workflows (`workflows/`), skills (`skills/`), catálogo e `CHANGELOG.md`. | **Zero risco:** preserva intocados `SESSAO.md`, `PRD.md`, `sprints/` e `livro-arquitetura/`. |
+| **🟢 Essencial** *(Padrão)* | `node governanca/scripts/sincronizar.mjs`<br>`npm run rr:sync` | Atualiza padrões em [padroes/](governanca/padroes/), workflows em [workflows/](governanca/workflows/), skills em [skills/](governanca/skills/), catálogo em [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md) e o [CHANGELOG.md](governanca/CHANGELOG.md). | **Zero risco:** preserva intocados [SESSAO.md](governanca/SESSAO.md), [PRD.md](governanca/PRD.md), [sprints/](governanca/sprints/) e [livro-arquitetura/](governanca/livro-arquitetura/). |
 | **🔴 Total** *(Hard Reset)* | `node governanca/scripts/sincronizar.mjs --total`<br>`npm run rr:sync -- --total` | Regenera 100% dos arquivos a partir dos templates da matriz para os presets configurados. | **Destrutivo com rede de segurança:** exige confirmação digitada (`REGENERAR TUDO`) e salva backup automático em `.backup-governanca-*`. |
 
 ---
@@ -77,18 +77,18 @@ node governanca/scripts/sincronizar.mjs
 npm run rr:sync
 ```
 
-O script `sincronizar.mjs` (Node.js 18+ nativo, zero dependências externas):
-1. Lê `governanca/.matriz.json`.
+O script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) (Node.js 18+ nativo, zero dependências externas):
+1. Lê [.matriz.json](governanca/.matriz.json).
 2. Conecta à API do GitHub com o `GITHUB_TOKEN`.
-3. Baixa as versões mais recentes dos manuais, workflows, skills e o `CHANGELOG.md`.
-4. Invoca o `harness.mjs` para refletir as mudanças em `.agents/rules/`, `.agents/workflows/` e `.agents/skills/`.
+3. Baixa as versões mais recentes dos manuais, workflows, skills e o [CHANGELOG.md](governanca/CHANGELOG.md).
+4. Invoca o script [harness.mjs](governanca/scripts/harness.mjs) para refletir as mudanças em `.agents/rules/`, `.agents/workflows/` e `.agents/skills/`.
 
 ---
 
 ### Cenário B: Vinculando um Projeto Novo do Zero em Outra Máquina
 Se você estiver em um computador sem a progenitora clonada e quiser vincular um projeto novo:
-1. Copie o script `sincronizar.mjs` para `governanca/scripts/sincronizar.mjs`.
-2. Crie o arquivo `governanca/.matriz.json` com os presets desejados:
+1. Copie o script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) para a pasta `governanca/scripts/`.
+2. Crie o arquivo [.matriz.json](governanca/.matriz.json) com os presets desejados:
    ```json
    {
      "repositorio": "https://github.com/MRodrigoRS/rr-controle-de-agentes",
@@ -111,7 +111,7 @@ No computador onde a aplicação Web da progenitora estiver em execução (`npm 
 2. No projeto desejado, clique no botão **Recriar Governança ▾**.
 3. Escolha:
    - **🟢 Sincronizar Essencial (Seguro):** Atualização instantânea sem tocar no contexto local.
-   - **🔴 Regeneração Total...:** Exibe a **Modal de Confirmação** com alerta detalhado e dispara a regeneração completa com backup automático.
+   - **🔴 Regeneração Total...:** Exibe a modal de confirmação com alerta detalhado e dispara a regeneração completa com backup automático.
 
 ---
 
@@ -119,5 +119,10 @@ No computador onde a aplicação Web da progenitora estiver em execução (`npm 
 
 Toda vez que a governança matriz for alterada e for realizado um commit na matriz:
 1. **Auditoria de Mudanças:** Execute `git diff` e `git status` para inspecionar todas as modificações.
-2. **Atualização do Changelog:** Registre uma nova entrada em `governanca/CHANGELOG.md` e em `src/templates/CHANGELOG.md`, agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
-3. **Commit:** Só conclua o commit após o changelog estar devidamente sincronizado.
+2. **Atualização do Changelog:** Registre uma nova entrada em [CHANGELOG.md](governanca/CHANGELOG.md) e em `src/templates/CHANGELOG.md`, agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
+3. **Links Markdown Obrigatórios:** Toda referência a arquivos, documentos, skills ou workflows deve ser escrita como link Markdown verificável (exemplo: [CHANGELOG.md](governanca/CHANGELOG.md)), nunca como texto puro solto.
+4. **Commit:** Só conclua o commit após o changelog estar devidamente sincronizado e verificado com `npm test`.
+
+---
+
+*Template gerado por RR Tech Studio (Rodrigo Rafael).*
