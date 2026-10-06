@@ -26,6 +26,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Comandos One-Liner e Prompts para Agente:** Seção no manual [sincronizacao-remota.md](governanca/padroes/sincronizacao-remota.md) com comandos diretos (PowerShell e Bash) e o prompt exato para colar para o agente IA iniciar ou sincronizar a governança.
 - **Distribuição Universal do Harness:** Inclusão do script [harness.mjs](governanca/scripts/harness.mjs) na pasta de templates `src/templates/scripts/` para transporte remoto.
 - **Interface Web Dedicada do Satélite:** Implementado o script portátil [ui.mjs](governanca/scripts/ui.mjs) (Node.js 18+ nativo, zero dependências externas) permitindo subir um servidor local com painel web interativo completo idêntico ao da progenitora em qualquer máquina que possua o projeto governado (`npm run rr:ui` ou `node governanca/scripts/ui.mjs`).
+- **Skill [sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md):** Nova skill que automatiza o ciclo completo de sincronização com a matriz pública (modo essencial ou total), validação síncrona do painel web ([ui.mjs](governanca/scripts/ui.mjs) `--check`), leitura do changelog e registro no diário [SESSAO.md](governanca/SESSAO.md), acionada por comando `/sincronizar-governanca` ou pedido em linguagem natural.
 
 ### Modificado
 - [AGENTS.md](governanca/AGENTS.md): Documentação dos comandos de sincronização, manutenção e hábito obrigatório de registro no changelog.

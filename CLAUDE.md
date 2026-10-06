@@ -3,5 +3,5 @@
 Este projeto é governado por regras estritas da RR Tech Studio.
 - **Regras e Padrões Oficiais:** Consulte [governanca/AGENTS.md](governanca/AGENTS.md)
 - **Sessão Atual e Sprint Ativa:** Consulte [governanca/SESSAO.md](governanca/SESSAO.md)
-- **Primeira Sessão:** Siga o roteiro em [governanca/VINCULAR.md](governanca/VINCULAR.md)
+- **Primeira Sessão:** Siga o roteiro em [governanca/INICIO.md](governanca/INICIO.md)
 - **Workflows:** Procedimentos disponíveis em [governanca/workflows/](governanca/workflows/)
