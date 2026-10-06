@@ -1,7 +1,7 @@
 ---
-status: pendente
+status: concluida
 ultima_modificacao: 2026-10-06
-sessao_atual: 0
+sessao_atual: 1
 ---
 
 # Sprint 02: Blindagem Agêntica e Segurança Moderna (OWASP 2026 & Zero-Trust) — rr-controle-de-agentes-1.1
@@ -15,52 +15,52 @@ sessao_atual: 0
 ### Etapa 1: OWASP Top 10 for Agentic Applications 2026 (ASI01–ASI07)
 **Objetivo:** Blindar os agentes contra ataques de injeção indireta, sequestro de objetivos e poluição de memória ao interagir com ferramentas e APIs externas.
 **Tarefas:**
-- [ ] Atualizar [governanca/padroes/backend.md](../padroes/backend.md) e [src/templates/padroes/backend.md](../../src/templates/padroes/backend.md) incluindo uma seção dedicada a **Segurança Agêntica & Interfaces de IA**:
+- [x] Atualizar [governanca/padroes/backend.md](../../padroes/backend.md) e [src/templates/padroes/backend.md](../../../src/templates/padroes/backend.md) incluindo uma seção dedicada a **Segurança Agêntica & Interfaces de IA**:
   - *ASI01 (Goal Hijacking):* Regra mandatória de que prompts ou saídas retornadas por ferramentas externas, banco de dados ou web scraping são estritamente tratados como dados não-confiáveis, nunca como instruções executáveis.
   - *ASI02 (Tool Misuse / Poisoning):* Proibição de ferramentas externas sobreporem parâmetros de controle ou regras pétreas do sistema.
   - *ASI06 (Memory/Context Poisoning):* Blindagem das anotações persistentes (`SESSAO.md`) contra injeção cega de dados de terceiros.
-- [ ] Atualizar [governanca/skills/usar-harness-do-agente.md](../skills/usar-harness-do-agente.md) detalhando a postura operacional defensiva do agente contra injeção indireta de prompts.
+- [x] Atualizar [governanca/skills/usar-harness-do-agente.md](../../skills/usar-harness-do-agente.md) detalhando a postura operacional defensiva do agente contra injeção indireta de prompts.
 **Critérios de Aceite:**
-- [ ] Diretrizes de Zero-Trust de Contexto formalizadas nos padrões de backend e nas skills do harness.
+- [x] Diretrizes de Zero-Trust de Contexto formalizadas nos padrões de backend e nas skills do harness.
 
 ### Etapa 2: Barreira Determinística contra Vazamento de Segredos (Gitleaks)
 **Objetivo:** Impedir que chaves de API, senhas ou tokens sensíveis sejam acidentalmente comitados no Git por humanos ou agentes de IA.
 **Tarefas:**
-- [ ] Criar um script utilitário portátil em Node.js nativo: `governanca/scripts/verificar-segredos.mjs` (com cópia em `src/templates/scripts/verificar-segredos.mjs`).
+- [x] Criar um script utilitário portátil em Node.js nativo: `governanca/scripts/verificar-segredos.mjs` (com cópia em `src/templates/scripts/verificar-segredos.mjs`).
   - O script verifica se o executável `gitleaks` está disponível no ambiente e executa a varredura nos arquivos staged (`git diff --staged`); caso ausente, executa um escaneamento leve por regex nativo procurando padrões conhecidos (chaves OpenAI, Anthropic, Stripe, AWS, certificados privados e atribuições `.env`).
-- [ ] Atualizar [governanca/skills/auditar-prontidao-producao.md](../skills/auditar-prontidao-producao.md) e [governanca/skills/auditar-repositorio.md](../skills/auditar-repositorio.md), incluindo a execução obrigatória do `verificar-segredos.mjs` no checklist pré-deploy.
+- [x] Atualizar [governanca/skills/auditar-prontidao-producao.md](../../skills/auditar-prontidao-producao.md) e [governanca/skills/auditar-repositorio.md](../../skills/auditar-repositorio.md), incluindo a execução obrigatória do `verificar-segredos.mjs` no checklist pré-deploy.
 **Critérios de Aceite:**
-- [ ] Script `verificar-segredos.mjs` testado com arquivos simulados contendo chaves fictícias, bloqueando com sucesso com código de saída != 0.
-- [ ] Checklist de prontidão para produção exigindo varredura limpa de segredos.
+- [x] Script `verificar-segredos.mjs` testado com arquivos simulados contendo chaves fictícias, bloqueando com sucesso com código de saída != 0.
+- [x] Checklist de prontidão para produção exigindo varredura limpa de segredos.
 
 ### Etapa 3: Defesa em Profundidade no Backend (Strict CSP & Rate Limiting)
 **Objetivo:** Padronizar defesas ativas de rede e cabeçalhos HTTP nos manuais de engenharia para projetos web.
 **Tarefas:**
-- [ ] Atualizar [governanca/padroes/backend.md](../padroes/backend.md) com a subseção **Cabeçalhos Defensivos e Infraestrutura HTTP**:
+- [x] Atualizar [governanca/padroes/backend.md](../../padroes/backend.md) com a subseção **Cabeçalhos Defensivos e Infraestrutura HTTP**:
   - *Strict CSP:* Uso mandatório de Content Security Policy com nonce ou hash criptográfico e diretiva `strict-dynamic`, bloqueando injeções inline não autorizadas (`object-src 'none'`, `base-uri 'none'`).
   - *Cabeçalhos Mandatórios:* `Strict-Transport-Security (HSTS)`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`.
   - *Rate Limiting Obrigatório:* Limitação de taxa de requisições por IP ou conta em endpoints de login, recuperação de senha, geração de tokens e webhooks sensíveis.
-- [ ] Atualizar a checklist de segurança de [governanca/skills/auditar-prontidao-producao.md](../skills/auditar-prontidao-producao.md) para auditar a presença desses cabeçalhos e do rate limiting.
+- [x] Atualizar a checklist de segurança de [governanca/skills/auditar-prontidao-producao.md](../../skills/auditar-prontidao-producao.md) para auditar a presença desses cabeçalhos e do rate limiting.
 **Critérios de Aceite:**
-- [ ] Padrões de cabeçalhos e rate limiting documentados com clareza em `backend.md`.
+- [x] Padrões de cabeçalhos e rate limiting documentados com clareza em `backend.md`.
 
 ### Etapa 4: Política de MCP Mínimo e Proteção contra Tool Poisoning
 **Objetivo:** Garantir que conexões via Model Context Protocol (MCP) sigam a política de menor privilégio e não introduzam vulnerabilidades no ambiente de desenvolvimento.
 **Tarefas:**
-- [ ] Atualizar [governanca/skills/configurar-harness.md](../skills/configurar-harness.md) e [governanca/skills/usar-harness-do-agente.md](../skills/usar-harness-do-agente.md):
-  - Estabelecer a regra de *Allowlist Explícita*: nenhum MCP deve ser configurado sem justificativa direta fundamentada na stack do [02-stack.md](../livro-arquitetura/02-stack.md).
+- [x] Atualizar [governanca/skills/configurar-harness.md](../../skills/configurar-harness.md) e [governanca/skills/usar-harness-do-agente.md](../../skills/usar-harness-do-agente.md):
+  - Estabelecer a regra de *Allowlist Explícita*: nenhum MCP deve ser configurado sem justificativa direta fundamentada na stack do [02-stack.md](../../livro-arquitetura/02-stack.md).
   - Padrão *Read-Only First*: servidores MCP que conectam a bancos de dados ou sistemas externos devem iniciar configurados em modo somente-leitura.
   - Aprovação humana obrigatória antes de qualquer ação destrutiva via MCP (escrita, deleção, deploy).
 **Critérios de Aceite:**
-- [ ] Regras de governança de MCP formalizadas nas skills do harness.
+- [x] Regras de governança de MCP formalizadas nas skills do harness.
 
 ---
 
 ## Andamento
 
-- [ ] Etapa em andamento
-- [ ] Testes passando
-- [ ] Código revisado
+- [x] Etapa em andamento
+- [x] Testes passando
+- [x] Código revisado
 
 ---
 
@@ -93,9 +93,9 @@ sprint-02: blindagem agentica OWASP 2026, verificacao de segredos e defesa em pr
 
 ## Evidências
 
-- [ ] Script `verificar-segredos.mjs` executado e aprovado
-- [ ] `npm test` passando com 100% dos links íntegros
-- [ ] Manuais atualizados com OWASP 2026 e Strict CSP
+- [x] Script `verificar-segredos.mjs` executado e aprovado
+- [x] `npm test` passando com 100% dos links íntegros
+- [x] Manuais atualizados com OWASP 2026 e Strict CSP
 
 ## Limitações
 

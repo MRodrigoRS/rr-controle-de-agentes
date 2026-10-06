@@ -42,17 +42,25 @@ Este comando atômico:
 4. Registra todas as skills como ponteiros leves em `.agents/skills/<nome>/SKILL.md`.
 5. Purga quaisquer pastas ou arquivos de skills e workflows obsoletos/renomeados.
 
-### 2. Proponha Integrações e MCPs (Dirigido pela Stack)
+### 2. Política de MCP Mínimo & Proteção contra Tool Poisoning
 
-Não instale MCPs genéricos "por garantia". Derive estritamente do [02-stack.md](../livro-arquitetura/02-stack.md):
+Não instale MCPs genéricos "por garantia". Tool bloat degrada o contexto e amplia a superfície de ataque:
 
-1. **Examine a stack real do projeto:**
-   - **PostgreSQL:** propor MCP oficial do PostgreSQL (se houver necessidade de inspeção direta de schemas).
-   - **Google Apps Script:** verificar se clasp e credenciais do Google estão autenticadas.
-   - **Supabase / Firebase:** propor CLI ou MCP oficial do provedor.
-   - **Sem serviços externos:** **zero MCPs**, mantendo contexto leve e respostas rápidas.
+1. **Allowlist Explícita (Dirigida pela Stack):**
+   - Nenhum MCP deve ser ativado sem justificativa direta fundamentada na stack do [02-stack.md](../livro-arquitetura/02-stack.md):
+     - **PostgreSQL:** propor MCP oficial do PostgreSQL apenas se houver necessidade real de inspeção de dados.
+     - **Google Apps Script:** verificar se clasp e credenciais do Google estão autenticadas.
+     - **Supabase / Firebase:** propor CLI ou MCP oficial do provedor.
+     - **Sem serviços externos:** **zero MCPs**, mantendo contexto leve e respostas rápidas.
 
-2. **Pergunte ao usuário antes de instalar:**
-   *"Identifiquei que este projeto usa [Serviço]. Deseja configurar o MCP oficial para [finalidade] ou seguimos com o ambiente padrão?"*
+2. **Padrão Read-Only First:**
+   - Servidores MCP conectados a bancos de dados, storages ou APIs devem ser configurados prioritariamente em modo **somente-leitura** (`readonly: true`).
+   - Escritas, mutações e comandos administrativos via MCP são bloqueados por padrão.
 
-3. **Configure apenas com aprovação expressa.**
+3. **Aprovação Humana Obrigatória em Ações Críticas:**
+   - Operações destrutivas (drop de tabelas, exclusão de dados, deploys ou revogação de acessos) **nunca** devem ser executadas de forma autônoma por MCPs. Exija consentimento expresso do usuário.
+
+4. **Confirmação Prévia:**
+   - Pergunte ao usuário antes de instalar qualquer servidor:
+     *"Identifiquei que este projeto usa [Serviço]. Deseja configurar o MCP oficial em modo somente-leitura para [finalidade] ou seguimos com o ambiente padrão?"*
+   - Configure apenas com aprovação expressa.

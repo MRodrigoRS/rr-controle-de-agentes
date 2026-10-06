@@ -4,7 +4,7 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** [Sprint 02 — Blindagem Agêntica e Segurança Moderna](sprints/02-blindagem-agentica-e-seguranca-moderna.md) (Aguardando Gate 1)
+**Sprint Ativa:** [Sprint 03 — Análise Zero-Token e Modernização do Catálogo](sprints/03-analise-zero-token-e-modernizacao-catalogo.md) (Aguardando Gate 1)
 
 ---
 
@@ -38,6 +38,15 @@
 
 
 ## Registro de Sessões
+
+### Sessão — 2026-10-06: Conclusão da Sprint 02 — Blindagem Agêntica, Scanner de Segredos e Defesa em Profundidade
+- **Objetivo:** Implementar proteções contra ataques a agentes (OWASP Agentic Top 10 2026), barreira determinística contra vazamento de segredos (Gitleaks + fallback regex), cabeçalhos HTTP defensivos (Strict CSP e Rate Limiting) e política de MCP Mínimo.
+- **Entregas Realizadas:**
+  - **Etapa 1:** Adicionada a Seção 8 em `backend.md` com diretrizes Zero-Trust de Contexto e proteção contra ASI01 (Goal Hijacking), ASI02 (Tool Poisoning) e ASI06 (Memory/Context Poisoning). Atualizada a skill `usar-harness-do-agente.md` com postura defensiva para agentes.
+  - **Etapa 2:** Criado script portátil `verificar-segredos.mjs` (Node.js nativo 18+, zero dependências) com fallback regex e suporte a `gitleaks`. Testado com fixture artificial bloqueando com sucesso (exit code 1). Integrado às skills `auditar-prontidao-producao.md` e `auditar-repositorio.md`.
+  - **Etapa 3:** Adicionada a Seção 9 em `backend.md` padronizando Strict CSP com nonce e `strict-dynamic`, HSTS permanente (`max-age=63072000`), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` e Rate Limiting obrigatório. Atualizado checklist pré-deploy.
+  - **Etapa 4:** Atualizada a Seção 2 de `configurar-harness.md` com política de MCP Mínimo: Allowlist Explícita vinculada a `02-stack.md`, Read-Only First para bancos de dados e barreira humana obrigatória para operações destrutivas.
+- **Status Atual:** Todas as 4 etapas implementadas e verificadas. `npm test` verde (860 links verificados e 61 templates aprovados), `npm run build` aprovado e varredura de segredos limpa em 177 arquivos. Sprint 02 concluída e arquivada em [sprints/concluidas/02-blindagem-agentica-e-seguranca-moderna.md](sprints/concluidas/02-blindagem-agentica-e-seguranca-moderna.md). Repositório pronto para iniciar a Sprint 03 (Aguardando Gate 1).
 
 ### Sessão — 2026-10-06: Conclusão da Sprint 01.1 — Changelog de Produto e Hábito de Commit
 - **Objetivo:** Estabelecer a segregação física e conceitual entre o Changelog do Produto (`./CHANGELOG.md` na raiz) e o Changelog da Governança (`governanca/CHANGELOG.md`), implementando scaffold não-destrutivo no gerador e ensinando aos agentes o hábito mandatório de registrar o delta consolidado antes de fechar qualquer commit.

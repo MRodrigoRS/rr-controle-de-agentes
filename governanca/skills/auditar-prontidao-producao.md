@@ -25,6 +25,7 @@ description: Checklist pré-deploy — ambiente, build, segurança, resiliência
 
 - [ ] `.env.example` existe e documenta todas as variáveis com descrição
 - [ ] Nenhum segredo real está no repositório (chaves, tokens, senhas no source)
+- [ ] Scanner determinístico de segredos executado e limpo: `node governanca/scripts/verificar-segredos.mjs --all` com zero achados
 - [ ] `.env` está em `.gitignore` e o `.env.example` não contém valores reais
 - [ ] URLs de APIs externas no código apontam para produção (não localhost)
 - [ ] Configurações por ambiente (`development`, `production`) são coerentes
@@ -40,9 +41,9 @@ description: Checklist pré-deploy — ambiente, build, segurança, resiliência
 
 ## 3. Segurança
 
-- [ ] Headers de segurança presentes (CSP, HSTS, X-Frame-Options, X-Content-Type-Options)
+- [ ] Headers de segurança presentes: Strict CSP com nonce e `strict-dynamic`, HSTS, X-Frame-Options (DENY), X-Content-Type-Options (nosniff) e Referrer-Policy
 - [ ] CORS configurado com origens específicas (nunca `*` em produção)
-- [ ] Rate limiting ativo em endpoints críticos (login, API)
+- [ ] Rate limiting determinístico ativo em endpoints críticos (login, cadastro, tokens, webhooks)
 - [ ] Autenticação e autorização verificadas em **toda** rota/endpoint
 - [ ] Inputs validados e sanitizados (XSS, SQL injection, command injection)
 - [ ] Nenhuma informação sensível em logs, mensagens de erro ou stack traces

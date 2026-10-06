@@ -6,6 +6,16 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [Sprint 02] — 2026-10-06
+
+### Adicionado
+- **OWASP Agentic Top 10 2026:** Inclusão formal de proteções contra ASI01 (Goal Hijacking), ASI02 (Tool Poisoning) e ASI06 (Memory/Context Poisoning) nos manuais [backend.md](padroes/backend.md) e [usar-harness-do-agente.md](skills/usar-harness-do-agente.md).
+- **Scanner Determinístico de Segredos:** Script portátil [verificar-segredos.mjs](scripts/verificar-segredos.mjs) (Node.js nativo 18+, zero dependências) com fallback regex e suporte a `gitleaks`, integrado aos checklists pré-deploy e auditorias ([auditar-prontidao-producao.md](skills/auditar-prontidao-producao.md) e [auditar-repositorio.md](skills/auditar-repositorio.md)).
+- **Defesa HTTP em Profundidade:** Padrão mandatório de Strict CSP com nonce e `strict-dynamic`, HSTS permanente (`max-age=63072000; includeSubDomains; preload`), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` e Rate Limiting documentados em [backend.md](padroes/backend.md).
+- **Governança de MCP:** Regras de Allowlist Explícita baseada no [02-stack.md](livro-arquitetura/02-stack.md), política Read-Only First para bancos e autorização humana mandatória antes de ações de mutação em [configurar-harness.md](skills/configurar-harness.md).
+
+---
+
 ## [Sprint 01.1] — 2026-10-06
 
 ### Adicionado

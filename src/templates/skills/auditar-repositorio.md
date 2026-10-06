@@ -25,20 +25,17 @@ description: Audita segurança, más práticas, inconsistências e oportunidades
 
 Examine arquivo por arquivo em busca de:
 
+- **Vazamento de Segredos (Varredura Automática):** Execute obrigatoriamente `node governanca/scripts/verificar-segredos.mjs --all` para detectar chaves de API, senhas ou tokens comitados.
 - **Senhas, tokens, chaves de API, strings de conexão** hardcoded
   (especialmente em arquivos versionados, não em `.env.example`)
-- **SQL Injection** — concatenção de strings em queries SQL/NoSQL
-- **XSS (Cross-Site Scripting)** — renderização direta de input do usuário
-  sem sanitização
-- **CSRF** — ausência de proteção em mutações de estado
-- **Autenticação frágil** — lógica de login insegura, falta de validação
-  de sessão, tokens previsíveis
-- **Exposição de informações sensíveis** — stack traces, dados internos
-  em respostas de API, comentários com credenciais
-- **Dependências vulneráveis** — versões conhecidamente inseguras de
-  bibliotecas (consulte `package.json`, `requirements.txt`, etc.)
-- **Permissões excessivas** — escopos OAuth2 muito amplos, service accounts
-  com privilégios além do necessário (especialmente em GAS e cloud)
+- **SQL Injection** — concatenação de strings em queries SQL/NoSQL
+- **XSS (Cross-Site Scripting)** — renderização direta de input do usuário sem sanitização
+- **CSRF & Headers Defensivos** — ausência de Strict CSP, HSTS, X-Frame-Options ou proteção em mutações de estado conforme [backend.md](../padroes/backend.md)
+- **Segurança Agêntica (OWASP Agentic Top 10):** Chamadas a ferramentas externas, MCPs ou web scraping tratando retornos como dados não-confiáveis, prevenindo Goal Hijacking (ASI01) e Tool Poisoning (ASI02)
+- **Autenticação frágil** — lógica de login insegura, falta de validação de sessão, tokens previsíveis e ausência de rate limiting
+- **Exposição de informações sensíveis** — stack traces, dados internos em respostas de API, comentários com credenciais
+- **Dependências vulneráveis** — versões conhecidamente inseguras de bibliotecas (consulte `package.json`, `requirements.txt`, etc.)
+- **Permissões excessivas** — escopos OAuth2 muito amplos, service accounts com privilégios além do necessário (especialmente em GAS e cloud)
 
 ### 2. Más Práticas
 

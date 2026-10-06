@@ -12,6 +12,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.2] — 2026-10-06
+
+### Adicionado
+- Scanner determinístico de segredos `verificar-segredos.mjs` com fallback nativo por regex e suporte a Gitleaks.
+- Diretrizes defensivas contra OWASP Agentic Top 10 2026 (Zero-Trust de contexto, anti-Goal Hijacking e Memory Poisoning).
+- Padrões de cabeçalhos HTTP defensivos (Strict CSP com nonce, HSTS permanente e Rate Limiting) e política de MCP Mínimo no harness.
+
+---
+
 ## [1.1.1] — 2026-10-06
 
 ### Adicionado
