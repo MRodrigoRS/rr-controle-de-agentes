@@ -16,13 +16,13 @@ import { stdin as input, stdout as output } from "node:process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const raiz = path.resolve(__dirname, "../..");
+const ehSubpastaScripts = path.basename(__dirname) === "scripts" && path.basename(path.dirname(__dirname)) === "governanca";
+const raiz = ehSubpastaScripts ? path.resolve(__dirname, "../..") : process.cwd();
 const govDir = path.join(raiz, "governanca");
 const matrizConfigPath = path.join(govDir, ".matriz.json");
 
 if (!fs.existsSync(govDir)) {
-  console.error("❌ Erro: Pasta governanca/ não encontrada em " + raiz);
-  process.exit(1);
+  fs.mkdirSync(govDir, { recursive: true });
 }
 
 // 1. Carregar configuração da matriz
@@ -102,11 +102,20 @@ async function main() {
 
   // Tentativa A: Progenitora presente localmente
   const caminhosLocaisPossiveis = [
-    path.resolve(raiz, "..", "rr-controle-de-agentes-1.1"),
-    path.resolve(raiz, "..", "rr-controle-de-agentes"),
-    path.resolve(raiz, "..", repoName),
     path.resolve(process.cwd()),
   ];
+
+  // Busca subindo os diretórios pais recursivamente (até 5 níveis) para achar a progenitora
+  let dirCursor = path.resolve(raiz, "..");
+  for (let i = 0; i < 5; i++) {
+    caminhosLocaisPossiveis.push(dirCursor);
+    caminhosLocaisPossiveis.push(path.join(dirCursor, "rr-controle-de-agentes-1.1"));
+    caminhosLocaisPossiveis.push(path.join(dirCursor, "rr-controle-de-agentes"));
+    caminhosLocaisPossiveis.push(path.join(dirCursor, repoName));
+    const pai = path.dirname(dirCursor);
+    if (pai === dirCursor) break;
+    dirCursor = pai;
+  }
 
   let progenitoraLocal = null;
   for (const c of caminhosLocaisPossiveis) {
@@ -137,7 +146,36 @@ async function main() {
   configMatriz.modoRegeneracaoUltimo = ehModoTotal ? "total" : "essencial";
   fs.writeFileSync(matrizConfigPath, JSON.stringify(configMatriz, null, 2), "utf-8");
 
-  // 6. Invocar o script do harness para refletir as mudanças em .agents/
+  // 6. Garantir ponteiros na raiz do projeto (AGENTS.md e CLAUDE.md)
+  const agentsRoot = path.join(raiz, "AGENTS.md");
+  if (!fs.existsSync(agentsRoot)) {
+    fs.writeFileSync(
+      agentsRoot,
+      `# Governança do Projeto — RR Tech Studio\n\nAs diretrizes e regras oficiais deste projeto estão em:\n👉 [governanca/AGENTS.md](governanca/AGENTS.md)\n\nNotas persistentes e sprint ativa em:\n👉 [governanca/SESSAO.md](governanca/SESSAO.md)\n\n---\n\n### Como Iniciar uma Sessão (Intenção Macro)\nPara ativar imediatamente o fluxo correto e evitar adivinhações do agente:\n- **Projeto novo (do zero):** \`"Inicie o onboarding do projeto [Nome]"\` → segue [governanca/INICIO.md](governanca/INICIO.md)\n- **Projeto existente com código:** \`"Vincule este projeto à governança"\` → segue [governanca/VINCULAR.md](governanca/VINCULAR.md)\n- **Continuar sprint ativa:** \`"Execute /status e continue a sprint ativa"\` → segue [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Atualizar governança com a matriz:** \`"Sincronize a governança com a matriz"\` → skill [governanca/skills/sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md)\n`,
+      "utf-8"
+    );
+    console.log("📝 Criado ponteiro raiz: AGENTS.md");
+  }
+
+  const claudeRoot = path.join(raiz, "CLAUDE.md");
+  if (!fs.existsSync(claudeRoot)) {
+    fs.writeFileSync(
+      claudeRoot,
+      `# Governança do Projeto — RR Tech Studio\n\nConsulte:\n- Diretrizes: [governanca/AGENTS.md](governanca/AGENTS.md)\n- Estado atual e regras ativas: [governanca/SESSAO.md](governanca/SESSAO.md)\n\n---\n\n### Como Iniciar uma Sessão (Intenção Macro)\n- **Projeto novo (do zero):** \`"Inicie o onboarding do projeto [Nome]"\` → segue [governanca/INICIO.md](governanca/INICIO.md)\n- **Projeto existente com código:** \`"Vincule este projeto à governança"\` → segue [governanca/VINCULAR.md](governanca/VINCULAR.md)\n- **Continuar sprint ativa:** \`"Execute /status e continue a sprint ativa"\` → segue [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Atualizar governança:** \`"Sincronize a governança com a matriz"\` → skill [governanca/skills/sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md)\n`,
+      "utf-8"
+    );
+    console.log("📝 Criado ponteiro raiz: CLAUDE.md");
+  }
+
+  // Se executado fora de governanca/scripts/, garantir cópia em governanca/scripts/sincronizar.mjs
+  const destSincronizar = path.join(govDir, "scripts", "sincronizar.mjs");
+  fs.mkdirSync(path.join(govDir, "scripts"), { recursive: true });
+  const scriptAtual = fileURLToPath(import.meta.url);
+  if (!fs.existsSync(destSincronizar) && fs.existsSync(scriptAtual)) {
+    fs.copyFileSync(scriptAtual, destSincronizar);
+  }
+
+  // 7. Invocar o script do harness para refletir as mudanças em .agents/
   const harnessScript = path.join(govDir, "scripts", "harness.mjs");
   if (fs.existsSync(harnessScript)) {
     console.log("\n⚙️  Re-sincronizando o harness do agente local (.agents/)...");
@@ -212,6 +250,8 @@ async function sincronizarDeGitHubRemoto() {
       let destRel = null;
       if (item.path.endsWith("CATALOGO_TECNOLOGIAS.md")) {
         destRel = path.join("skills", "CATALOGO_TECNOLOGIAS.md");
+      } else if (relPath === "CHANGELOG.md") {
+        destRel = "CHANGELOG.md";
       } else if (relPath.startsWith("padroes/")) {
         destRel = relPath;
       } else if (relPath.startsWith("workflows/")) {
@@ -221,7 +261,9 @@ async function sincronizarDeGitHubRemoto() {
       } else if (relPath.startsWith("relatorios/")) {
         destRel = relPath;
       } else if (relPath.startsWith("scripts/")) {
-        destRel = path.join("templates", path.basename(relPath));
+        destRel = relPath.endsWith(".template")
+          ? path.join("templates", path.basename(relPath))
+          : path.join("scripts", path.basename(relPath));
       } else if (ehModoTotal && relPath.startsWith("arquitetura/")) {
         destRel = path.join("livro-arquitetura", relPath.replace(/^arquitetura\//, ""));
       } else if (ehModoTotal && (relPath === "SESSAO.md" || relPath === "PRD.md" || relPath === "PLANO.md")) {
@@ -265,6 +307,13 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
     }
   }
 
+  // CHANGELOG da matriz
+  const changelogOrigem = path.join(templatesDir, "CHANGELOG.md");
+  const changelogDest = path.join(govDir, "CHANGELOG.md");
+  if (fs.existsSync(changelogOrigem)) {
+    fs.copyFileSync(changelogOrigem, changelogDest);
+  }
+
   // Catálogo de tecnologias
   const catalogoSrc = path.join(govDir, "skills", "CATALOGO_TECNOLOGIAS.md");
   const catalogoOrigem = path.join(raizOrigem, "governanca", "skills", "CATALOGO_TECNOLOGIAS.md");
@@ -272,13 +321,19 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
     fs.copyFileSync(catalogoOrigem, catalogoSrc);
   }
 
-  // Scripts templates
+  // Scripts e templates
   const scriptsSrc = path.join(templatesDir, "scripts");
+  const scriptsDest = path.join(govDir, "scripts");
   const templatesDest = path.join(govDir, "templates");
   if (fs.existsSync(scriptsSrc)) {
+    fs.mkdirSync(scriptsDest, { recursive: true });
     fs.mkdirSync(templatesDest, { recursive: true });
     for (const f of fs.readdirSync(scriptsSrc)) {
-      fs.copyFileSync(path.join(scriptsSrc, f), path.join(templatesDest, f));
+      if (f.endsWith(".template")) {
+        fs.copyFileSync(path.join(scriptsSrc, f), path.join(templatesDest, f));
+      } else {
+        fs.copyFileSync(path.join(scriptsSrc, f), path.join(scriptsDest, f));
+      }
     }
   }
 

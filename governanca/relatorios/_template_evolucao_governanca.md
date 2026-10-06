@@ -6,9 +6,23 @@
 
 ---
 
-## 1. Resumo Executivo & Nota de Maturidade
+## 1. Manifesto de Cobertura Integral
 
-| Pilar Avaliado | Nota (0 a 10) | Diagnóstico Resumido |
+*Obrigatório: tabela declarando todos os arquivos inspecionados na íntegra para comprovar a ausência de amostragem preguiçosa.*
+
+| Frente / Módulo | Arquivos Inspecionados na Íntegra | Total de Linhas | Status da Checagem |
+|---|---|:---:|:---:|
+| **Scripts & Gerador** | `sincronizar.mjs`, `gerador.ts`, etc. | [Linhas] | 100% Lido |
+| **Workflows & Sessão** | `workflows/*.md`, `SESSAO.md`, etc. | [Linhas] | 100% Lido |
+| **Manuais Técnicos** | `padroes/*.md`, `livro-arquitetura/*` | [Linhas] | 100% Lido |
+| **Catálogo & Skills** | `CATALOGO_TECNOLOGIAS.md`, `skills/*.md` | [Linhas] | 100% Lido |
+| **TOTAL GERAL** | **[Total de Arquivos Auditados]** | **[Total Linhas]** | **100% Coberto** |
+
+---
+
+## 2. Resumo Executivo & Nota de Maturidade
+
+| Pilar Avaliado | Nota (0 a 10) | Diagnóstico Resumido pós-Inspeção na Íntegra |
 |---|:---:|---|
 | **Integridade & Estrutura** | [Nota] | [Consistência entre regras, links e templates] |
 | **Coerência Documental (.md)** | [Nota] | [Fluxo lógico, divisão de responsabilidades e zero redundâncias/órfãos] |
@@ -18,10 +32,9 @@
 | **Ferramental & Automações** | [Nota] | [Eficácia de scripts portáteis e dashboards locais] |
 | **MÉDIA GERAL DE MATURIDADE** | **[Média] / 10** | **[Classificação: Emergente / Maduro / Estado da Arte]** |
 
-
 ---
 
-## 2. Radar de Inovação & Tecnologias da Web Avaliadas
+## 3. Radar de Inovação & Tecnologias da Web Avaliadas
 
 *Registro de ferramentas, bibliotecas, MCPs e práticas modernas pesquisadas na web para potencial adoção.*
 
@@ -39,12 +52,12 @@
 
 ---
 
-## 3. Diagnóstico de Gaps, Atritos e Oportunidades
+## 4. Diagnóstico de Gaps, Atritos e Oportunidades
 
 ### 🔴 Gaps Críticos (Alta Prioridade)
 *Pontos frágeis que podem induzir o agente a alucinar, quebrar links ou gerar retrabalho.*
 1. **[Título do Gap]:** 
-   - **Localização:** `[arquivo/pasta]`
+   - **Localização:** `[arquivo:linha]`
    - **Impacto:** [Por que atrapalha o desenvolvimento]
    - **Ação Recomendada:** [Solução proposta]
 
@@ -60,27 +73,18 @@
 
 ---
 
-## 4. Matriz Esforço x Impacto
+## 5. Roadmap Executável: Sprints Físicas Dedicadas
 
-| Alto Impacto / Baixo Esforço (Prioridade 1) | Alto Impacto / Alto Esforço (Prioridade 2) |
-|---|---|
-| - [Item 1]<br>- [Item 2] | - [Item 3]<br>- [Item 4] |
-| **Baixo Impacto / Baixo Esforço (Prioridade 3)** | **Baixo Impacto / Alto Esforço (Descartar)** |
-| - [Item 5] | - [Item 6] |
+> **Regra Obrigatória da Governança:**  
+> As propostas de evolução **NUNCA devem permanecer como resumos inline ou listas soltas no relatório**.  
+> O auditor DEVE gerar arquivos Markdown individuais para cada sprint proposta no diretório oficial:  
+> `governanca/sprints/XX-nome-da-sprint.md`, seguindo rigorosamente [sprints/_template.md](governanca/sprints/_template.md).
+
+| Sprint | Arquivo Físico Dedicado | Foco Estratégico & Escopo Expandido | Status |
+|:---:|---|---|:---:|
+| **01** | 👉 `governanca/sprints/01-nome-da-sprint.md` | [Descrição do objetivo principal e escopo da entrega] | `pendente` |
+| **02** | 👉 `governanca/sprints/02-nome-da-sprint.md` | [Descrição do objetivo principal e escopo da entrega] | `pendente` |
 
 ---
 
-## 5. Proposta de Sprint de Evolução (Backlog Executável)
-
-*Estrutura pronta para ser copiada para [SESSAO.md](governanca/SESSAO.md) caso aprovada pelo usuário.*
-
-### Sprint [Número] — Evolução da Governança: [Tema da Sprint]
-- **Objetivo da Sprint:** [Meta clara e mensurável]
-- **Tarefas Planejadas:**
-  - [ ] **Etapa 1:** [Descrição da tarefa] (Alvo: `[arquivo/caminho]`)
-  - [ ] **Etapa 2:** [Descrição da tarefa] (Alvo: `[arquivo/caminho]`)
-  - [ ] **Etapa 3:** [Descrição da tarefa] (Alvo: `[arquivo/caminho]`)
-- **Critérios de Aceite:**
-  - `npm test` passando com 100% dos links íntegros e presets válidos.
-  - Registro detalhado em [CHANGELOG.md](governanca/CHANGELOG.md).
-  - Harness local sincronizado via [harness.mjs](governanca/scripts/harness.mjs).
+*Para iniciar a execução, aguarde a aprovação formal do usuário no Gate 1 da respectiva sprint para inseri-la como ativa em [SESSAO.md](governanca/SESSAO.md).*

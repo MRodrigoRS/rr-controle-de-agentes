@@ -4,7 +4,7 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** Nenhuma (Fast-Track / Refatoração Estratégica)
+**Sprint Ativa:** [Sprint 01 — Blindagem Estrutural, Links Nativos e Rigor Operacional](governanca/sprints/01-blindagem-estrutural-e-links-nativos.md) (Aguardando Gate 1)
 
 ---
 
@@ -38,6 +38,16 @@
 
 
 ## Registro de Sessões
+
+### Sessão — 2026-10-06: Auditoria Completa de Maturidade, Blindagem de P&D e Roadmap Multi-Sprint
+- **Objetivo:** Executar auditoria profunda de maturidade da governança matriz com 4 subagentes especializados, blindar a skill de auditoria contra atalhos/preguiça e materializar um roadmap multi-sprint em arquivos físicos dedicados.
+- **Entregas Realizadas:**
+  - Inspeção integral (100% das linhas) em mais de 65 arquivos centrais da governança via 4 subagentes especializados (Manuais, Workflows, Scripts e Catálogo/Skills).
+  - Relatório oficial consolidado em [evolucao-governanca-2026-10-06.md](governanca/relatorios/evolucao-governanca-2026-10-06.md), com nota calibrada em 7.8/10 (Maduro).
+  - Blindagem da skill [auditar-maturidade-governanca.md](governanca/skills/auditar-maturidade-governanca.md), do workflow [auditar-governanca.md](governanca/workflows/auditar-governanca.md) e do template [_template_evolucao_governanca.md](governanca/relatorios/_template_evolucao_governanca.md) com: Manifesto de Cobertura obrigatório, proibição absoluta de simulação mental, pesquisa externa na web obrigatória e materialização mandatória de sprints físicas.
+  - Materialização de 4 sprints físicas dedicadas em `governanca/sprints/` (Sprint 01: Correções mecânicas; Sprint 02: Blindagem agêntica OWASP 2026 e Gitleaks; Sprint 03: Knip zero-token, Biome e saneamento de catálogo; Sprint 04: Context engineering 32 KiB, workflows fluidos e WCAG a11y).
+  - Validação de integridade mecânica com `npm test` verde (851 links locais e 27 presets 100% íntegros).
+- **Próximos Passos:** Iniciar nova sessão executando a Sprint 01 (Gate 1 e Etapa 1).
 
 ### Sessão — 2026-10-06: Pente Fino e Canonização Universal de Links na Governança
 - **Objetivo:** Auditar minuciosamente 100% dos arquivos do ecossistema, eliminando todas as menções em texto solto a documentos, skills e workflows em favor de links Markdown verificáveis, consolidando paridade absoluta entre matriz e templates.

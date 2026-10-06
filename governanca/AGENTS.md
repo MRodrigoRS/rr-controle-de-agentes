@@ -15,7 +15,7 @@ Quando o usuário iniciar a conversa com saudações ou prompts genéricos (ex: 
 Em vez disso, faça um **auto-diagnóstico rápido (3 segundos)** da estrutura do repositório e declare o diagnóstico seguido da ação recomendada:
 
 1. **Repositório Existente (Brownfield Onboarding):**
-   - *Condição:* Existe código funcional no repositório (ex: `src/`, scripts, aplicação existente), mas os documentos de governança ainda possuem dados genéricos ou [02-stack.md](governanca/livro-arquitetura/02-stack.md) ainda não reflete a stack real.
+   - *Condição:* Existe código funcional no repositório (ex: `src/`, scripts, aplicação existente), mas os documentos de governança ainda possuem dados genéricos/placeholders (`rr-controle-de-agentes-1.1`) ou [02-stack.md](governanca/livro-arquitetura/02-stack.md) ainda não reflete a stack real.
    - *Ação Imediata:* Declare o diagnóstico e ofereça a vinculação:
      > *"Identifiquei que este é um repositório existente recebendo governança. Deseja que eu execute a vinculação da stack e preenchimento da arquitetura agora?"* (Siga [VINCULAR.md](governanca/VINCULAR.md)).
 
@@ -65,7 +65,7 @@ Boas práticas esperadas em todo o desenvolvimento:
 - **Testes incrementais:** Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades.
 - **Responsividade e PWA:** Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão.
 - **Estrutura de pastas:** Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md). Não crie pastas soltas na raiz do projeto.
-- **Documentação de decisões:** Decisões técnicas relevantes devem ser registradas no livro de arquitetura em [livro-arquitetura/](governanca/livro-arquitetura/).
+- **Documentação de decisões:** Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`.
 - **Changelog da governança atualizado:** Toda alteração nas regras, padrões, skills ou workflows da governança exige que o agente analise o diff (`git diff`) e registre uma entrada correspondente em [CHANGELOG.md](governanca/CHANGELOG.md) antes do commit.
 
 ## Padrões de Implementação

@@ -13,22 +13,28 @@
 
 1. **Ativar a Skill de Referência:**
    - Siga o guia passo a passo em [auditar-maturidade-governanca.md](governanca/skills/auditar-maturidade-governanca.md).
-2. **Raio-X Interno:**
-   - Inspecione regras, manuais em [padroes/](governanca/padroes/), catálogo em [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md), scripts portáteis e teste a integridade com `npm test`.
+2. **Raio-X Interno (Evidências Mandatórias):**
+   - Inspecione regras, manuais em [padroes/](governanca/padroes/), catálogo em [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md), scripts portáteis e teste a integridade com `npm test` real no terminal.
    - Avalie a **coerência geral dos arquivos Markdown (.md)**: divisão de responsabilidades, ausência de redundâncias/repetições desnecessárias e garantia de que todos os arquivos se integram em um fluxo fluido sem arquivos órfãos.
-
+   - Monte obrigatoriamente a tabela de **Manifesto de Cobertura** (arquivos lidos na íntegra x linhas).
 3. **Pesquisa Externa & Benchmark Web:**
-   - Investigue inovações recentes em agent harness engineering, ferramentas de análise estática sem consumo de tokens e segurança.
+   - Investigue inovações recentes em agent harness engineering, ferramentas de análise estática sem consumo de tokens (Knip, Biome) e segurança agêntica (OWASP 2026).
 4. **Gerar Relatório de Auditoria:**
    - Crie o artefato `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` com base em [_template_evolucao_governanca.md](governanca/relatorios/_template_evolucao_governanca.md).
-5. **Estruturar Proposta de Sprint:**
-   - Proponha as tarefas prioritárias para a esteira da matriz e aguarde a aprovação do usuário antes de iniciar qualquer código.
+5. **Materializar Sprints Físicas Dedicadas (Roadmap Executável):**
+   - **É OBRIGATÓRIO gerar arquivos físicos dedicados e expandidos para cada sprint identificada no diretório oficial:**
+     `governanca/sprints/XX-nome-da-sprint.md`
+   - É expressamente proibido deixar propostas de sprint como resumos compactados ou listas inline soltas dentro do relatório.
+   - Cada sprint física deve seguir o padrão integral de [sprints/_template.md](governanca/sprints/_template.md), contendo objetivo mensurável, etapas detalhadas, tarefas, critérios de aceite, instruções de Gate 1/2 e roteiro passo a passo de verificação.
+   - O relatório de auditoria deve conter a tabela com o resumo de cada sprint e links diretos para seus arquivos físicos correspondentes em `governanca/sprints/`.
 
 ## Saída
 
-- Relatório formal `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` contendo nota de maturidade, radar de inovações e proposta de Sprint.
+- Relatório formal `governanca/relatorios/evolucao-governanca-<YYYY-MM-DD>.md` contendo manifesto de cobertura, nota de maturidade e radar de inovações.
+- Conjunto de **arquivos físicos dedicados de sprint** gerados em `governanca/sprints/XX-nome-da-sprint.md`.
 
 ## Critérios de Conclusão
 
-- Relatório gerado com avaliação crítica e fundamentada.
-- Proposta de Sprint apresentada ao usuário de forma modular e acionável.
+- Relatório gerado com avaliação crítica, manifesto de cobertura comprovado e fundamentado em evidências do código.
+- Todas as frentes de evolução desdobradas e materializadas em **arquivos físicos dedicados de sprint** prontos para execução após Gate 1.
+- `npm test` validado e aprovado com 100% de links íntegros.
