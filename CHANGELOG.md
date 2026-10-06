@@ -12,6 +12,16 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.3] — 2026-10-06
+
+### Adicionado
+- Auditoria de código morto e dependências zumbis zero-token com Knip documentada em `auditar-repositorio.md`.
+- Paridade total de linters nativos nos presets (.NET Roslyn Analyzers, golangci-lint, gofumpt, flutter_lints, dart format) e Biome como padrão nos presets web.
+- Saneamento taxonômico do catálogo de tecnologias (151 tecnologias em 11 categorias limpas) com aposentadoria formal de PyInstaller e dotenv.
+- Desacoplamento estrito de escopo entre auditoria técnica de repositório e auditorias de consistência visual/responsividade na meta-skill `faxina-completa.md`.
+
+---
+
 ## [1.1.2] — 2026-10-06
 
 ### Adicionado

@@ -4,7 +4,7 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** [Sprint 03 — Análise Zero-Token e Modernização do Catálogo](sprints/03-analise-zero-token-e-modernizacao-catalogo.md) (Aguardando Gate 1)
+**Sprint Ativa:** [Sprint 04 — Context Engineering, Workflows Fluidos e Acessibilidade WCAG](sprints/04-context-engineering-workflows-e-a11y.md) (Aguardando Gate 1)
 
 ---
 
@@ -38,6 +38,16 @@
 
 
 ## Registro de Sessões
+
+### Sessão — 2026-10-06: Conclusão da Sprint 03 — Análise Zero-Token, Higiene e Modernização do Catálogo
+- **Objetivo:** Integrar ferramentas de análise estática e higiene que rodam offline poupando tokens de IA (Knip, Biome), sanear a taxonomia do catálogo SQLite e calibrar todos os 27 presets com linters nativos.
+- **Entregas Realizadas:**
+  - **Etapa 1:** Adicionada subseção oficial de *Código Morto & Dependências Zumbis (Zero-Token com Knip)* em `auditar-repositorio.md` (e template), prescrevendo comandos locais offline (`npx knip --reporter compact`, `cargo machete`, `vulture`, `deadcode`) e proibindo gasto de tokens lendo dezenas de arquivos manualmente.
+  - **Etapa 2:** Biome consolidado como ferramenta primária recomendada em `arquitetura.lint` e `arquitetura.formatacao` para todos os presets web modernos em `presets.json` e documentado no catálogo.
+  - **Etapa 3:** Saneamento taxonômico do catálogo SQLite (`dados/rr.db`): categorias consolidadas (de 13 para 11 categorias limpas; `Testes` absorvido por `Qualidade & Testes`, `Linguagens & Tipagem` absorvido por `Bibliotecas`). Ferramentas obsoletas marcadas como preteridas (`PyInstaller` por Nuitka, `dotenv` por `--env-file`). Inseridas novas tecnologias de 2026 (`Gitleaks`, `Knip`, `Oxlint`, `Bun`, `Deno`). Snapshots JSON sincronizados.
+  - **Etapa 4:** Cadastrados linters nativos específicos no SQLite e snapshot (`.NET Roslyn Analyzers`, `golangci-lint`, `gofumpt`, `flutter_lints`, `dart format`) e vinculados aos IDs em `presets.json` para os presets C#, Go e Flutter.
+  - **Etapa 5:** Desacoplamento estrito de escopo em `auditar-repositorio.md` e `faxina-completa.md`, removendo duplicatas de testes visuais e mobile da auditoria de repositório e delegando-os exclusivamente às skills correspondentes.
+- **Status Atual:** Todas as 5 etapas implementadas e verificadas. `npm test` verde (875 links locais íntegros e 27 presets válidos), `npm run build` aprovado e varredura de segredos limpa. Sprint 03 concluída e arquivada em [sprints/concluidas/03-analise-zero-token-e-modernizacao-catalogo.md](sprints/concluidas/03-analise-zero-token-e-modernizacao-catalogo.md). Repositório pronto para iniciar a Sprint 04 (Aguardando Gate 1).
 
 ### Sessão — 2026-10-06: Conclusão da Sprint 02 — Blindagem Agêntica, Scanner de Segredos e Defesa em Profundidade
 - **Objetivo:** Implementar proteções contra ataques a agentes (OWASP Agentic Top 10 2026), barreira determinística contra vazamento de segredos (Gitleaks + fallback regex), cabeçalhos HTTP defensivos (Strict CSP e Rate Limiting) e política de MCP Mínimo.

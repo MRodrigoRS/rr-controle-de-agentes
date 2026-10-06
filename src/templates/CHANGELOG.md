@@ -6,6 +6,16 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [Sprint 03] — 2026-10-06
+
+### Adicionado
+- **Análise Zero-Token (Knip):** Seção oficial em [auditar-repositorio.md](skills/auditar-repositorio.md) instruindo o uso de ferramentas offline de análise estática (`npx knip --reporter compact`, `cargo machete`, `vulture`, `deadcode`) para erradicar código morto e dependências zumbis sem queimar tokens de IA.
+- **Modernização do Catálogo SQLite:** Saneamento taxonômico completo (151 tecnologias em 11 categorias limpas), absorvendo categorias monotemáticas (`Linguagens & Tipagem` e `Testes` consolidadas em `Bibliotecas` e `Qualidade & Testes`). Aposentadoria formal de `PyInstaller` (preterido por `Nuitka`) e `dotenv` (preterido por `--env-file`). Adicionadas ferramentas de 2026 (`Gitleaks`, `Knip`, `Oxlint`, `Bun`, `Deno`).
+- **Paridade Total de Linters nos Presets:** Vinculação de IDs reais aos presets em `presets.json` para linters de todas as linguagens suportadas (.NET Roslyn Analyzers, golangci-lint, gofumpt, flutter_lints, dart format) e Biome consolidado nos presets web.
+- **Desacoplamento de Fases:** Refinamento de escopo na meta-skill [faxina-completa.md](skills/faxina-completa.md) e [auditar-repositorio.md](skills/auditar-repositorio.md), separando a auditoria técnica de repositório das fases estéticas de design tokens ([auditar-consistencia-visual.md](skills/auditar-consistencia-visual.md)) e mobile ([auditar-responsividade.md](skills/auditar-responsividade.md)).
+
+---
+
 ## [Sprint 02] — 2026-10-06
 
 ### Adicionado

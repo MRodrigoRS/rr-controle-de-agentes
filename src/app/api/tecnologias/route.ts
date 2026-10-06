@@ -49,7 +49,7 @@ export async function POST(request: Request) {
 
     // Atualiza o CATALOGO_TECNOLOGIAS.md
     try {
-      const catalogoPath = path.resolve(process.cwd(), "src/templates/skills/CATALOGO_TECNOLOGIAS.md");
+      const catalogoPath = path.resolve(process.cwd(), "governanca/skills/CATALOGO_TECNOLOGIAS.md");
       const catalogoMd = gerarCatalogoMarkdown();
       fs.writeFileSync(catalogoPath, catalogoMd, "utf-8");
     } catch {

@@ -208,6 +208,14 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
+    "id": 137,
+    "nome": "@types/google-apps-script",
+    "categoria": "Bibliotecas",
+    "aplicabilidade": "Definições de tipos TypeScript para desenvolvimento com Google Apps Script APIs",
+    "descricao": "Tipagens TypeScript oficiais para todo o ambiente de desenvolvimento do Google Apps Script (SpreadsheetApp, GmailApp, DriveApp, HtmlService, etc.), viabilizando autocomplete estrito, refatorações seguras e compilação sem erros em IDEs modernas.",
+    "criado_em": "2026-09-04 13:16:12"
+  },
+  {
     "id": 52,
     "nome": "Baileys",
     "categoria": "Bibliotecas",
@@ -408,6 +416,14 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
+    "id": 128,
+    "nome": "SHA-256 + pepper + UUID",
+    "categoria": "Bibliotecas",
+    "aplicabilidade": "Padrão criptográfico de hashing com pepper e UUID para autenticação",
+    "descricao": "Prática de criptografia e hashing de senhas com salgamento/pimenta e identificadores universais únicos.",
+    "criado_em": "2026-09-03 16:20:59"
+  },
+  {
     "id": 57,
     "nome": "Sonner",
     "categoria": "Bibliotecas",
@@ -539,8 +555,8 @@
     "id": 53,
     "nome": "dotenv",
     "categoria": "Bibliotecas",
-    "aplicabilidade": "Carregar variáveis de ambiente de arquivos .env",
-    "descricao": "Pacote Node.js que carrega variáveis de ambiente de um arquivo .env para process.env, separando configurações sensíveis do código-fonte. Padrão de facto em projetos JavaScript/TypeScript.",
+    "aplicabilidade": "Carregar variáveis de ambiente de arquivos .env [Preterido por --env-file]",
+    "descricao": "Pacote Node.js para carregar variáveis de arquivo .env. [Preterido: em Node.js 20+, utilize a flag nativa --env-file ou o suporte embutido dos frameworks modernos].",
     "criado_em": "2026-09-03 16:19:43"
   },
   {
@@ -582,6 +598,14 @@
     "aplicabilidade": "Grafo de conhecimento via AST (Tree-sitter) para análise de dependências e blast radius",
     "descricao": "Transforma o repositório em um grafo de conhecimento consultável (graph.json, graph.html, GRAPH_REPORT.md) para análise de impacto e aceleração de onboarding sem gastar tokens.",
     "criado_em": "2026-10-01 07:00:15"
+  },
+  {
+    "id": 151,
+    "nome": "dart format",
+    "categoria": "Ferramentas",
+    "aplicabilidade": "Formatador de código oficial e idiomático para Dart",
+    "descricao": "Ferramenta CLI padrão embutida no Dart SDK que formata automaticamente arquivos .dart de acordo com as diretrizes de estilo oficiais.",
+    "criado_em": "2026-10-06 20:29:03"
   },
   {
     "id": 111,
@@ -824,20 +848,20 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
-    "id": 137,
-    "nome": "@types/google-apps-script",
-    "categoria": "Linguagens & Tipagem",
-    "aplicabilidade": "Definições de tipos TypeScript para desenvolvimento com Google Apps Script APIs",
-    "descricao": "Tipagens TypeScript oficiais para todo o ambiente de desenvolvimento do Google Apps Script (SpreadsheetApp, GmailApp, DriveApp, HtmlService, etc.), viabilizando autocomplete estrito, refatorações seguras e compilação sem erros em IDEs modernas.",
-    "criado_em": "2026-09-04 13:16:12"
-  },
-  {
     "id": 116,
     "nome": "Expo SDK",
     "categoria": "Mobile",
     "aplicabilidade": "Plataforma e conjunto de ferramentas para React Native",
     "descricao": "Ecossistema completo que simplifica o desenvolvimento, build e deploy de aplicações React Native.",
     "criado_em": "2026-09-03 16:20:59"
+  },
+  {
+    "id": 147,
+    "nome": ".NET Roslyn Analyzers",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Análise estática e regras de qualidade integradas para C# e .NET",
+    "descricao": "Analisadores oficiais da plataforma .NET baseados no compilador Roslyn que inspecionam estilo, segurança e melhores práticas durante o build.",
+    "criado_em": "2026-10-06 20:29:03"
   },
   {
     "id": 31,
@@ -856,6 +880,22 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
+    "id": 117,
+    "nome": "Jest",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Framework de testes unitários e de integração JavaScript",
+    "descricao": "Test runner clássico com foco em simplicidade, assertions embutidas e suporte a mocks.",
+    "criado_em": "2026-09-03 16:20:59"
+  },
+  {
+    "id": 143,
+    "nome": "Knip",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Detecção zero-token de código morto, exports e dependências não utilizadas",
+    "descricao": "Analisador estático em alta velocidade para projetos JavaScript e TypeScript que encontra arquivos órfãos, tipos não importados e dependências não declaradas.",
+    "criado_em": "2026-10-06 20:29:03"
+  },
+  {
     "id": 36,
     "nome": "MSW (Mock Service Worker)",
     "categoria": "Qualidade & Testes",
@@ -870,6 +910,14 @@
     "aplicabilidade": "Mocks para testes unitários em .NET",
     "descricao": "Framework de mocking para .NET que cria fakes de interfaces/classes em testes xUnit, isolando ViewModels e Services de dependências externas.",
     "criado_em": "2026-09-03 16:19:43"
+  },
+  {
+    "id": 144,
+    "nome": "Oxlint",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Linter estático 50-100x mais rápido que ESLint",
+    "descricao": "Linter de última geração escrito em Rust focado em regras de correção sem necessidade de configuração complexa.",
+    "criado_em": "2026-10-06 20:29:03"
   },
   {
     "id": 32,
@@ -912,6 +960,38 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
+    "id": 150,
+    "nome": "flutter_lints",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Regras e linting recomendados para Flutter e Dart",
+    "descricao": "Conjunto oficial de regras e linters da equipe Flutter para incentivar boas práticas e código idiomático em aplicações Flutter.",
+    "criado_em": "2026-10-06 20:29:03"
+  },
+  {
+    "id": 149,
+    "nome": "gofumpt",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Formatador de código Go estrito e determinístico",
+    "descricao": "Formatador mais rigoroso que o gofmt padrão, aplicando regras adicionais de consistência e higiene estilística.",
+    "criado_em": "2026-10-06 20:29:03"
+  },
+  {
+    "id": 148,
+    "nome": "golangci-lint",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Meta-linter rápido e extensível em paralelo para Go",
+    "descricao": "Agregador de linters em Go líder do ecossistema que executa dezenas de ferramentas estáticas em paralelo com cache inteligente.",
+    "criado_em": "2026-10-06 20:29:03"
+  },
+  {
+    "id": 115,
+    "nome": "integration_test",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Testes de integração end-to-end para Flutter",
+    "descricao": "Pacote oficial do Flutter para executar testes de integração em dispositivos reais ou emuladores.",
+    "criado_em": "2026-09-03 16:20:59"
+  },
+  {
     "id": 87,
     "nome": "mypy",
     "categoria": "Qualidade & Testes",
@@ -944,6 +1024,14 @@
     "criado_em": "2026-09-03 16:19:43"
   },
   {
+    "id": 121,
+    "nome": "testify",
+    "categoria": "Qualidade & Testes",
+    "aplicabilidade": "Conjunto de asserções e mocks para testes em Go",
+    "descricao": "Biblioteca de teste mais popular de Go com assertions elegantes, suites de teste e suporte a mocking.",
+    "criado_em": "2026-09-03 16:20:59"
+  },
+  {
     "id": 35,
     "nome": "xUnit",
     "categoria": "Qualidade & Testes",
@@ -966,6 +1054,22 @@
     "aplicabilidade": "Progressive Web App (PWA) e Service Worker com suporte nativo ao Next.js App Router",
     "descricao": "Módulo moderno para Next.js App Router que compila Service Workers, estratégias de cache offline Workbox e Web App Manifest, permitindo que a aplicação Next.js seja instalável como PWA no desktop e mobile.",
     "criado_em": "2026-09-04 17:10:51"
+  },
+  {
+    "id": 145,
+    "nome": "Bun",
+    "categoria": "Runtimes & Build",
+    "aplicabilidade": "Runtime, package manager e bundler ultra-rápido tudo-em-um para JS/TS",
+    "descricao": "Runtime moderno compatível com Node.js com performance extrema escrito em Zig.",
+    "criado_em": "2026-10-06 20:29:03"
+  },
+  {
+    "id": 146,
+    "nome": "Deno",
+    "categoria": "Runtimes & Build",
+    "aplicabilidade": "Runtime seguro e moderno com TypeScript nativo e APIs web padrão",
+    "descricao": "Runtime moderno para JavaScript e TypeScript com segurança por padrão, empacotador nativo e suporte a imports diretos.",
+    "criado_em": "2026-10-06 20:29:03"
   },
   {
     "id": 39,
@@ -1027,8 +1131,8 @@
     "id": 45,
     "nome": "PyInstaller",
     "categoria": "Runtimes & Build",
-    "aplicabilidade": "Gerar executáveis .exe a partir de scripts Python",
-    "descricao": "Compila e empacota aplicações escritas em Python em arquivos executáveis independentes para que rodem em máquinas sem Python instalado.",
+    "aplicabilidade": "Gerar executáveis .exe a partir de scripts Python [Preterido por Nuitka]",
+    "descricao": "Compila e empacota aplicações Python em executáveis independentes. [Preterido: em novos projetos, utilize Nuitka (ID 47) para compilação nativa em C e proteção de código].",
     "criado_em": "2026-09-03 16:19:43"
   },
   {
@@ -1096,35 +1200,11 @@
     "criado_em": "2026-09-04 13:16:05"
   },
   {
-    "id": 128,
-    "nome": "SHA-256 + pepper + UUID",
+    "id": 142,
+    "nome": "Gitleaks",
     "categoria": "Segurança",
-    "aplicabilidade": "Padrão de hashing seguro e tokens únicos para autenticação",
-    "descricao": "Prática de criptografia e hashing de senhas com salgamento/pimenta e identificadores universais únicos.",
-    "criado_em": "2026-09-03 16:20:59"
-  },
-  {
-    "id": 117,
-    "nome": "Jest",
-    "categoria": "Testes",
-    "aplicabilidade": "Framework de testes unitários e de integração JavaScript",
-    "descricao": "Test runner clássico com foco em simplicidade, assertions embutidas e suporte a mocks.",
-    "criado_em": "2026-09-03 16:20:59"
-  },
-  {
-    "id": 115,
-    "nome": "integration_test",
-    "categoria": "Testes",
-    "aplicabilidade": "Testes de integração end-to-end para Flutter",
-    "descricao": "Pacote oficial do Flutter para executar testes de integração em dispositivos reais ou emuladores.",
-    "criado_em": "2026-09-03 16:20:59"
-  },
-  {
-    "id": 121,
-    "nome": "testify",
-    "categoria": "Testes",
-    "aplicabilidade": "Conjunto de asserções e mocks para testes em Go",
-    "descricao": "Biblioteca de teste mais popular de Go com assertions elegantes, suites de teste e suporte a mocking.",
-    "criado_em": "2026-09-03 16:20:59"
+    "aplicabilidade": "Detecção determinística de segredos e credenciais hardcoded",
+    "descricao": "Scanner SAST de código aberto ultra-rápido para auditoria de repositórios e prevenção de vazamento de chaves e tokens em commits.",
+    "criado_em": "2026-10-06 20:29:03"
   }
 ]

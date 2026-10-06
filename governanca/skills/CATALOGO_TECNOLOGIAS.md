@@ -1,7 +1,7 @@
 # Catálogo de Tecnologias
 
 > Catálogo oficial gerado a partir do RR Controle de Agentes.
-> Total: 141 tecnologias em 13 categorias.
+> Total: 151 tecnologias em 11 categorias.
 
 ## Backend
 
@@ -43,6 +43,7 @@
 | ID | Tecnologia | Aplicabilidade |
 |:--:|------------|----------------|
 | 70 | **@supabase/ssr** | Sessão do Supabase Auth via cookies em aplicações SSR |
+| 137 | **@types/google-apps-script** | Definições de tipos TypeScript para desenvolvimento com Google Apps Script APIs |
 | 52 | **Baileys** | Integração WhatsApp Web via WebSocket em Node.js |
 | 17 | **Base UI** | Componentes de UI acessíveis sem estilização para React |
 | 65 | **Chart.js** | Criação de gráficos dinâmicos e interativos em JavaScript |
@@ -50,7 +51,7 @@
 | 54 | **clsx** | Concatenação condicional de classes CSS |
 | 99 | **CommunityToolkit.Mvvm** | MVVM simplificado em .NET (MAUI, WPF) |
 | 18 | **Dnd-Kit** | Criar interfaces interativas de arrastar e soltar (Drag and Drop) |
-| 53 | **dotenv** | Carregar variáveis de ambiente de arquivos .env |
+| 53 | **dotenv** | Carregar variáveis de ambiente de arquivos .env [Preterido por --env-file] |
 | 123 | **DriveApp** | Gestão de arquivos e pastas no Google Drive via Google Apps Script |
 | 104 | **expo-router** | Navegação baseada em arquivos no React Native/Expo |
 | 105 | **FluentValidation** | Validação de modelos fluida em .NET |
@@ -72,6 +73,7 @@
 | 59 | **React QR Code** | Geração de QR codes no navegador com React |
 | 13 | **Recharts** | Renderizar gráficos dinâmicos de dados em dashboards React |
 | 103 | **Riverpod** | Gerenciamento de estado em Flutter |
+| 128 | **SHA-256 + pepper + UUID** | Padrão criptográfico de hashing com pepper e UUID para autenticação |
 | 57 | **Sonner** | Notificações toast leves e acessíveis para React |
 | 122 | **SpreadsheetApp** | Manipulação de planilhas Google Sheets via Google Apps Script |
 | 51 | **Stripe** | Gateway de pagamentos global com checkout e assinaturas |
@@ -99,6 +101,7 @@
 
 | ID | Tecnologia | Aplicabilidade |
 |:--:|------------|----------------|
+| 151 | **dart format** | Formatador de código oficial e idiomático para Dart |
 | 111 | **dotnet format** | Formatador e linter oficial de código .NET C# |
 | 141 | **Graphify** | Grafo de conhecimento via AST (Tree-sitter) para análise de dependências e blast radius |
 
@@ -141,12 +144,6 @@
 | 23 | **TypeScript** | Frontend e Backend corporativo |
 | 29 | **XAML** | Definição de layouts de interface gráfica declarativa em C# |
 
-## Linguagens & Tipagem
-
-| ID | Tecnologia | Aplicabilidade |
-|:--:|------------|----------------|
-| 137 | **@types/google-apps-script** | Definições de tipos TypeScript para desenvolvimento com Google Apps Script APIs |
-
 ## Mobile
 
 | ID | Tecnologia | Aplicabilidade |
@@ -157,17 +154,26 @@
 
 | ID | Tecnologia | Aplicabilidade |
 |:--:|------------|----------------|
+| 147 | **.NET Roslyn Analyzers** | Análise estática e regras de qualidade integradas para C# e .NET |
 | 31 | **Biome** | Formatação e análise de código ultrarrápidas em JS/TS/CSS |
 | 79 | **bUnit** | Testes de componentes Razor/Blazor com xUnit ou NUnit |
 | 38 | **ESLint** | Garantir conformidade e qualidade estática em projetos JS/TS |
+| 150 | **flutter_lints** | Regras e linting recomendados para Flutter e Dart |
+| 149 | **gofumpt** | Formatador de código Go estrito e determinístico |
+| 148 | **golangci-lint** | Meta-linter rápido e extensível em paralelo para Go |
+| 115 | **integration_test** | Testes de integração end-to-end para Flutter |
+| 117 | **Jest** | Framework de testes unitários e de integração JavaScript |
+| 143 | **Knip** | Detecção zero-token de código morto, exports e dependências não utilizadas |
 | 106 | **Moq** | Mocks para testes unitários em .NET |
 | 36 | **MSW (Mock Service Worker)** | Interceptar e mockar chamadas HTTP em testes |
 | 87 | **mypy** | Checagem estática de tipos em Python |
+| 144 | **Oxlint** | Linter estático 50-100x mais rápido que ESLint |
 | 32 | **Playwright** | Testes end-to-end (E2E) robustos e automatizados |
 | 88 | **pre-commit** | Hooks de git para manter qualidade no commit |
 | 34 | **pytest** | Testes de unidade em código Python de forma simples |
 | 93 | **pytest-qt** | Testes de interfaces PySide6/PyQt com pytest |
 | 86 | **Ruff** | Lint e formatação de Python em altíssima velocidade |
+| 121 | **testify** | Conjunto de asserções e mocks para testes em Go |
 | 37 | **Testing Library** | Testar interações de componentes React com o DOM |
 | 33 | **Vitest** | Testes de unidade e integração rápidos e reativos |
 | 35 | **xUnit** | Testes de unidade robustos no ecossistema C# |
@@ -178,7 +184,9 @@
 |:--:|------------|----------------|
 | 64 | **.NET** | Plataforma de desenvolvimento cross-platform da Microsoft |
 | 140 | **@serwist/next** | Progressive Web App (PWA) e Service Worker com suporte nativo ao Next.js App Router |
+| 145 | **Bun** | Runtime, package manager e bundler ultra-rápido tudo-em-um para JS/TS |
 | 68 | **clasp** | Gerenciamento e deploy de projetos Google Apps Script via terminal |
+| 146 | **Deno** | Runtime seguro e moderno com TypeScript nativo e APIs web padrão |
 | 39 | **Docker** | Garantir consistência absoluta em desenvolvimento e produção |
 | 40 | **Docker Compose** | Orquestrar múltiplos containers Docker locais |
 | 138 | **Google Apps Script (V8)** | Runtime serverless do Google Workspace baseado no motor V8 moderno |
@@ -187,7 +195,7 @@
 | 91 | **Nuitka** | Compilar aplicações Python em executáveis nativos |
 | 44 | **pnpm** | Gerenciamento eficiente de dependências node_modules |
 | 92 | **PyArmor** | Ofuscação e licenciamento de código Python comercial |
-| 45 | **PyInstaller** | Gerar executáveis .exe a partir de scripts Python |
+| 45 | **PyInstaller** | Gerar executáveis .exe a partir de scripts Python [Preterido por Nuitka] |
 | 42 | **Supabase CLI** | Desenvolvimento e testes locais do banco Supabase |
 | 89 | **uv** | Gerenciador de projetos e dependências Python moderno |
 | 73 | **Vercel** | Hospedagem e deploy de aplicações Next.js e frontends |
@@ -199,15 +207,7 @@
 
 | ID | Tecnologia | Aplicabilidade |
 |:--:|------------|----------------|
-| 128 | **SHA-256 + pepper + UUID** | Padrão de hashing seguro e tokens únicos para autenticação |
-
-## Testes
-
-| ID | Tecnologia | Aplicabilidade |
-|:--:|------------|----------------|
-| 115 | **integration_test** | Testes de integração end-to-end para Flutter |
-| 117 | **Jest** | Framework de testes unitários e de integração JavaScript |
-| 121 | **testify** | Conjunto de asserções e mocks para testes em Go |
+| 142 | **Gitleaks** | Detecção determinística de segredos e credenciais hardcoded |
 
 ---
 

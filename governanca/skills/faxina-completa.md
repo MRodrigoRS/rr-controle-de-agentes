@@ -14,21 +14,22 @@ description: Orquestra todas as auditorias do projeto em uma única varredura se
 Execute em ordem. Cada fase gera seu próprio relatório usando o template
 em [_template.md](../relatorios/_template.md).
 
-| Fase | Skill | Relatório gerado |
-|------|-------|-----------------|
-| 0 | [auditar-comercializacao.md](auditar-comercializacao.md) | `auditoria-comercializacao.md` |
-| 1 | [auditar-repositorio.md](auditar-repositorio.md) | `auditoria-repositorio.md` |
-| 2 | [auditar-consistencia-visual.md](auditar-consistencia-visual.md) | `auditoria-consistencia.md` |
-| 3 | [auditar-responsividade.md](auditar-responsividade.md) | `auditoria-responsividade.md` |
-| 4 | [auditar-textos-usuario.md](auditar-textos-usuario.md) | `auditoria-textos.md` |
-| 5 | [auditar-prontidao-producao.md](auditar-prontidao-producao.md) | `auditoria-producao.md` |
-| 6 | [auditar-competitividade.md](auditar-competitividade.md) | `auditoria-competitividade.md` |
-| 7 | *(Se aplicável)* [desenvolver-e-auditar-gas.md](desenvolver-e-auditar-gas.md) | `auditoria-gas.md` |
+| Fase | Skill | Relatório gerado | Foco e Escopo Exclusivo |
+|------|-------|-----------------|--------------------------|
+| 0 | [auditar-comercializacao.md](auditar-comercializacao.md) | `auditoria-comercializacao.md` | Pagamentos, webhooks Stripe/MP, segurança financeira |
+| 1 | [auditar-repositorio.md](auditar-repositorio.md) | `auditoria-repositorio.md` | Segurança, arquitetura, código morto zero-token (Knip) e más práticas |
+| 2 | [auditar-consistencia-visual.md](auditar-consistencia-visual.md) | `auditoria-consistencia.md` | Design tokens, harmonia estética de cores/espaçamentos e componentes de UI |
+| 3 | [auditar-responsividade.md](auditar-responsividade.md) | `auditoria-responsividade.md` | Viewports mobile (360px), layout responsivo e alvos de toque |
+| 4 | [auditar-textos-usuario.md](auditar-textos-usuario.md) | `auditoria-textos.md` | Textos ao cliente, remoção de jargão e dados fictícios |
+| 5 | [auditar-prontidao-producao.md](auditar-prontidao-producao.md) | `auditoria-producao.md` | Scanner de segredos, build, Strict CSP, variáveis de ambiente |
+| 6 | [auditar-competitividade.md](auditar-competitividade.md) | `auditoria-competitividade.md` | Posicionamento de mercado, pricing e gap analysis |
+| 7 | *(Se aplicável)* [desenvolver-e-auditar-gas.md](desenvolver-e-auditar-gas.md) | `auditoria-gas.md` | Quotas e mitigações RPC para Google Apps Script |
 
-**Por que esta ordem?** Protege o dinheiro (pagamento é o erro mais caro)
-→ corrige fundamentos (segurança, práticas e oportunidades de evolução) →
-unifica visual → garante mobile → ajusta a comunicação com o cliente →
-libera para produção → posiciona no mercado.
+**Por que esta ordem e desacoplamento?** Protege o dinheiro (pagamento é o erro mais caro)
+→ corrige fundamentos técnicos e código morto sem gastar tokens com UI (repositório) →
+unifica visual e design tokens (consistência) → garante layout mobile (responsividade) →
+ajusta a comunicação com o cliente (textos) → blinda pré-deploy (produção) →
+posiciona no mercado (competitividade).
 
 ## Como Executar
 

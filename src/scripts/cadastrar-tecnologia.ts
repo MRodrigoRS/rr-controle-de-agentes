@@ -52,8 +52,8 @@ Exemplo:
     descricao,
   });
 
-  // Atualiza também o CATALOGO_TECNOLOGIAS.md nos templates da progenitora
-  const catalogoPath = path.resolve(process.cwd(), "src/templates/skills/CATALOGO_TECNOLOGIAS.md");
+  // Atualiza também o CATALOGO_TECNOLOGIAS.md na governança da progenitora
+  const catalogoPath = path.resolve(process.cwd(), "governanca/skills/CATALOGO_TECNOLOGIAS.md");
   const catalogoMd = gerarCatalogoMarkdown();
   fs.writeFileSync(catalogoPath, catalogoMd, "utf-8");
 

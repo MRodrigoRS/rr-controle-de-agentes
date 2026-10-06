@@ -39,7 +39,22 @@ Examine arquivo por arquivo em busca de:
 
 ### 2. Más Práticas
 
-- **Código morto** — funções, variáveis, imports não utilizados
+#### Código Morto & Dependências Zumbis (Zero-Token com Knip)
+
+> **Regra Pétrea de Economia de Tokens:** O agente NUNCA deve varrer dezenas de arquivos manualmente via chamadas de leitura para procurar código morto ou exports sem uso se houver tooling determinístico local.
+> O agente deve sempre preferir comandos locais offline de sub-milissegundos que poupam milhares de tokens de contexto.
+
+Execute a ferramenta offline de análise estática correspondente à stack:
+- **TypeScript / JavaScript / Node / Next.js:** Execute `npx knip --reporter compact` (ou `bunx knip` / `pnpm dlx knip`). Em poucos segundos, o Knip gera o inventário determinístico exato de:
+  - Arquivos órfãos não importados por nenhum ponto de entrada
+  - Dependências e devDependencies não utilizadas no `package.json`
+  - Dependências listadas no código mas ausentes no `package.json`
+  - Exports, funções, variáveis e tipos declarados mas nunca consumidos
+- **Rust:** `cargo machete` (dependências não utilizadas) e warnings nativos de `dead_code`.
+- **Python:** `vulture` ou `ruff check --select F401,F841`.
+- **Go:** `deadcode` oficial (`golang.org/x/tools/cmd/deadcode`).
+
+#### Outras Más Práticas a Inspecionar
 - **Duplicação** — lógica repetida que deveria estar em um único lugar
 - **Tratamento de erros genérico** — `catch` vazio, `try` monstruoso
   sem separação por tipo de erro
@@ -102,11 +117,11 @@ morto, funções longas) já estão cobertos em Más Práticas:
 Examine se a base de código obedece fielmente às diretrizes dos manuais técnicos:
 
 #### Padrões de Frontend ([frontend.md](../padroes/frontend.md))
-- **Design Tokens & Consistência Visual:** Existem cores hexadecimais arbitrárias, inline styles ou valores mágicos de espaçamento que deveriam utilizar os tokens semânticos do Design System / tema?
+> **Nota de Desacoplamento de Escopo:** Auditorias estéticas e de design tokens (cores hexadecimais soltas, inconsistência visual de espaçamentos) são tratadas exclusivamente por [auditar-consistencia-visual.md](auditar-consistencia-visual.md). Auditorias de viewport mobile (360px), quebra de layout e áreas de toque são de competência de [auditar-responsividade.md](auditar-responsividade.md). Aqui a auditoria de repositório concentra-se na estrutura técnica do frontend:
+
 - **Estados Assíncronos Completos:** Telas e componentes assíncronos cobrem obrigatoriamente os 4 estados essenciais (`Idle`, `Loading/Skeleton`, `Success/Empty State` e `Error amigável com botão de retry`)?
 - **Acessibilidade (WCAG 2.1 AA):** Elementos interativos (`<button>`, `<a>`) possuem labels acessíveis (`aria-label`), tags HTML semânticas adequadas e foco visível para navegação por teclado?
 - **Separação de Camadas (Clean Components):** Componentes de apresentação misturam requisições de rede brutas e mutações complexas em vez de delegar a custom hooks ou presenters?
-- **Layout & Responsividade:** Interfaces quebram em mobile (360px), causam scroll horizontal involuntário ou desrespeitam o grid responsivo?
 
 #### Padrões de Backend ([backend.md](../padroes/backend.md))
 - **Zero-Trust Input Validation:** Todos os endpoints e eventos externos (params, query, body, webhooks, filas) possuem schemas rígidos de validação na borda (Zod, Valibot, etc.) antes de atingir a lógica de negócio?
