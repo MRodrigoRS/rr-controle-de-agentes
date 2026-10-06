@@ -33,13 +33,23 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   return NextResponse.json({ sucesso: true });
 }
 
-export async function PUT(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const projetos = carregarProjetos();
   const projeto = projetos.find((p) => p.id === id);
 
   if (!projeto) {
     return NextResponse.json({ erro: "Projeto não encontrado" }, { status: 404 });
+  }
+
+  let modo: "essencial" | "total" = "essencial";
+  try {
+    const body = await request.json();
+    if (body?.modo === "total") {
+      modo = "total";
+    }
+  } catch {
+    // Body opcional; padrão é "essencial"
   }
 
   const presetFrontend = obterFrontend(projeto.presetFrontend);
@@ -56,6 +66,16 @@ export async function PUT(_request: Request, { params }: { params: Promise<{ id:
   const ehVinculado = projeto.vinculado === true;
 
   try {
+    let backupCriado: string | null = null;
+    const governancaPath = path.join(caminhoAbs, "governanca");
+
+    if (modo === "total" && fs.existsSync(governancaPath)) {
+      const ts = new Date().toISOString().replace(/[:.]/g, "-");
+      const backupDir = path.join(caminhoAbs, `.backup-governanca-${ts}`);
+      fs.cpSync(governancaPath, backupDir, { recursive: true });
+      backupCriado = backupDir;
+    }
+
     await criarEstruturaGovernanca({
       nome: projeto.nome,
       descricao: projeto.descricao,
@@ -64,10 +84,15 @@ export async function PUT(_request: Request, { params }: { params: Promise<{ id:
       presetBackend,
       repositorioExistente: ehVinculado,
       regenerar: true,
+      modoRegeneracao: modo,
       modoMigracao: projeto.modoMigracao,
     });
 
-    return NextResponse.json({ sucesso: true, mensagem: "Governança recriada com sucesso" });
+    const mensagem = modo === "total"
+      ? `Governança regenerada totalmente com sucesso! (Backup salvo em: ${path.basename(backupCriado || "")})`
+      : "Governança sincronizada com sucesso (modo essencial)!";
+
+    return NextResponse.json({ sucesso: true, mensagem, backup: backupCriado });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : "Erro desconhecido";
     return NextResponse.json({ erro: msg }, { status: 500 });

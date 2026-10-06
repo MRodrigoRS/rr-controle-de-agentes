@@ -59,11 +59,29 @@ Quando uma melhoria for validada no projeto e fizer sentido para todo o ecossist
    - **Práticas de Frontend:** Se novas técnicas mundiais de frontend, acessibilidade WCAG, design tokens, microinterações ou UX surgiram, edite `./src/templates/padroes/frontend.md`.
    - **Práticas de Backend:** Se novas convenções de segurança OWASP, arquitetura em camadas, validação estrita (Zero-Trust) ou resiliência surgiram, edite `./src/templates/padroes/backend.md`.
    - **Diretrizes Gerais ou Novos Templates:** Se a melhoria for uma diretriz arquitetural geral ou novo template, edite os arquivos em `./src/templates/`.
-   - **Validação Obrigatória:** Execute `npm test` na progenitora para confirmar que todos os templates e presets continuam íntegros.
+    - **Validação Obrigatória:** Execute `npm test` na progenitora para confirmar que todos os templates e presets continuam íntegros.
+
+4. **Registrar no CHANGELOG Oficial da Governança:**
+   - Antes de commitar as alterações na progenitora, execute `git diff` e analise minuciosamente todas as mudanças realizadas.
+   - Adicione uma entrada descritiva em [CHANGELOG.md](governanca/CHANGELOG.md) (e em `./src/templates/CHANGELOG.md`), agrupando por `Adicionado`, `Modificado`, `Corrigido` ou `Removido`.
+   - Isso garante que qualquer projeto associado que sincronizar a matriz receba o histórico transparente do que mudou.
+
+## Como Consumir Atualizações da Matriz nos Projetos Associados
+
+Em qualquer projeto associado (em qualquer computador), para puxar as evoluções mais recentes da matriz:
+- **Modo Essencial (Seguro / Padrão):** Atualiza padrões (`padroes/`), workflows (`workflows/`), skills (`skills/`) e catálogo sem mexer em notas de sessão ou livro de arquitetura:
+  ```bash
+  node governanca/scripts/sincronizar.mjs
+  ```
+- **Modo Total (Hard Reset):** Regenera todos os arquivos com confirmação interativa e backup automático:
+  ```bash
+  node governanca/scripts/sincronizar.mjs --total
+  ```
 
 ## Regras
 
 - Não transforme um caso isolado em regra — procure padrão (repetiu 2+ vezes).
 - Propostas e alterações na progenitora passam obrigatoriamente por aprovação prévia do usuário.
+- Toda alteração na governança exige atualização do [CHANGELOG.md](governanca/CHANGELOG.md) antes do commit.
 - Priorize a ferramenta mais simples: regra em manual → script → skill → workflow → agente.
 

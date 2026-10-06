@@ -108,7 +108,7 @@ export default async function DetalheProjeto({ params }: { params: Promise<{ id:
             {temStack && (
               <BotaoVerStack projetoId={projeto.id} nomeProjeto={projeto.nome} />
             )}
-            <BotaoRecriarGovernanca projetoId={projeto.id} />
+            <BotaoRecriarGovernanca projetoId={projeto.id} projetoNome={projeto.nome} />
             <BotaoDeletarProjeto projetoId={projeto.id} projetoNome={projeto.nome} />
           </div>
         </div>

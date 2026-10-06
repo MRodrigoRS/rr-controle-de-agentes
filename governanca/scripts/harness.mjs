@@ -22,7 +22,10 @@ if (!fs.existsSync(govDir)) {
 
 // 1. Ponteiros raiz
 fs.writeFileSync(path.join(raiz, "AGENTS.md"), "# Governança do Projeto — RR Tech Studio\n\nAs diretrizes e regras oficiais deste projeto estão em:\n👉 [governanca/AGENTS.md](governanca/AGENTS.md)\n\nNotas persistentes e sprint ativa em:\n👉 [governanca/SESSAO.md](governanca/SESSAO.md)\n", "utf-8");
-fs.writeFileSync(path.join(raiz, "CLAUDE.md"), "# Governança do Projeto — RR Tech Studio\n\nEste projeto é governado por regras estritas da RR Tech Studio.\n- **Regras e Padrões Oficiais:** Consulte [governanca/AGENTS.md](governanca/AGENTS.md)\n- **Sessão Atual e Sprint Ativa:** Consulte [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Primeira Sessão:** Siga o roteiro em [governanca/INICIO.md](governanca/INICIO.md) (ou VINCULAR.md)\n- **Workflows:** Procedimentos disponíveis em [governanca/workflows/](governanca/workflows/)\n", "utf-8");
+
+const temInicio = fs.existsSync(path.join(govDir, "INICIO.md"));
+const roteiroInicial = temInicio ? "[governanca/INICIO.md](governanca/INICIO.md)" : "[governanca/VINCULAR.md](governanca/VINCULAR.md)";
+fs.writeFileSync(path.join(raiz, "CLAUDE.md"), "# Governança do Projeto — RR Tech Studio\n\nEste projeto é governado por regras estritas da RR Tech Studio.\n- **Regras e Padrões Oficiais:** Consulte [governanca/AGENTS.md](governanca/AGENTS.md)\n- **Sessão Atual e Sprint Ativa:** Consulte [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Primeira Sessão:** Siga o roteiro em " + roteiroInicial + "\n- **Workflows:** Procedimentos disponíveis em [governanca/workflows/](governanca/workflows/)\n", "utf-8");
 
 // 2. Regras .agents
 const agentsDir = path.join(raiz, ".agents");
@@ -69,7 +72,7 @@ if (fs.existsSync(skSrc)) {
         if (nMatch) skillName = nMatch[1].trim();
         if (dMatch) desc = dMatch[1].trim();
       }
-      fs.writeFileSync(path.join(folder, "SKILL.md"), "---\nname: " + skillName + "\ndescription: " + desc + "\n---\n\n# Skill: " + skillName + "\n\n> Ponteiro do Harness para governança oficial.\n\n## Instruções de Execução\n\nConsulte e execute as instruções atualizadas em:\n👉 [governanca/skills/" + f + "](../../governanca/skills/" + f + ")\n", "utf-8");
+      fs.writeFileSync(path.join(folder, "SKILL.md"), "---\nname: " + skillName + "\ndescription: " + desc + "\n---\n\n# Skill: " + skillName + "\n\n> Ponteiro do Harness para governança oficial.\n\n## Instruções de Execução\n\nConsulte e execute as instruções atualizadas em:\n👉 [governanca/skills/" + f + "](../../../governanca/skills/" + f + ")\n", "utf-8");
     }
   }
 }

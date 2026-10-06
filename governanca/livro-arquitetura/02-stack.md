@@ -1,7 +1,7 @@
 # Detalhamento da Stack — rr-controle-de-agentes-1.1
 
 **Projeto:** rr-controle-de-agentes-1.1
-**Gerado em:** 2026-10-02
+**Gerado em:** 2026-10-06
 
 
 

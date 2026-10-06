@@ -49,7 +49,7 @@ Após a última fase, gere o sumário unificado em
 `governanca/relatorios/faxina-completa.md`:
 
 ```markdown
-# Faxina Completa — 2026-10-02
+# Faxina Completa — 2026-10-06
 
 **Projeto:** rr-controle-de-agentes-1.1
 

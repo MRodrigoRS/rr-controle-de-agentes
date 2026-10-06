@@ -81,6 +81,7 @@ export function obterCriteriosQualidade(): { titulo: string; descricao: string }
     { titulo: "Responsividade e PWA", descricao: "Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão." },
     { titulo: "Estrutura de pastas", descricao: "Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](governanca/skills/convencoes-estrutura-de-pastas.md). Não crie pastas soltas na raiz do projeto." },
     { titulo: "Documentação de decisões", descricao: "Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`." },
+    { titulo: "Changelog da governança atualizado", descricao: "Toda alteração nas regras, padrões, skills ou workflows da governança exige que o agente analise o diff (`git diff`) e registre uma entrada correspondente em [CHANGELOG.md](governanca/CHANGELOG.md) antes do commit." },
   ];
 }
 

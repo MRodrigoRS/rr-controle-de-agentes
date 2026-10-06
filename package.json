@@ -10,6 +10,7 @@
     "rr:db:migrar": "tsx src/servidor/db/migrar-e-seed.ts",
     "rr:tecnologia": "tsx src/scripts/cadastrar-tecnologia.ts",
     "rr:harness": "tsx src/scripts/configurar-harness.ts",
+    "rr:sync": "tsx src/scripts/sincronizar.ts",
     "test": "tsx src/scripts/validar-templates.ts",
     "validar:templates": "tsx src/scripts/validar-templates.ts"
   },

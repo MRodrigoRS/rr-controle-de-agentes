@@ -3,7 +3,7 @@
 > Manual oficial de padrões de engenharia de interface da RR Tech Studio.
 > Todo código de frontend (Web, Desktop ou Mobile) deve seguir rigorosamente estas diretrizes.
 
-**Gerado em:** 2026-10-02
+**Gerado em:** 2026-10-06
 
 ---
 

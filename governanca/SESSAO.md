@@ -39,6 +39,17 @@
 
 ## Registro de Sessões
 
+### Sessão — 2026-10-06: Sincronização Remota da Governança e Seleção Essencial/Total na Web UI
+- **Objetivo:** Permitir que a governança matriz seja sincronizada a partir da fonte por projetos associados em qualquer computador, com modos Essencial (seguro) e Total (hard reset com confirmação e backup), tanto via CLI/Node quanto via Web UI.
+- **Entregas Realizadas:**
+  - `src/app/api/projetos/[id]/route.ts`: Rota PUT evoluída para receber `{ modo: "essencial" | "total" }` com backup automático de segurança no modo total.
+  - `src/componentes/botao-recriar-governanca.tsx` & `modal-confirmar-regeneracao-total.tsx`: Botão expandido com seletor das duas opções (Essencial e Total) e modal de confirmação com alerta visual e aviso de backup para regeneração total.
+  - `src/servidor/gerador.ts`: Suporte formal a `modoRegeneracao?: "essencial" | "total"`, blindagem de contexto local no modo essencial e gravação de metadados em `governanca/.matriz.json`.
+  - `src/templates/scripts/sincronizar.mjs` & `governanca/scripts/sincronizar.mjs`: Script universal portátil (Node.js nativo 18+, zero dependências) com download remoto de matriz via GitHub API/raw, suporte a `--total`, travas de segurança e invocação automática do harness.
+  - `src/scripts/sincronizar.ts` & `package.json`: Comando CLI `npm run rr:sync -- [caminho] [--total]`.
+  - Documentação atualizada: `governanca/AGENTS.md`, `src/templates/AGENTS.md`, `governanca/skills/evoluir-governanca.md` e `src/templates/skills/evoluir-governanca.md`.
+  - Validações: `npm test` 100% verde (55/55 templates aprovados e 274 links markdown verificados) e `npm run build` concluído com sucesso.
+
 ### Sessão — 2026-10-02: Blindagem, Eliminação de Duplos Sentidos e Auto-Governança
 - **Objetivo:** Sanear todas as fragilidades, condições mortas/órfãs, inconsistências semânticas e aplicar auto-governança na progenitora.
 - **Entregas Realizadas:**

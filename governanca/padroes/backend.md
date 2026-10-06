@@ -3,7 +3,7 @@
 > Manual oficial de arquitetura backend, regras de negócio e segurança da RR Tech Studio.
 > Todo código de servidor, API, banco de dados ou integração deve seguir rigorosamente estas diretrizes.
 
-**Gerado em:** 2026-10-02
+**Gerado em:** 2026-10-06
 
 ---
 

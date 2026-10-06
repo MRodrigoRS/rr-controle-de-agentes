@@ -52,6 +52,7 @@ Boas práticas esperadas em todo o desenvolvimento:
 A arquitetura deste projeto é governada por manuais de engenharia dedicados em `governanca/padroes/`. Consulte e siga obrigatoriamente:
 - **Frontend & UI/UX:** Siga [frontend.md](governanca/padroes/frontend.md) para padrões de consistência visual, feedback visual (toasts de ~4s e loading local), atualização atômica (proibido `location.reload()`), empty states, navegação previsível e reatividade.
 - **Backend & Segurança:** Siga [backend.md](governanca/padroes/backend.md) para o princípio de Zero-Trust no cliente (blindagem contra DevTools/F12), autoridade única de cálculos e permissões, transações atômicas (ACID), sanitização de queries, idempotência e logging seguro sem PII.
+- **Sincronização Remota:** Siga [sincronizacao-remota.md](governanca/padroes/sincronizacao-remota.md) para configurar acesso com token privado no GitHub e sincronizar a governança de qualquer máquina nos modos essencial ou total.
 
 ### Modelo de Dados
 *(Aplicável se o projeto possuir banco de dados ou persistência estruturada)*
@@ -99,6 +100,30 @@ Instruções completas em `governanca/workflows/`.
 As skills acompanham este projeto em `governanca/skills/` e estão mapeadas no harness (`.agents/skills/`).
 - Consulte **apenas** a skill relevante para a tarefa em andamento.
 - Use [CATALOGO_TECNOLOGIAS.md](governanca/skills/CATALOGO_TECNOLOGIAS.md) para consultar o catálogo oficial da progenitora quando for propor ou adicionar novas dependências.
+
+## Sincronização e Manutenção da Governança
+
+A governança deste projeto pode ser sincronizada a partir da matriz oficial da RR Tech Studio de qualquer computador:
+
+- **Modo Essencial (Seguro / Dia a dia):** Atualiza padrões (`governanca/padroes/`), workflows (`governanca/workflows/`), skills (`governanca/skills/`) e catálogo de tecnologias, preservando o contexto vivo do projeto (`governanca/SESSAO.md`, `governanca/PRD.md`, `governanca/sprints/` e `governanca/livro-arquitetura/`):
+  ```bash
+  node governanca/scripts/sincronizar.mjs
+  ```
+- **Modo Total (Hard Reset / Excepcional):** Regenera todos os arquivos da governança a partir dos templates da matriz com confirmação explícita e backup automático prévio:
+  ```bash
+  node governanca/scripts/sincronizar.mjs --total
+  ```
+- **Re-sincronizar apenas o Harness local (`.agents/`):**
+  ```bash
+  node governanca/scripts/harness.mjs
+  ```
+
+### Hábito Obrigatório: Análise de Diff e Registro no CHANGELOG.md
+
+Antes de commitar qualquer alteração que modifique ou evolua a governança (novas regras, manuais em `governanca/padroes/`, workflows, skills ou scripts):
+1. **Auditoria de Diff:** O agente deve executar `git diff` e `git status` para revisar detalhadamente quais diretrizes, templates ou rotinas foram alterados.
+2. **Registro no Changelog:** Adicione uma entrada clara em [`governanca/CHANGELOG.md`](governanca/CHANGELOG.md) (e no template correspondente se a edição for na matriz), agrupando por **Adicionado**, **Modificado**, **Corrigido** ou **Removido**.
+3. **Commit Consciente:** Só realize o commit após o changelog refletir com precisão técnica tudo o que foi entregue.
 
 ## Gestão de Contexto e Sessões
 

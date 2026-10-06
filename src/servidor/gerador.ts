@@ -14,6 +14,7 @@ interface CriarProjetoParams {
   presetBackend: PresetBackend;
   repositorioExistente?: boolean;
   regenerar?: boolean;
+  modoRegeneracao?: "essencial" | "total";
   modoMigracao?: boolean;
 }
 
@@ -148,6 +149,8 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   const arquivos: { destino: string; template: string; ctx: Record<string, unknown> }[] = [
     // Arquivo mestre de regras (sempre atualizado)
     { destino: path.join(governancaDir, "AGENTS.md"), template: "AGENTS.md", ctx },
+    // Histórico de mudanças da governança matriz (sempre atualizado)
+    { destino: path.join(governancaDir, "CHANGELOG.md"), template: "CHANGELOG.md", ctx },
     // Template de sprints (sempre atualizado)
     { destino: path.join(governancaDir, "sprints", "_template.md"), template: "SPRINT.md", ctx: ctxSprint },
     // Stack oficial do projeto (sempre atualizada para refletir presets atuais)
@@ -207,7 +210,9 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
     });
   }
 
-  // 6. Livros de arquitetura protegidos (não sobrescreve se já existirem ou se for regeneração)
+  const ehRegeneracaoTotal = params.modoRegeneracao === "total";
+
+  // 6. Livros de arquitetura protegidos (sobrescreve apenas se for regeneração total)
   const outrosLivros = [
     { destino: path.join(governancaDir, "livro-arquitetura", "01-visao-geral.md"), template: "arquitetura/01-visao-geral.md" },
     { destino: path.join(governancaDir, "livro-arquitetura", "03-logica-do-sistema.md"), template: "arquitetura/03-logica-do-sistema.md" },
@@ -217,26 +222,26 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   ];
 
   for (const item of outrosLivros) {
-    if (!params.regenerar && !fs.existsSync(item.destino)) {
+    if (ehRegeneracaoTotal || (!params.regenerar && !fs.existsSync(item.destino))) {
       arquivos.push({ destino: item.destino, template: item.template, ctx });
     }
   }
 
-  // 7. PLANO.md sagrado — NUNCA sobrescreve se o arquivo já existir (proteção contra perda de dados)
+  // 7. PLANO.md — NUNCA sobrescreve no modo essencial/normal (proteção contra perda de dados)
   const caminhoPlano = path.join(governancaDir, "PLANO.md");
-  if (!fs.existsSync(caminhoPlano)) {
+  if (ehRegeneracaoTotal || !fs.existsSync(caminhoPlano)) {
     arquivos.push({ destino: caminhoPlano, template: "PLANO.md", ctx });
   }
 
-  // 8. PRD.md — NUNCA sobrescreve se já existir
+  // 8. PRD.md — NUNCA sobrescreve no modo essencial/normal
   const caminhoPrd = path.join(governancaDir, "PRD.md");
-  if (!fs.existsSync(caminhoPrd)) {
+  if (ehRegeneracaoTotal || !fs.existsSync(caminhoPrd)) {
     arquivos.push({ destino: caminhoPrd, template: "PRD.md", ctx });
   }
 
-  // 9. SESSAO.md — NUNCA sobrescreve se já existir
+  // 9. SESSAO.md — NUNCA sobrescreve no modo essencial/normal
   const caminhoSessao = path.join(governancaDir, "SESSAO.md");
-  if (!fs.existsSync(caminhoSessao)) {
+  if (ehRegeneracaoTotal || !fs.existsSync(caminhoSessao)) {
     arquivos.push({ destino: caminhoSessao, template: "SESSAO.md", ctx });
   }
 
@@ -260,9 +265,23 @@ export async function criarEstruturaGovernanca(params: CriarProjetoParams) {
   const catalogoPath = path.join(governancaDir, "skills", "CATALOGO_TECNOLOGIAS.md");
   fs.writeFileSync(catalogoPath, catalogoMd, "utf-8");
 
+  // Gera ou atualiza o arquivo de metadados da matriz (.matriz.json)
+  const matrizMetaPath = path.join(governancaDir, ".matriz.json");
+  const matrizMeta = {
+    repositorio: "https://github.com/MRodrigoRS/rr-controle-de-agentes",
+    branch: "master",
+    versaoMatriz: "1.1.0",
+    presetFrontend: presetFrontend.id,
+    presetBackend: presetBackend.id,
+    modoRegeneracaoUltimo: params.modoRegeneracao || (params.regenerar ? "essencial" : "criacao"),
+    atualizadoEm: new Date().toISOString(),
+  };
+  fs.writeFileSync(matrizMetaPath, JSON.stringify(matrizMeta, null, 2), "utf-8");
+
   // Limpeza de arquivos obsoletos em todas as pastas gerenciadas
   const ownedFiles = new Set(arquivos.map((a) => a.destino));
   ownedFiles.add(catalogoPath);
+  ownedFiles.add(matrizMetaPath);
 
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "skills"));
   limparArquivosObsoletos(ownedFiles, path.join(governancaDir, "workflows"));

@@ -1,0 +1,9 @@
+{
+  "repositorio": "https://github.com/MRodrigoRS/rr-controle-de-agentes",
+  "branch": "master",
+  "versaoMatriz": "1.1.0",
+  "presetFrontend": "nextjs-app-router",
+  "presetBackend": "sqlite-local",
+  "modoRegeneracaoUltimo": "essencial",
+  "atualizadoEm": "2026-10-06T05:44:48.845Z"
+}
