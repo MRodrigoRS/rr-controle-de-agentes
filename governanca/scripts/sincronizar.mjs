@@ -16,13 +16,13 @@ import { stdin as input, stdout as output } from "node:process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const raiz = path.resolve(__dirname, "../..");
+const ehSubpastaScripts = path.basename(__dirname) === "scripts" && path.basename(path.dirname(__dirname)) === "governanca";
+const raiz = ehSubpastaScripts ? path.resolve(__dirname, "../..") : process.cwd();
 const govDir = path.join(raiz, "governanca");
 const matrizConfigPath = path.join(govDir, ".matriz.json");
 
 if (!fs.existsSync(govDir)) {
-  console.error("❌ Erro: Pasta governanca/ não encontrada em " + raiz);
-  process.exit(1);
+  fs.mkdirSync(govDir, { recursive: true });
 }
 
 // 1. Carregar configuração da matriz
@@ -137,7 +137,36 @@ async function main() {
   configMatriz.modoRegeneracaoUltimo = ehModoTotal ? "total" : "essencial";
   fs.writeFileSync(matrizConfigPath, JSON.stringify(configMatriz, null, 2), "utf-8");
 
-  // 6. Invocar o script do harness para refletir as mudanças em .agents/
+  // 6. Garantir ponteiros na raiz do projeto (AGENTS.md e CLAUDE.md)
+  const agentsRoot = path.join(raiz, "AGENTS.md");
+  if (!fs.existsSync(agentsRoot)) {
+    fs.writeFileSync(
+      agentsRoot,
+      `# Governança do Projeto — RR Tech Studio\n\nAs diretrizes e regras oficiais deste projeto estão em:\n👉 [governanca/AGENTS.md](governanca/AGENTS.md)\n\nNotas persistentes e sprint ativa em:\n👉 [governanca/SESSAO.md](governanca/SESSAO.md)\n`,
+      "utf-8"
+    );
+    console.log("📝 Criado ponteiro raiz: AGENTS.md");
+  }
+
+  const claudeRoot = path.join(raiz, "CLAUDE.md");
+  if (!fs.existsSync(claudeRoot)) {
+    fs.writeFileSync(
+      claudeRoot,
+      `# Governança do Projeto — RR Tech Studio\n\nConsulte:\n- Diretrizes: [governanca/AGENTS.md](governanca/AGENTS.md)\n- Estado atual e regras ativas: [governanca/SESSAO.md](governanca/SESSAO.md)\n`,
+      "utf-8"
+    );
+    console.log("📝 Criado ponteiro raiz: CLAUDE.md");
+  }
+
+  // Se executado fora de governanca/scripts/, garantir cópia em governanca/scripts/sincronizar.mjs
+  const destSincronizar = path.join(govDir, "scripts", "sincronizar.mjs");
+  fs.mkdirSync(path.join(govDir, "scripts"), { recursive: true });
+  const scriptAtual = fileURLToPath(import.meta.url);
+  if (!fs.existsSync(destSincronizar) && fs.existsSync(scriptAtual)) {
+    fs.copyFileSync(scriptAtual, destSincronizar);
+  }
+
+  // 7. Invocar o script do harness para refletir as mudanças em .agents/
   const harnessScript = path.join(govDir, "scripts", "harness.mjs");
   if (fs.existsSync(harnessScript)) {
     console.log("\n⚙️  Re-sincronizando o harness do agente local (.agents/)...");
@@ -223,7 +252,9 @@ async function sincronizarDeGitHubRemoto() {
       } else if (relPath.startsWith("relatorios/")) {
         destRel = relPath;
       } else if (relPath.startsWith("scripts/")) {
-        destRel = path.join("templates", path.basename(relPath));
+        destRel = relPath.endsWith(".template")
+          ? path.join("templates", path.basename(relPath))
+          : path.join("scripts", path.basename(relPath));
       } else if (ehModoTotal && relPath.startsWith("arquitetura/")) {
         destRel = path.join("livro-arquitetura", relPath.replace(/^arquitetura\//, ""));
       } else if (ehModoTotal && (relPath === "SESSAO.md" || relPath === "PRD.md" || relPath === "PLANO.md")) {
@@ -281,13 +312,19 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
     fs.copyFileSync(catalogoOrigem, catalogoSrc);
   }
 
-  // Scripts templates
+  // Scripts e templates
   const scriptsSrc = path.join(templatesDir, "scripts");
+  const scriptsDest = path.join(govDir, "scripts");
   const templatesDest = path.join(govDir, "templates");
   if (fs.existsSync(scriptsSrc)) {
+    fs.mkdirSync(scriptsDest, { recursive: true });
     fs.mkdirSync(templatesDest, { recursive: true });
     for (const f of fs.readdirSync(scriptsSrc)) {
-      fs.copyFileSync(path.join(scriptsSrc, f), path.join(templatesDest, f));
+      if (f.endsWith(".template")) {
+        fs.copyFileSync(path.join(scriptsSrc, f), path.join(templatesDest, f));
+      } else {
+        fs.copyFileSync(path.join(scriptsSrc, f), path.join(scriptsDest, f));
+      }
     }
   }
 

@@ -104,6 +104,65 @@ Se você estiver em um computador sem a progenitora clonada e quiser vincular um
 
 ---
 
+### Cenário C: Bootstrap em Repositório Virgem (Sem Governança e Sem [AGENTS.md](governanca/AGENTS.md))
+
+Quando você inicia um novo projeto ou abre um repositório legado que **nunca possuiu governança** e não tem a pasta `governanca/` nem o arquivo de entrada [AGENTS.md](governanca/AGENTS.md), você não precisa criar pastas manualmente. O script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) pode ser baixado e executado diretamente da matriz em um único comando:
+
+#### 1. Comando de Inicialização Rápida (One-Liner)
+
+**No Windows (PowerShell):**
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+```
+
+**No Linux / macOS (Bash / zsh):**
+```bash
+curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+```
+
+*(Se o repositório matriz for privado, configure `$env:GITHUB_TOKEN="ghp_xxx"` ou `export GITHUB_TOKEN="ghp_xxx"` antes da execução).*
+
+O que esse comando faz de ponta a ponta:
+1. Baixa o script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) e detecta a raiz do projeto.
+2. Cria a pasta `governanca/` com padrões, workflows, skills e relatórios.
+3. Cria os arquivos raiz [AGENTS.md](governanca/AGENTS.md) e [CLAUDE.md](CLAUDE.md).
+4. Inicializa o diário de bordo [SESSAO.md](governanca/SESSAO.md) e [.matriz.json](governanca/.matriz.json).
+5. Move o script para `governanca/scripts/` e baixa o script [harness.mjs](governanca/scripts/harness.mjs).
+6. Executa o [harness.mjs](governanca/scripts/harness.mjs) para popular o diretório `.agents/` com regras, workflows e skills do agente.
+
+---
+
+### 4.1 O que Enviar de Entrada para o Agente IA
+
+Ao iniciar uma sessão de trabalho com qualquer agente IA (Antigravity, Claude Code, Cursor, Copilot, Windsurf):
+
+#### Se o projeto JÁ POSSUI governança:
+Envie a instrução de leitura direta:
+> *"Leia atentamente as diretrizes em [AGENTS.md](governanca/AGENTS.md) e o estado ativo da sprint em [SESSAO.md](governanca/SESSAO.md) antes de planejar ou executar qualquer tarefa."*
+
+#### Se o projeto NUNCA TEVE governança:
+Copie e cole o seguinte prompt para o agente:
+
+```text
+Você é o agente desenvolvedor deste projeto sob a Governança Oficial RR Tech Studio.
+Este repositório ainda não possui a estrutura de governança inicializada.
+
+Por favor, execute o procedimento de bootstrap:
+1. Certifique-se de que o Node.js (18+) está instalado.
+2. Execute o comando de inicialização correspondente ao seu sistema operacional:
+   - PowerShell:
+     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+   - Bash/Linux/macOS:
+     curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+3. Após a sincronização, leia obrigatoriamente:
+   - [AGENTS.md](governanca/AGENTS.md)
+   - [SESSAO.md](governanca/SESSAO.md)
+   - [.matriz.json](governanca/.matriz.json)
+4. Confirme a conclusão, liste o que foi configurado e apresente o plano de trabalho para a primeira sprint.
+```
+
+---
+
 ## 5. Pela Interface Web da Progenitora
 
 No computador onde a aplicação Web da progenitora estiver em execução (`npm run dev`):
