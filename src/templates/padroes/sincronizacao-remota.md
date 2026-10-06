@@ -26,41 +26,12 @@ A governança possui dois modos formais de atualização:
 
 ---
 
-## 3. Configuração de Acesso ao Repositório Privado
+## 3. Acesso Público Direto (Zero Configuração de Tokens)
 
-Como o repositório matriz é **privado**, outras máquinas precisam de autorização do GitHub para baixar os arquivos. Essa configuração é feita em duas etapas:
+Como o repositório matriz da RR Tech Studio é **público**, qualquer computador ou ambiente pode sincronizar e inicializar a governança diretamente sem necessidade de Personal Access Tokens (PAT), logins ou chaves de API:
 
-### Etapa 3.1: Gerar o Personal Access Token (PAT) no GitHub
-*(Executado apenas uma única vez no navegador)*
-
-1. Acesse o GitHub e clique na sua **foto de perfil** (canto superior direito) → **Settings**.
-2. Na barra lateral esquerda, role até o final e clique em **Developer Settings**.
-3. Selecione **Personal access tokens** → **Tokens (classic)**.
-4. Clique em **Generate new token** → **Generate new token (classic)**.
-5. Preencha os campos:
-   - **Note:** `RR_GOVERNANCA_SYNC`
-   - **Expiration:** Prazo desejado (ex: `90 days` ou `No expiration`)
-   - **Scopes:** Marque a caixinha **`repo`** (acesso completo de leitura a repositórios privados).
-6. Clique em **Generate token** e copie o token gerado (`ghp_...`).
-
----
-
-### Etapa 3.2: Configurar o Token na Máquina de Trabalho
-*(Executado uma vez por computador onde você for programar)*
-
-#### No Windows (PowerShell):
-Grave a variável de ambiente permanentemente no escopo do seu usuário:
-```powershell
-[Environment]::SetEnvironmentVariable("GITHUB_TOKEN", "ghp_SEU_TOKEN_AQUI", "User")
-```
-*Feche e reabra o terminal para carregar a variável.*
-
-#### No Linux / macOS / Codespaces (Terminal):
-Grave a variável no seu arquivo de perfil:
-```bash
-echo 'export GITHUB_TOKEN="ghp_SEU_TOKEN_AQUI"' >> ~/.bashrc
-source ~/.bashrc
-```
+- **Zero Configuração:** Não é necessário gerar tokens nem configurar variáveis de ambiente para o uso cotidiano.
+- **Uso com Token (Opcional para CI/CD):** Caso você execute pipelines automatizados intensivos e deseje expandir a cota de chamadas da API do GitHub de 60/hora para 5.000/hora, você pode opcionalmente definir a variável `$env:GITHUB_TOKEN="ghp_xxx"` (PowerShell) ou `export GITHUB_TOKEN="ghp_xxx"` (Bash). O script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) a detecta e a consome automaticamente.
 
 ---
 
@@ -112,15 +83,15 @@ Quando você inicia um novo projeto ou abre um repositório legado que **nunca p
 
 **No Windows (PowerShell):**
 ```powershell
-$headers = if ($env:GITHUB_TOKEN) { @{ Authorization = "token $env:GITHUB_TOKEN" } } else { @{} }; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -Headers $headers -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
 ```
 
 **No Linux / macOS (Bash / zsh):**
 ```bash
-curl -fsSL ${GITHUB_TOKEN:+-H "Authorization: token $GITHUB_TOKEN"} "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
 ```
 
-*(Se o repositório matriz for privado, configure `$env:GITHUB_TOKEN="ghp_xxx"` ou `export GITHUB_TOKEN="ghp_xxx"` antes da execução para injetar a autenticação automaticamente).*
+*(Como a matriz é pública, nenhuma autenticação é necessária. Se a variável `$env:GITHUB_TOKEN` estiver configurada no ambiente, o script a consome automaticamente para usufruir de cotas de API ampliadas).*
 
 O que esse comando faz de ponta a ponta:
 1. Baixa o script [sincronizar.mjs](governanca/scripts/sincronizar.mjs) e detecta a raiz do projeto (ou progenitora local nos diretórios superiores se presente).
@@ -151,9 +122,9 @@ Por favor, execute o procedimento de bootstrap:
 1. Certifique-se de que o Node.js (18+) está instalado.
 2. Execute o comando de inicialização correspondente ao seu sistema operacional:
    - PowerShell:
-     $headers = if ($env:GITHUB_TOKEN) { @{ Authorization = "token $env:GITHUB_TOKEN" } } else { @{} }; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -Headers $headers -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
+     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -OutFile "sincronizar.mjs"; node sincronizar.mjs --total -y; Remove-Item "sincronizar.mjs"
    - Bash/Linux/macOS:
-     curl -fsSL ${GITHUB_TOKEN:+-H "Authorization: token $GITHUB_TOKEN"} "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
+     curl -fsSL "https://raw.githubusercontent.com/MRodrigoRS/rr-controle-de-agentes/master/src/templates/scripts/sincronizar.mjs" -o sincronizar.mjs && node sincronizar.mjs --total -y && rm sincronizar.mjs
 3. Após a sincronização, leia obrigatoriamente:
    - [AGENTS.md](governanca/AGENTS.md)
    - [SESSAO.md](governanca/SESSAO.md)
