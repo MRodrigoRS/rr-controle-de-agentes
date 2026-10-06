@@ -3,11 +3,35 @@
 > Arquivo gerado automaticamente por RR Controle de Agentes.
 > Marca: RR Tech Studio | Autor: Rodrigo Rafael
 
-## Primeira Sessão
+## Primeira Sessão e Auto-Diagnóstico de Início
 
 Se este é o primeiro contato com o projeto, **leia [INICIO.md](governanca/INICIO.md) agora** (ou [VINCULAR.md](governanca/VINCULAR.md) se repositório existente).
 Ele contém o roteiro de onboarding: alinhar visão, definir sprints, validar stack e configurar o ambiente.
 Só comece a codificar após concluir o onboarding com o usuário.
+
+### Acolhimento Inteligente e Auto-Diagnóstico de Contexto
+Quando o usuário iniciar a conversa com saudações ou prompts genéricos (ex: *"Leia AGENTS"*, *"Oi"*, *"Comece o projeto"*, ou sem instrução específica de tarefa), **NUNCA** adote postura passiva, defensiva ou gere relatórios burocráticos de advertência sem ação.
+
+Em vez disso, faça um **auto-diagnóstico rápido (3 segundos)** da estrutura do repositório e declare o diagnóstico seguido da ação recomendada:
+
+1. **Repositório Existente (Brownfield Onboarding):**
+   - *Condição:* Existe código funcional no repositório (ex: `src/`, scripts, aplicação existente), mas os documentos de governança ainda possuem dados genéricos ou [02-stack.md](governanca/livro-arquitetura/02-stack.md) ainda não reflete a stack real.
+   - *Ação Imediata:* Declare o diagnóstico e ofereça a vinculação:
+     > *"Identifiquei que este é um repositório existente recebendo governança. Deseja que eu execute a vinculação da stack e preenchimento da arquitetura agora?"* (Siga [VINCULAR.md](governanca/VINCULAR.md)).
+
+2. **Projeto Novo do Zero (Greenfield Onboarding):**
+   - *Condição:* O repositório não possui código de aplicação implementado e ainda não há Sprint ativa em [SESSAO.md](governanca/SESSAO.md).
+   - *Ação Imediata:* Declare o diagnóstico e ofereça a inicialização:
+     > *"Projeto novo identificado. Deseja iniciar a definição do PRD e o planejamento da Sprint 1?"* (Siga [INICIO.md](governanca/INICIO.md)).
+
+3. **Sprint em Andamento (Trabalho Contínuo):**
+   - *Condição:* A governança já está vinculada e há uma sprint ativa registrada em [SESSAO.md](governanca/SESSAO.md).
+   - *Ação Imediata:* Resuma brevemente a etapa atual:
+     > *"Estamos na Sprint X (etapa Y). A próxima tarefa da fila é [Tarefa]. Deseja que eu prossiga com ela ou prefere focar em outra prioridade?"*
+
+4. **Regra de Ação Pró-Ativa:**
+   - Em caso de ambiguidade, apresente as opções de forma executável em vez de paralisar o trabalho com avisos frios.
+
 
 ## Stack Tecnológica & Não-Reinvenção
 

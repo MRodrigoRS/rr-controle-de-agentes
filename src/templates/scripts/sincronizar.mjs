@@ -151,7 +151,7 @@ async function main() {
   if (!fs.existsSync(agentsRoot)) {
     fs.writeFileSync(
       agentsRoot,
-      `# Governança do Projeto — RR Tech Studio\n\nAs diretrizes e regras oficiais deste projeto estão em:\n👉 [governanca/AGENTS.md](governanca/AGENTS.md)\n\nNotas persistentes e sprint ativa em:\n👉 [governanca/SESSAO.md](governanca/SESSAO.md)\n`,
+      `# Governança do Projeto — RR Tech Studio\n\nAs diretrizes e regras oficiais deste projeto estão em:\n👉 [governanca/AGENTS.md](governanca/AGENTS.md)\n\nNotas persistentes e sprint ativa em:\n👉 [governanca/SESSAO.md](governanca/SESSAO.md)\n\n---\n\n### Como Iniciar uma Sessão (Intenção Macro)\nPara ativar imediatamente o fluxo correto e evitar adivinhações do agente:\n- **Projeto novo (do zero):** \`"Inicie o onboarding do projeto [Nome]"\` → segue [governanca/INICIO.md](governanca/INICIO.md)\n- **Projeto existente com código:** \`"Vincule este projeto à governança"\` → segue [governanca/VINCULAR.md](governanca/VINCULAR.md)\n- **Continuar sprint ativa:** \`"Execute /status e continue a sprint ativa"\` → segue [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Atualizar governança com a matriz:** \`"Sincronize a governança com a matriz"\` → skill [governanca/skills/sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md)\n`,
       "utf-8"
     );
     console.log("📝 Criado ponteiro raiz: AGENTS.md");
@@ -161,7 +161,7 @@ async function main() {
   if (!fs.existsSync(claudeRoot)) {
     fs.writeFileSync(
       claudeRoot,
-      `# Governança do Projeto — RR Tech Studio\n\nConsulte:\n- Diretrizes: [governanca/AGENTS.md](governanca/AGENTS.md)\n- Estado atual e regras ativas: [governanca/SESSAO.md](governanca/SESSAO.md)\n`,
+      `# Governança do Projeto — RR Tech Studio\n\nConsulte:\n- Diretrizes: [governanca/AGENTS.md](governanca/AGENTS.md)\n- Estado atual e regras ativas: [governanca/SESSAO.md](governanca/SESSAO.md)\n\n---\n\n### Como Iniciar uma Sessão (Intenção Macro)\n- **Projeto novo (do zero):** \`"Inicie o onboarding do projeto [Nome]"\` → segue [governanca/INICIO.md](governanca/INICIO.md)\n- **Projeto existente com código:** \`"Vincule este projeto à governança"\` → segue [governanca/VINCULAR.md](governanca/VINCULAR.md)\n- **Continuar sprint ativa:** \`"Execute /status e continue a sprint ativa"\` → segue [governanca/SESSAO.md](governanca/SESSAO.md)\n- **Atualizar governança:** \`"Sincronize a governança com a matriz"\` → skill [governanca/skills/sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md)\n`,
       "utf-8"
     );
     console.log("📝 Criado ponteiro raiz: CLAUDE.md");

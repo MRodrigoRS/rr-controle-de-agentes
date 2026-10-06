@@ -27,6 +27,9 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Distribuição Universal do Harness:** Inclusão do script [harness.mjs](governanca/scripts/harness.mjs) na pasta de templates `src/templates/scripts/` para transporte remoto.
 - **Interface Web Dedicada do Satélite:** Implementado o script portátil [ui.mjs](governanca/scripts/ui.mjs) (Node.js 18+ nativo, zero dependências externas) permitindo subir um servidor local com painel web interativo completo idêntico ao da progenitora em qualquer máquina que possua o projeto governado (`npm run rr:ui` ou `node governanca/scripts/ui.mjs`).
 - **Skill [sincronizar-governanca.md](governanca/skills/sincronizar-governanca.md):** Nova skill que automatiza o ciclo completo de sincronização com a matriz pública (modo essencial ou total), validação síncrona do painel web ([ui.mjs](governanca/scripts/ui.mjs) `--check`), leitura do changelog e registro no diário [SESSAO.md](governanca/SESSAO.md), acionada por comando `/sincronizar-governanca` ou pedido em linguagem natural.
+- **Acolhimento Inteligente e Auto-Diagnóstico de Contexto:** Adicionado ao [AGENTS.md](governanca/AGENTS.md) protocolo oficial para que o agente, ao receber prompts genéricos como *"Leia AGENTS"*, realize auto-diagnóstico de contexto em 3 segundos (identificando Onboarding Brownfield com código vivo, Greenfield para novos projetos, ou Continuação de Sprint) e proponha a ação correta imediatamente sem advertências burocráticas ou postura passiva.
+- **Comandos Rápidos de Início (Intenção Macro):** Adicionados aos ponteiros de raiz [AGENTS.md](governanca/AGENTS.md) e [CLAUDE.md](CLAUDE.md) para guiar o usuário com prompts precisos no pontapé inicial de cada sessão.
+
 
 ### Modificado
 - [AGENTS.md](governanca/AGENTS.md): Documentação dos comandos de sincronização, manutenção e hábito obrigatório de registro no changelog.
