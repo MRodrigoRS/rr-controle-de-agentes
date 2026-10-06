@@ -203,6 +203,117 @@ function listarArquivosRecursivo(dir, ext = ".md") {
   return resultado;
 }
 
+function obterHistoricoLinhasCommits(caminhoProjeto, limit = 10, offset = 0) {
+  const respostaVazia = {
+    pontos: [],
+    totalCommits: 0,
+    temMais: false,
+    offset,
+    limit,
+  };
+
+  try {
+    if (!ehRaizGit(caminhoProjeto)) return respostaVazia;
+
+    const countOut = execFileSync("git", ["-C", caminhoProjeto, "rev-list", "--count", "HEAD"], {
+      encoding: "utf-8",
+      timeout: 3000,
+      stdio: ["ignore", "pipe", "ignore"],
+      windowsHide: true,
+    }).trim();
+
+    const totalCommits = parseInt(countOut, 10);
+    if (isNaN(totalCommits) || totalCommits === 0) return respostaVazia;
+
+    const commitHead = obterMetadadosGit(caminhoProjeto);
+    const metricasHead = commitHead ? obterMetricasCodigo(caminhoProjeto) : null;
+    const totalLinhasHead = metricasHead ? metricasHead.totalLinhas : 0;
+
+    const quantidadeBuscar = Math.min(totalCommits, offset + limit);
+    if (quantidadeBuscar <= 0) return respostaVazia;
+
+    const logOut = execFileSync(
+      "git",
+      [
+        "-C",
+        caminhoProjeto,
+        "log",
+        `-n`,
+        String(quantidadeBuscar),
+        "--shortstat",
+        "--format=COMMIT|%h|%s|%cd|%ct",
+        "--date=short",
+      ],
+      {
+        encoding: "utf-8",
+        timeout: 5000,
+        stdio: ["ignore", "pipe", "ignore"],
+        windowsHide: true,
+      }
+    );
+
+    const linhas = logOut.split(/\r?\n/);
+    const commitsBrutos = [];
+    let commitAtual = null;
+
+    for (const linha of linhas) {
+      if (linha.startsWith("COMMIT|")) {
+        if (commitAtual) {
+          commitsBrutos.push(commitAtual);
+        }
+        const [, hash, mensagem, data, unixTs] = linha.split("|");
+        commitAtual = {
+          hash: hash || "",
+          mensagem: mensagem || "",
+          data: data || "",
+          timestamp: (parseInt(unixTs, 10) || 0) * 1000,
+          insercoes: 0,
+          delecoes: 0,
+        };
+      } else if (commitAtual && linha.includes("changed")) {
+        const insMatch = linha.match(/(\d+)\s+insertion/);
+        const delMatch = linha.match(/(\d+)\s+deletion/);
+        if (insMatch) commitAtual.insercoes = parseInt(insMatch[1], 10);
+        if (delMatch) commitAtual.delecoes = parseInt(delMatch[1], 10);
+      }
+    }
+    if (commitAtual) {
+      commitsBrutos.push(commitAtual);
+    }
+
+    let linhasAcumuladas = totalLinhasHead;
+    const todosCalculados = [];
+
+    for (let i = 0; i < commitsBrutos.length; i++) {
+      const c = commitsBrutos[i];
+      todosCalculados.push({
+        hash: c.hash,
+        mensagem: c.mensagem,
+        data: c.data,
+        timestamp: c.timestamp,
+        linhasTotais: Math.max(0, linhasAcumuladas),
+        insercoes: c.insercoes,
+        delecoes: c.delecoes,
+      });
+
+      const deltaLiquido = c.insercoes - c.delecoes;
+      linhasAcumuladas -= deltaLiquido;
+    }
+
+    const fatia = todosCalculados.slice(offset, offset + limit).reverse();
+
+    return {
+      pontos: fatia,
+      totalCommits,
+      temMais: offset + limit < totalCommits,
+      offset,
+      limit,
+    };
+  } catch (error) {
+    return respostaVazia;
+  }
+}
+
 function obterDadosProjeto() {
   let nome = path.basename(raiz);
   let descricao = "";
@@ -252,6 +363,7 @@ function obterDadosProjeto() {
   const git = obterMetadadosGit(raiz);
   const metricas = obterMetricasCodigo(raiz);
   const historico = obterHistoricoGit(raiz, 6);
+  const historicoLinhas = obterHistoricoLinhasCommits(raiz, 10, 0);
 
   return {
     nome,
@@ -261,6 +373,7 @@ function obterDadosProjeto() {
     git,
     metricas,
     historico,
+    historicoLinhas,
     temStack: !!conteudoStack,
     arquivos: {
       padroes,
@@ -593,6 +706,34 @@ function gerarPaginaHtml() {
       </div>
     </div>
 
+    <!-- Card do Gráfico de Evolução de Linhas -->
+    <div class="card" id="card-grafico" style="margin-bottom: 24px; display: none;">
+      <div class="card-header" style="flex-wrap: wrap; gap: 8px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h2 class="card-title">Evolução do Volume de Linhas</h2>
+            <span class="card-count" id="grafico-badge-commits">0 commits</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+            Variação no período exibido: <span id="grafico-variacao" style="font-family: monospace; font-weight: 600;">+0 linhas</span>
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 0.75rem; color: var(--text-dim);">Passe o mouse nos pontos para ver o delta</span>
+          <button class="btn" id="btn-carregar-mais-commits" style="display: none; padding: 2px 8px; font-size: 0.75rem;" onclick="carregarMaisCommits()">
+            + Carregar mais
+          </button>
+        </div>
+      </div>
+
+      <div style="position: relative; background: #0d1117; border: 1px solid rgba(48, 54, 61, 0.6); border-radius: 8px; padding: 10px; margin-top: 8px;">
+        <svg id="svg-grafico" viewBox="0 0 850 240" style="width: 100%; height: auto; max-height: 280px; display: block;">
+        </svg>
+        <div id="grafico-tooltip" style="position: absolute; display: none; pointer-events: none; background: #161b22; border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 12px; font-size: 0.8rem; box-shadow: 0 8px 24px rgba(0,0,0,0.6); z-index: 10; max-width: 280px;">
+        </div>
+      </div>
+    </div>
+
     <!-- Seção de Stack e Commits -->
     <div class="grid-sections">
       <div class="card">
@@ -783,8 +924,171 @@ function gerarPaginaHtml() {
           ...(data.arquivos.sprints || []).map(s => "sprints/" + s)
         ];
         renderizarListaArquivos("sprints", sprintsAvulsos, "");
+        // Gráfico de evolução de linhas
+        if (data.historicoLinhas && data.historicoLinhas.pontos) {
+          pontosGrafico = data.historicoLinhas.pontos;
+          totalCommitsGrafico = data.historicoLinhas.totalCommits;
+          temMaisGrafico = data.historicoLinhas.temMais;
+          renderizarGrafico(pontosGrafico);
+        }
       } catch (err) {
         console.error("Falha ao carregar dados:", err);
+      }
+    }
+
+    let pontosGrafico = [];
+    let totalCommitsGrafico = 0;
+    let temMaisGrafico = false;
+
+    function renderizarGrafico(pontos) {
+      if (!pontos || pontos.length < 2) {
+        document.getElementById("card-grafico").style.display = "none";
+        return;
+      }
+      document.getElementById("card-grafico").style.display = "flex";
+
+      const primeiroPonto = pontos[0];
+      const ultimoPonto = pontos[pontos.length - 1];
+      const variacaoPeriodo = ultimoPonto.linhasTotais - primeiroPonto.linhasTotais;
+
+      document.getElementById("grafico-badge-commits").textContent = pontos.length + " de " + totalCommitsGrafico + " commits";
+      const elVariacao = document.getElementById("grafico-variacao");
+      elVariacao.textContent = (variacaoPeriodo > 0 ? "+" : "") + variacaoPeriodo.toLocaleString("pt-BR") + " linhas";
+      elVariacao.style.color = variacaoPeriodo > 0 ? "var(--accent-green)" : (variacaoPeriodo < 0 ? "var(--accent-red)" : "var(--text-muted)");
+
+      const btnMais = document.getElementById("btn-carregar-mais-commits");
+      btnMais.style.display = temMaisGrafico ? "inline-flex" : "none";
+
+      const dim = {
+        largura: 850,
+        altura: 240,
+        paddingLeft: 65,
+        paddingRight: 35,
+        paddingTop: 30,
+        paddingBottom: 45
+      };
+
+      const valores = pontos.map(p => p.linhasTotais);
+      const minVal = Math.min(...valores);
+      const maxVal = Math.max(...valores);
+      const margem = Math.max(10, Math.ceil((maxVal - minVal) * 0.15));
+      const yMin = Math.max(0, minVal - margem);
+      const yMax = maxVal + margem;
+      const alcanceY = Math.max(1, yMax - yMin);
+      const wUtil = dim.largura - dim.paddingLeft - dim.paddingRight;
+      const hUtil = dim.altura - dim.paddingTop - dim.paddingBottom;
+
+      const coords = pontos.map((p, idx) => {
+        const x = pontos.length === 1
+          ? dim.paddingLeft + wUtil / 2
+          : dim.paddingLeft + (idx / (pontos.length - 1)) * wUtil;
+        const y = dim.altura - dim.paddingBottom - ((p.linhasTotais - yMin) / alcanceY) * hUtil;
+        return { x, y, p };
+      });
+
+      const dLinha = coords.reduce(function(acc, c, idx) {
+        const pt = c.x.toFixed(1) + " " + c.y.toFixed(1);
+        return idx === 0 ? "M " + pt : acc + " L " + pt;
+      }, "");
+
+      const chaoY = dim.altura - dim.paddingBottom;
+      const dArea = coords.length > 0
+        ? dLinha + " L " + coords[coords.length - 1].x.toFixed(1) + " " + chaoY + " L " + coords[0].x.toFixed(1) + " " + chaoY + " Z"
+        : "";
+
+      const svg = document.getElementById("svg-grafico");
+
+      let svgHtml = '<defs>' +
+        '<linearGradient id="gradienteAzul" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="#58a6ff" stop-opacity="0.28" />' +
+          '<stop offset="100%" stop-color="#58a6ff" stop-opacity="0.0" />' +
+        '</linearGradient>' +
+      '</defs>';
+
+      // Linhas de Grade Horizontais
+      [0, 0.5, 1].forEach(function(pct) {
+        const y = dim.paddingTop + (dim.altura - dim.paddingTop - dim.paddingBottom) * (1 - pct);
+        const valorLinha = Math.round(yMin + (yMax - yMin) * pct);
+        svgHtml += '<line x1="' + dim.paddingLeft + '" y1="' + y + '" x2="' + (dim.largura - dim.paddingRight) + '" y2="' + y + '" stroke="#21262d" stroke-dasharray="3 3" stroke-width="1" />' +
+          '<text x="' + (dim.paddingLeft - 10) + '" y="' + (y + 4) + '" fill="#7d8590" font-size="11" text-anchor="end" font-family="monospace">' + valorLinha.toLocaleString("pt-BR") + '</text>';
+      });
+
+      // Linha do chão
+      svgHtml += '<line x1="' + dim.paddingLeft + '" y1="' + chaoY + '" x2="' + (dim.largura - dim.paddingRight) + '" y2="' + chaoY + '" stroke="#30363d" stroke-width="1" />';
+
+      // Área e Linha
+      if (dArea) svgHtml += '<path d="' + dArea + '" fill="url(#gradienteAzul)" />';
+      if (dLinha) svgHtml += '<path d="' + dLinha + '" fill="none" stroke="#58a6ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />';
+
+      // Pontos nos commits
+      coords.forEach(function(c, idx) {
+        svgHtml += '<circle cx="' + c.x.toFixed(1) + '" cy="' + c.y.toFixed(1) + '" r="4" fill="#58a6ff" stroke="#0d1117" stroke-width="2" style="cursor: pointer;" data-idx="' + idx + '" class="grafico-ponto" />' +
+          '<text x="' + c.x.toFixed(1) + '" y="' + (chaoY + 18) + '" fill="#7d8590" font-size="10" text-anchor="middle" font-family="monospace">' + c.p.hash + '</text>';
+      });
+
+      svg.innerHTML = svgHtml;
+
+      // Adiciona eventos de hover
+      const tooltip = document.getElementById("grafico-tooltip");
+      svg.querySelectorAll(".grafico-ponto").forEach(function(el) {
+        el.addEventListener("mouseenter", function(e) {
+          const idx = parseInt(e.target.getAttribute("data-idx"), 10);
+          const c = coords[idx];
+          if (!c) return;
+
+          const p = c.p;
+          tooltip.innerHTML =
+            '<div style="font-weight: 600; color: #fff; margin-bottom: 4px; display: flex; justify-content: space-between;">' +
+              '<span style="color: var(--accent-blue); font-family: monospace;">[' + p.hash + ']</span>' +
+              '<span style="color: var(--text-muted); font-size: 0.75rem;">' + p.data + '</span>' +
+            '</div>' +
+            '<div style="color: var(--text-main); margin-bottom: 6px; font-size: 0.78rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + escaparHtml(p.mensagem) + '</div>' +
+            '<div style="display: flex; justify-content: space-between; font-family: monospace; font-size: 0.75rem; border-top: 1px solid var(--card-border); padding-top: 4px;">' +
+              '<span style="color: #fff;">' + p.linhasTotais.toLocaleString("pt-BR") + ' linhas</span>' +
+              '<span>' +
+                '<span style="color: var(--accent-green);">+' + p.insercoes + '</span> / ' +
+                '<span style="color: var(--accent-red);">-' + p.delecoes + '</span>' +
+              '</span>' +
+            '</div>';
+          tooltip.style.display = "block";
+          
+          const rect = svg.getBoundingClientRect();
+          const pontoX = (c.x / dim.largura) * rect.width;
+          const pontoY = (c.y / dim.altura) * rect.height;
+
+          let left = pontoX + 15;
+          if (left + 260 > rect.width) left = pontoX - 270;
+          let top = Math.max(10, pontoY - 40);
+
+          tooltip.style.left = left + "px";
+          tooltip.style.top = top + "px";
+        });
+
+        el.addEventListener("mouseleave", function() {
+          tooltip.style.display = "none";
+        });
+      });
+    }
+
+    async function carregarMaisCommits() {
+      const btn = document.getElementById("btn-carregar-mais-commits");
+      btn.textContent = "Carregando...";
+      btn.disabled = true;
+      try {
+        const novoLimite = pontosGrafico.length + 10;
+        const res = await fetch("/api/historico-linhas?limit=" + novoLimite + "&offset=0");
+        const data = await res.json();
+        if (data.pontos) {
+          pontosGrafico = data.pontos;
+          totalCommitsGrafico = data.totalCommits;
+          temMaisGrafico = data.temMais;
+          renderizarGrafico(pontosGrafico);
+        }
+      } catch (e) {
+        console.error("Falha ao carregar mais commits:", e);
+      } finally {
+        btn.textContent = "+ Carregar mais";
+        btn.disabled = false;
       }
     }
 
@@ -946,6 +1250,21 @@ function iniciarServidor() {
         const info = obterDadosProjeto();
         res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
         res.end(JSON.stringify(info));
+      } catch (err) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ erro: err.message }));
+      }
+      return;
+    }
+
+    // GET /api/historico-linhas -> Retorna histórico de evolução de linhas por commit
+    if (req.method === "GET" && url.pathname === "/api/historico-linhas") {
+      const limit = parseInt(url.searchParams.get("limit") || "10", 10) || 10;
+      const offset = parseInt(url.searchParams.get("offset") || "0", 10) || 0;
+      try {
+        const hist = obterHistoricoLinhasCommits(raiz, limit, offset);
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        res.end(JSON.stringify(hist));
       } catch (err) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ erro: err.message }));
