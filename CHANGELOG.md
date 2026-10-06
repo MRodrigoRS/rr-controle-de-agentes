@@ -12,6 +12,18 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.4] — 2026-10-06
+
+### Adicionado
+- **Context Engineering no AGENTS.md:** Teto estrito de 150 linhas (~12 KB) com Progressive Disclosure orientado a manuais em `padroes/` e workflows *just-in-time*, blindando contra truncamento de contexto de IA.
+- **Encadeamento Fluido de Workflows:** Seção "Próximo Passo Recomendado" em todos os workflows operacionais (`/spec`, `/plan`, `/research`, `/implement`, `/review`, `/release`, `VINCULAR.md`) eliminando becos sem saída na navegação do agente.
+- **Validação Visual Humana no Fast-Track (`/fix`):** Agente proibido de escanear telas de forma autônoma; exigência de descrição de rota/componente com aguardo de validação humana explícita antes do commit.
+- **Trava de Teto em Loops de Teste (`/test`):** Limite determinístico de até 3 tentativas consecutivas de correção de falhas de teste antes de interromper o ciclo para alinhamento com o usuário.
+- **Usabilidade Nativa Zero-Bloat:** Seção 7 em `padroes/frontend.md` padronizando tags HTML semânticas nativas (`<button>`, `<a>`), fechamento de modais/drawers com tecla `Escape`, alvos de clique confortáveis no mobile (~40-44px) e alto contraste, sem inchaço de dependências externas ou ARIA redundante.
+- **Reconciliação Viva do Livro de Arquitetura:** Volumes 01 a 05 inteiramente alinhados à stack real do projeto (Next.js 16 + React 19 + Tailwind CSS 4 + SQLite nativo `node:sqlite` WAL + Biome + Vitest), documentando catálogo de tabelas, ERD e comportamentos autônomos.
+
+---
+
 ## [1.1.3] — 2026-10-06
 
 ### Adicionado

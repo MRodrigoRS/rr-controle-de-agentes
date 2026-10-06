@@ -1,90 +1,70 @@
 # Lógica do Sistema — rr-controle-de-agentes-1.1
 
-> Documenta o comportamento do sistema: regras de negócio, fórmulas, fluxos
-> de dados, estados, workflows e integrações. Atualize sempre que uma sprint
-> implementar ou modificar lógica.
-
-**Gerado em:** 2026-10-02
+**Projeto:** rr-controle-de-agentes-1.1  
+**Marca:** RR Tech Studio | Autor: Rodrigo Rafael  
+**Última Reconciliação:** 2026-10-06  
 
 ---
 
-## Regras de Negócio
+## 1. Regras de Negócio do Sistema
 
-*Extraídas do código. Liste cada regra com localização.*
-
-| ID | Regra | Onde | Referência |
-|----|-------|------|------------|
-| RN-01 | | | |
-| RN-02 | | | |
-
-## Fórmulas e Cálculos
-
-*Extraídos do código: totais, descontos, prazos, conversões, qualquer lógica matemática.*
-
-| ID | Fórmula | Descrição | Onde |
-|----|---------|-----------|------|
-| F-01 | | | |
-| F-02 | | | |
-
-## Fluxos de Dados
-
-*Como os dados entram, são processados e saem.*
-
-```
-[Origem] → [Processo] → [Armazenamento] → [Saída]
-```
-
-## Máquinas de Estado
-
-*Estados de cada entidade e transições possíveis.*
-
-**Entidade:** (ex: Pedido, Usuário, Atendimento)
-
-```
-┌──────────┐    ação 1    ┌──────────┐
-│ Estado A │ ──────────→ │ Estado B │
-└──────────┘             └──────────┘
-     ↑                        │
-     └────────────────────────┘
-           ação 2
-```
-
-| De | Para | Ação | Condição |
-|----|------|------|----------|
-| | | | |
-
-## Workflows
-
-*Sequências coreografadas de passos que envolvem múltiplas partes do sistema.*
-
-**Workflow:** (nome)
-
-1. 
-2. 
-3. 
-
-**Envolve:** (módulos, serviços ou arquivos participantes)
-
-## Integrações
-
-*APIs externas, webhooks, callbacks, serviços consumidos ou expostos.*
-
-| Serviço | Tipo | Entrada | Saída | Autenticação | Arquivo |
-|---------|------|---------|-------|-------------|---------|
-| | | | | | |
-
-## Efeitos Colaterais
-
-*Tudo que o sistema faz além do fluxo principal: notificações, logs, caches,
-envio de e-mail, atualização de relatórios.*
-
-| Ação | Gatilho | Onde |
-|------|---------|------|
-| | | |
+| ID | Regra de Negócio | Onde Está Implementado | Descrição / Comportamento |
+|----|------------------|------------------------|---------------------------|
+| **RN-01** | Cadastro de Projetos Greenfield | `src/servidor/projetos.ts` e `src/servidor/gerador.ts` | Cria o registro no banco SQLite (`projetos`), gera a pasta no disco, instancia o scaffold com templates compilados e inicializa o Git se necessário. |
+| **RN-02** | Vinculação Brownfield com Stack Real | `src/servidor/projetos.ts` e `src/scripts/vincular.ts` | Analisa arquivos do repositório existente, detecta stack técnica automaticamente e injeta governança mantendo código e configs intactos. |
+| **RN-03** | Injeção e Compilação de Templates | `src/servidor/gerador.ts` | Processa os 61 templates oficiais (`src/templates/`) substituindo placeholders Mustache (`{{nomeProjeto}}`, `{{clausulas}}`, `{{qualidade}}`, etc.) na pasta `governanca/` de destino. |
+| **RN-04** | Harness Agêntico Unificado | `src/servidor/harness.ts` e `governanca/scripts/harness.mjs` | Configura e mantém paridade estrita entre regras (`.agents/rules/`), workflows (`.agents/workflows/`) e wrappers de habilidades (`.agents/skills/`). |
+| **RN-05** | Catálogo e Presets Integrados | `src/servidor/db.ts` | Gerencia o catálogo de 151 tecnologias em 11 categorias e garante integridade referencial dos 27 presets mapeados para desenvolvimento. |
+| **RN-06** | Contagem de Métricas de Código | `src/servidor/db.ts` (`metricas_git`) | Calcula o total de arquivos, linhas e caracteres do repositório persistindo o histórico associado ao commit hash. |
 
 ---
 
-> Mantenha atualizado — use a skill [mapear-logica-do-sistema.md](../skills/mapear-logica-do-sistema.md) ao final
-> de cada sprint (ou [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md) para reconciliação global).
+## 2. Fluxos de Dados Principais
 
-*Template gerado por RR Tech Studio (Rodrigo Rafael).*
+```
+[Interface Web / API Client]
+       │ (JSON Payload)
+       ▼
+[Next.js API Route (/api/...)]
+       │ (Zod Validation)
+       ▼
+[src/servidor/projetos.ts | db.ts]
+       │ (Atomic SQL Transaction)
+       ▼
+[SQLite: dados/rr.db] ──► [src/servidor/gerador.ts] ──► [Disco do Projeto]
+```
+
+---
+
+## 3. Máquina de Estados do Projeto
+
+```
+┌─────────────┐       vinculação       ┌───────────────┐
+│ Greenfield  │ ─────────────────────► │  Vinculado /  │
+│  (Novo)     │                        │ Governança OK │
+└─────────────┘                        └───────────────┘
+       │                                       │
+       │ criação do zero                       │ execução de sprints
+       ▼                                       ▼
+┌─────────────┐       sprint-00        ┌───────────────┐
+│ Scaffolding │ ─────────────────────► │ Em Produção / │
+│ Inicial     │                        │  Evolução     │
+└─────────────┘                        └───────────────┘
+```
+
+---
+
+## 4. Endpoints e Rotas de Integração da API
+
+| Rota | Método | Função | Módulo Responsável |
+|------|:------:|--------|--------------------|
+| `/api/projetos` | `GET` | Lista todos os projetos cadastrados com métricas | `src/app/api/projetos/route.ts` |
+| `/api/projetos` | `POST` | Cria ou vincula um novo projeto na governança | `src/app/api/projetos/route.ts` |
+| `/api/projetos/[id]` | `GET` / `DELETE` | Detalha ou remove projeto cadastrado | `src/app/api/projetos/[id]/route.ts` |
+| `/api/presets` | `GET` | Retorna os 27 presets oficiais de frontend e backend | `src/app/api/presets/route.ts` |
+| `/api/tecnologias` | `GET` / `POST` | Consulta e gerencia o catálogo de 151 tecnologias | `src/app/api/tecnologias/route.ts` |
+| `/api/selecionar-pasta`| `POST` | Diálogo nativo para seleção de diretório local | `src/app/api/selecionar-pasta/route.ts` |
+
+---
+
+*Documento mantido e reconciliado conforme os padrões da RR Tech Studio.*

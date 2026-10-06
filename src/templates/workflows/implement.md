@@ -30,3 +30,7 @@ Código implementado + testes + evidências no arquivo da sprint.
 - Evidências registradas e limitações honestas
 - Changelog do produto atualizado na raiz (`CHANGELOG.md`) com o delta da entrega
 - Entrega aprovada pelo usuário (Gate 2)
+
+## Próximo Passo Recomendado
+
+Execute `/review` (workflow [review.md](review.md)) para validação adversarial pré-Gate 2. Após Gate 2 aprovado e commit realizado, execute `/status` (workflow [status.md](status.md)) para verificar ou planejar a próxima sprint ativa.

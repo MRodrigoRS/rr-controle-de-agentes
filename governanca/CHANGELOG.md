@@ -6,6 +6,18 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [Sprint 04] — 2026-10-06
+
+### Adicionado
+- **Context Engineering & Orçamento de Contexto:** `AGENTS.md` enxugado para 97 linhas com teto contratual de 150 linhas (~12 KB) e Progressive Disclosure rigoroso via `padroes/` para evitar truncamento em LLMs (teto de 32 KiB).
+- **Encadeamento Determinístico de Workflows:** Seção "Próximo Passo Recomendado" em [spec.md](workflows/spec.md), [plan.md](workflows/plan.md), [research.md](workflows/research.md), [implement.md](workflows/implement.md), [review.md](workflows/review.md), [release.md](workflows/release.md) e [VINCULAR.md](VINCULAR.md), eliminando becos sem saída no fluxo de trabalho do agente.
+- **Validação Visual Humana no `/fix`:** Diretriz obrigatória no workflow Fast-Track [fix.md](workflows/fix.md) para mudanças de UI/CSS: o agente detalha o componente e rota afetados e aguarda validação humana explícita, sem scan autônomo de tela.
+- **Trava de Teto de Tentativas no `/test`:** Limite formal de até 3 tentativas no workflow [test.md](workflows/test.md) contra loops infinitos de refatoração cega.
+- **Usabilidade Nativa e Ergonomia de Interface (Zero-Bloat):** Seção 7 em [frontend.md](padroes/frontend.md) instituindo HTML semântico nativo (`<button>`, `<a>`), fechamento por teclado (`Escape`), alvos de toque confortáveis (~40-44px) no mobile e contraste legível com zero inchaço de bibliotecas extras ou atributos ARIA redundantes.
+- **Reconciliação Completa do Livro de Arquitetura:** Volumes 01 a 05 de [livro-arquitetura/](livro-arquitetura/) totalmente reconciliados com a stack viva (Next.js 16, React 19, SQLite nativo WAL `dados/rr.db`, Biome e Vitest), incluindo diagrama ERD das 3 tabelas reais (`tecnologias`, `projetos`, `metricas_git`).
+
+---
+
 ## [Sprint 03] — 2026-10-06
 
 ### Adicionado

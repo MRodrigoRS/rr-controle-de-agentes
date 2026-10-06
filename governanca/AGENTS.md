@@ -3,187 +3,94 @@
 > Arquivo gerado automaticamente por RR Controle de Agentes.
 > Marca: RR Tech Studio | Autor: Rodrigo Rafael
 
-## Primeira Sessão e Auto-Diagnóstico de Início
+## Orçamento de Contexto & Progressive Disclosure
 
-Se este é o primeiro contato com o projeto, **leia [INICIO.md](INICIO.md) agora** (ou [VINCULAR.md](VINCULAR.md) se repositório existente).
-Ele contém o roteiro de onboarding: alinhar visão, definir sprints, validar stack e configurar o ambiente.
-Só comece a codificar após concluir o onboarding com o usuário.
+> **Teto Estrito:** Este arquivo opera sob o limite estrito de até **150 linhas (~12 KB)** para proteger a governança contra o truncamento silencioso de contexto do OpenAI Codex (teto de 32 KiB) e manter o foco cognitivo dos modelos de IA nas regras fundamentais.
+> **Progressive Disclosure:** Manuais profundos ([padroes/](padroes/)), fluxos operacionais ([workflows/](workflows/)) e habilidades ([skills/](skills/)) devem ser lidos estritamente sob demanda (*just-in-time*), nunca carregados em bloco na abertura da sessão.
 
-### Acolhimento Inteligente e Auto-Diagnóstico de Contexto
-Quando o usuário iniciar a conversa com saudações ou prompts genéricos (ex: *"Leia AGENTS"*, *"Oi"*, *"Comece o projeto"*, ou sem instrução específica de tarefa), **NUNCA** adote postura passiva, defensiva ou gere relatórios burocráticos de advertência sem ação.
+---
 
-Em vez disso, faça um **auto-diagnóstico rápido (3 segundos)** da estrutura do repositório e declare o diagnóstico seguido da ação recomendada:
+## Primeira Sessão e Auto-Diagnóstico de Contexto
 
-1. **Repositório Existente (Brownfield Onboarding):**
-   - *Condição:* Existe código funcional no repositório (ex: `src/`, scripts, aplicação existente), mas os documentos de governança ainda possuem dados genéricos/placeholders (`rr-controle-de-agentes-1.1`) ou [02-stack.md](livro-arquitetura/02-stack.md) ainda não reflete a stack real.
-   - *Ação Imediata:* Declare o diagnóstico e ofereça a vinculação:
-     > *"Identifiquei que este é um repositório existente recebendo governança. Deseja que eu execute a vinculação da stack e preenchimento da arquitetura agora?"* (Siga [VINCULAR.md](VINCULAR.md)).
+Se for o primeiro contato, siga [INICIO.md](INICIO.md) (ou [VINCULAR.md](VINCULAR.md) se houver código existente).
+Ao receber saudações ou prompts genéricos (*"Oi"*, *"Leia AGENTS"*, *"Comece"*), faça auto-diagnóstico em 3 segundos e declare a ação:
+1. **Brownfield (Código vivo sem governança preenchida):** Proponha vinculação imediata da stack via [VINCULAR.md](VINCULAR.md).
+2. **Greenfield (Repositório novo sem código):** Proponha especificação do PRD e planejamento da Sprint 01 via [INICIO.md](INICIO.md).
+3. **Sprint em Andamento:** Reporte a sprint e etapa ativa de [SESSAO.md](SESSAO.md) e aponte para a próxima tarefa.
 
-2. **Projeto Novo do Zero (Greenfield Onboarding):**
-   - *Condição:* O repositório não possui código de aplicação implementado e ainda não há Sprint ativa em [SESSAO.md](SESSAO.md).
-   - *Ação Imediata:* Declare o diagnóstico e ofereça a inicialização:
-     > *"Projeto novo identificado. Deseja iniciar a definição do PRD e o planejamento da Sprint 1?"* (Siga [INICIO.md](INICIO.md)).
-
-3. **Sprint em Andamento (Trabalho Contínuo):**
-   - *Condição:* A governança já está vinculada e há uma sprint ativa registrada em [SESSAO.md](SESSAO.md).
-   - *Ação Imediata:* Resuma brevemente a etapa atual:
-     > *"Estamos na Sprint X (etapa Y). A próxima tarefa da fila é [Tarefa]. Deseja que eu prossiga com ela ou prefere focar em outra prioridade?"*
-
-4. **Regra de Ação Pró-Ativa:**
-   - Em caso de ambiguidade, apresente as opções de forma executável em vez de paralisar o trabalho com avisos frios.
-
+---
 
 ## Stack Tecnológica & Não-Reinvenção
 
-A fonte da verdade e o catálogo detalhado de ferramentas aprovadas residem em [02-stack.md](livro-arquitetura/02-stack.md).
+A fonte da verdade técnica do projeto reside em [02-stack.md](livro-arquitetura/02-stack.md).
+- **Consulta Obrigatória:** Consulte [02-stack.md](livro-arquitetura/02-stack.md) antes de propor qualquer código ou dependência.
+- **Não-Reinvenção:** É proibido criar soluções ad-hoc ou instalar bibliotecas concorrentes para o que já existe no catálogo.
+- **Novas Dependências:** Consulte primeiro [CATALOGO_TECNOLOGIAS.md](skills/CATALOGO_TECNOLOGIAS.md) e obtenha aprovação prévia do usuário.
+- **Dever de Crítica:** Não seja um assistente passivo. Se o usuário sugerir algo frágil ou que gere dívida técnica, alerte com firmeza e proponha alternativas seguras.
 
-- **Consulta Obrigatória:** Antes de propor dependências ou desenhar soluções, consulte [02-stack.md](livro-arquitetura/02-stack.md) para respeitar as bibliotecas e padrões oficiais contratados para o projeto.
-- **Cláusula de Não-Reinvenção:** Utilize estritamente as ferramentas aprovadas da stack oficial. É proibido inventar soluções caseiras (ad-hoc) ou instalar bibliotecas redundantes/concorrentes para responsabilidades já contempladas no catálogo oficial.
-- **Novas Dependências:** Para propor qualquer nova biblioteca, consulte primeiro o catálogo da progenitora ([CATALOGO_TECNOLOGIAS.md](skills/CATALOGO_TECNOLOGIAS.md)) e obtenha aprovação prévia do usuário.
+---
 
-## Dever de Crítica
+## Cláusulas Pétreas (Regras Inegociáveis)
 
-Você não é um assistente que apenas obedece. Você é um arquiteto de software. Se o usuário sugerir algo arquiteturalmente frágil, inseguro ou que gere dívida técnica, **alerte com clareza** e proponha alternativa segura. Registre decisões contestadas como ADR no [livro de arquitetura](livro-arquitetura/).
+1. **Escopo Estrito:** Não implemente fora do escopo da sprint/etapa ativa sem alinhamento prévio.
+2. **Zero Testes Quebrados:** Nunca avance de etapa com testes falhando. Corrija imediatamente.
+3. **Zero Vazamento de Segredos:** Proibido comitar credenciais, tokens ou senhas. Use `.env.example` e passe no scanner nativo.
+4. **Português Brasileiro no Domínio:** Nomes de entidades, regras, variáveis, tabelas e funções em português. Termos técnicos universais (id, payload, props, status, token, req/res) em inglês.
+5. **Backend como Autoridade Única (Zero-Trust):** O cliente é manipulável. Toda validação, cálculo e autorização deve ser re-executada no backend.
+6. **Dependências Justificadas:** Toda biblioteca precisa de justificativa registrada no PRD/livro de arquitetura.
+7. **Changelog a Cada Commit:**
+   - **Produto:** Registre obrigatoriamente o delta consolidado (Adicionado/Modificado/Corrigido) no `CHANGELOG.md` da raiz (`../CHANGELOG.md`) antes de fechar qualquer commit com código, APIs ou regras de negócio. Nunca narre micro-passos.
+   - **Governança:** Alterações estruturais ou em manuais são registradas em [governanca/CHANGELOG.md](CHANGELOG.md).
 
-## Cláusulas Pétreas
+---
 
-Regras inegociáveis da governança:
+## Critérios de Qualidade de Engenharia
 
-- **Não implementar fora do escopo:** Não implementar funcionalidades fora do escopo da sprint/etapa atual. Se algo urgente surgir, registre e alinhe com o usuário antes.
-- **Não avançar com testes falhando:** Não avançar para a próxima etapa enquanto houver testes falhando. Corrija antes de prosseguir.
-- **Não expor segredos:** Não expor chaves secretas, tokens, senhas ou dados sensíveis. Use variáveis de ambiente e .env.example.
-- **Português brasileiro no código:** Nomes de entidades, regras de negócio, tabelas de banco, variáveis e funções devem ser escritos em português brasileiro (ex: obterUsuario, salvarPedido, cliente). Termos técnicos universais e padrões de bibliotecas/frameworks (id, payload, props, handler, middleware, token, status, req/res) permanecem em inglês sem tradução forçada.
-- **Backend como autoridade única (Zero-Trust no cliente):** O frontend é uma camada de apresentação descartável e potencialmente manipulável pelo usuário (DevTools/F12). Toda regra de negócio, cálculo de valores/preços, checagem de permissões/papéis e validação de transição de estado deve obrigatoriamente ser recalculada e validada no backend, nunca aceitando dados calculados ou permissões vindas cegamente do payload do cliente.
-- **Dependências com justificativa:** Não instalar dependências sem justificativa prévia registrada. Prefira bibliotecas consolidadas e de manutenção ativa.
-- **Changelog de produto atualizado a cada commit:** Antes de fechar qualquer commit com código, regras de negócio, telas ou APIs do produto, o agente deve obrigatoriamente registrar o delta consolidado (Adicionado, Modificado, Corrigido) no `CHANGELOG.md` da raiz do projeto (`../CHANGELOG.md`). É proibido comitar sem atualizar o changelog do produto, e é proibido narrar processo/histórico de edição (apenas o delta final entregue). Alterações exclusivas nas regras da governança são registradas em [CHANGELOG.md](CHANGELOG.md).
+- **Build Limpo:** Passar em `npm run build` (ou equivalente na stack) sem alertas impeditivos.
+- **Commits Descritivos:** Mensagens claras em português explicando o que mudou e por quê.
+- **Estrutura de Pastas:** Respeitar [convencoes-estrutura-de-pastas.md](skills/convencoes-estrutura-de-pastas.md). Zero arquivos soltos na raiz.
+- **Linguagem de Negócio:** Textos voltados ao cliente (telas, toasts, e-mails) sem jargão técnico e sem dados fictícios.
+- **Honestidade Radical:** Nunca diga "está pronto" sem evidência comprovada. Declare o que não foi testado.
 
-## Critérios de Qualidade
+---
 
-Boas práticas esperadas em todo o desenvolvimento:
+## Manuais Especializados de Engenharia
 
-- **Build sem erros:** Código deve passar em `npm run build` (ou equivalente) sem erros.
-- **Commits descritivos:** Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê.
-- **Changelog do produto na raiz:** Todo commit de desenvolvimento de software deve refletir seu delta no `CHANGELOG.md` da raiz do projeto, mantendo as versões e entregas do produto transparentes para humanos e agentes.
-- **Testes incrementais:** Testes devem ser incrementais — nunca regrida a suíte de testes existente. Adicione testes para novas funcionalidades.
-- **Responsividade e PWA:** Aplicações Web devem ser 100% responsivas (Mobile-First) e incluir suporte a PWA (manifest, ícones e instalabilidade) por padrão.
-- **Estrutura de pastas:** Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](skills/convencoes-estrutura-de-pastas.md). Não crie pastas soltas na raiz do projeto.
-- **Documentação de decisões:** Decisões técnicas relevantes devem ser registradas no livro de arquitetura em `governanca/livro-arquitetura/`.
-- **Changelog da governança atualizado:** Toda alteração nas regras, padrões, skills ou workflows da governança exige que o agente analise o diff (`git diff`) e registre uma entrada correspondente em [CHANGELOG.md](CHANGELOG.md) antes do commit.
+Consulte *just-in-time* em [padroes/](padroes/):
+- **Frontend & Usabilidade:** Siga [frontend.md](padroes/frontend.md) (consistência visual, toasts, estados assíncronos, HTML semântico, fechamento com ESC, alvos de toque mobile ~44px e zero inchaço).
+- **Backend & Segurança:** Siga [backend.md](padroes/backend.md) (Zero-Trust, Strict CSP com nonce, HSTS permanente, Rate Limiting, OWASP Agentic Top 10 e transações ACID).
+- **Sincronização Remota:** Siga [sincronizacao-remota.md](padroes/sincronizacao-remota.md) (sync essencial e total via `sincronizar.mjs`).
+- **Modelo de Dados:** Schema real do banco em [05-modelo-de-dados.md](livro-arquitetura/05-modelo-de-dados.md).
 
-## Padrões de Implementação
-
-### Mensagens e Linguagem para o Usuário
-- Todo texto voltado ao cliente (telas, toasts, e-mails, validações) deve estar em **linguagem de negócio** clara — proibido jargão técnico (nomes de tabelas, status HTTP, termos como "CRUD", "payload", "endpoint", "stack trace").
-- **Nunca use dados fictícios** ((99) 99999-8888, teste@teste) — confirme dados reais com o usuário.
-- Erros genéricos e seguros: "Sem conexão com o servidor. Verifique sua internet." / "Erro interno. Tente novamente mais tarde."
-
-### Verificação e Honestidade
-- **Nunca diga "pronto" sem evidência.** Mostre o que foi verificado (screenshots quando a UI mudou, testes executados, fluxos exercitados).
-- **Declare sempre o que NÃO foi verificado**, em linguagem de negócio ("pagamento real com cartão verdadeiro ainda não testado").
-- Ao entregar, forneça um roteiro passo a passo para o usuário conferir sozinho.
-
-### Ações Críticas e Destrutivas
-- Toda exclusão ou operação irreversível exige confirmação explícita indicando o registro afetado.
-
-### Padrões Especializados de Desenvolvimento
-A arquitetura deste projeto é governada por manuais de engenharia dedicados em [padroes/](padroes/). Consulte e siga obrigatoriamente:
-- **Frontend & UI/UX:** Siga [frontend.md](padroes/frontend.md) para padrões de consistência visual, feedback visual (toasts de ~4s e loading local), atualização atômica (proibido `location.reload()`), empty states, navegação previsível e reatividade.
-- **Backend & Segurança:** Siga [backend.md](padroes/backend.md) para o princípio de Zero-Trust no cliente (blindagem contra DevTools/F12), autoridade única de cálculos e permissões, transações atômicas (ACID), sanitização de queries, idempotência e logging seguro sem PII.
-- **Sincronização Remota:** Siga [sincronizacao-remota.md](padroes/sincronizacao-remota.md) para configurar acesso com token privado no GitHub e sincronizar a governança de qualquer máquina nos modos essencial ou total.
-
-### Modelo de Dados
-*(Aplicável se o projeto possuir banco de dados ou persistência estruturada)*
-- A fonte da verdade do schema é o estado **atual** do banco real, documentado em [05-modelo-de-dados.md](livro-arquitetura/05-modelo-de-dados.md). Antes de manipular models, queries ou migrations, consulte-o para respeitar nomes exatos de colunas e constraints.
-- Para extrair ou reconciliar o modelo, consulte a pasta [skills/](skills/) (skills de extração de modelo ou sincronização).
-
-### Distribuição Desktop e Mobile
-- **Desktop (quando aplicável):** O produto final é o executável standalone / instalador testado em máquina limpa (consulte a pasta [skills/](skills/)), nunca o código-fonte solto.
-- **Mobile (quando aplicável):** Adote offline-first com cache local, armazenamento seguro de credenciais/tokens e validação em dispositivo físico/emulador antes do release.
+---
 
 ## Níveis de Execução e Cerimônia
 
-O desenvolvimento é calibrado por complexidade para evitar burocracia desnecessária:
+- **Nível 1 — Tarefas Rápidas / Polimentos (`/fix`):** Correções pontuais e bugs rápidos. Sem criação de sprint. Diagnóstico → implementação → evidência (com validação humana para UI) → commit convencional → registro de 1 linha em [SESSAO.md](SESSAO.md). Detalhes em [workflows/fix.md](workflows/fix.md).
+- **Nível 2 — Entregas Estruturadas (Sprints):** Features, refatorações amplas e arquitetura. Conduzidas em [sprints/](sprints/) com dois gates obrigatórios:
+  - **Gate 1 (Aprovação do Plano):** Plano, riscos e critérios aceitos pelo usuário antes do código.
+  - **Gate 2 (Aprovação da Entrega):** Evidências + limitações + changelog atualizado. Commit só com autorização expressa.
 
-### Nível 1 — Tarefas Rápidas / Polimentos (`/fix`)
-- **Aplicabilidade:** Bugs pontuais, ajustes visuais de CSS/padding, correções de digitação, imports ou pequenas correções avulsas detectadas na hora.
-- **Cerimônia Enxuta:** **Sem criação de arquivo de sprint.** Diagnóstico rápido de 3 linhas → implementação direta com teste/verificação → commit convencional direto (`fix: ...`) → 1 linha registrada em [SESSAO.md](SESSAO.md).
-- **Workflow:** Execute `/fix` (detalhes em [fix.md](workflows/fix.md)).
+---
 
-### Nível 2 — Entregas Estruturadas (Sprints)
-- **Aplicabilidade:** Novas funcionalidades, novas telas, refatorações amplas ou mudanças de regras de negócio.
-- **Cerimônia Formal:** As sprints residem em [sprints/](sprints/). Siga a ordem numérica com dois gates obrigatórios:
-  1. **Gate 1 — Aprovação do Plano:** Apresente o plano (etapas, arquivos afetados, riscos e critérios de aceite) antes de iniciar a implementação.
-  2. **Gate 2 — Aprovação da Entrega:** Apresente evidências + limitações honestas + roteiro de verificação. **Só faça commit após aprovação explícita do usuário.**
-  - Faça revisão adversarial antes do Gate 2 (tente quebrar o próprio código com casos extremos e testes de segurança).
+## Workflows e Ferramentas
 
-## Workflows (Slash Commands)
+Procedimentos operacionais disponíveis em [workflows/](workflows/):
+- `/status`: Orientação de sessão e calibração com código real em [SESSAO.md](SESSAO.md).
+- `/fix`: Fast-track para correção ágil sem overhead burocrático.
+- `/spec`: Decomposição de requisitos em especificação verificável ([PRD.md](PRD.md)).
+- `/plan`: Estruturação formal de nova sprint em [sprints/](sprints/).
+- `/implement`: Ciclo guiado de codificação com testes e gates.
+- `/test`: Protocolos de teste e validação por stack com teto de tentativas.
+- `/review`: Revisão adversarial independente pré-entrega.
+- `/release`: Checklist rigoroso de prontidão para produção.
 
-O harness disponibiliza procedimentos estruturados como comandos nativos:
-- `/status`: Orientação de sessão — sprint ativa, estado do git, calibração com o código
-- `/fix`: Procedimento ágil (Fast-Track) para resolver bugs e ajustes pontuais sem sprint
-- `/spec`: Transforma visão em especificação verificável ([PRD.md](PRD.md))
-- `/plan`: Estrutura o plano de uma sprint ([sprints/](sprints/))
-- `/implement`: Ciclo guiado de execução da sprint com testes e gates
-- `/test`: Protocolos de teste e validação de evidências por stack
-- `/review`: Revisão adversarial independente antes da entrega
-- `/research`: Investigação progressiva de repositório ou tecnologia desconhecida
-- `/release`: Checklist de prontidão para produção e auditorias finais
+---
 
-Instruções completas em [workflows/](workflows/).
+## Gestão de Contexto e Notas Persistentes
 
-
-## Skills do Projeto
-
-As skills acompanham este projeto em [skills/](skills/) e estão mapeadas no harness (`.agents/skills/`).
-- Consulte **apenas** a skill relevante para a tarefa em andamento.
-- Use [CATALOGO_TECNOLOGIAS.md](skills/CATALOGO_TECNOLOGIAS.md) para consultar o catálogo oficial da progenitora quando for propor ou adicionar novas dependências.
-
-## Sincronização e Manutenção da Governança
-
-A governança deste projeto pode ser sincronizada a partir da matriz oficial da RR Tech Studio de qualquer computador:
-
-- **Modo Essencial (Seguro / Dia a dia):** Atualiza padrões ([padroes/](padroes/)), workflows ([workflows/](workflows/)), skills ([skills/](skills/)) e catálogo de tecnologias, preservando o contexto vivo do projeto ([SESSAO.md](SESSAO.md), [PRD.md](PRD.md), [sprints/](sprints/) e [livro-arquitetura/](livro-arquitetura/)):
-  ```bash
-  node governanca/scripts/sincronizar.mjs
-  ```
-- **Modo Total (Hard Reset / Excepcional):** Regenera todos os arquivos da governança a partir dos templates da matriz com confirmação explícita e backup automático prévio:
-  ```bash
-  node governanca/scripts/sincronizar.mjs --total
-  ```
-- **Re-sincronizar apenas o Harness local (`.agents/`):**
-  ```bash
-  node governanca/scripts/harness.mjs
-  ```
-
-### Hábito Obrigatório: Análise de Diff e Registro no [CHANGELOG.md](CHANGELOG.md)
-
-Antes de commitar qualquer alteração que modifique ou evolua a governança (novas regras, manuais em [padroes/](padroes/), workflows, skills ou scripts):
-1. **Auditoria de Diff:** O agente deve executar `git diff` e `git status` para revisar detalhadamente quais diretrizes, templates ou rotinas foram alterados.
-2. **Registro no Changelog:** Adicione uma entrada clara em [CHANGELOG.md](CHANGELOG.md) (e no template correspondente se a edição for na matriz), agrupando por **Adicionado**, **Modificado**, **Corrigido** ou **Removido**.
-3. **Commit Consciente:** Só realize o commit após o changelog refletir com precisão técnica tudo o que foi entregue.
-
-## Gestão de Contexto e Sessões
-
-As anotações persistentes entre sessões ficam em **[SESSAO.md](SESSAO.md)**.
-
-### Protocolo de Início de Sessão
-
-Ao iniciar qualquer nova sessão de trabalho, execute o comando `/status` ou siga o roteiro passo a passo consolidado em **[SESSAO.md](SESSAO.md)** (identificar sprint ativa, comparar com o código real, auditar notas obsoletas e reportar o diagnóstico).
-
-### Ao Final de Cada Sessão
-1. Atualize o front-matter da sprint (`status`, `ultima_modificacao`, `sessao_atual`).
-2. Marque o ponto de parada com `← estou aqui` no corpo da sprint.
-3. Registre o resumo objetivo da sessão em [SESSAO.md](SESSAO.md).
-
-### Arquivamento de Sprints
-Após aprovação do usuário no Gate 2 e commit:
-```bash
-mkdir -p governanca/sprints/concluidas
-mv governanca/sprints/XX-titulo.md governanca/sprints/concluidas/XX-titulo.md
-```
-Atualize [SESSAO.md](SESSAO.md) apontando para a próxima sprint ativa.
-
-### ADRs — Registro de Decisões Arquiteturais
-
-Quando uma decisão de design for contestável por outro desenvolvedor ou agente futuro, registre um ADR em [decisoes/](livro-arquitetura/decisoes/) usando o [_template.md](livro-arquitetura/decisoes/_template.md).
-Use o status `superada` ou `depreciada` quando uma decisão for revisitada — nunca delete ADRs existentes.
+As anotações vivas de sessão residem exclusivamente em **[SESSAO.md](SESSAO.md)**.
+- **Início de Sessão:** Execute `/status` ou siga o roteiro consolidado em [SESSAO.md](SESSAO.md).
+- **Término de Sessão:** Registre o progresso em `## Registro de Sessões` de [SESSAO.md](SESSAO.md).
+- **Arquivamento de Sprints:** Após Gate 2 e commit, mova para `governanca/sprints/concluidas/` e aponte para a próxima sprint ativa.
+- **Decisões Arquiteturais:** Decisões contestadas ou de impacto estrutural viram ADRs em [decisoes/](livro-arquitetura/decisoes/).

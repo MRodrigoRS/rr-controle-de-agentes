@@ -31,10 +31,11 @@
 2. **Implementação Direta:**
    Aplique a correção respeitando os padrões de engenharia em [padroes/](../padroes/) ([frontend.md](../padroes/frontend.md) ou [backend.md](../padroes/backend.md)).
 
-3. **Verificação & Não-Regressão:**
+3. **Verificação & Validação:**
    - Execute os testes automatizados existentes (`npm test` ou comando da stack).
-   - Se for bug lógico, adicione um teste unitário que comprove que o bug não voltará a ocorrer.
+   - Se for bug lógico ou de backend, adicione um teste unitário que comprove que o bug não voltará a ocorrer e apresente o output.
    - Verifique que o linter e o build passam sem erros.
+   - **Validação Visual Humana (Obrigatória para Ajustes de UI/CSS):** O agente **nunca deve** tentar escanear a tela ou capturar telas de forma autônoma. O agente deve descrever com exatidão o que alterou, indicar a rota/componente afetado e explicar o que se espera que o usuário visualize, **aguardando confirmação explícita do usuário** antes de avançar para o commit.
 
 4. **Changelog & Commit:**
    - Atualize o `CHANGELOG.md` na raiz do projeto sob `### Corrigido` (e `governanca/CHANGELOG.md` se for ajuste de governança) registrando o delta conciso da correção antes de comitar.
@@ -52,5 +53,10 @@
 - Bug corrigido ou ajuste aplicado com sucesso
 - Build e testes passando com regressão zero
 - Padrões de engenharia seguidos ([padroes/](../padroes/))
+- Validação humana confirmada (para alterações de UI/CSS)
 - Delta registrado em `CHANGELOG.md` da raiz do projeto
 - Commit realizado e registrado em [SESSAO.md](../SESSAO.md)
+
+## Próximo Passo Recomendado
+
+Após o commit do fix e registro no changelog, execute `/status` (workflow [status.md](status.md)) para retomar a sprint em andamento.

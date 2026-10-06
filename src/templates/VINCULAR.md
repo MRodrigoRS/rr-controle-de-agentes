@@ -155,4 +155,10 @@ Após aprovação, faça o primeiro commit com a mensagem:
 sprint-00: vinculação de governança
 ```
 
+## 7 — Próximo Passo Recomendado
+
+Com a vinculação concluída, o livro de arquitetura preenchido e o commit `sprint-00` realizado:
+- Execute `/status` (workflow [status.md](workflows/status.md)) para inspecionar a sessão ativa e confirmar com o usuário a inicialização formal da **Sprint 01**.
+
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*
+

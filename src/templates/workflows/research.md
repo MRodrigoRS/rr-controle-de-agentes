@@ -26,3 +26,10 @@ o que o sistema faz, arquitetura, dependências, fluxos críticos e lacunas.
 
 - Consegue explicar o sistema sem reler "tudo" a cada sessão
 - O artefato está registrado e disponível para sessões futuras
+
+## Próximo Passo Recomendado
+
+Com o diagnóstico e as descobertas registradas no relatório de pesquisa:
+- Se estiver definindo um novo recurso do zero, execute `/spec` (workflow [spec.md](spec.md)) para estruturar requisitos no [PRD.md](../PRD.md).
+- Se estiver pronto para estruturar a próxima sprint de engenharia, execute `/plan` (workflow [plan.md](plan.md)).
+- Se a pesquisa foi realizada para destravar uma tarefa de sprint ativa, retorne a `/implement` (workflow [implement.md](implement.md)).

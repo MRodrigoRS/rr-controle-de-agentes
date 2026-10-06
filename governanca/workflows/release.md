@@ -25,3 +25,10 @@ Release feita com bloqueantes zerados, changelog do produto oficializado e pós-
 - Nenhum `[BLOQ]` em aberto
 - Versão consolidada e documentada em `CHANGELOG.md` da raiz do projeto
 - Aplicação verificada em produção após o deploy
+
+## Próximo Passo Recomendado
+
+Com a publicação em produção concluída e verificada:
+1. Registre a versão oficial no `CHANGELOG.md` da raiz e na governança ([CHANGELOG.md](../CHANGELOG.md)).
+2. Gere a tag Git anotada da release (`git tag -a vX.Y.Z -m "Release vX.Y.Z"`).
+3. Atualize [SESSAO.md](../SESSAO.md) e planeje o próximo ciclo com o usuário.

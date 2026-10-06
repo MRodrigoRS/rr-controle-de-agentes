@@ -24,3 +24,7 @@ Sprint em [sprints/](../sprints/) com etapas, tarefas e critérios.
 
 - Plano aprovado pelo usuário (Gate 1)
 - Tarefas executáveis, não vagas ("criar backend" é vago)
+
+## Próximo Passo Recomendado
+
+Apresente o plano formulado ao usuário para validação formal no **Gate 1**. Após obter a aprovação explícita, execute `/implement` (workflow [implement.md](implement.md)) para iniciar a execução da Etapa 1.

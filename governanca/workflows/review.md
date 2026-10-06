@@ -34,3 +34,8 @@ Achados corrigidos (ou registrados como limitações) antes da entrega.
 - Nenhum achado crítico em aberto
 - Achados não corrigidos registrados em `## Limitações`
 - ADRs criados para decisões arquiteturais relevantes (ou confirmado que não há nenhuma)
+
+## Próximo Passo Recomendado
+
+- **Se houver falhas críticas ou testes quebrando:** Retorne imediatamente ao workflow [implement.md](implement.md) para corrigir os problemas apontados.
+- **Se tudo estiver validado com robustez comprovada:** Apresente as evidências e o roteiro de verificação ao usuário no **Gate 2**. Com a aprovação obtida, atualize o `CHANGELOG.md` e realize o commit convencional.

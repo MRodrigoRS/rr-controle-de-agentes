@@ -64,4 +64,27 @@
 
 ---
 
+## 7. Usabilidade Nativa e Ergonomia de Interface (Zero-Bloat)
+
+> **Engenharia Limpa Sem Inchaço:** Não instale bibliotecas pesadas de acessibilidade nem sobrecarregue o markup com anotações ARIA complexas e redundantes. A usabilidade de alto padrão é alcançada usando o que o navegador já oferece nativamente, economizando linhas de código e bytes de bundle.
+
+- **HTML Semântico Nativo em Vez de Divs:**
+  - Utilize `<button>` para ações/disparos e `<a>` para navegação entre rotas.
+  - É proibido simular botões ou links com `<div onClick={...}>` ou `<span onClick={...}>` (que demandam `tabIndex`, listeners de teclado manuais e geram código duplicado).
+  - O HTML nativo já fornece foco pelo teclado (Tab/Shift+Tab), acionamento por Enter/Espaço e suporte nativo sem uma única linha de JavaScript adicional.
+- **Teclado e Fechamento Universal com `Escape`:**
+  - Modais, gavetas (*drawers*) e menus flutuantes devem fechar imediatamente quando o usuário pressionar a tecla `Escape`.
+  - Dê preferência à tag nativa `<dialog>` ou a um listener simples de teclado no fechamento de overlays.
+- **Alvos de Toque Confortáveis (Touch Targets Mobile):**
+  - Todo elemento interativo (botões, ícones clicáveis, links de menu, checkboxes e radios) deve possuir área de toque mínima confortável entre **~40px e 44px** (aplicada via padding/hit area, sem poluir visualmente o design).
+  - Isso elimina frustrações de cliques errados ou perdidos no uso em smartphones e tablets.
+- **Contraste Nítido e Legibilidade:**
+  - Garanta que textos, rótulos e ícones tenham contraste nítido contra o fundo (evite cinza claro sobre fundo branco ou cinza escuro sobre fundo preto).
+  - A interface deve ser confortável de ler em telas com brilho reduzido ou em ambientes externos com luz solar.
+- **Sem Dependências Pesadas:**
+  - Proibido adotar bibliotecas volumosas que prometem acessibilidade ao custo de inchaço no bundle. Simplicidade semântica supera complexidade de terceiros.
+
+---
+
 *Template gerado por RR Tech Studio (Rodrigo Rafael).*
+

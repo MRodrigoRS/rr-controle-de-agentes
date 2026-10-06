@@ -100,7 +100,7 @@ Conforme disciplinado nas regras de governança, o resultado desta auditoria nã
 | **01.1** | 👉 [01.1-changelog-de-produto-e-habito-de-commit.md](../sprints/concluidas/01.1-changelog-de-produto-e-habito-de-commit.md) | Changelog de produto na raiz (`./CHANGELOG.md`), scaffold não-destrutivo e condicionamento do hábito de registro do delta antes de cada commit. | `concluida` |
 | **02** | 👉 [02-blindagem-agentica-e-seguranca-moderna.md](../sprints/concluidas/02-blindagem-agentica-e-seguranca-moderna.md) | Diretrizes OWASP Top 10 for Agentic Applications 2026 (ASI01 a ASI07), scanner de segredos Gitleaks e defesa em profundidade (Strict CSP). | `concluida` |
 | **03** | 👉 [03-analise-zero-token-e-modernizacao-catalogo.md](../sprints/concluidas/03-analise-zero-token-e-modernizacao-catalogo.md) | Análise estática offline sem consumo de tokens com Knip, adoção de Biome nos presets web e saneamento taxonômico do catálogo SQLite. | `concluida` |
-| **04** | 👉 [04-context-engineering-workflows-e-a11y.md](../sprints/04-context-engineering-workflows-e-a11y.md) | Context engineering (teto de 32 KiB do Codex), encadeamento fluido de workflows (sem becos sem saída), rigor visual no `/fix` e acessibilidade WCAG 2.1 AA. | `pendente` |
+| **04** | 👉 [04-context-engineering-workflows-e-a11y.md](../sprints/04-context-engineering-workflows-e-a11y.md) | Context engineering (teto de 32 KiB do Codex), encadeamento fluido de workflows, validação humana no `/fix` e ergonomia/usabilidade nativa. | `pendente` |
 
 ---
 

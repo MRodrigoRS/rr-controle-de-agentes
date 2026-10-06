@@ -24,3 +24,7 @@ Atualização de [PRD.md](../PRD.md) com os critérios de aceite e o escopo.
 
 - Critérios de aceite são verificáveis (dá para saber quando terminou)
 - Usuário aprovou a especificação
+
+## Próximo Passo Recomendado
+
+Com a especificação e os critérios de aceite validados no [PRD.md](../PRD.md), execute `/plan` (workflow [plan.md](plan.md)) para estruturar o plano da sprint verificável com etapas e tarefas delimitadas.

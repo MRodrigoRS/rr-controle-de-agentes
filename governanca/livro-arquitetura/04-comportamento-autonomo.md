@@ -1,63 +1,42 @@
 # Comportamento Autônomo — rr-controle-de-agentes-1.1
 
-> Catálogo de tudo que roda sozinho no sistema — triggers de banco, jobs
-> agendados, webhooks, workers, middlewares, cascatas, CI e hooks.
->
-> **Mantenha atualizado sempre que criar ou modificar um destes itens.**
-> Um sistema onde ninguém sabe o que roda automaticamente é uma caixa
-> preta prestes a quebrar.
+**Projeto:** rr-controle-de-agentes-1.1  
+**Marca:** RR Tech Studio | Autor: Rodrigo Rafael  
+**Última Reconciliação:** 2026-10-06  
+
+> Catálogo de tudo que executa autonomamente no sistema — inicializações automáticas, rotinas de banco, CI, verificadores e hooks.
 
 ---
 
-## Database Triggers
+## 1. Rotinas Autônomas de Banco de Dados (SQLite)
 
-| Nome | Tabela | Evento | Ação | Localização |
-|------|--------|--------|------|-------------|
-| *ex: log_audit* | *pedidos* | *AFTER INSERT* | *insere em logs_auditoria* | *prisma/migrations/* |
+| Recurso | Disparo | Ação / Comportamento | Localização |
+|---------|---------|----------------------|-------------|
+| **Write-Ahead Logging (WAL)** | Abertura da conexão com o banco | Ativa `PRAGMA journal_mode = WAL;` para permitir leituras concorrentes ultrarrápidas sem bloquear escritas. | `src/servidor/db.ts` |
+| **Auto-Migration de Inicialização** | Boot do servidor ou execução de script | Executa `CREATE TABLE IF NOT EXISTS` para as tabelas `tecnologias`, `projetos` e `metricas_git`. | `src/servidor/db.ts` |
+| **Auto-Seed de Catálogo** | Boot quando tabela `tecnologias` estiver vazia | Lê `dados/tecnologias-snapshot.json` ou `src/servidor/dados/tecnologias.json` e popula as 151 tecnologias homologadas. | `src/servidor/db.ts` |
+| **Auto-Migração de Colunas** | Boot do servidor | Adiciona `modo_migracao` na tabela `projetos` caso ainda não exista, com tratamento de exceção silenciosa. | `src/servidor/db.ts` |
 
-## Cascatas de Chave Estrangeira
+---
 
-| Tabela origem | Tabela destino | Ação ON DELETE | Ação ON UPDATE | Localização |
-|---------------|----------------|----------------|----------------|-------------|
-| *ex: itens_pedido* | *pedidos* | *CASCADE* | *NO ACTION* | *prisma/schema.prisma* |
+## 2. Automação de Qualidade, CI & Testes
 
-## Jobs Agendados
+| Automação | Gatilho | O que Valida | Localização |
+|-----------|---------|--------------|-------------|
+| **Validador de Integridade de Templates** | `npm test` ou CI GitHub Actions | Analisa 61 templates, 27 presets x catálogo SQLite, paridade de 27 wrappers `.agents/skills/` e integridade estrita de todos os links Markdown locais. | `src/scripts/validar-templates.ts` |
+| **Scanner Nativo de Segredos** | Pré-commit ou comando `node governanca/scripts/verificar-segredos.mjs --all` | Varre arquivos alterados e histórico git procurando chaves de API, senhas, tokens e credenciais confidenciais. | `governanca/scripts/verificar-segredos.mjs` |
+| **Sincronizador do Harness** | `node governanca/scripts/harness.mjs` | Regenera regras (`000-governanca.md`), links de workflows e wrappers de skills em `.agents/` para paridade total com a governança. | `governanca/scripts/harness.mjs` |
 
-| Nome | Schedule | Descrição | Última execução | Localização |
-|------|----------|-----------|-----------------|-------------|
-| | | | | |
+---
 
-## Webhooks
+## 3. Gestão de Sessão e Progressive Disclosure
 
-| Provedor | Evento tratado | Handler | Verificação de assinatura | Localização |
-|----------|---------------|---------|--------------------------|-------------|
-| | | | | |
+| Mecanismo | Comportamento Autônomo |
+|-----------|------------------------|
+| **Auto-Diagnóstico de Início** | Ao receber prompt genérico, o agente realiza auto-diagnóstico em 3 segundos identificando se o repositório é Greenfield, Brownfield ou Sprint Ativa antes de agir. |
+| **Trava de Teto em Loops** | Se um teste falhar durante `/test` e não for sanado em até 3 tentativas, o ciclo é interrompido autonomamente para alinhamento com o usuário. |
+| **Validação Visual Humana no `/fix`** | O agente descreve o que alterou e indica a rota sem escanear a tela de forma autônoma, aguardando validação humana explícita. |
 
-## Workers e Filas
+---
 
-| Worker | Fila | Tarefa | Concorrência | Localização |
-|--------|------|--------|--------------|-------------|
-| | | | | |
-
-## Middleware e Lifecycle
-
-| Nome | Disparo | Efeito colateral | Localização |
-|------|---------|------------------|-------------|
-| | | | |
-
-## CI e Pós-Deploy
-
-| Pipeline | Evento | Ações | Localização |
-|----------|--------|-------|-------------|
-| | | | |
-
-## Git Hooks
-
-| Hook | Ação | Localização |
-|------|------|-------------|
-| | | |
-
-> Mantenha atualizado — use a skill [mapear-comportamento-autonomo.md](../skills/mapear-comportamento-autonomo.md) (ou [sincronizar-documentacao.md](../skills/sincronizar-documentacao.md) para reconciliação global).
-
-*Template gerado por RR Tech Studio (Rodrigo Rafael).*
-
+*Documento mantido e reconciliado conforme os padrões da RR Tech Studio.*

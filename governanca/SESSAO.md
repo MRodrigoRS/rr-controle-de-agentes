@@ -4,7 +4,8 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** [Sprint 04 — Context Engineering, Workflows Fluidos e Acessibilidade WCAG](sprints/04-context-engineering-workflows-e-a11y.md) (Aguardando Gate 1)
+**Sprint Ativa:** [Sprint 05 — Modularização e Build Pipeline do Painel Satélite](sprints/05-modularizacao-painel-satelite.md) (Planejamento)
+**Última Concluída:** [Sprint 04 — Ergonomia dos Workflows, Context Engineering e Usabilidade Nativa](sprints/concluidas/04-context-engineering-workflows-e-a11y.md)
 
 ---
 
@@ -38,6 +39,17 @@
 
 
 ## Registro de Sessões
+
+### Sessão — 2026-10-06: Implementação da Sprint 04 — Ergonomia dos Workflows, Context Engineering e Usabilidade Nativa (Aguardando Gate 2)
+- **Objetivo:** Orçamento de contexto no `AGENTS.md` (< 150 linhas), encadeamento contínuo de workflows (Próximo Passo Recomendado), validação visual humana no `/fix`, trava de até 3 tentativas no `/test`, ergonomia de interface zero-bloat no `frontend.md` e reconciliação integral dos 5 volumes do Livro de Arquitetura.
+- **Entregas Realizadas:**
+  - **Etapa 1:** `governanca/AGENTS.md` e template enxugados para 97 linhas (~6.8 KB), estabelecendo a cláusula de teto formal de 150 linhas (~12 KB) e Progressive Disclosure rígido.
+  - **Etapa 2:** Adicionada seção `## Próximo Passo Recomendado` em `/spec`, `/plan`, `/research`, `/implement`, `/review`, `/release` e `VINCULAR.md` (e templates), eliminando becos sem saída na navegação agêntica.
+  - **Etapa 3:** Atualizados `/fix` (validação humana obrigatória de telas/CSS sem scan autônomo) e `/test` (trava formal de interrupção após 3 tentativas de correção de testes para evitar loops infinitos).
+  - **Etapa 4:** Adicionada Seção 7 em `padroes/frontend.md` (e template) com Usabilidade Nativa e Ergonomia (Zero-Bloat): HTML semântico (`<button>`, `<a>`), fechamento por `Escape`, alvos de toque ~40-44px e contraste legível, com zero bibliotecas extras ou atributos ARIA inflados.
+  - **Etapa 5:** Volumes 01 a 05 do Livro de Arquitetura 100% preenchidos e reconciliados com a realidade viva do `rr-controle-de-agentes-1.1` (Next.js 16, React 19, SQLite nativo WAL `dados/rr.db`, Biome, Vitest, diagrama ERD e regras de negócio reais RN-01 a RN-06).
+  - **Validações:** `npm test` verde (61 templates aprovados, 27 presets e wrappers válidos, 873 links verificados), scanner de segredos limpo (177 arquivos auditados) e `npm run build` compilado com sucesso.
+- **Status Atual:** Todas as 5 etapas implementadas e verificadas. Sprint 04 aguardando autorização do usuário no Gate 2 para commit e arquivamento.
 
 ### Sessão — 2026-10-06: Conclusão da Sprint 03 — Análise Zero-Token, Higiene e Modernização do Catálogo
 - **Objetivo:** Integrar ferramentas de análise estática e higiene que rodam offline poupando tokens de IA (Knip, Biome), sanear a taxonomia do catálogo SQLite e calibrar todos os 27 presets com linters nativos.
