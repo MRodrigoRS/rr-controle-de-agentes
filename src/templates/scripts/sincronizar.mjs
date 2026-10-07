@@ -178,6 +178,41 @@ async function main() {
     console.log("📝 Criado ponteiro raiz: CLAUDE.md");
   }
 
+  // 6.1 Garantir CHANGELOG.md de produto na raiz se não existir (preserva se já existir)
+  const changelogRoot = path.join(raiz, "CHANGELOG.md");
+  if (!fs.existsSync(changelogRoot)) {
+    const nomeProj = path.basename(raiz);
+    const dataHoje = new Date().toISOString().split("T")[0];
+    const changelogInicial = `# Changelog — ${nomeProj}
+
+Todas as alterações notáveis, novas funcionalidades, melhorias e correções deste software são documentadas neste arquivo.
+
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+> **Diretriz para Agentes IA e Desenvolvedores:**
+> - Atualize este arquivo **antes de fechar qualquer commit** que altere regras de negócio, telas, dados ou APIs do produto.
+> - Registre apenas o **delta consolidado** (o que foi adicionado, modificado ou corrigido).
+> - **Não acumule** processo de edição, histórico de tentativas ou micro-passos. O commit no Git já registra o histórico detalhado linha por linha.
+
+---
+
+## [Não lançado]
+
+### Adicionado
+- Estrutura base da aplicação e regras de governança.
+
+---
+
+## [0.1.0] — ${dataHoje}
+
+### Adicionado
+- Inicialização do projeto sob a Governança Oficial RR Tech Studio.
+- Definição da stack tecnológica oficial em [governanca/livro-arquitetura/02-stack.md](governanca/livro-arquitetura/02-stack.md).
+`;
+    fs.writeFileSync(changelogRoot, changelogInicial, "utf-8");
+    console.log("📝 Criado changelog de produto na raiz: CHANGELOG.md");
+  }
+
   // Se executado fora de governanca/scripts/, garantir cópia em governanca/scripts/sincronizar.mjs
   const destSincronizar = path.join(govDir, "scripts", "sincronizar.mjs");
   fs.mkdirSync(path.join(govDir, "scripts"), { recursive: true });

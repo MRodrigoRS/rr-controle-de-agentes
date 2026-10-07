@@ -10,6 +10,8 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### Adicionado
 - **Flag `--remoto` / `--online` / `-r` no Sincronizador (`sincronizar.mjs`):** Permite forçar o download direto de arquivos atualizados a partir do repositório remoto público no GitHub (Raw), ignorando cópias locais da matriz na mesma máquina. Essencial para validação de rede, testes de campo e pipelines de CI.
+- **Ação Rápida `🌐 Forçar Remoto` no Painel Satélite (`ui.mjs`):** Botão nativo no cabeçalho e suporte no endpoint `/api/sincronizar` para acionar a busca pela nuvem diretamente pelo navegador.
+- **Criação de `CHANGELOG.md` de Produto na Raiz no Bootstrap Remoto:** O script `sincronizar.mjs` agora garante a inicialização do changelog de produto na raiz de satélites se ele ainda não existir, preservando o padrão de versionamento semântico desde o primeiro commit.
 - **Documentação de Modos de Rede:** Atualização do manual em [sincronizacao-remota.md](padroes/sincronizacao-remota.md) e na skill [sincronizar-governanca.md](skills/sincronizar-governanca.md) detalhando o uso da flag `--remoto`.
 
 ---

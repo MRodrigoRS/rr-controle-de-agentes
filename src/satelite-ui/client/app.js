@@ -337,8 +337,17 @@ let arquivoAbertoAtual = "";
       const titulo = document.getElementById("action-modal-titulo");
       const terminal = document.getElementById("action-terminal-output");
 
-      titulo.textContent = modo === "total" ? "Regeneração Total da Governança..." : "Sincronização Essencial da Governança...";
-      terminal.textContent = "⏳ Conectando e sincronizando com a matriz da RR Tech Studio...\nAguarde...\n";
+      if (modo === "total") {
+        titulo.textContent = "Regeneração Total da Governança...";
+      } else if (modo === "remoto") {
+        titulo.textContent = "Sincronização Remota Forçada (GitHub Raw)...";
+      } else {
+        titulo.textContent = "Sincronização Essencial da Governança...";
+      }
+
+      terminal.textContent = modo === "remoto"
+        ? "🌐 Forçando busca remota na nuvem via GitHub Raw (ignorando cópias locais)...\nAguarde...\n"
+        : "⏳ Conectando e sincronizando com a matriz da RR Tech Studio...\nAguarde...\n";
       modal.classList.add("active");
 
       try {

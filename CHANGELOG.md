@@ -16,6 +16,8 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### Adicionado
 - **Sincronização Remota Forçada (`--remoto` / `--online` / `-r`):** Flag no utilitário de sincronização (`sincronizar.mjs`) que ignora a detecção de diretórios locais e força a conexão via GitHub Raw, permitindo testar downloads e rotas de rede da nuvem mesmo quando a matriz progenitora está clonada localmente.
+- **Botão `🌐 Forçar Remoto` no Painel Satélite (`ui.mjs`):** Nova ação rápida no cabeçalho do painel web e suporte no endpoint `/api/sincronizar` para disparar a sincronização remota via navegador com terminal flutuante em tempo real.
+- **Changelog de Produto Inicial no Bootstrap Remoto:** O sincronizador (`sincronizar.mjs`) agora gera automaticamente o `CHANGELOG.md` de produto na raiz do repositório satélite caso ainda não exista, garantindo histórico de releases desde o primeiro dia.
 - **Espelhamento nos Templates e Governança:** Atualização de paridade em `src/templates/scripts/sincronizar.mjs`, no manual de sincronização remota (`sincronizacao-remota.md`) e nas diretrizes da skill `sincronizar-governanca`.
 
 ---

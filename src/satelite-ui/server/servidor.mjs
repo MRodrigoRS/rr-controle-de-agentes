@@ -482,9 +482,11 @@ function iniciarServidor() {
       req.on("data", (chunk) => { body += chunk; });
       req.on("end", () => {
         let modo = "essencial";
+        let forcarRemoto = false;
         try {
           const parsed = JSON.parse(body);
           if (parsed.modo === "total") modo = "total";
+          if (parsed.modo === "remoto" || parsed.remoto) forcarRemoto = true;
         } catch {
           // ignore
         }
@@ -497,9 +499,12 @@ function iniciarServidor() {
         }
 
         try {
-          const cmd = modo === "total"
-            ? `node "${scriptSync}" --total -y`
-            : `node "${scriptSync}"`;
+          let cmd = `node "${scriptSync}"`;
+          if (modo === "total") {
+            cmd = `node "${scriptSync}" --total -y`;
+          } else if (forcarRemoto) {
+            cmd = `node "${scriptSync}" --remoto`;
+          }
           const output = execSync(cmd, { cwd: raiz, encoding: "utf-8" });
           res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
           res.end(JSON.stringify({ sucesso: true, output }));

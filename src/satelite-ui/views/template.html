@@ -23,10 +23,13 @@
           <p id="proj-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;"></p>
         </div>
         <div class="header-actions">
-          <button class="btn btn-primary" onclick="executarSincronizacao('essencial')">
+          <button class="btn btn-primary" onclick="executarSincronizacao('essencial')" title="Atualização rápida e segura a partir da matriz">
             🟢 Sincronizar Essencial
           </button>
-          <button class="btn btn-danger" onclick="executarSincronizacao('total')">
+          <button class="btn" onclick="executarSincronizacao('remoto')" title="Força a busca e download direto da nuvem via GitHub Raw">
+            🌐 Forçar Remoto
+          </button>
+          <button class="btn btn-danger" onclick="executarSincronizacao('total')" title="Regenera toda a governança do zero com backup prévio">
             🔴 Regenerar Total...
           </button>
           <button class="btn" onclick="executarHarness()">

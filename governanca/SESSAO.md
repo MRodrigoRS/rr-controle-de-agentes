@@ -40,13 +40,14 @@
 
 ## Registro de Sessões
 
-### Sessão — 2026-10-06: Evolução da Governança — Flag `--remoto` no Sincronizador (`v1.1.6`)
-- **Objetivo:** Incorporar feedback de campo: adicionar suporte oficial à flag `--remoto` / `--online` / `-r` no script de sincronização (`sincronizar.mjs`), permitindo forçar a busca e download de arquivos via GitHub Raw mesmo em máquinas com clone local da matriz.
+### Sessão — 2026-10-06: Evolução da Governança — Flag `--remoto`, Painel Satélite e Changelog de Produto (`v1.1.6`)
+- **Objetivo:** Incorporar feedback de campo: suporte à flag `--remoto` no sincronizador, ação direta na UI do satélite e garantia de criação de `CHANGELOG.md` de produto na raiz em satélites limpos.
 - **Entregas Realizadas:**
-  - Implementada a flag `--remoto` / `--online` / `-r` em `governanca/scripts/sincronizar.mjs` e espelhada em `src/templates/scripts/sincronizar.mjs`.
+  - Implementada a flag `--remoto` / `--online` / `-r` em `governanca/scripts/sincronizar.mjs` e `src/templates/scripts/sincronizar.mjs`.
+  - Botão `🌐 Forçar Remoto` adicionado no cabeçalho do Painel Satélite (`src/satelite-ui/views/template.html`, `client/app.js` e `server/servidor.mjs`), com suporte no endpoint `/api/sincronizar` e bundles regerados via `npm run build:ui`.
+  - `sincronizar.mjs` agora garante a criação inicial do `CHANGELOG.md` de produto na raiz do satélite caso não exista (preservando o histórico caso já exista).
   - Atualizada a documentação em `padroes/sincronizacao-remota.md` e na skill `sincronizar-governanca.md` (e templates).
-  - Teste de campo automatizado executado com sucesso: `node governanca/scripts/sincronizar.mjs --remoto` contatou a API do GitHub Raw na nuvem, ignorou caminhos locais e sincronizou 62 arquivos.
-  - Testes do projeto 100% verdes (`npm test` com 61 templates aprovados e 910 links íntegros; `verificar-segredos.mjs` limpo). Versão bumpada para `1.1.6`.
+  - Teste de campo com download real pelo GitHub executado com sucesso e asserções 100% aprovadas (`npm test` com 61 templates e 916 links; `verificar-segredos.mjs` limpo).
 - **Status Atual:** Concluído e pronto para commit e envio ao GitHub remoto.
 
 ### Sessão — 2026-10-06: Conclusão da Sprint 05 — Modularização e Build Pipeline do Painel Satélite
