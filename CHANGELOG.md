@@ -22,6 +22,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### Corrigido
 - **Bug Crítico de Criação de Documentos na Governança:** Corrigida omissão no script `sincronizar.mjs` onde arquivos fundamentais da governança (`governanca/AGENTS.md`, `governanca/VINCULAR.md`, `governanca/INICIO.md`, `governanca/sprints/_template.md` e o `livro-arquitetura/`) não eram baixados nem copiados para projetos satélites durante a sincronização remota ou local, deixando a pasta `governanca/` desprovida das regras mestres e instruções de onboarding.
+- **Limpeza Efetiva no Modo Total (Hard Reset Verdadeiro):** No modo de regeneração total (`--total`), o script agora limpa ativamente subpastas com resíduos de sprints, relatórios e modelos de dados legados após realizar o backup automático, garantindo que o reset de fábrica seja 100% puro e não deixe sobras de sessões anteriores.
 
 ---
 

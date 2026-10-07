@@ -8,8 +8,8 @@ description: Cria o script que extrai o modelo de dados real (PostgreSQL ou SQLi
 > Instrui o agente a materializar o script `extrair-modelo` no projeto a
 > partir do modelo virgem, customizando o mapeamento de domínios para o
 > repositório específico. Suporta tanto **PostgreSQL** quanto **SQLite**.
-> O resultado fica em `governanca/scripts/` (pasta que **não regenera**);
-> os virgens ficam em `governanca/templates/` (regeneram).
+> O resultado fica em `governanca/scripts/` (preservado na sincronização essencial);
+> os virgens ficam em `governanca/templates/` (mantidos pela matriz).
 
 ## Por que existe
 
@@ -88,6 +88,6 @@ Commite a pasta `governanca/livro-arquitetura/modelo-de-dados/` junto com o cód
 ## Regras
 
 - **Nunca edite o virgem** em `governanca/templates/` — edite sempre a cópia em `governanca/scripts/`
-- `governanca/scripts/` **não regenera** — é o local definitivo dos scripts do projeto
+- **Preservação:** `governanca/scripts/` e `governanca/livro-arquitetura/` são preservados na sincronização essencial. No modo Total (Hard Reset), a governança é resetada integralmente a partir dos templates virgens (com backup automático prévio).
 - **Sempre use o script** para conhecer o schema — não tente adivinhar campos lendo arquivos de migration antigos
 - Em repositórios vinculados, execute esta extração **antes** de criar as sprints funcionais

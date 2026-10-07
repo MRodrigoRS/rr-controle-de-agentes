@@ -74,6 +74,15 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       const backupDir = path.join(caminhoAbs, `.backup-governanca-${ts}`);
       fs.cpSync(governancaPath, backupDir, { recursive: true });
       backupCriado = backupDir;
+
+      // Limpa resíduos de pastas do projeto para garantir reset total de fábrica
+      const pastasParaResetar = ["sprints", "relatorios", "livro-arquitetura", "padroes", "workflows", "skills", "templates"];
+      for (const sub of pastasParaResetar) {
+        const subPath = path.join(governancaPath, sub);
+        if (fs.existsSync(subPath)) {
+          fs.rmSync(subPath, { recursive: true, force: true });
+        }
+      }
     }
 
     await criarEstruturaGovernanca({

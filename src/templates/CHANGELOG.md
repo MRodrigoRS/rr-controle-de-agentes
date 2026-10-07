@@ -16,6 +16,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### Corrigido
 - **Omissão Crítica na Cópia/Download de Documentos Essenciais:** Corrigido bug em `sincronizar.mjs` onde `governanca/AGENTS.md` (o manual oficial de regras e cláusulas pétreas), o documento de entrada inicial (`governanca/VINCULAR.md` ou `governanca/INICIO.md`), o template mestre de sprints (`governanca/sprints/_template.md`) e os volumes do `livro-arquitetura/` não eram roteados para download nem cópia durante a sincronização de projetos satélites, deixando o ponteiro raiz `AGENTS.md` quebrado. Implementada detecção automática de projeto existente e interpolação nativa de variáveis de template (`{{nomeProjeto}}`, `{{data}}`, `{{clausulas}}`, `{{qualidade}}`).
+- **Limpeza Rigorosa no Modo Total (Hard Reset):** No modo `--total`, o sincronizador agora elimina resíduos e artefatos de sprints, relatórios e modelos de dados legados após realizar o backup automático, garantindo um reset 100% fidedigno aos templates da matriz sem resquícios do passado na pasta ativa.
 
 ---
 

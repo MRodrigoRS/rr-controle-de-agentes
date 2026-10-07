@@ -40,14 +40,15 @@
 
 ## Registro de Sessões
 
-### Sessão — 2026-10-06: Evolução da Governança — Flag `--remoto`, Painel Satélite e Correção Crítica de Documentos (`v1.1.6`)
-- **Objetivo:** Incorporar feedback de campo: suporte à flag `--remoto` no sincronizador, ação direta na UI do satélite, criação de `CHANGELOG.md` de produto na raiz e correção crítica do roteamento de documentos da governança em `sincronizar.mjs`.
+### Sessão — 2026-10-06: Evolução da Governança — Flag `--remoto`, Painel Satélite e Hard Reset Puro (`v1.1.6`)
+- **Objetivo:** Incorporar feedback de campo: suporte à flag `--remoto` no sincronizador, ação direta na UI do satélite, criação de `CHANGELOG.md` de produto na raiz, correção crítica de documentos da governança e limpeza rigorosa no modo total.
 - **Entregas Realizadas:**
   - Implementada a flag `--remoto` / `--online` / `-r` em `governanca/scripts/sincronizar.mjs` e `src/templates/scripts/sincronizar.mjs`.
   - **Correção Crítica de Documentos:** Corrigida omissão onde `governanca/AGENTS.md`, `governanca/VINCULAR.md`, `governanca/INICIO.md`, `governanca/sprints/_template.md` e o `livro-arquitetura/` não eram copiados/baixados nos satélites. Adicionada detecção inteligente de projeto existente e interpolação nativa de tags de template.
+  - **Limpeza Rigorosa no Modo Total (Hard Reset Verdadeiro):** No modo `--total`, o script agora limpa ativamente resíduos de sprints, relatórios e modelos de dados legados após realizar o backup automático, garantindo que o reset de fábrica seja 100% puro.
   - Botão `🌐 Forçar Remoto` adicionado no cabeçalho do Painel Satélite (`src/satelite-ui/views/template.html`, `client/app.js` e `server/servidor.mjs`), com suporte no endpoint `/api/sincronizar` e bundles regerados via `npm run build:ui`.
   - `sincronizar.mjs` agora garante a criação inicial do `CHANGELOG.md` de produto na raiz do satélite caso não exista (preservando o histórico caso já exista).
-  - Atualizada a documentação em `padroes/sincronizacao-remota.md` e na skill `sincronizar-governanca.md` (e templates).
+  - Atualizada a documentação em `padroes/sincronizacao-remota.md`, skill `criar-extrair-modelo.md` e na skill `sincronizar-governanca.md` (e templates).
   - Testes em sandbox temporária executados com 0 falhas e todas as asserções de paridade 100% aprovadas (`npm test` com 61 templates e 916 links; `verificar-segredos.mjs` limpo).
 - **Status Atual:** Concluído e pronto para commit e envio ao GitHub remoto.
 

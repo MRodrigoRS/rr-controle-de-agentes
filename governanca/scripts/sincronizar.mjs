@@ -100,6 +100,23 @@ async function main() {
     console.log(`💾 Criando backup prévio em: ${path.basename(backupDir)}...`);
     fs.cpSync(govDir, backupDir, { recursive: true });
     console.log("✅ Backup salvo com sucesso!\n");
+
+    // Limpa resíduos de pastas do projeto para garantir um reset total de fábrica
+    console.log("🧹 Modo Total: limpando resíduos de sprints, relatórios e modelos de dados antigos...");
+    const pastasParaResetar = [
+      path.join(govDir, "sprints"),
+      path.join(govDir, "relatorios"),
+      path.join(govDir, "livro-arquitetura"),
+      path.join(govDir, "padroes"),
+      path.join(govDir, "workflows"),
+      path.join(govDir, "skills"),
+      path.join(govDir, "templates"),
+    ];
+    for (const p of pastasParaResetar) {
+      if (fs.existsSync(p)) {
+        fs.rmSync(p, { recursive: true, force: true });
+      }
+    }
   }
 
   // 4. Estratégia de obtenção dos arquivos (Local com fallback para Remoto GitHub)
