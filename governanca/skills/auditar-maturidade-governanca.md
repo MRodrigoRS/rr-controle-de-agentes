@@ -1,13 +1,13 @@
 ---
 name: auditar-maturidade-governanca
-description: Audita a maturidade da governança matriz, pesquisa ferramentas e melhores práticas da web (como Graphify, linters, MCPs, harness) e gera relatórios com propostas de sprints para auto-evolução contínua.
+description: Audita a estabilidade, integridade física, testes e maturidade interna da governança matriz, validando scripts, templates e conformidade com o manifesto de cobertura.
 ---
 
-# Skill: Auditar Maturidade & Evoluir Governança (P&D Matriz)
+# Skill: Auditar Maturidade da Governança (Sanidade Interna Matriz)
 
 > **Escopo:** Exclusivo da Matriz Progenitora (`rr-controle-de-agentes-1.1`).  
-> **Modo de Uso:** 100% Sob Demanda — disparado apenas por comando explícito do usuário ou `/auditar-governanca`.  
-> **Meta-Objetivo:** A governança deve ser um organismo vivo de alta engenharia, capaz de inspecionar a si mesmo, comparar-se com o estado da arte do mercado e propor sua própria evolução contínua sem superficialidade, sem atalhos cognitivos e gerando sprints físicas dedicadas prontas para execução.
+> **Modo de Uso:** 100% Sob Demanda — disparado por comando explícito do usuário ou `/auditar-governanca`.  
+> **Meta-Objetivo:** A governança deve ser um organismo vivo de alta engenharia, capaz de inspecionar a si mesmo, garantir ausência de contradições, conformidade mecânica e estabilidade absoluta sem superficialidade e sem atalhos cognitivos.
 
 ---
 
@@ -55,30 +55,23 @@ O auditor DEVE obrigatoriamente inspecionar os arquivos vivos no disco antes de 
 
 ---
 
-### Fase 2: Pesquisa Externa Obrigatória na Web & Benchmark do Estado da Arte
+### Fase 2: Inspeção de Sanidade de Manuais, Padrões e Livro de Arquitetura
 
-O auditor DEVE obrigatoriamente consultar a internet (via ferramentas de busca na web e leitura de documentações oficiais) para comparar a governança com as inovações mais recentes da indústria. É terminantemente proibido basear-se apenas na memória estática pré-treinada do modelo.
+O auditor DEVE verificar a sanidade interna, consistência e ausência de contradições na documentação:
 
-1. **Protocolo Mandatório de Varredura Externa:**
-   - Execute buscas ativas cobrindo os 4 eixos fundamentais de modernização:
-     - **Eixo A (Agent Harness Engineering & Context Limits):** Investigue convenções recentes de arquivos de contexto (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`), limites de truncamento cumulativo de LLMs líderes (ex: teto silencioso de 32 KiB do Codex), práticas de *progressive disclosure* e estudos empíricos sobre tamanho de prompts de sistema.
-     - **Eixo B (Segurança Agêntica & Blindagem de Ferramentas):** Consulte as publicações mais recentes do OWASP (incluindo o *OWASP Top 10 for Agentic Applications* — ASI01 a ASI07), mitigações contra *indirect prompt injection*, riscos de *tool poisoning*, escaneamento determinístico de segredos (Gitleaks, TruffleHog) e cabeçalhos de defesa em profundidade (Strict CSP com nonce/`strict-dynamic`).
-     - **Eixo C (Ferramentas Offline Zero-Token & AST):** Pesquise ferramentas modernas que rodem localmente em sub-milissegundos sem consumir tokens de IA: linters e formatadores em Rust (Biome, Oxlint), analisadores de código morto e dependências zumbis (Knip), manipuladores de AST (ast-grep, Tree-sitter) e test runners nativos (`node --test`).
-     - **Eixo D (Model Context Protocol & DX Portátil):** Consulte a especificação oficial do MCP (modelcontextprotocol.io), boas práticas de segurança (OAuth 2.1, allowlists, menor privilégio) e ergonomia de desenvolvedor (one-liners, zero-dependências).
-2. **Delegação a Subagente Pesquisador:**
-   - Quando o harness suportar execução multiagente, o agente principal pode delegar esta fase a um subagente dedicado (`role: Web Benchmark Researcher`), que executará as buscas na web e devolverá um briefing compilado com links canônicos e dados técnicos verificados.
-3. **Formatação Mandatória no Radar de Inovação:**
-   - Para cada tecnologia, ferramenta ou padrão identificado na pesquisa, o relatório DEVE conter:
-     - **Nome & Categoria:** Identificação clara.
-     - **Fonte / URL Canônica:** Link oficial da documentação ou repositório.
-     - **O que faz:** Descrição técnica objetiva.
-     - **Benefício Real para a RR Tech Studio:** Ganho mensurável em tokens, velocidade, segurança ou qualidade.
-     - **Veredito Técnico Justificado:**
-       - `Adotar Imediatamente` (alto impacto, zero atrito, alinhado à stack atual).
-       - `Planejar para Sprint Futura` (alto valor, mas exige janela de implementação estruturada).
-       - `Descartar` (viola a simplicidade Markdown-first, introduz dependências pesadas em linguagens secundárias ou gera overengineering).
-4. **Filtro de Simplicidade Inegociável (Anti-Overengineering):**
-   - Rejeite sumariamente propostas que criem frameworks proprietários de avaliação, suítes em YAML com runners headless ou dependências que fujam do Node.js nativo e do ecossistema contratado. Toda modernização deve respeitar a premissa de manter a governança ágil, portátil e guiada por Markdown.
+1. **Varredura de Consistência e Ausência de Contradições:**
+   - Inspecione `governanca/AGENTS.md`, `INICIO.md`, `VINCULAR.md` e `padroes/*.md`.
+   - Assegure que as regras mandatórias não entram em conflito entre si.
+   - Verifique se links relativos respeitam os diretórios reais sem depender de suposições.
+2. **Auditoria de Estabilidade dos Scripts e Ferramental Nativo:**
+   - Valide se `sincronizar.mjs`, `harness.mjs` e `ui.mjs` executam sem falhas com Node.js nativo puro.
+   - Assegure que comandos de CLI (flags `--remoto`, `--total`, `--check`) estão cobertos e documentados.
+3. **Auditoria do Livro de Arquitetura (Volumes 01 a 05):**
+   - Inspecione a integridade dos cinco volumes em `governanca/livro-arquitetura/`.
+   - Verifique se os diagramas Mermaid possuem sintaxe válida e se as tabelas de componentes refletem o repositório.
+4. **Articulação com Pesquisa Externa:**
+   - Esta skill foca estritamente na estabilidade e integridade interna da governança.
+   - Para benchmarking externo, exploração de tendências da indústria e novos MCPs/ferramentas via busca na web, invoque a skill especializada [pesquisar-inovacao-governanca.md](pesquisar-inovacao-governanca.md).
 
 ---
 

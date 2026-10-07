@@ -4,6 +4,15 @@ Todas as alterações notáveis, novas regras, padrões de engenharia, skills e 
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/) e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.7] — 2026-10-07
+
+### Adicionado
+- **Skill `pesquisar-inovacao-governanca` (Exclusiva da Matriz):** Skill dedicada para radar de tendências, busca ativa na web, análise do estado da arte de agentes (OWASP Top 10 for Agentic Applications, MCP, AST/Tree-sitter, harnesses modernos) e geração de propostas físicas de P&D em [sprints/](sprints/).
+- **Skill `lapidar-skills` (Híbrida — Matriz & Satélites):** Nova skill focada em Engenharia de Contexto, combate ao *prompt rot*, eliminação de ambiguidades, imperatividade e padronização rigorosa de skills no catálogo oficial e em projetos associados. Replicada em [src/templates/skills/lapidar-skills.md](skills/lapidar-skills.md).
+
+### Modificado
+- **Especialização de `auditar-maturidade-governanca` (Exclusiva da Matriz):** Foco reorientado estritamente para sanidade interna, conformidade mecânica do manifesto de cobertura, paridade de templates, execução de testes determinísticos e integridade do livro de arquitetura, delegando investigações externas para a skill especializada de pesquisa.
+
 ---
 
 ## [1.1.6] — 2026-10-06
