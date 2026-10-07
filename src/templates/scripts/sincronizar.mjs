@@ -5,6 +5,7 @@
  *
  * Modos de Uso:
  *   node governanca/scripts/sincronizar.mjs           -> Modo Essencial (Seguro): atualiza padrões, workflows e skills sem alterar contexto local.
+ *   node governanca/scripts/sincronizar.mjs --remoto  -> Força busca remota via GitHub Raw (ignora detecção de pasta local).
  *   node governanca/scripts/sincronizar.mjs --total   -> Modo Total (Hard Reset): regenera tudo a partir da matriz (exige confirmação e cria backup).
  *   node governanca/scripts/sincronizar.mjs --total -y -> Modo Total sem confirmação interativa (automação/CI).
  */
@@ -45,6 +46,7 @@ if (fs.existsSync(matrizConfigPath)) {
 const args = process.argv.slice(2);
 const ehModoTotal = args.includes("--total") || args.includes("-t");
 const pularConfirmacao = args.includes("--sim") || args.includes("-y") || args.includes("--forcar");
+const forcarRemoto = args.includes("--remoto") || args.includes("--online") || args.includes("-r");
 
 const branchArgIdx = args.findIndex((a) => a === "--branch" || a === "-b");
 if (branchArgIdx !== -1 && args[branchArgIdx + 1]) {
@@ -69,6 +71,9 @@ async function main() {
   console.log(`📡 RR Tech Studio — Sincronizador de Governança`);
   console.log(`   Origem: ${repoOwner}/${repoName} (${configMatriz.branch})`);
   console.log(`   Modo: ${ehModoTotal ? "🔴 TOTAL (Hard Reset)" : "🟢 ESSENCIAL (Seguro)"}`);
+  if (forcarRemoto) {
+    console.log(`   Rede: 🌐 REMOTO FORÇADO (ignora busca local)`);
+  }
   console.log("========================================================\n");
 
   // 3. Travas de segurança para o modo Total
@@ -118,11 +123,15 @@ async function main() {
   }
 
   let progenitoraLocal = null;
-  for (const c of caminhosLocaisPossiveis) {
-    if (fs.existsSync(path.join(c, "src", "templates")) && c !== raiz) {
-      progenitoraLocal = c;
-      break;
+  if (!forcarRemoto) {
+    for (const c of caminhosLocaisPossiveis) {
+      if (fs.existsSync(path.join(c, "src", "templates")) && c !== raiz) {
+        progenitoraLocal = c;
+        break;
+      }
     }
+  } else {
+    console.log("🌐 Flag --remoto / --online ativada: ignorando progenitora local e forçando busca via GitHub...");
   }
 
   if (progenitoraLocal) {
@@ -132,7 +141,9 @@ async function main() {
 
   // Tentativa B: Remoto via GitHub API / Raw
   if (!sucessoObtencao) {
-    console.log(`🌐 Buscando atualizações remotas via GitHub (${repoOwner}/${repoName})...`);
+    if (!forcarRemoto) {
+      console.log(`🌐 Buscando atualizações remotas via GitHub (${repoOwner}/${repoName})...`);
+    }
     sucessoObtencao = await sincronizarDeGitHubRemoto();
   }
 

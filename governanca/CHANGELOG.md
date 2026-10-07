@@ -6,6 +6,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.6] — 2026-10-06
+
+### Adicionado
+- **Flag `--remoto` / `--online` / `-r` no Sincronizador (`sincronizar.mjs`):** Permite forçar o download direto de arquivos atualizados a partir do repositório remoto público no GitHub (Raw), ignorando cópias locais da matriz na mesma máquina. Essencial para validação de rede, testes de campo e pipelines de CI.
+- **Documentação de Modos de Rede:** Atualização do manual em [sincronizacao-remota.md](padroes/sincronizacao-remota.md) e na skill [sincronizar-governanca.md](skills/sincronizar-governanca.md) detalhando o uso da flag `--remoto`.
+
+---
+
 ## [Sprint 05] — 2026-10-06
 
 ### Adicionado

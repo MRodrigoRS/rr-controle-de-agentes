@@ -40,6 +40,15 @@
 
 ## Registro de Sessões
 
+### Sessão — 2026-10-06: Evolução da Governança — Flag `--remoto` no Sincronizador (`v1.1.6`)
+- **Objetivo:** Incorporar feedback de campo: adicionar suporte oficial à flag `--remoto` / `--online` / `-r` no script de sincronização (`sincronizar.mjs`), permitindo forçar a busca e download de arquivos via GitHub Raw mesmo em máquinas com clone local da matriz.
+- **Entregas Realizadas:**
+  - Implementada a flag `--remoto` / `--online` / `-r` em `governanca/scripts/sincronizar.mjs` e espelhada em `src/templates/scripts/sincronizar.mjs`.
+  - Atualizada a documentação em `padroes/sincronizacao-remota.md` e na skill `sincronizar-governanca.md` (e templates).
+  - Teste de campo automatizado executado com sucesso: `node governanca/scripts/sincronizar.mjs --remoto` contatou a API do GitHub Raw na nuvem, ignorou caminhos locais e sincronizou 62 arquivos.
+  - Testes do projeto 100% verdes (`npm test` com 61 templates aprovados e 910 links íntegros; `verificar-segredos.mjs` limpo). Versão bumpada para `1.1.6`.
+- **Status Atual:** Concluído e pronto para commit e envio ao GitHub remoto.
+
 ### Sessão — 2026-10-06: Conclusão da Sprint 05 — Modularização e Build Pipeline do Painel Satélite
 - **Objetivo:** Decompor o monólito de 1.433 linhas de `ui.mjs` em módulos especializados em `src/satelite-ui/`, criar script de bundling determinístico e integrar asserção de paridade em `npm test` e `npm run build`.
 - **Entregas Realizadas:**

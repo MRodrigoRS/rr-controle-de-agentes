@@ -12,6 +12,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.6] — 2026-10-06
+
+### Adicionado
+- **Sincronização Remota Forçada (`--remoto` / `--online` / `-r`):** Flag no utilitário de sincronização (`sincronizar.mjs`) que ignora a detecção de diretórios locais e força a conexão via GitHub Raw, permitindo testar downloads e rotas de rede da nuvem mesmo quando a matriz progenitora está clonada localmente.
+- **Espelhamento nos Templates e Governança:** Atualização de paridade em `src/templates/scripts/sincronizar.mjs`, no manual de sincronização remota (`sincronizacao-remota.md`) e nas diretrizes da skill `sincronizar-governanca`.
+
+---
+
 ## [1.1.5] — 2026-10-06
 
 ### Adicionado

@@ -31,6 +31,7 @@ description: Sincroniza a governança local com a matriz pública da RR Tech Stu
 
 Avalie a intenção expressa pelo usuário:
 - **Modo Essencial (Padrão):** Se o usuário pediu apenas para atualizar, sincronizar ou trazer novidades.
+- **Modo Remoto Forçado:** Se o usuário pediu para sincronizar pela nuvem/GitHub (`--remoto`, `--online`, `-r`), ignorando pastas locais da matriz.
 - **Modo Total (Hard Reset):** Se o usuário pediu explicitamente para *"regenerar tudo"*, *"resetar a governança"* ou *"recriar templates do zero"*.
 
 ---
@@ -43,6 +44,9 @@ Execute o comando correspondente no terminal:
 # Modo Essencial (Seguro / Rotina):
 node governanca/scripts/sincronizar.mjs
 # Ou: npm run rr:sync
+
+# Forçar Busca Remota via GitHub (ignora clone local da matriz):
+node governanca/scripts/sincronizar.mjs --remoto
 
 # Modo Total (Regeneração Completa com Backup Prévio):
 node governanca/scripts/sincronizar.mjs --total -y

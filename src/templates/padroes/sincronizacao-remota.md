@@ -22,6 +22,7 @@ A governança possui dois modos formais de atualização:
 | Modo | Comando | Comportamento | Impacto no Projeto |
 | :--- | :--- | :--- | :--- |
 | **🟢 Essencial** *(Padrão)* | `node governanca/scripts/sincronizar.mjs`<br>`npm run rr:sync` | Atualiza padrões em [padroes/](../padroes/), workflows em [workflows/](../workflows/), skills em [skills/](../skills/), catálogo em [CATALOGO_TECNOLOGIAS.md](../skills/CATALOGO_TECNOLOGIAS.md) e o [CHANGELOG.md](../CHANGELOG.md). | **Zero risco:** preserva intocados [SESSAO.md](../SESSAO.md), [PRD.md](../PRD.md), [sprints/](../sprints/) e [livro-arquitetura/](../livro-arquitetura/). |
+| **🌐 Remoto Forçado** | `node governanca/scripts/sincronizar.mjs --remoto`<br>`npm run rr:sync -- --remoto` | Força a busca diretamente no GitHub Raw, ignorando clones locais da matriz na mesma máquina (atalhos: `-r`, `--online`). | **Zero risco / Teste real:** ideal para testar rotas de rede e downloads da nuvem mesmo quando a matriz está clonada localmente. |
 | **🔴 Total** *(Hard Reset)* | `node governanca/scripts/sincronizar.mjs --total`<br>`npm run rr:sync -- --total` | Regenera 100% dos arquivos a partir dos templates da matriz para os presets configurados. | **Destrutivo com rede de segurança:** exige confirmação digitada (`REGENERAR TUDO`) e salva backup automático em `.backup-governanca-*`. |
 
 ---

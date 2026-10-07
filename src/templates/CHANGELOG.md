@@ -6,6 +6,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.6] — 2026-10-06
+
+### Adicionado
+- **Flag `--remoto` / `--online` / `-r` no Sincronizador (`sincronizar.mjs`):** Permite forçar o download direto de arquivos atualizados a partir do repositório remoto público no GitHub (Raw), ignorando cópias locais da matriz na mesma máquina. Essencial para validação de rede, testes de campo e pipelines de CI.
+- **Documentação de Modos de Rede:** Atualização do manual em [sincronizacao-remota.md](padroes/sincronizacao-remota.md) e na skill [sincronizar-governanca.md](skills/sincronizar-governanca.md) detalhando o uso da flag `--remoto`.
+
+---
+
 ## [Sprint 05] — 2026-10-06
 
 ### Adicionado
@@ -95,14 +103,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Acolhimento Inteligente e Auto-Diagnóstico de Contexto:** Adicionado ao [AGENTS.md](AGENTS.md) protocolo oficial para que o agente, ao receber prompts genéricos como *"Leia AGENTS"*, realize auto-diagnóstico de contexto em 3 segundos (identificando Onboarding Brownfield com código vivo, Greenfield para novos projetos, ou Continuação de Sprint) e proponha a ação correta imediatamente sem advertências burocráticas ou postura passiva.
 - **Comandos Rápidos de Início (Intenção Macro):** Adicionados aos ponteiros de raiz [AGENTS.md](AGENTS.md) e [CLAUDE.md](../CLAUDE.md) para guiar o usuário com prompts precisos no pontapé inicial de cada sessão.
 - **Ferramental de P&D e Auto-Evolução da Governança (Exclusivo Matriz):** Implementada a nova skill [auditar-maturidade-governanca.md](skills/auditar-maturidade-governanca.md), o workflow `/auditar-governanca` ([auditar-governanca.md](workflows/auditar-governanca.md)) e o template de relatório [_template_evolucao_governanca.md](relatorios/_template_evolucao_governanca.md). A ferramenta opera sob demanda exclusivamente na matriz para benchmark com o mercado, avaliação de ferramentas (Graphify, linters, MCPs) e geração de backlog de sprints sem poluir os projetos satélites.
-
-
+- **Auditoria Integral de Maturidade & Roadmap Multi-Sprint:** Realizada inspeção de 100% dos manuais, scripts e catálogo da governança, formalizada em [evolucao-governanca-2026-10-06.md](relatorios/evolucao-governanca-2026-10-06.md) (nota calibrada em 7.8/10), com desdobramento mandatória em 4 arquivos físicos de sprint em `governanca/sprints/` (Sprints 01 a 04).
+- **Blindagem Anti-Atalhos na Auditoria:** Skill e workflow de auditoria blindados com proibição estrita de suposições/testes mentais, exigência de tabela de Manifesto de Cobertura e proibição de roadmaps inline.
 
 ### Modificado
 - [AGENTS.md](AGENTS.md): Documentação dos comandos de sincronização, manutenção e hábito obrigatório de registro no changelog.
 - Skill [evoluir-governanca.md](skills/evoluir-governanca.md): Seção dedicada ao consumo de melhorias da matriz e registro obrigatório de diff.
 - Script [harness.mjs](scripts/harness.mjs): Ajuste de caminhos relativos em ponteiros do harness e suporte a rotas de início dinâmicas.
-- **Canonização Universal de Links (Pente Fino):** Varredura completa em 145 arquivos eliminando todas as menções em texto puro solto a documentos, skills e workflows. Cobertura da suíte ampliada para **655 links Markdown locais auditados e 100% íntegros**.
+- Script portátil [sincronizar.mjs](scripts/sincronizar.mjs) e template: Busca recursiva de diretórios pais para localizar a progenitora, garantia de ponteiros raiz e suporte a transporte de `CHANGELOG.md`.
+- **Canonização Universal de Links (Pente Fino):** Varredura completa em 145 arquivos eliminando todas as menções em texto puro solto a documentos, skills e workflows. Cobertura da suíte ampliada para **856 links Markdown locais auditados e 100% íntegros**.
 - **Paridade Absoluta:** Sincronização espelhada de 100% dos arquivos entre os templates da progenitora (`src/templates/`) e os arquivos vivos da governança (`governanca/`).
 
 ---
