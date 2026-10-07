@@ -4,8 +4,8 @@
 > Este arquivo nunca é sobrescrito na regeneração da governança.
 
 **Gerado em:** 2026-10-02
-**Sprint Ativa:** [Sprint 05 — Modularização e Build Pipeline do Painel Satélite](sprints/05-modularizacao-painel-satelite.md) (Planejamento)
-**Última Concluída:** [Sprint 04 — Ergonomia dos Workflows, Context Engineering e Usabilidade Nativa](sprints/concluidas/04-context-engineering-workflows-e-a11y.md)
+**Sprint Ativa:** Nenhuma sprint ativa no momento (Aguardando planejamento da próxima sprint)
+**Última Concluída:** [Sprint 05 — Modularização e Build Pipeline do Painel Satélite](sprints/concluidas/05-modularizacao-painel-satelite.md)
 
 ---
 
@@ -40,7 +40,17 @@
 
 ## Registro de Sessões
 
-### Sessão — 2026-10-06: Implementação da Sprint 04 — Ergonomia dos Workflows, Context Engineering e Usabilidade Nativa (Aguardando Gate 2)
+### Sessão — 2026-10-06: Conclusão da Sprint 05 — Modularização e Build Pipeline do Painel Satélite
+- **Objetivo:** Decompor o monólito de 1.433 linhas de `ui.mjs` em módulos especializados em `src/satelite-ui/`, criar script de bundling determinístico e integrar asserção de paridade em `npm test` e `npm run build`.
+- **Entregas Realizadas:**
+  - **Etapa 1:** Fontes modulares criados em `src/satelite-ui/` (`views/estilos.css`, `views/template.html`, `client/app.js` e `server/servidor.mjs`) com sintaxe nativa e facilidade de manutenção.
+  - **Etapa 2:** Script `src/scripts/build-satelite-ui.ts` desenvolvido para concatenar e empacotar o HTML, CSS e JS do cliente dentro do servidor Node.js nativo de forma determinística e segura via literal JSON.
+  - **Etapa 3:** Integração no pipeline: script `npm run build:ui` criado, integrado ao `npm run build` do Next.js e asserção de paridade `validarParidadeSateliteUi` incorporada ao `npm test`.
+  - **Etapa 4:** Bundles gerados e validados com `node governanca/scripts/ui.mjs --check` e `node src/templates/scripts/ui.mjs --check` (29.043 linhas, 185 arquivos, 110 commits). Scanner de segredos limpo e build 100% verde.
+  - **Etapa 5:** Volumes 01 e 04 do Livro de Arquitetura reconciliados e changelogs atualizados (`[1.1.5]` e `[Sprint 05]`).
+- **Status Atual:** Todas as 5 etapas implementadas, validadas e aprovadas no Gate 2. Sprint 05 comitada e arquivada em [sprints/concluidas/05-modularizacao-painel-satelite.md](sprints/concluidas/05-modularizacao-painel-satelite.md). Pronta para novos desafios.
+
+### Sessão — 2026-10-06: Conclusão da Sprint 04 — Ergonomia dos Workflows, Context Engineering e Usabilidade Nativa
 - **Objetivo:** Orçamento de contexto no `AGENTS.md` (< 150 linhas), encadeamento contínuo de workflows (Próximo Passo Recomendado), validação visual humana no `/fix`, trava de até 3 tentativas no `/test`, ergonomia de interface zero-bloat no `frontend.md` e reconciliação integral dos 5 volumes do Livro de Arquitetura.
 - **Entregas Realizadas:**
   - **Etapa 1:** `governanca/AGENTS.md` e template enxugados para 97 linhas (~6.8 KB), estabelecendo a cláusula de teto formal de 150 linhas (~12 KB) e Progressive Disclosure rígido.

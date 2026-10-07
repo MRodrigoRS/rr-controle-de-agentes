@@ -23,7 +23,8 @@
 
 | Automação | Gatilho | O que Valida | Localização |
 |-----------|---------|--------------|-------------|
-| **Validador de Integridade de Templates** | `npm test` ou CI GitHub Actions | Analisa 61 templates, 27 presets x catálogo SQLite, paridade de 27 wrappers `.agents/skills/` e integridade estrita de todos os links Markdown locais. | `src/scripts/validar-templates.ts` |
+| **Validador de Integridade de Templates** | `npm test` ou CI GitHub Actions | Analisa 61 templates, 27 presets x catálogo SQLite, paridade de 27 wrappers `.agents/skills/`, paridade do bundle `ui.mjs` x `src/satelite-ui/` e integridade estrita de todos os links Markdown locais. | `src/scripts/validar-templates.ts` |
+| **Bundler do Painel Satélite** | `npm run build` ou `npm run build:ui` | Empacota os módulos de `src/satelite-ui/` (views, client, server) em um único arquivo autocontido para `governanca/scripts/ui.mjs` e templates. | `src/scripts/build-satelite-ui.ts` |
 | **Scanner Nativo de Segredos** | Pré-commit ou comando `node governanca/scripts/verificar-segredos.mjs --all` | Varre arquivos alterados e histórico git procurando chaves de API, senhas, tokens e credenciais confidenciais. | `governanca/scripts/verificar-segredos.mjs` |
 | **Sincronizador do Harness** | `node governanca/scripts/harness.mjs` | Regenera regras (`000-governanca.md`), links de workflows e wrappers de skills em `.agents/` para paridade total com a governança. | `governanca/scripts/harness.mjs` |
 

@@ -15,7 +15,7 @@ sessao_atual: 1
 ### Etapa 1: Context Engineering & Orçamento Rígido no `AGENTS.md`
 **Objetivo:** Proteger a governança contra a perda silenciosa de regras no OpenAI Codex (teto de 32 KiB) e evitar dispersão de atenção dos modelos com arquivos de raiz inchados.
 **Tarefas:**
-- [x] Atualizar [governanca/AGENTS.md](../AGENTS.md) e [src/templates/AGENTS.md](../../src/templates/AGENTS.md):
+- [x] Atualizar [governanca/AGENTS.md](../../AGENTS.md) e [src/templates/AGENTS.md](../../../src/templates/AGENTS.md):
   - Estabelecer a cláusula formal de **Orçamento Máximo de Contexto**: o arquivo `AGENTS.md` da raiz nunca deve ultrapassar 150 linhas (ou ~12 KB), reservando espaço estrito para regras pétreas, princípios de não-reinvenção e ponteiros operacionais.
   - Adotar o princípio de **Progressive Disclosure**: manuais profundos (`padroes/`), procedimentos (`workflows/`) e habilidades técnicas (`skills/`) devem ser consultados estritamente sob demanda (*just-in-time*), nunca carregados em bloco na inicialização.
   - Mover trechos prolixos e descrições detalhadas de comandos para os manuais de referência em `padroes/`.
@@ -32,16 +32,16 @@ sessao_atual: 1
   - `implement.md`: *"Próximo passo: execute `/review` para validação adversarial pré-Gate 2 e `/status` após o commit."*
   - `review.md`: *"Próximo passo: se aprovado, apresente evidências no Gate 2, registre changelog e faça commit; se houver falhas, retorne a `/implement`."*
   - `release.md`: *"Próximo passo: oficializar versão no `CHANGELOG.md` da raiz e da governança, gerar tag Git (`vX.Y.Z`) e atualizar `SESSAO.md`."*
-- [x] Atualizar o encerramento de [governanca/VINCULAR.md](../VINCULAR.md) (e template) orientando a transição imediata para a Sprint 1 via `/status`.
+- [x] Atualizar o encerramento de [governanca/VINCULAR.md](../../VINCULAR.md) (e template) orientando a transição imediata para a Sprint 1 via `/status`.
 **Critérios de Aceite:**
 - [x] Nenhum workflow terminando abruptamente; jornada 100% encadeada de ponta a ponta.
 
 ### Etapa 3: Rigor Visual no Fast-Track (`/fix`) e Trava em `/test`
 **Objetivo:** Evitar commits cosméticos às cegas no `/fix` e loops infinitos de refatoração no `/test`.
 **Tarefas:**
-- [x] Atualizar [governanca/workflows/fix.md](../workflows/fix.md) e template:
+- [x] Atualizar [governanca/workflows/fix.md](../../workflows/fix.md) e template:
   - Adicionar aos critérios de conclusão: caso a correção envolva telas, componentes de interface ou regras de CSS, o agente **não deve tentar escanear a tela de forma autônoma**; o agente deve especificar detalhadamente ao usuário **o que foi alterado, em qual rota/tela testar e o que se espera observar**, aguardando a confirmação visual explícita do usuário antes de avançar para o commit.
-- [x] Atualizar [governanca/workflows/test.md](../workflows/test.md) e template:
+- [x] Atualizar [governanca/workflows/test.md](../../workflows/test.md) e template:
   - Estabelecer teto de tentativas: em caso de testes falhando, o agente tem o limite de até **3 tentativas estruturadas** de correção; caso os testes persistam falhando, o agente deve interromper o loop, diagnosticar o erro ao usuário e solicitar alinhamento antes de novas mutações.
 **Critérios de Aceite:**
 - [x] `/fix` exigindo descrição detalhada e validação humana explícita para alterações de UI; `/test` com trava formal contra loops infinitos de tentativas.
@@ -49,7 +49,7 @@ sessao_atual: 1
 ### Etapa 4: Usabilidade Prática e Ergonomia de Interface (Zero-Bloat)
 **Objetivo:** Garantir código limpo e experiência fluida para qualquer usuário no desktop e mobile sem inchar o código com bibliotecas externas de acessibilidade ou ARIA redundante.
 **Tarefas:**
-- [x] Atualizar [governanca/padroes/frontend.md](../padroes/frontend.md) e template com a seção **7. Usabilidade Nativa e Ergonomia de Interface (Zero-Bloat)**:
+- [x] Atualizar [governanca/padroes/frontend.md](../../padroes/frontend.md) e template com a seção **7. Usabilidade Nativa e Ergonomia de Interface (Zero-Bloat)**:
   - *HTML Semântico (Código Menor):* Uso obrigatório de `<button>` para ações e `<a>` para navegação em vez de `<div onClick>` com listeners manuais de clique/teclado. Tags nativas reduzem código JS e já vêm com suporte nativo do navegador.
   - *Interações Intuitivas:* Modais, gavetas (*drawers*) e menus flutuantes devem fechar nativamente com a tecla `Escape` (ESC).
   - *Alvos de Toque no Mobile:* Botões e links clicáveis em interfaces mobile devem possuir área confortável de toque (mínimo de ~40-44px), evitando toques acidentais ou cliques errados.
@@ -61,11 +61,11 @@ sessao_atual: 1
 ### Etapa 5: Reconciliação do Livro de Arquitetura da Matriz com o Código Vivo
 **Objetivo:** Eliminar dados em branco e tabelas sintéticas do livro de arquitetura da Matriz, tornando-o um espelho real da aplicação `rr-controle-de-agentes-1.1`.
 **Tarefas:**
-- [x] Atualizar [governanca/livro-arquitetura/01-visao-geral.md](../livro-arquitetura/01-visao-geral.md): documentar a visão, papéis e estrutura física real do repositório.
-- [x] Atualizar [governanca/livro-arquitetura/02-stack.md](../livro-arquitetura/02-stack.md): remover Prisma e Supabase e detalhar as 12 ferramentas contratadas e em execução (Next.js 16, React 19, Tailwind CSS 4, SQLite nativo WAL `node:sqlite`, Hono, Biome, Vitest).
-- [x] Atualizar [governanca/livro-arquitetura/03-logica-do-sistema.md](../livro-arquitetura/03-logica-do-sistema.md): documentar as 6 regras de negócio reais (RN-01 a RN-06), fluxos de dados, máquina de estados e rotas REST da API.
-- [x] Atualizar [governanca/livro-arquitetura/04-comportamento-autonomo.md](../livro-arquitetura/04-comportamento-autonomo.md): documentar rotinas autônomas de banco (WAL, auto-migration, auto-seed), qualidade em CI e guardrails de sessão.
-- [x] Atualizar [governanca/livro-arquitetura/05-modelo-de-dados.md](../livro-arquitetura/05-modelo-de-dados.md): preencher com as tabelas reais do SQLite (`tecnologias`, `projetos`, `metricas_git`) com diagrama Mermaid ERD completo e catálogo de colunas.
+- [x] Atualizar [governanca/livro-arquitetura/01-visao-geral.md](../../livro-arquitetura/01-visao-geral.md): documentar a visão, papéis e estrutura física real do repositório.
+- [x] Atualizar [governanca/livro-arquitetura/02-stack.md](../../livro-arquitetura/02-stack.md): remover Prisma e Supabase e detalhar as 12 ferramentas contratadas e em execução (Next.js 16, React 19, Tailwind CSS 4, SQLite nativo WAL `node:sqlite`, Hono, Biome, Vitest).
+- [x] Atualizar [governanca/livro-arquitetura/03-logica-do-sistema.md](../../livro-arquitetura/03-logica-do-sistema.md): documentar as 6 regras de negócio reais (RN-01 a RN-06), fluxos de dados, máquina de estados e rotas REST da API.
+- [x] Atualizar [governanca/livro-arquitetura/04-comportamento-autonomo.md](../../livro-arquitetura/04-comportamento-autonomo.md): documentar rotinas autônomas de banco (WAL, auto-migration, auto-seed), qualidade em CI e guardrails de sessão.
+- [x] Atualizar [governanca/livro-arquitetura/05-modelo-de-dados.md](../../livro-arquitetura/05-modelo-de-dados.md): preencher com as tabelas reais do SQLite (`tecnologias`, `projetos`, `metricas_git`) com diagrama Mermaid ERD completo e catálogo de colunas.
 **Critérios de Aceite:**
 - [x] Livro de arquitetura (volumes 01 a 05) 100% preenchido com dados reais do repositório.
 

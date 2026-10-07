@@ -6,6 +6,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [Sprint 05] — 2026-10-06
+
+### Adicionado
+- **Modularização do Painel Satélite (`src/satelite-ui/`):** Desacoplamento do monólito de 1.433 linhas de `ui.mjs` em módulos especializados com syntax highlight nativo (`views/estilos.css`, `views/template.html`, `client/app.js` e `server/servidor.mjs`).
+- **Script de Bundling Determinístico:** Utilitário `build-satelite-ui.ts` que concatena e injeta CSS, HTML e JS do cliente dentro do servidor Node.js gerando os artefatos de distribuição em `governanca/scripts/ui.mjs` e `src/templates/scripts/ui.mjs` com zero dependências externas no satélite.
+- **Validação de Paridade no Pipeline:** Script `npm run build:ui` acoplado ao build de produção (`npm run build`) e asserção de paridade em `npm test`, garantindo que os fontes modulares e os bundles em disco permaneçam sincronizados.
+
+---
+
 ## [Sprint 04] — 2026-10-06
 
 ### Adicionado

@@ -36,7 +36,8 @@ rr-controle-de-agentes-1.1/
 │   ├── componentes/         ← Componentes de interface do usuário
 │   ├── servidor/            ← Lógica de backend (db.ts, projetos.ts, gerador.ts, harness.ts)
 │   ├── scripts/             ← Scripts utilitários de CLI e validação de templates
-│   └── templates/           ← 61 templates oficiais de governança
+│   ├── templates/           ← 61 templates oficiais de governança
+│   └── satelite-ui/         ← Fontes modulares do Painel Satélite (views/, client/, server/)
 ├── governanca/              ← Governança viva do próprio projeto (matriz)
 │   ├── livro-arquitetura/   ← Volumes 01 a 05 e decisões arquiteturais (ADRs)
 │   ├── padroes/             ← Manuais de frontend, backend e sincronização

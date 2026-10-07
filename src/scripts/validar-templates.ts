@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { processarTemplate } from "@/servidor/templates";
 import { obterTodasTecnologias } from "@/servidor/db";
+import { compilarSateliteUi } from "./build-satelite-ui";
 
 interface ErroValidacao {
   arquivo: string;
@@ -260,6 +261,44 @@ export function validarParidadeWrappersHarness(): boolean {
   return false;
 }
 
+export function validarParidadeSateliteUi(): boolean {
+  console.log("🔗 Verificando paridade do bundle do Painel Satélite (ui.mjs x src/satelite-ui/)...");
+  const rootDir = process.cwd();
+  const bundleCompilado = compilarSateliteUi();
+
+  const uiGovPath = path.join(rootDir, "governanca", "scripts", "ui.mjs");
+  const uiTemplatePath = path.join(rootDir, "src", "templates", "scripts", "ui.mjs");
+
+  let erros = 0;
+  if (!fs.existsSync(uiGovPath)) {
+    console.error("❌ governanca/scripts/ui.mjs não encontrado. Execute 'npm run build:ui'.");
+    erros++;
+  } else {
+    const conteudoGov = fs.readFileSync(uiGovPath, "utf-8");
+    if (conteudoGov.trim() !== bundleCompilado.trim()) {
+      console.error("❌ governanca/scripts/ui.mjs está desatualizado em relação a src/satelite-ui/. Execute 'npm run build:ui'.");
+      erros++;
+    }
+  }
+
+  if (!fs.existsSync(uiTemplatePath)) {
+    console.error("❌ src/templates/scripts/ui.mjs não encontrado. Execute 'npm run build:ui'.");
+    erros++;
+  } else {
+    const conteudoTemplate = fs.readFileSync(uiTemplatePath, "utf-8");
+    if (conteudoTemplate.trim() !== bundleCompilado.trim()) {
+      console.error("❌ src/templates/scripts/ui.mjs está desatualizado em relação a src/satelite-ui/. Execute 'npm run build:ui'.");
+      erros++;
+    }
+  }
+
+  if (erros === 0) {
+    console.log("✅ Bundle do Painel Satélite em perfeita paridade com os fontes de src/satelite-ui/.\n");
+    return true;
+  }
+  return false;
+}
+
 export function validarTemplates(): boolean {
   console.log("\n🔍 Iniciando validação de templates em src/templates...\n");
 
@@ -268,6 +307,9 @@ export function validarTemplates(): boolean {
 
   const okHarness = validarParidadeWrappersHarness();
   if (!okHarness) return false;
+
+  const okUi = validarParidadeSateliteUi();
+  if (!okUi) return false;
 
   const okLinks = validarIntegridadeLinksMarkdown();
   if (!okLinks) return false;

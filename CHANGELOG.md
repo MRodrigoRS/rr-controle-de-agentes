@@ -12,6 +12,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.1.5] — 2026-10-06
+
+### Adicionado
+- **Modularização dos Fontes do Painel Satélite (`src/satelite-ui/`):** Decomposição completa do arquivo monolítico de 1.433 linhas de `ui.mjs` em módulos especializados com syntax highlight nativo (`views/estilos.css`, `views/template.html`, `client/app.js` e `server/servidor.mjs`).
+- **Pipeline de Bundling Determinístico (`build-satelite-ui.ts`):** Compilação automática dos módulos em um único arquivo autocontido para `governanca/scripts/ui.mjs` e `src/templates/scripts/ui.mjs`, preservando a premissa de zero dependências externas no satélite.
+- **Automação no CI e Validação de Paridade:** Script `build:ui` integrado ao `npm run build` do Next.js e asserção de paridade estrita em `npm test`, impedindo publicação de bundles desatualizados.
+
+---
+
 ## [1.1.4] — 2026-10-06
 
 ### Adicionado

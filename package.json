@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsx src/scripts/build-satelite-ui.ts && next build",
+    "build:ui": "tsx src/scripts/build-satelite-ui.ts",
     "start": "next start",
     "rr:vincular": "tsx src/scripts/vincular.ts",
     "rr:db:migrar": "tsx src/servidor/db/migrar-e-seed.ts",

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RR Tech Studio — Painel do Projeto</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* INJECT_STYLES */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-top">
+        <div>
+          <div class="header-title-area">
+            <h1 class="title" id="proj-nome">Carregando...</h1>
+            <span class="badge badge-satelite">Satélite Governado</span>
+            <span class="badge badge-git" id="badge-branch">branch: ...</span>
+            <span class="badge badge-lines" id="badge-lines">0 linhas</span>
+          </div>
+          <p id="proj-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;"></p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="executarSincronizacao('essencial')">
+            🟢 Sincronizar Essencial
+          </button>
+          <button class="btn btn-danger" onclick="executarSincronizacao('total')">
+            🔴 Regenerar Total...
+          </button>
+          <button class="btn" onclick="executarHarness()">
+            ⚙️ Harness
+          </button>
+          <button class="btn" onclick="abrirNoEditor()">
+            💻 Abrir no Editor
+          </button>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <strong>Caminho:</strong> <span id="meta-caminho" style="font-family: monospace; font-size: 0.8rem;">...</span>
+        </div>
+        <div class="meta-item">
+          <strong>Último Commit:</strong> <span id="meta-commit">...</span>
+        </div>
+        <div class="meta-item">
+          <strong>Volume de Código:</strong> <span id="meta-volume">...</span>
+        </div>
+        <div class="meta-item">
+          <strong>Origem Matriz:</strong> <span id="meta-matriz">...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card do Gráfico de Evolução de Linhas -->
+    <div class="card" id="card-grafico" style="margin-bottom: 24px; display: none;">
+      <div class="card-header" style="flex-wrap: wrap; gap: 8px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h2 class="card-title">Evolução do Volume de Linhas</h2>
+            <span class="card-count" id="grafico-badge-commits">0 commits</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+            Variação no período exibido: <span id="grafico-variacao" style="font-family: monospace; font-weight: 600;">+0 linhas</span>
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 0.75rem; color: var(--text-dim);">Passe o mouse nos pontos para ver o delta</span>
+          <button class="btn" id="btn-carregar-mais-commits" style="display: none; padding: 2px 8px; font-size: 0.75rem;" onclick="carregarMaisCommits()">
+            + Carregar mais
+          </button>
+        </div>
+      </div>
+
+      <div style="position: relative; background: #0d1117; border: 1px solid rgba(48, 54, 61, 0.6); border-radius: 8px; padding: 10px; margin-top: 8px;">
+        <svg id="svg-grafico" viewBox="0 0 850 240" style="width: 100%; height: auto; max-height: 280px; display: block;">
+        </svg>
+        <div id="grafico-tooltip" style="position: absolute; display: none; pointer-events: none; background: #161b22; border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 12px; font-size: 0.8rem; box-shadow: 0 8px 24px rgba(0,0,0,0.6); z-index: 10; max-width: 280px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de Stack e Commits -->
+    <div class="grid-sections">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Stack Tecnológica & Presets</h2>
+          <button class="btn" style="padding: 2px 8px; font-size: 0.75rem;" onclick="abrirArquivo('livro-arquitetura/02-stack.md')">
+            Ver 02-stack.md
+          </button>
+        </div>
+        <div id="stack-content" style="font-size: 0.88rem; color: var(--text-muted);">
+          Carregando stack...
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Histórico Recente de Commits</h2>
+          <span class="card-count" id="commits-count">0</span>
+        </div>
+        <ul class="commits-list" id="commits-list">
+          <li class="empty-msg">Nenhum commit encontrado.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Cards de Governança -->
+    <div class="grid-sections" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Padrões de Engenharia</h2>
+          <span class="card-count" id="count-padroes">0</span>
+        </div>
+        <ul class="file-list" id="list-padroes"></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Workflows</h2>
+          <span class="card-count" id="count-workflows">0</span>
+        </div>
+        <ul class="file-list" id="list-workflows"></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Skills do Agente</h2>
+          <span class="card-count" id="count-skills">0</span>
+        </div>
+        <ul class="file-list" id="list-skills"></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Livro de Arquitetura</h2>
+          <span class="card-count" id="count-arquitetura">0</span>
+        </div>
+        <ul class="file-list" id="list-arquitetura"></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Sprints & Sessão</h2>
+          <span class="card-count" id="count-sprints">0</span>
+        </div>
+        <ul class="file-list" id="list-sprints"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Leitura de Markdown -->
+  <div class="modal-overlay" id="markdown-modal" onclick="fecharModalSeFora(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="color: var(--accent-blue); font-size: 1.1rem;">📄</span>
+          <span class="modal-title" id="modal-arquivo-titulo">documento.md</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="abrirArquivoNoEditor()">
+            Abrir no Editor
+          </button>
+          <button class="btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="fecharModal()">
+            ✕ Fechar
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" id="modal-arquivo-body">
+        Carregando conteúdo...
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Ação / Terminal -->
+  <div class="modal-overlay" id="action-modal">
+    <div class="modal-content" style="max-width: 700px;">
+      <div class="modal-header">
+        <span class="modal-title" id="action-modal-titulo">Executando Ação...</span>
+        <button class="btn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="fecharActionModal()">
+          ✕ Fechar
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="terminal-output" id="action-terminal-output">Processando...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* INJECT_SCRIPT */
+  </script>
+</body>
+</html>
