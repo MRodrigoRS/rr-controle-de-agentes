@@ -20,6 +20,9 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Changelog de Produto Inicial no Bootstrap Remoto:** O sincronizador (`sincronizar.mjs`) agora gera automaticamente o `CHANGELOG.md` de produto na raiz do repositório satélite caso ainda não exista, garantindo histórico de releases desde o primeiro dia.
 - **Espelhamento nos Templates e Governança:** Atualização de paridade em `src/templates/scripts/sincronizar.mjs`, no manual de sincronização remota (`sincronizacao-remota.md`) e nas diretrizes da skill `sincronizar-governanca`.
 
+### Corrigido
+- **Bug Crítico de Criação de Documentos na Governança:** Corrigida omissão no script `sincronizar.mjs` onde arquivos fundamentais da governança (`governanca/AGENTS.md`, `governanca/VINCULAR.md`, `governanca/INICIO.md`, `governanca/sprints/_template.md` e o `livro-arquitetura/`) não eram baixados nem copiados para projetos satélites durante a sincronização remota ou local, deixando a pasta `governanca/` desprovida das regras mestres e instruções de onboarding.
+
 ---
 
 ## [1.1.5] — 2026-10-06

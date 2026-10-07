@@ -236,6 +236,67 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
   console.log(`\n🎉 Governança sincronizada com sucesso no modo ${ehModoTotal ? "TOTAL" : "ESSENCIAL"}!\n`);
 }
 
+const CLAUSULAS_PADRAO = [
+  "1. **Não implementar fora do escopo:** Não implementar funcionalidades fora do escopo da sprint/etapa atual. Se algo urgente surgir, registre e alinhe com o usuário antes.",
+  "2. **Não avançar com testes falhando:** Não avançar para a próxima etapa enquanto houver testes falhando. Corrija antes de prosseguir.",
+  "3. **Não expor segredos:** Não expor chaves secretas, tokens, senhas ou dados sensíveis. Use variáveis de ambiente e .env.example.",
+  "4. **Português brasileiro no código:** Nomes de entidades, regras de negócio, tabelas de banco, variáveis e funções devem ser escritos em português brasileiro (ex: obterUsuario, salvarPedido, cliente). Termos técnicos universais (id, payload, props, handler, middleware, token, status, req/res) permanecem em inglês sem tradução forçada.",
+  "5. **Backend como autoridade única (Zero-Trust no cliente):** O frontend é uma camada de apresentação manipulável. Toda regra de negócio, cálculo de valores/preços, checagem de permissões e validação de transição de estado deve obrigatoriamente ser recalculada e validada no backend.",
+  "6. **Dependências com justificativa:** Não instalar dependências sem justificativa prévia registrada.",
+  "7. **Changelog a Cada Commit:**\n   - **Produto:** Registre obrigatoriamente o delta consolidado (Adicionado/Modificado/Corrigido) no `CHANGELOG.md` da raiz (`../CHANGELOG.md`) antes de fechar qualquer commit com código, APIs ou regras de negócio.\n   - **Governança:** Alterações estruturais ou em manuais são registradas em [governanca/CHANGELOG.md](CHANGELOG.md)."
+].join("\n\n");
+
+const QUALIDADE_PADRAO = [
+  "- **Build sem erros:** Código deve passar em `npm run build` (ou equivalente) sem erros.",
+  "- **Commits descritivos:** Commits devem ter mensagens descritivas em português, explicando o que foi feito e por quê.",
+  "- **Changelog do produto na raiz:** Todo commit de desenvolvimento de software deve refletir seu delta no `CHANGELOG.md` da raiz do projeto.",
+  "- **Testes incrementais:** Testes devem ser incrementais — nunca regrida a suíte de testes existente.",
+  "- **Responsividade e Usabilidade:** Aplicações Web devem ser 100% responsivas (Mobile-First) e acessíveis por padrão.",
+  "- **Estrutura de pastas:** Siga a estrutura de pastas definida em [convencoes-estrutura-de-pastas.md](skills/convencoes-estrutura-de-pastas.md).",
+  "- **Documentação de decisões:** Decisões técnicas relevantes devem ser registradas em [livro-arquitetura/](livro-arquitetura/)."
+].join("\n");
+
+function detectarSeEhProjetoExistente(dirRaiz) {
+  if (fs.existsSync(path.join(dirRaiz, "governanca", "VINCULAR.md"))) return true;
+  if (fs.existsSync(path.join(dirRaiz, "governanca", "INICIO.md"))) return false;
+
+  const arquivosCodigo = [
+    "package.json", "tsconfig.json", "composer.json", "pom.xml", "build.gradle",
+    "Cargo.toml", "go.mod", "requirements.txt", "Pipfile", "pyproject.toml",
+    "Gemfile", "Makefile", "Dockerfile", ".clasp.json"
+  ];
+  for (const a of arquivosCodigo) {
+    if (fs.existsSync(path.join(dirRaiz, a))) return true;
+  }
+  const pastasCodigo = ["src", "app", "lib", "pages", "server", "client", "api"];
+  for (const p of pastasCodigo) {
+    if (fs.existsSync(path.join(dirRaiz, p))) return true;
+  }
+  return false;
+}
+
+function aplicarContextoBasico(conteudo, nomeProjeto) {
+  const dataHoje = new Date().toISOString().split("T")[0];
+  let c = conteudo;
+  c = c.replaceAll("{{nomeProjeto}}", nomeProjeto);
+  c = c.replaceAll("{{data}}", dataHoje);
+  c = c.replaceAll("{{clausulas}}", CLAUSULAS_PADRAO);
+  c = c.replaceAll("{{qualidade}}", QUALIDADE_PADRAO);
+  c = c.replaceAll("{{branchSugerida}}", "refactor/modernizacao-stack");
+  c = c.replaceAll("{{frontend}}", "A definir");
+  c = c.replaceAll("{{backend}}", "A definir");
+  c = c.replaceAll("{{numero}}", "01");
+  c = c.replaceAll("{{titulo}}", "Diagnóstico e Onboarding");
+  c = c.replaceAll("{{objetivo}}", "Mapeamento inicial do projeto e estruturação da base.");
+  c = c.replaceAll("{{numeroEtapa}}", "1");
+  c = c.replaceAll("{{tituloEtapa}}", "Análise de Arquitetura");
+  c = c.replaceAll("{{objetivoEtapa}}", "Investigar o repositório e preencher o livro de arquitetura.");
+  c = c.replaceAll("{{comandoTeste}}", "npm test");
+  c = c.replaceAll("{{sugestaoCommit}}", "feat(init): onboarding da governanca inicializado");
+  c = c.replace(/\{\{#if[\s\S]*?\{\{\/if\}\}/g, "");
+  return c;
+}
+
 function sincronizarDeOrigemLocal(caminhoOrigem) {
   try {
     const templatesDir = path.join(caminhoOrigem, "src", "templates");
@@ -280,37 +341,37 @@ async function sincronizarDeGitHubRemoto() {
       "relatorios/_template_evolucao_governanca.md",
     ]);
 
+    const nomeProjeto = path.basename(raiz);
+    const ehMatriz = fs.existsSync(path.join(raiz, "src", "templates"));
+    const ehProjetoExistente = detectarSeEhProjetoExistente(raiz);
+    const docEntradaEsperado = ehProjetoExistente ? "VINCULAR.md" : "INICIO.md";
+
     let falhasDownload = 0;
     for (const item of arquivosTemplates) {
       const relPath = item.path.replace(/^src\/templates\//, "");
 
       // Se for satélite (não matriz), não baixa ferramentas exclusivas de P&D da matriz
-      const ehMatriz = fs.existsSync(path.join(raiz, "src", "templates"));
       if (!ehMatriz && exclusivosMatriz.has(relPath)) {
         continue;
       }
 
-      // Verifica se é arquivo protegido no modo essencial
-      if (!ehModoTotal) {
-        if (
-          relPath.startsWith("arquitetura/01-") ||
-          relPath.startsWith("arquitetura/03-") ||
-          relPath.startsWith("arquitetura/04-") ||
-          relPath.startsWith("arquitetura/05-") ||
-          relPath === "PLANO.md" ||
-          relPath === "PRD.md" ||
-          relPath === "SESSAO.md"
-        ) {
-          continue; // Protegido!
-        }
-      }
-
       // Determinar destino no projeto
       let destRel = null;
+
       if (item.path.endsWith("CATALOGO_TECNOLOGIAS.md")) {
         destRel = path.join("skills", "CATALOGO_TECNOLOGIAS.md");
+      } else if (relPath === "AGENTS.md") {
+        destRel = "AGENTS.md";
       } else if (relPath === "CHANGELOG.md") {
         destRel = "CHANGELOG.md";
+      } else if (relPath === "SPRINT.md") {
+        destRel = path.join("sprints", "_template.md");
+      } else if (relPath === "INICIO.md" || relPath === "VINCULAR.md") {
+        if (relPath === docEntradaEsperado) {
+          destRel = docEntradaEsperado;
+        } else {
+          continue;
+        }
       } else if (relPath.startsWith("padroes/")) {
         destRel = relPath;
       } else if (relPath.startsWith("workflows/")) {
@@ -323,22 +384,42 @@ async function sincronizarDeGitHubRemoto() {
         destRel = relPath.endsWith(".template")
           ? path.join("templates", path.basename(relPath))
           : path.join("scripts", path.basename(relPath));
-      } else if (ehModoTotal && relPath.startsWith("arquitetura/")) {
-        destRel = path.join("livro-arquitetura", relPath.replace(/^arquitetura\//, ""));
-      } else if (ehModoTotal && (relPath === "SESSAO.md" || relPath === "PRD.md" || relPath === "PLANO.md")) {
-        destRel = relPath;
+      } else if (relPath.startsWith("arquitetura/")) {
+        const destLivro = path.join("livro-arquitetura", relPath.replace(/^arquitetura\//, ""));
+        const destAbsLivro = path.join(govDir, destLivro);
+        if (ehModoTotal || !fs.existsSync(destAbsLivro)) {
+          destRel = destLivro;
+        } else {
+          continue;
+        }
+      } else if (relPath === "SESSAO.md" || relPath === "PRD.md" || relPath === "PLANO.md") {
+        const destAbsDoc = path.join(govDir, relPath);
+        if (ehModoTotal || !fs.existsSync(destAbsDoc)) {
+          destRel = relPath;
+        } else {
+          continue;
+        }
       }
 
       if (!destRel) continue;
 
       const destAbs = path.join(govDir, destRel);
+
+      // Se for a própria matriz, preserva seu AGENTS.md mestre
+      if (destRel === "AGENTS.md" && ehMatriz && fs.existsSync(destAbs)) {
+        continue;
+      }
+
       fs.mkdirSync(path.dirname(destAbs), { recursive: true });
 
       // Baixa o conteúdo cru do arquivo
       const rawUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${configMatriz.branch}/${item.path}`;
       const rawRes = await fetch(rawUrl, { headers });
       if (rawRes.ok) {
-        const conteudo = await rawRes.text();
+        let conteudo = await rawRes.text();
+        if (destRel.endsWith(".md") && !destRel.startsWith("padroes/") && !destRel.startsWith("workflows/") && !destRel.startsWith("skills/")) {
+          conteudo = aplicarContextoBasico(conteudo, nomeProjeto);
+        }
         fs.writeFileSync(destAbs, conteudo, "utf-8");
       } else {
         console.error(`❌ Falha ao baixar ${item.path} (HTTP ${rawRes.status}: ${rawRes.statusText})`);
@@ -359,14 +440,19 @@ async function sincronizarDeGitHubRemoto() {
 }
 
 function copiarPastasMatriz(templatesDir, raizOrigem) {
-  const subpastas = ["padroes", "workflows", "skills", "relatorios"];
+  const nomeProjeto = path.basename(raiz);
   const ehMatriz = fs.existsSync(path.join(raiz, "src", "templates"));
+  const ehProjetoExistente = detectarSeEhProjetoExistente(raiz);
+  const docEntradaEsperado = ehProjetoExistente ? "VINCULAR.md" : "INICIO.md";
+
+  const subpastas = ["padroes", "workflows", "skills", "relatorios"];
   const exclusivosMatriz = new Set([
     "auditar-maturidade-governanca.md",
     "auditar-governanca.md",
     "_template_evolucao_governanca.md",
   ]);
 
+  // 1. Subpastas padrão (padroes, workflows, skills, relatorios)
   for (const sub of subpastas) {
     const srcDir = path.join(templatesDir, sub);
     const destDir = path.join(govDir, sub);
@@ -375,7 +461,7 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
       for (const f of fs.readdirSync(srcDir)) {
         if (f.endsWith(".md")) {
           if (!ehMatriz && exclusivosMatriz.has(f)) {
-            continue; // Satélites não recebem ferramentas exclusivas da matriz
+            continue;
           }
           fs.copyFileSync(path.join(srcDir, f), path.join(destDir, f));
         }
@@ -383,21 +469,50 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
     }
   }
 
-  // CHANGELOG da matriz
+  // 2. AGENTS.md na pasta governanca/ (sempre mantido atualizado no satélite)
+  const agentsOrigem = path.join(templatesDir, "AGENTS.md");
+  const agentsDest = path.join(govDir, "AGENTS.md");
+  if (fs.existsSync(agentsOrigem)) {
+    if (!ehMatriz || !fs.existsSync(agentsDest)) {
+      const conteudo = aplicarContextoBasico(fs.readFileSync(agentsOrigem, "utf-8"), nomeProjeto);
+      fs.writeFileSync(agentsDest, conteudo, "utf-8");
+    }
+  }
+
+  // 3. Documento de entrada (INICIO.md ou VINCULAR.md)
+  const docOrigem = path.join(templatesDir, docEntradaEsperado);
+  const docDest = path.join(govDir, docEntradaEsperado);
+  if (fs.existsSync(docOrigem)) {
+    if (ehModoTotal || !fs.existsSync(docDest)) {
+      const conteudo = aplicarContextoBasico(fs.readFileSync(docOrigem, "utf-8"), nomeProjeto);
+      fs.writeFileSync(docDest, conteudo, "utf-8");
+    }
+  }
+
+  // 4. Template de Sprint (SPRINT.md -> governanca/sprints/_template.md)
+  const sprintOrigem = path.join(templatesDir, "SPRINT.md");
+  const sprintDestDir = path.join(govDir, "sprints");
+  fs.mkdirSync(sprintDestDir, { recursive: true });
+  if (fs.existsSync(sprintOrigem)) {
+    const conteudo = aplicarContextoBasico(fs.readFileSync(sprintOrigem, "utf-8"), nomeProjeto);
+    fs.writeFileSync(path.join(sprintDestDir, "_template.md"), conteudo, "utf-8");
+  }
+
+  // 5. CHANGELOG da matriz
   const changelogOrigem = path.join(templatesDir, "CHANGELOG.md");
   const changelogDest = path.join(govDir, "CHANGELOG.md");
   if (fs.existsSync(changelogOrigem)) {
     fs.copyFileSync(changelogOrigem, changelogDest);
   }
 
-  // Catálogo de tecnologias
+  // 6. Catálogo de tecnologias
   const catalogoSrc = path.join(govDir, "skills", "CATALOGO_TECNOLOGIAS.md");
   const catalogoOrigem = path.join(raizOrigem, "governanca", "skills", "CATALOGO_TECNOLOGIAS.md");
   if (fs.existsSync(catalogoOrigem)) {
     fs.copyFileSync(catalogoOrigem, catalogoSrc);
   }
 
-  // Scripts e templates
+  // 7. Scripts e templates
   const scriptsSrc = path.join(templatesDir, "scripts");
   const scriptsDest = path.join(govDir, "scripts");
   const templatesDest = path.join(govDir, "templates");
@@ -413,23 +528,32 @@ function copiarPastasMatriz(templatesDir, raizOrigem) {
     }
   }
 
-  // No modo total, copia também os livros de arquitetura e arquivos base
-  if (ehModoTotal) {
-    const arqSrc = path.join(templatesDir, "arquitetura");
-    const arqDest = path.join(govDir, "livro-arquitetura");
-    if (fs.existsSync(arqSrc)) {
-      fs.mkdirSync(arqDest, { recursive: true });
-      for (const f of fs.readdirSync(arqSrc)) {
-        if (f.endsWith(".md")) {
-          fs.copyFileSync(path.join(arqSrc, f), path.join(arqDest, f));
+  // 8. Livro de arquitetura (no total ou se não existir)
+  const arqSrc = path.join(templatesDir, "arquitetura");
+  const arqDest = path.join(govDir, "livro-arquitetura");
+  if (fs.existsSync(arqSrc)) {
+    fs.mkdirSync(arqDest, { recursive: true });
+    fs.mkdirSync(path.join(arqDest, "decisoes"), { recursive: true });
+    for (const f of fs.readdirSync(arqSrc)) {
+      const srcFile = path.join(arqSrc, f);
+      const destFile = path.join(arqDest, f);
+      if (f.endsWith(".md")) {
+        if (ehModoTotal || !fs.existsSync(destFile)) {
+          const conteudo = aplicarContextoBasico(fs.readFileSync(srcFile, "utf-8"), nomeProjeto);
+          fs.writeFileSync(destFile, conteudo, "utf-8");
         }
       }
     }
+  }
 
-    for (const f of ["SESSAO.md", "PRD.md", "PLANO.md"]) {
-      const srcFile = path.join(templatesDir, f);
-      if (fs.existsSync(srcFile)) {
-        fs.copyFileSync(srcFile, path.join(govDir, f));
+  // 9. SESSAO.md, PRD.md, PLANO.md (no total ou se não existir)
+  for (const f of ["SESSAO.md", "PRD.md", "PLANO.md"]) {
+    const srcFile = path.join(templatesDir, f);
+    const destFile = path.join(govDir, f);
+    if (fs.existsSync(srcFile)) {
+      if (ehModoTotal || !fs.existsSync(destFile)) {
+        const conteudo = aplicarContextoBasico(fs.readFileSync(srcFile, "utf-8"), nomeProjeto);
+        fs.writeFileSync(destFile, conteudo, "utf-8");
       }
     }
   }

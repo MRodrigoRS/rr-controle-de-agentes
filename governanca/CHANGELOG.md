@@ -14,6 +14,9 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - **Criação de `CHANGELOG.md` de Produto na Raiz no Bootstrap Remoto:** O script `sincronizar.mjs` agora garante a inicialização do changelog de produto na raiz de satélites se ele ainda não existir, preservando o padrão de versionamento semântico desde o primeiro commit.
 - **Documentação de Modos de Rede:** Atualização do manual em [sincronizacao-remota.md](padroes/sincronizacao-remota.md) e na skill [sincronizar-governanca.md](skills/sincronizar-governanca.md) detalhando o uso da flag `--remoto`.
 
+### Corrigido
+- **Omissão Crítica na Cópia/Download de Documentos Essenciais:** Corrigido bug em `sincronizar.mjs` onde `governanca/AGENTS.md` (o manual oficial de regras e cláusulas pétreas), o documento de entrada inicial (`governanca/VINCULAR.md` ou `governanca/INICIO.md`), o template mestre de sprints (`governanca/sprints/_template.md`) e os volumes do `livro-arquitetura/` não eram roteados para download nem cópia durante a sincronização de projetos satélites, deixando o ponteiro raiz `AGENTS.md` quebrado. Implementada detecção automática de projeto existente e interpolação nativa de variáveis de template (`{{nomeProjeto}}`, `{{data}}`, `{{clausulas}}`, `{{qualidade}}`).
+
 ---
 
 ## [Sprint 05] — 2026-10-06
